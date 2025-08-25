@@ -1,0 +1,40 @@
+{
+  "extends": ["next/core-web-vitals"],
+  "plugins": ["unused-imports"],
+  "rules": {
+    "no-console": ["error", { "allow": ["warn", "dir"] }],
+    "no-restricted-syntax": ["error", "TSEnumDeclaration", "WithStatement"],
+    "@typescript-eslint/interface-name-prefix": "off",
+    "@typescript-eslint/member-delimiter-style": "off",
+    "@typescript-eslint/no-empty-interface": "off",
+    "unused-imports/no-unused-imports": "error",
+    "react/self-closing-comp": [
+      "error",
+      {
+        "component": true,
+        "html": true
+      }
+    ],
+    "import/order": [
+      "error",
+      {
+        "groups": [
+          "builtin",
+          "external",
+          "type",
+          "internal",
+          "sibling",
+          "parent",
+          "index",
+          "object"
+        ],
+        "newlines-between": "always",
+        "pathGroupsExcludedImportTypes": ["react"],
+        "alphabetize": { "order": "asc", "caseInsensitive": true },
+        "pathGroups": [
+          { "pattern": "react", "group": "external", "position": "before" }
+        ]
+      }
+    ]
+  }
+}
