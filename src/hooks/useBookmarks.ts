@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 
 import type { BookmarkedRecipe } from '@/types'
 
-import { getBookmarks } from '@/lib/bookmarkService'
+import { getBookmarks } from '@/lib/supabase/bookmarkService'
 
 export function useBookmarks() {
   const [bookmarks, setBookmarks] = useState<BookmarkedRecipe[]>([])

@@ -86,8 +86,10 @@ export function RecipeDetail({ recipe }: RecipeDetailProps) {
       <Stack gap={4}>
         <Flex justify="between" align="center">
           <Link href="/">
-            <ArrowBackIcon />
-            Back to Recipes
+            <Button variant="ghost">
+              <ArrowBackIcon />
+              Back to Recipes
+            </Button>
           </Link>
           {isOwner && (
             <Flex gap={2}>
@@ -102,18 +104,17 @@ export function RecipeDetail({ recipe }: RecipeDetailProps) {
             </Flex>
           )}
         </Flex>
-        {currentRecipe.imageUrl && (
-          <HeroImage>
-            <Image
-              src={currentRecipe.imageUrl}
-              alt={currentRecipe.title}
-              fill
-              style={{ objectFit: 'cover' }}
-              priority
-              sizes="(max-width: 1200px) 100vw, 1200px"
-            />
-          </HeroImage>
-        )}
+
+        <HeroImage>
+          <Image
+            src={currentRecipe.imageUrl}
+            alt={currentRecipe.title}
+            fill
+            style={{ objectFit: 'cover' }}
+            priority
+            sizes="(max-width: 1200px) 100vw, 1200px"
+          />
+        </HeroImage>
 
         <HeaderSection>
           <Flex justify="between" align="start">
