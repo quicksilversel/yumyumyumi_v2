@@ -2,34 +2,32 @@
 
 import { useState } from 'react'
 
+import styled from '@emotion/styled'
 import AccessTimeIcon from '@mui/icons-material/AccessTime'
 import BookmarkIcon from '@mui/icons-material/Bookmark'
 import CategoryIcon from '@mui/icons-material/Category'
 import ClearIcon from '@mui/icons-material/Clear'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import FilterListIcon from '@mui/icons-material/FilterList'
+
+import type { RecipeFilters, RecipeCategory } from '@/types'
+
+import { Button } from '@/components/ui/Button'
+import { Chip, ChipGroup } from '@/components/ui/Chip'
+import { Select, FormField, FormLabel } from '@/components/ui/Input'
+import { Flex, Stack } from '@/components/ui/Layout'
+import { H5 } from '@/components/ui/Typography'
 import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-  Badge,
-  Box,
-  Button,
-  Chip,
-  FormControl,
-  FormControlLabel,
-  InputLabel,
-  MenuItem,
-  Paper,
-  Select,
-  Stack,
-  Switch,
-  Typography,
-} from '@mui/material'
-
-import type { RecipeCategory, RecipeFilters } from '@/types'
-
-import { getCookingTimeRanges, getRecipeCategories } from '@/lib/recipeService'
+  getCookingTimeRanges,
+  getRecipeCategories,
+} from '@/lib/supabase/recipeService'
+import {
+  colors,
+  spacing,
+  borderRadius,
+  transition,
+  typography,
+} from '@/styles/designTokens'
 
 type RecipeFiltersProps = {
   filters: RecipeFilters
@@ -46,17 +44,18 @@ export function RecipeFiltersComponent({
   const categories = getRecipeCategories()
   const timeRanges = getCookingTimeRanges()
 
-  const handleCategoryChange = (event: any) => {
+  const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     onFiltersChange({
       ...filters,
-      category: event.target.value || undefined,
+      category: e.target.value as RecipeCategory | undefined,
     })
   }
 
-  const handleTimeChange = (event: any) => {
+  const handleTimeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const value = e.target.value ? parseInt(e.target.value) : undefined
     onFiltersChange({
       ...filters,
-      maxCookingTime: event.target.value || undefined,
+      maxCookingTime: value,
     })
   }
 
@@ -78,161 +77,226 @@ export function RecipeFiltersComponent({
   ].filter(Boolean).length
 
   return (
-    <Paper
-      elevation={0}
-      sx={{
-        border: '1px solid',
-        borderColor: 'divider',
-        borderRadius: 2,
-        mb: 3,
-        overflow: 'hidden',
-      }}
-    >
-      <Accordion
-        expanded={expanded}
-        onChange={() => setExpanded(!expanded)}
-        elevation={0}
-        sx={{
-          '&:before': {
-            display: 'none',
-          },
-        }}
-      >
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          sx={{
-            '& .MuiAccordionSummary-content': {
-              alignItems: 'center',
-              gap: 2,
-            },
-          }}
-        >
-          <FilterListIcon color="action" />
-          <Typography variant="h6" fontWeight={500}>
-            Filters
-          </Typography>
-          {activeFiltersCount > 0 && (
-            <Badge badgeContent={activeFiltersCount} color="primary" />
-          )}
-        </AccordionSummary>
-        
-        <AccordionDetails>
-          <Stack spacing={3}>
-            <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
-              <FormControl size="medium" sx={{ minWidth: 200 }}>
-                <InputLabel>
-                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
-                    <CategoryIcon fontSize="small" />
-                    Category
-                  </Box>
-                </InputLabel>
-                <Select
-                  value={filters.category || ''}
-                  onChange={handleCategoryChange}
-                  label="Category"
-                >
-                  <MenuItem value="">
-                    <em>All Categories</em>
-                  </MenuItem>
-                  {categories.map((category) => (
-                    <MenuItem key={category} value={category}>
-                      {category}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
+    <FilterContainer>
+      <FilterHeader onClick={() => setExpanded(!expanded)}>
+        <FilterListIcon />
+        <H5>Filters</H5>
+        {activeFiltersCount > 0 && <Badge>{activeFiltersCount}</Badge>}
+        <ExpandIcon expanded={expanded} />
+      </FilterHeader>
 
-              <FormControl size="medium" sx={{ minWidth: 200 }}>
-                <InputLabel>
-                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
-                    <AccessTimeIcon fontSize="small" />
-                    Cooking Time
-                  </Box>
-                </InputLabel>
-                <Select
-                  value={filters.maxCookingTime || ''}
-                  onChange={handleTimeChange}
-                  label="Cooking Time"
-                >
-                  <MenuItem value="">
-                    <em>Any Duration</em>
-                  </MenuItem>
-                  {timeRanges.map((range) => (
-                    <MenuItem key={range.label} value={range.value || ''}>
-                      {range.label}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </Box>
+      <FilterContent expanded={expanded}>
+        <Stack gap={4}>
+          <FilterRow>
+            <StyledFormField>
+              <FormLabel>
+                <IconLabel>
+                  <CategoryIcon />
+                  Category
+                </IconLabel>
+              </FormLabel>
+              <Select
+                value={filters.category || ''}
+                onChange={handleCategoryChange}
+                fullWidth
+              >
+                <option value="">All Categories</option>
+                {categories.map((category) => (
+                  <option key={category} value={category}>
+                    {category}
+                  </option>
+                ))}
+              </Select>
+            </StyledFormField>
 
-            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <FormControlLabel
-                control={
-                  <Switch
-                    checked={filters.showBookmarkedOnly || false}
-                    onChange={handleBookmarkedToggle}
-                    color="primary"
-                    icon={<BookmarkIcon />}
-                    checkedIcon={<BookmarkIcon />}
-                  />
-                }
-                label={
-                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                    <Typography>Bookmarked Only</Typography>
-                    <Chip label={bookmarkedCount} size="small" variant="outlined" />
-                  </Box>
-                }
-              />
+            <StyledFormField>
+              <FormLabel>
+                <IconLabel>
+                  <AccessTimeIcon />
+                  Cooking Time
+                </IconLabel>
+              </FormLabel>
+              <Select
+                value={filters.maxCookingTime || ''}
+                onChange={handleTimeChange}
+                fullWidth
+              >
+                <option value="">Any Duration</option>
+                {timeRanges.map((range) => (
+                  <option key={range.label} value={range.value || ''}>
+                    {range.label}
+                  </option>
+                ))}
+              </Select>
+            </StyledFormField>
+          </FilterRow>
 
-              {activeFiltersCount > 0 && (
-                <Button
-                  variant="text"
-                  startIcon={<ClearIcon />}
-                  onClick={clearFilters}
-                  color="secondary"
-                >
-                  Clear All
-                </Button>
-              )}
-            </Box>
-          </Stack>
-        </AccordionDetails>
-      </Accordion>
+          <Flex justify="between" align="center">
+            <ToggleButton
+              active={filters.showBookmarkedOnly || false}
+              onClick={handleBookmarkedToggle}
+              type="button"
+            >
+              <BookmarkIcon />
+              Bookmarked Only
+              <Badge>{bookmarkedCount}</Badge>
+            </ToggleButton>
+
+            {activeFiltersCount > 0 && (
+              <Button variant="ghost" size="sm" onClick={clearFilters}>
+                <ClearIcon />
+                Clear All
+              </Button>
+            )}
+          </Flex>
+        </Stack>
+      </FilterContent>
 
       {!expanded && activeFiltersCount > 0 && (
-        <Box sx={{ px: 2, py: 1.5, borderTop: '1px solid', borderColor: 'divider' }}>
-          <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
+        <ActiveFilters>
+          <ChipGroup gap={2}>
             {filters.category && (
               <Chip
-                label={filters.category}
-                onDelete={() => onFiltersChange({ ...filters, category: undefined })}
-                size="small"
-                color="primary"
+                size="sm"
                 variant="outlined"
-              />
+                clickable
+                onClick={() =>
+                  onFiltersChange({ ...filters, category: undefined })
+                }
+              >
+                {filters.category} ×
+              </Chip>
             )}
             {filters.maxCookingTime && (
               <Chip
-                label={`< ${filters.maxCookingTime} min`}
-                onDelete={() => onFiltersChange({ ...filters, maxCookingTime: undefined })}
-                size="small"
-                color="primary"
+                size="sm"
                 variant="outlined"
-              />
+                clickable
+                onClick={() =>
+                  onFiltersChange({ ...filters, maxCookingTime: undefined })
+                }
+              >
+                &lt; {filters.maxCookingTime} min ×
+              </Chip>
             )}
             {filters.showBookmarkedOnly && (
               <Chip
-                label="Bookmarked"
-                onDelete={() => onFiltersChange({ ...filters, showBookmarkedOnly: false })}
-                size="small"
-                color="primary"
+                size="sm"
                 variant="outlined"
-              />
+                clickable
+                onClick={() =>
+                  onFiltersChange({ ...filters, showBookmarkedOnly: false })
+                }
+              >
+                Bookmarked ×
+              </Chip>
             )}
-          </Stack>
-        </Box>
+          </ChipGroup>
+        </ActiveFilters>
       )}
-    </Paper>
+    </FilterContainer>
   )
 }
+
+const FilterContainer = styled.div`
+  border: 1px solid ${colors.gray[200]};
+  border-radius: ${borderRadius.lg};
+  background: ${colors.white};
+  margin-bottom: ${spacing[6]};
+  overflow: hidden;
+`
+
+const FilterHeader = styled.button`
+  width: 100%;
+  padding: ${spacing[4]} ${spacing[6]};
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: ${spacing[3]};
+  transition: background-color ${transition.default};
+
+  &:hover {
+    background-color: ${colors.gray[50]};
+  }
+`
+
+const ExpandIcon = styled(ExpandMoreIcon, {
+  shouldForwardProp: (prop) => prop !== 'expanded',
+})<{ expanded: boolean }>`
+  margin-left: auto;
+  transition: transform ${transition.default};
+  transform: rotate(${(props) => (props.expanded ? '180deg' : '0deg')});
+`
+
+const Badge = styled.span`
+  background-color: ${colors.black};
+  color: ${colors.white};
+  font-size: ${typography.fontSize.xs};
+  font-weight: ${typography.fontWeight.semibold};
+  padding: ${spacing[0.5]} ${spacing[2]};
+  border-radius: ${borderRadius.full};
+  min-width: 20px;
+  text-align: center;
+`
+
+const FilterContent = styled.div<{ expanded: boolean }>`
+  max-height: ${(props) => (props.expanded ? '500px' : '0')};
+  overflow: hidden;
+  transition: max-height ${transition.slow};
+  padding: ${(props) =>
+    props.expanded ? `0 ${spacing[6]} ${spacing[6]}` : '0'};
+`
+
+const FilterRow = styled(Flex)`
+  flex-wrap: wrap;
+  gap: ${spacing[4]};
+  margin-bottom: ${spacing[4]};
+`
+
+const StyledFormField = styled(FormField)`
+  min-width: 200px;
+  margin-bottom: 0;
+`
+
+const IconLabel = styled.div`
+  display: flex;
+  align-items: center;
+  gap: ${spacing[1]};
+
+  svg {
+    font-size: 18px;
+  }
+`
+
+const ToggleButton = styled.button<{ active: boolean }>`
+  display: flex;
+  align-items: center;
+  gap: ${spacing[2]};
+  padding: ${spacing[2]} ${spacing[3]};
+  background-color: ${(props) => (props.active ? colors.black : colors.white)};
+  color: ${(props) => (props.active ? colors.white : colors.black)};
+  border: 1px solid
+    ${(props) => (props.active ? colors.black : colors.gray[300])};
+  border-radius: ${borderRadius.lg};
+  cursor: pointer;
+  transition: all ${transition.default};
+  font-size: ${typography.fontSize.sm};
+
+  &:hover {
+    background-color: ${(props) =>
+      props.active ? colors.gray[800] : colors.gray[50]};
+    border-color: ${(props) =>
+      props.active ? colors.gray[800] : colors.gray[400]};
+  }
+
+  svg {
+    font-size: 20px;
+  }
+`
+
+const ActiveFilters = styled.div`
+  padding: ${spacing[3]} ${spacing[6]};
+  border-top: 1px solid ${colors.gray[200]};
+`

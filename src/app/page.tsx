@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 
-import { ClientRecipeList } from '@/components/ClientRecipeList'
-import { getRecipes } from '@/lib/recipeService'
+import { RecipeList } from '@/components/RecipeList/RecipeList'
+import { getRecipes } from '@/lib/supabase/recipeService'
 
 export const metadata: Metadata = {
   title: 'YumYumYumi - Discover Amazing Recipes',
@@ -11,5 +11,5 @@ export const metadata: Metadata = {
 export default async function HomePage() {
   const recipes = await getRecipes()
 
-  return <ClientRecipeList initialRecipes={recipes} />
+  return <RecipeList initialRecipes={recipes} />
 }

@@ -2,8 +2,50 @@
 
 import { useState } from 'react'
 
-import SearchIcon from '@mui/icons-material/Search'
-import { InputAdornment, TextField } from '@mui/material'
+import styled from '@emotion/styled'
+
+import { typography } from '@/styles/designTokens'
+
+const SearchContainer = styled.div`
+  position: relative;
+  width: 85%;
+  max-width: 1000px;
+  margin: 0 auto;
+`
+
+const StyledInput = styled.input`
+  width: 100%;
+  padding: 12px 24px;
+  background-color: transparent;
+  font-size: 14px;
+  line-height: 18px;
+  color: #575756;
+  border-radius: 50px;
+  border: 1px solid #575756;
+  font-family: ${typography.fontFamily.sans};
+  transition: all 250ms ease-in-out;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z'/%3E%3Cpath d='M0 0h24v24H0z' fill='none'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: 18px 18px;
+  background-position: 98% center;
+
+  &::placeholder {
+    color: #575756;
+    opacity: 0.7;
+  }
+
+  &:hover,
+  &:focus {
+    padding: 12px 0;
+    outline: 0;
+    border: 1px solid transparent;
+    border-bottom: 1px solid #575756;
+    border-radius: 0;
+    background-position: 100% center;
+  }
+`
 
 type SearchBarProps = {
   onSearch: (searchTerm: string) => void
@@ -12,7 +54,7 @@ type SearchBarProps = {
 
 export function SearchBar({
   onSearch,
-  placeholder = 'Search for recipes, ingredients...',
+  placeholder = 'Search recipes...',
 }: SearchBarProps) {
   const [searchTerm, setSearchTerm] = useState('')
 
@@ -23,37 +65,14 @@ export function SearchBar({
   }
 
   return (
-    <TextField
-      fullWidth
-      value={searchTerm}
-      onChange={handleChange}
-      placeholder={placeholder}
-      variant="outlined"
-      InputProps={{
-        startAdornment: (
-          <InputAdornment position="start">
-            <SearchIcon color="action" />
-          </InputAdornment>
-        ),
-        sx: {
-          borderRadius: 2,
-          '& fieldset': {
-            borderColor: 'rgba(0, 0, 0, 0.1)',
-          },
-          '&:hover fieldset': {
-            borderColor: 'rgba(0, 0, 0, 0.2)',
-          },
-          '&.Mui-focused fieldset': {
-            borderColor: 'primary.main',
-            borderWidth: 2,
-          },
-        },
-      }}
-      sx={{
-        '& .MuiOutlinedInput-root': {
-          backgroundColor: 'background.paper',
-        },
-      }}
-    />
+    <SearchContainer>
+      <StyledInput
+        type="text"
+        value={searchTerm}
+        onChange={handleChange}
+        placeholder={placeholder}
+        aria-label="Search recipes"
+      />
+    </SearchContainer>
   )
 }

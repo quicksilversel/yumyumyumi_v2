@@ -1,9 +1,23 @@
+export type Ingredient = {
+  name: string
+  amount: string
+  unit?: string
+  isSpice?: boolean
+}
+
+export type Direction = {
+  title: string
+  description?: string
+}
+
 export type Recipe = {
   id: string
+  user_id?: string | null
   title: string
   summary: string
-  ingredients: string[]
-  directions: string[]
+  ingredients: Ingredient[]
+  directions: Direction[]
+  tags?: string[]
   tips?: string
   prepTime: number
   cookTime: number
@@ -12,6 +26,7 @@ export type Recipe = {
   category: RecipeCategory
   imageUrl: string
   source?: string
+  isPublic?: boolean
   createdAt: string
   updatedAt: string
 }

@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation'
 
 import { RecipeDetail } from '@/components/RecipeDetail'
-import { getRecipeById, getRecipes } from '@/lib/recipeService'
+import { getRecipeById, getRecipes } from '@/lib/supabase/recipeService'
 
 export async function generateStaticParams() {
   const recipes = await getRecipes()
@@ -11,8 +11,13 @@ export async function generateStaticParams() {
   }))
 }
 
-export async function generateMetadata({ params }: { params: { id: string } }) {
-  const recipe = await getRecipeById(params.id)
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ id: string }>
+}) {
+  const { id } = await params
+  const recipe = await getRecipeById(id)
 
   if (!recipe) {
     return {
@@ -29,9 +34,10 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
 export default async function RecipePage({
   params,
 }: {
-  params: { id: string }
+  params: Promise<{ id: string }>
 }) {
-  const recipe = await getRecipeById(params.id)
+  const { id } = await params
+  const recipe = await getRecipeById(id)
 
   if (!recipe) {
     notFound()
