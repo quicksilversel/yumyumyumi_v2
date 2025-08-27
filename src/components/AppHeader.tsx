@@ -18,133 +18,6 @@ import { SearchAndFilters } from './SearchAndFilters'
 import { AddRecipeDialog } from './ui/Modals/AddRecipeDialog'
 import { AuthModal } from './ui/Modals/AuthModal'
 
-// Styled Components
-const Header = styled.header`
-  position: sticky;
-  top: 0;
-  background-color: ${({ theme }) => theme.colors.primary};
-  color: ${({ theme }) => theme.colors.white};
-  z-index: 100;
-  box-shadow: ${({ theme }) => theme.shadow.sm};
-`
-
-const HeaderContent = styled.div`
-  display: flex;
-  flex-direction: column;
-`
-
-const FilterBar = styled.div`
-  background-color: rgba(255, 255, 255, 0.95);
-  padding: ${({ theme }) => theme.spacing[3]} 0;
-  backdrop-filter: blur(10px);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-`
-
-const Toolbar = styled(Flex)`
-  height: 64px;
-  padding: 0 ${({ theme }) => theme.spacing[4]};
-`
-
-const LogoLink = styled(Link)`
-  display: flex;
-  align-items: center;
-  gap: ${({ theme }) => theme.spacing[3]};
-  text-decoration: none;
-  color: ${({ theme }) => theme.colors.white};
-  transition: opacity ${({ theme }) => theme.transition.default};
-
-  &:hover {
-    opacity: 0.8;
-  }
-`
-
-const LogoText = styled.div`
-  color: ${({ theme }) => theme.colors.white};
-  letter-spacing: 0.1em;
-  font-size: ${({ theme }) => theme.typography.fontSize.xl};
-  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
-  line-height: ${({ theme }) => theme.typography.lineHeight.normal};
-`
-
-const AddButton = styled(Button)`
-  background-color: ${({ theme }) => theme.colors.white};
-  color: ${({ theme }) => theme.colors.black};
-
-  &:hover {
-    background-color: ${({ theme }) => theme.colors.gray[100]};
-  }
-`
-
-const SignInButton = styled(Button)`
-  border-color: ${({ theme }) => theme.colors.white};
-  color: ${({ theme }) => theme.colors.white};
-
-  &:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-    border-color: ${({ theme }) => theme.colors.white};
-  }
-`
-
-const Avatar = styled.button`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background-color: ${({ theme }) => theme.colors.white};
-  color: ${({ theme }) => theme.colors.black};
-  border: none;
-  cursor: pointer;
-  font-size: 16px;
-  font-weight: 600;
-  transition: opacity ${({ theme }) => theme.transition.default};
-
-  &:hover {
-    opacity: 0.8;
-  }
-`
-
-const DropdownMenu = styled.div<{ open: boolean }>`
-  position: absolute;
-  top: calc(100% + ${({ theme }) => theme.spacing[2]});
-  right: 0;
-  background-color: ${({ theme }) => theme.colors.white};
-  border-radius: ${({ theme }) => theme.borderRadius.lg};
-  box-shadow: ${({ theme }) => theme.shadow.xl};
-  min-width: 200px;
-  z-index: 1000;
-  display: ${({ open }) => (open ? 'block' : 'none')};
-  overflow: hidden;
-`
-
-const MenuItem = styled.button<{ disabled?: boolean }>`
-  display: flex;
-  align-items: center;
-  gap: ${({ theme }) => theme.spacing[3]};
-  width: 100%;
-  padding: ${({ theme }) => theme.spacing[3]} ${({ theme }) => theme.spacing[4]};
-  background: none;
-  border: none;
-  cursor: ${({ disabled }) => (disabled ? 'default' : 'pointer')};
-  font-size: 14px;
-  color: ${({ disabled, theme }) => (disabled ? theme.colors.gray[500] : theme.colors.black)};
-  text-align: left;
-  transition: background-color ${({ theme }) => theme.transition.fast};
-
-  &:hover:not(:disabled) {
-    background-color: ${({ theme }) => theme.colors.gray[50]};
-  }
-
-  svg {
-    font-size: 18px;
-  }
-`
-
-const MenuDivider = styled(Divider)`
-  margin: 0;
-`
-
 export function AppHeader() {
   const { user, signOut } = useAuth()
   const [menuOpen, setMenuOpen] = useState(false)
@@ -207,7 +80,6 @@ export function AppHeader() {
                   onClick={handleAddRecipe}
                 >
                   <AddIcon />
-                  Add Recipe
                 </AddButton>
 
                 {user ? (
@@ -255,10 +127,133 @@ export function AppHeader() {
         open={addRecipeOpen}
         onClose={() => setAddRecipeOpen(false)}
         onRecipeAdded={() => {
-          // Optionally refresh the page or update the recipe list
           window.location.reload()
         }}
       />
     </>
   )
 }
+
+const Header = styled.header`
+  position: sticky;
+  top: 0;
+  background-color: ${({ theme }) => theme.colors.primary};
+  color: ${({ theme }) => theme.colors.white};
+  z-index: 100;
+  box-shadow: ${({ theme }) => theme.shadow.sm};
+`
+
+const HeaderContent = styled.div`
+  display: flex;
+  flex-direction: column;
+`
+
+const FilterBar = styled.div`
+  background-color: rgba(255, 255, 255, 0.95);
+  padding: ${({ theme }) => theme.spacing[3]} 0;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+`
+
+const Toolbar = styled(Flex)`
+  height: 64px;
+  padding: 0 ${({ theme }) => theme.spacing[4]};
+`
+
+const LogoLink = styled(Link)`
+  display: flex;
+  align-items: center;
+  gap: ${({ theme }) => theme.spacing[3]};
+  text-decoration: none;
+  color: ${({ theme }) => theme.colors.white};
+  transition: opacity ${({ theme }) => theme.transition.default};
+
+  &:hover {
+    opacity: 0.8;
+  }
+`
+
+const LogoText = styled.div`
+  color: ${({ theme }) => theme.colors.white};
+  letter-spacing: 0.1em;
+  font-size: ${({ theme }) => theme.typography.fontSize.xl};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
+  line-height: ${({ theme }) => theme.typography.lineHeight.normal};
+`
+
+const AddButton = styled(Button)`
+  color: ${({ theme }) => theme.colors.black};
+  padding: 0 8px;
+  border-radius: ${({ theme }) => theme.borderRadius.full};
+`
+
+const SignInButton = styled(Button)`
+  border-color: ${({ theme }) => theme.colors.white};
+  color: ${({ theme }) => theme.colors.white};
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: ${({ theme }) => theme.colors.white};
+  }
+`
+
+const Avatar = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: ${({ theme }) => theme.colors.white};
+  color: ${({ theme }) => theme.colors.black};
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  transition: opacity ${({ theme }) => theme.transition.default};
+
+  &:hover {
+    opacity: 0.8;
+  }
+`
+
+const DropdownMenu = styled.div<{ open: boolean }>`
+  position: absolute;
+  top: calc(100% + ${({ theme }) => theme.spacing[2]});
+  right: 0;
+  background-color: ${({ theme }) => theme.colors.white};
+  border-radius: ${({ theme }) => theme.borderRadius.lg};
+  box-shadow: ${({ theme }) => theme.shadow.xl};
+  min-width: 200px;
+  z-index: 1000;
+  display: ${({ open }) => (open ? 'block' : 'none')};
+  overflow: hidden;
+`
+
+const MenuItem = styled.button<{ disabled?: boolean }>`
+  display: flex;
+  align-items: center;
+  gap: ${({ theme }) => theme.spacing[3]};
+  width: 100%;
+  padding: ${({ theme }) => theme.spacing[3]} ${({ theme }) => theme.spacing[4]};
+  background: none;
+  border: none;
+  cursor: ${({ disabled }) => (disabled ? 'default' : 'pointer')};
+  font-size: 14px;
+  color: ${({ disabled, theme }) =>
+    disabled ? theme.colors.gray[500] : theme.colors.black};
+  text-align: left;
+  transition: background-color ${({ theme }) => theme.transition.fast};
+
+  &:hover:not(:disabled) {
+    background-color: ${({ theme }) => theme.colors.gray[50]};
+  }
+
+  svg {
+    font-size: 18px;
+  }
+`
+
+const MenuDivider = styled(Divider)`
+  margin: 0;
+`

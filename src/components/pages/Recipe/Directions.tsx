@@ -10,7 +10,7 @@ type RecipeDetailProps = {
 
 export const Directions = ({ recipe }: RecipeDetailProps) => {
   return (
-    <Container>
+    <DirectionContainer>
       <H2>手順</H2>
       <Stack gap={3}>
         <ul>
@@ -23,9 +23,13 @@ export const Directions = ({ recipe }: RecipeDetailProps) => {
           ))}
         </ul>
       </Stack>
-    </Container>
+    </DirectionContainer>
   )
 }
+
+const DirectionContainer = styled(Container)`
+  margin-top: 2rem;
+`
 
 const DirectionItem = styled.li`
   padding: ${({ theme }) => theme.spacing[4]};

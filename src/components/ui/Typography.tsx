@@ -22,7 +22,7 @@ export const H2 = styled.h2`
 
 export const H3 = styled.h3`
   margin: 0;
-  font-size: ${typography.fontSize['2xl']};
+  font-size: ${typography.fontSize['base']};
   font-weight: ${typography.fontWeight.normal};
   line-height: ${typography.lineHeight.tight};
   color: ${colors.black};

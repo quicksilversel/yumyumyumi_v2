@@ -53,6 +53,10 @@ const InfoGrid = styled.div`
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   gap: ${({ theme }) => theme.spacing[4]};
   margin-bottom: ${({ theme }) => theme.spacing[4]};
+
+  @media (max-width: 35.1875rem) {
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  }
 `
 
 const InfoCard = styled.div`

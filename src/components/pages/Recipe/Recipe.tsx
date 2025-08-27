@@ -19,16 +19,16 @@ export const RecipeDetail = (props: { recipe: Recipe }) => {
       <Hero {...props} />
       <Header {...props} />
       <Info {...props} />
+      <Tags {...props} />
       <Ingredients {...props} />
       <Source {...props} />
       <Directions {...props} />
       <Tips {...props} />
-      <Tags {...props} />
     </RecipeContainer>
   )
 }
 
 const RecipeContainer = styled.div`
   max-width: 1000px;
-  margin: 0 auto;
+  margin: 0 auto 1rem;
 `

@@ -1,13 +1,12 @@
 'use client'
 
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, Suspense } from 'react'
 
 import styled from '@emotion/styled'
 import BookmarkIcon from '@mui/icons-material/Bookmark'
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import LocalDiningIcon from '@mui/icons-material/LocalDining'
-import SearchIcon from '@mui/icons-material/Search'
 import TimerIcon from '@mui/icons-material/Timer'
 import { useRouter, useSearchParams } from 'next/navigation'
 
@@ -28,7 +27,7 @@ type SearchAndFiltersProps = {
   onFiltersChange?: (filters: any) => void
 }
 
-export function SearchAndFilters({ onFiltersChange }: SearchAndFiltersProps) {
+function SearchAndFiltersInner({ onFiltersChange }: SearchAndFiltersProps) {
   const router = useRouter()
   const searchParams = useSearchParams()
   const { user } = useAuth()
@@ -179,141 +178,159 @@ export function SearchAndFilters({ onFiltersChange }: SearchAndFiltersProps) {
   }
 
   return (
-    <FilterContainer>
+    <Container>
       <SearchWrapper>
-        <SearchIcon style={{ fontSize: 20 }} />
-        <form onSubmit={handleSearchSubmit} style={{ flex: 1 }}>
+        <Form onSubmit={handleSearchSubmit}>
           <SearchInput
+            id="search"
             type="text"
             placeholder="Search recipes..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
-        </form>
+        </Form>
       </SearchWrapper>
-
-      <div style={{ position: 'relative' }} ref={categoryRef}>
-        <FilterButton
-          onClick={() =>
-            setOpenDropdown(openDropdown === 'category' ? null : 'category')
-          }
-          active={!!selectedCategory}
-        >
-          <LocalDiningIcon />
-          {selectedCategory || 'Category'}
-          <ExpandMoreIcon />
-        </FilterButton>
-        <DropdownContainer open={openDropdown === 'category'}>
-          <DropdownItem
-            onClick={() => handleCategorySelect(null)}
-            selected={!selectedCategory}
+      <FilterContainer>
+        <div style={{ position: 'relative' }} ref={categoryRef}>
+          <FilterButton
+            onClick={() =>
+              setOpenDropdown(openDropdown === 'category' ? null : 'category')
+            }
+            active={!!selectedCategory}
           >
-            All Categories
-            {!selectedCategory && <CheckMark>✓</CheckMark>}
-          </DropdownItem>
-          {categories.map((category) => (
+            <LocalDiningIcon />
+            {selectedCategory || 'Category'}
+            <ExpandMoreIcon />
+          </FilterButton>
+          <DropdownContainer open={openDropdown === 'category'}>
             <DropdownItem
-              key={category}
-              onClick={() => handleCategorySelect(category)}
-              selected={selectedCategory === category}
+              onClick={() => handleCategorySelect(null)}
+              selected={!selectedCategory}
             >
-              {category}
-              {selectedCategory === category && <CheckMark>✓</CheckMark>}
+              All Categories
+              {!selectedCategory && <CheckMark>✓</CheckMark>}
             </DropdownItem>
-          ))}
-        </DropdownContainer>
-      </div>
+            {categories.map((category) => (
+              <DropdownItem
+                key={category}
+                onClick={() => handleCategorySelect(category)}
+                selected={selectedCategory === category}
+              >
+                {category}
+                {selectedCategory === category && <CheckMark>✓</CheckMark>}
+              </DropdownItem>
+            ))}
+          </DropdownContainer>
+        </div>
 
-      <div style={{ position: 'relative' }} ref={timeRef}>
-        <FilterButton
-          onClick={() =>
-            setOpenDropdown(openDropdown === 'time' ? null : 'time')
-          }
-          active={!!selectedCookingTime}
-        >
-          <TimerIcon />
-          {selectedCookingTime
-            ? cookingTimeOptions.find(
-                (opt) => opt.value === selectedCookingTime,
-              )?.label
-            : 'Cooking Time'}
-          <ExpandMoreIcon />
-        </FilterButton>
-        <DropdownContainer open={openDropdown === 'time'}>
-          {cookingTimeOptions.map((option) => (
-            <DropdownItem
-              key={option.label}
-              onClick={() => handleTimeSelect(option.value)}
-              selected={selectedCookingTime === option.value}
-            >
-              {option.label}
-              {selectedCookingTime === option.value && <CheckMark>✓</CheckMark>}
-            </DropdownItem>
-          ))}
-        </DropdownContainer>
-      </div>
+        <div style={{ position: 'relative' }} ref={timeRef}>
+          <FilterButton
+            onClick={() =>
+              setOpenDropdown(openDropdown === 'time' ? null : 'time')
+            }
+            active={!!selectedCookingTime}
+          >
+            <TimerIcon />
+            {selectedCookingTime
+              ? cookingTimeOptions.find(
+                  (opt) => opt.value === selectedCookingTime,
+                )?.label
+              : 'Cooking Time'}
+            <ExpandMoreIcon />
+          </FilterButton>
+          <DropdownContainer open={openDropdown === 'time'}>
+            {cookingTimeOptions.map((option) => (
+              <DropdownItem
+                key={option.label}
+                onClick={() => handleTimeSelect(option.value)}
+                selected={selectedCookingTime === option.value}
+              >
+                {option.label}
+                {selectedCookingTime === option.value && (
+                  <CheckMark>✓</CheckMark>
+                )}
+              </DropdownItem>
+            ))}
+          </DropdownContainer>
+        </div>
 
-      <div style={{ position: 'relative' }} ref={ingredientRef}>
-        <FilterButton
-          onClick={() =>
-            setOpenDropdown(openDropdown === 'ingredient' ? null : 'ingredient')
-          }
-          active={selectedIngredients.length > 0}
-        >
-          <LocalDiningIcon />
-          {selectedIngredients.length > 0
-            ? `${selectedIngredients.length} ingredients`
-            : 'Ingredients'}
-          <ExpandMoreIcon />
-        </FilterButton>
-        <DropdownContainer open={openDropdown === 'ingredient'}>
-          {selectedIngredients.length > 0 && (
-            <SelectedIngredients>
-              {selectedIngredients.map((ingredient) => (
-                <IngredientChip key={ingredient}>
-                  {ingredient}
-                  <button
-                    onClick={() => handleRemoveIngredient(ingredient)}
-                    style={{
-                      marginLeft: '0.25rem',
-                      background: 'none',
-                      border: 'none',
-                      cursor: 'pointer',
-                      padding: 0,
-                    }}
-                  >
-                    ×
-                  </button>
-                </IngredientChip>
-              ))}
-            </SelectedIngredients>
-          )}
-          <IngredientInput
-            type="text"
-            placeholder="Type ingredient and press Enter"
-            value={ingredientSearch}
-            onChange={(e) => setIngredientSearch(e.target.value)}
-            onKeyDown={handleAddIngredient}
-          />
-        </DropdownContainer>
-      </div>
-
-      {user && (
-        <FilterButton onClick={handleBookmarkToggle} active={showBookmarked}>
-          {showBookmarked ? <BookmarkIcon /> : <BookmarkBorderIcon />}
-          Bookmarked
-        </FilterButton>
-      )}
-    </FilterContainer>
+        <div style={{ position: 'relative' }} ref={ingredientRef}>
+          <FilterButton
+            onClick={() =>
+              setOpenDropdown(
+                openDropdown === 'ingredient' ? null : 'ingredient',
+              )
+            }
+            active={selectedIngredients.length > 0}
+          >
+            <LocalDiningIcon />
+            {selectedIngredients.length > 0
+              ? `${selectedIngredients.length} ingredients`
+              : 'Ingredients'}
+            <ExpandMoreIcon />
+          </FilterButton>
+          <DropdownContainer open={openDropdown === 'ingredient'}>
+            {selectedIngredients.length > 0 && (
+              <SelectedIngredients>
+                {selectedIngredients.map((ingredient) => (
+                  <IngredientChip key={ingredient}>
+                    {ingredient}
+                    <button
+                      onClick={() => handleRemoveIngredient(ingredient)}
+                      style={{
+                        marginLeft: '0.25rem',
+                        background: 'none',
+                        border: 'none',
+                        cursor: 'pointer',
+                        padding: 0,
+                      }}
+                    >
+                      ×
+                    </button>
+                  </IngredientChip>
+                ))}
+              </SelectedIngredients>
+            )}
+            <IngredientInput
+              type="text"
+              placeholder="Type ingredient and press Enter"
+              value={ingredientSearch}
+              onChange={(e) => setIngredientSearch(e.target.value)}
+              onKeyDown={handleAddIngredient}
+            />
+          </DropdownContainer>
+        </div>
+        {user && (
+          <FilterButton onClick={handleBookmarkToggle} active={showBookmarked}>
+            {showBookmarked ? <BookmarkIcon /> : <BookmarkBorderIcon />}
+            Bookmarked
+          </FilterButton>
+        )}
+      </FilterContainer>
+    </Container>
   )
 }
 
-const FilterContainer = styled.div`
+const Container = styled.div`
   display: flex;
   align-items: center;
+  overflow-x: scroll;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
   gap: ${({ theme }) => theme.spacing[2]};
   background-color: transparent;
   width: 100%;
+
+  @media (max-width: 35.1875rem) {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
 `
 
 const SearchWrapper = styled.div`
@@ -326,6 +343,7 @@ const SearchWrapper = styled.div`
   background-color: ${({ theme }) => theme.colors.white};
   border: 1px solid ${({ theme }) => theme.colors.gray[300]};
   border-radius: ${({ theme }) => theme.borderRadius.full};
+  width: 100%;
   height: 40px;
   transition: all ${({ theme }) => theme.transition.fast};
 
@@ -333,6 +351,11 @@ const SearchWrapper = styled.div`
     border-color: ${({ theme }) => theme.colors.primary};
     box-shadow: 0 0 0 3px rgba(245, 178, 172, 0.1);
   }
+`
+
+const Form = styled.form`
+  flex: 1;
+  height: 40px;
 `
 
 const SearchInput = styled.input`
@@ -347,6 +370,12 @@ const SearchInput = styled.input`
   &::placeholder {
     color: ${({ theme }) => theme.colors.gray[400]};
   }
+`
+
+const FilterContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: ${({ theme }) => theme.spacing[2]};
 `
 
 const FilterButton = styled.button<{ active?: boolean }>`
@@ -462,3 +491,19 @@ const SelectedIngredients = styled.div`
   padding: ${({ theme }) => theme.spacing[2]} ${({ theme }) => theme.spacing[3]};
   border-bottom: 1px solid ${({ theme }) => theme.colors.gray[200]};
 `
+
+const SearchAndFiltersFallback = styled.div`
+  display: flex;
+  align-items: center;
+  gap: ${({ theme }) => theme.spacing[2]};
+  height: 40px;
+  width: 100%;
+`
+
+export function SearchAndFilters(props: SearchAndFiltersProps) {
+  return (
+    <Suspense fallback={<SearchAndFiltersFallback />}>
+      <SearchAndFiltersInner {...props} />
+    </Suspense>
+  )
+}

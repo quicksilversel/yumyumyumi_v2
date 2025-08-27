@@ -11,7 +11,7 @@ import EditIcon from '@mui/icons-material/Edit'
 import type { Recipe } from '@/types'
 
 import { DeleteRecipeModal } from '@/components/Modal/DeleteRecipeModal'
-import { IconButton, Flex, H1, Body, Button } from '@/components/ui'
+import { IconButton, H1, Body, Button } from '@/components/ui'
 import { EditRecipeDialog } from '@/components/ui/Modals/EditRecipeDialog'
 import { useAuth } from '@/contexts/AuthContext'
 import { isBookmarked, toggleBookmark } from '@/lib/supabase/bookmarkService'
@@ -53,14 +53,14 @@ export const Header = ({ recipe }: RecipeDetailProps) => {
 
   return (
     <HeaderSection>
-      <Flex justify="between" align="start">
+      <Title>
         <H1>{recipe.title}</H1>
         <div>
           {isOwner && (
             <>
-              <Button variant="ghost" onClick={handleEdit}>
+              <StyledButton variant="ghost" onClick={handleEdit}>
                 <EditIcon />
-              </Button>
+              </StyledButton>
               <Button variant="ghost" onClick={() => setDeleteDialogOpen(true)}>
                 <DeleteIcon />
               </Button>
@@ -74,7 +74,7 @@ export const Header = ({ recipe }: RecipeDetailProps) => {
             {isBookmarkedState ? <BookmarkIcon /> : <BookmarkBorderIcon />}
           </IconButton>
         </div>
-      </Flex>
+      </Title>
       <Body>{recipe.summary}</Body>
 
       <EditRecipeDialog
@@ -94,4 +94,25 @@ export const Header = ({ recipe }: RecipeDetailProps) => {
 
 const HeaderSection = styled.div`
   margin-block: ${({ theme }) => theme.spacing[4]};
+
+  @media (max-width: 35.1875rem) {
+    margin: ${({ theme }) => theme.spacing[4]};
+  }
+`
+
+const Title = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-block: ${({ theme }) => theme.spacing[4]};
+
+  @media (max-width: 35.1875rem) {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+`
+
+const StyledButton = styled(Button)`
+  padding-left: 0;
 `

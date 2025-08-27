@@ -23,9 +23,7 @@ export const Ingredients = ({ recipe }: RecipeDetailProps) => {
                   {ingredient.amount} {ingredient.unit}
                 </Label>
               </Flex>
-              {ingredient.isSpice && (
-                <Caption>Spice</Caption>
-              )}
+              {ingredient.isSpice && <Caption>Spice</Caption>}
             </IngredientItem>
           )
         })}
@@ -37,10 +35,13 @@ export const Ingredients = ({ recipe }: RecipeDetailProps) => {
 const IngredientItem = styled.div`
   width: 100%;
   padding: ${({ theme }) => theme.spacing[3]} ${({ theme }) => theme.spacing[4]};
-  margin-bottom: ${({ theme }) => theme.spacing[2]};
   border-top: 1px solid ${({ theme }) => theme.colors.gray[200]};
 
   &:last-child {
     border-bottom: 1px solid ${({ theme }) => theme.colors.gray[200]};
+  }
+
+  &:first-child {
+    margin-top: ${({ theme }) => theme.spacing[4]};
   }
 `

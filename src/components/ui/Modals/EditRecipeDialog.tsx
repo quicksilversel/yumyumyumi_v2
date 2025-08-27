@@ -149,13 +149,16 @@ export function EditRecipeDialog({
 
       // Handle multiple data formats for directions
       const processedDirections = recipe.directions?.map((dir: any) => {
-        // If it's already an object with the correct structure
+        // If it's already an object with title or description
         if (
           typeof dir === 'object' &&
-          dir.description &&
-          !dir.description.startsWith('{')
+          (dir.title !== undefined || dir.description !== undefined) &&
+          !JSON.stringify(dir).startsWith('{')
         ) {
-          return dir
+          return {
+            title: dir.title || '',
+            description: dir.description || ''
+          }
         }
 
         // If it's a string
@@ -163,8 +166,11 @@ export function EditRecipeDialog({
           // Try to parse as JSON first
           try {
             const parsed = JSON.parse(dir)
-            if (parsed && typeof parsed === 'object' && parsed.description) {
-              return parsed
+            if (parsed && typeof parsed === 'object') {
+              return {
+                title: parsed.title || '',
+                description: parsed.description || ''
+              }
             }
           } catch {
             // Not JSON, use as description
@@ -172,16 +178,27 @@ export function EditRecipeDialog({
           }
         }
 
-        // If it's an object with JSON string in the description field
-        if (
-          typeof dir === 'object' &&
-          dir.description &&
-          dir.description.startsWith('{')
-        ) {
-          try {
-            return JSON.parse(dir.description)
-          } catch {
-            return { title: '', description: '' }
+        // If it's an object that might contain JSON strings
+        if (typeof dir === 'object') {
+          // Check if any field contains JSON
+          const fields = ['title', 'description']
+          for (const field of fields) {
+            if (dir[field] && typeof dir[field] === 'string' && dir[field].startsWith('{')) {
+              try {
+                const parsed = JSON.parse(dir[field])
+                return {
+                  title: parsed.title || '',
+                  description: parsed.description || ''
+                }
+              } catch {
+                // Continue to next field
+              }
+            }
+          }
+          // Return the object as is with defaults
+          return {
+            title: dir.title || '',
+            description: dir.description || ''
           }
         }
 
@@ -266,10 +283,12 @@ export function EditRecipeDialog({
     }
 
     // Validate and clean directions - ensure they're proper objects, not strings
-    const validDirections = directions.map((dir) => ({
-      title: String(dir.title || ''),
-      description: String(dir.description || ''),
-    }))
+    const validDirections = directions
+      .filter((dir) => dir.title || dir.description)
+      .map((dir) => ({
+        title: String(dir.title || ''),
+        description: String(dir.description || ''),
+      }))
 
     if (validDirections.length === 0) {
       setError('Please add at least one direction with description')

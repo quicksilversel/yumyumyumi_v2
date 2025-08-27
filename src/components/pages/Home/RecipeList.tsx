@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useState, Suspense } from 'react'
 
 import { keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
@@ -20,7 +20,7 @@ type RecipeListProps = {
   initialRecipes: Recipe[]
 }
 
-export function RecipeList({ initialRecipes }: RecipeListProps) {
+function RecipeListInner({ initialRecipes }: RecipeListProps) {
   const searchParams = useSearchParams()
   const [recipes, setRecipes] = useState<Recipe[]>(initialRecipes)
   const [filteredRecipes, setFilteredRecipes] =
@@ -180,3 +180,23 @@ const LoadingSpinner = styled.div`
 const LoadingContainer = styled(Flex)`
   padding: ${({ theme }) => theme.spacing[16]} 0;
 `
+
+const RecipeListFallback = () => {
+  return (
+    <Container maxWidth="lg">
+      <MainContent>
+        <LoadingContainer justify="center">
+          <LoadingSpinner />
+        </LoadingContainer>
+      </MainContent>
+    </Container>
+  )
+}
+
+export function RecipeList(props: RecipeListProps) {
+  return (
+    <Suspense fallback={<RecipeListFallback />}>
+      <RecipeListInner {...props} />
+    </Suspense>
+  )
+}
