@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 
-import { RecipeList } from '@/components/Pages/Home/RecipeList'
+import { RecipeList } from '@/components/pages/Home/RecipeList'
 import { getRecipes } from '@/lib/supabase/recipeService'
 
 export const metadata: Metadata = {
