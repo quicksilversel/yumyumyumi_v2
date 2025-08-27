@@ -11,6 +11,11 @@ import { getSupabaseClient } from './getSupabaseClient'
 // Helper to safely parse JSON fields
 function parseJsonField<T>(field: unknown, defaultValue: T): T {
   try {
+    // If field is a string, parse it as JSON
+    if (typeof field === 'string') {
+      return JSON.parse(field) as T
+    }
+    // If field is already an object/array, return it
     return (field as T) || defaultValue
   } catch {
     return defaultValue
@@ -19,19 +24,50 @@ function parseJsonField<T>(field: unknown, defaultValue: T): T {
 
 // Convert database recipe to app recipe format
 function mapDbRecipeToRecipe(dbRecipe: Record<string, unknown>): Recipe {
+  // Parse ingredients - handle both array of strings and array of objects
+  let ingredients: Ingredient[] = []
+  const rawIngredients = dbRecipe.ingredients
+  if (Array.isArray(rawIngredients)) {
+    ingredients = rawIngredients.map(item => {
+      if (typeof item === 'string') {
+        try {
+          return JSON.parse(item) as Ingredient
+        } catch {
+          return { name: item, amount: '', unit: '' } as Ingredient
+        }
+      }
+      return item as Ingredient
+    })
+  } else {
+    ingredients = parseJsonField<Ingredient[]>(rawIngredients, [])
+  }
+
+  // Parse directions similarly
+  let directions: Direction[] = []
+  const rawDirections = dbRecipe.directions
+  if (Array.isArray(rawDirections)) {
+    directions = rawDirections.map(item => {
+      if (typeof item === 'string') {
+        try {
+          return JSON.parse(item) as Direction
+        } catch {
+          // Fallback: use the string as the title
+          return { title: item } as Direction
+        }
+      }
+      return item as Direction
+    })
+  } else {
+    directions = parseJsonField<Direction[]>(rawDirections, [])
+  }
+
   return {
     id: dbRecipe.id as string,
     user_id: dbRecipe.user_id as string | null,
     title: dbRecipe.title as string,
     summary: (dbRecipe.summary as string) || '',
-    ingredients: parseJsonField<Ingredient[]>(
-      dbRecipe.ingredients,
-      []
-    ),
-    directions: parseJsonField<Direction[]>(
-      dbRecipe.directions,
-      []
-    ),
+    ingredients,
+    directions,
     tags: parseJsonField<string[] | undefined>(dbRecipe.tags, undefined),
     tips: (dbRecipe.tips as string) || undefined,
     prepTime: dbRecipe.prep_time as number,

@@ -107,6 +107,7 @@ export const Flex = styled.div<{
 
 export const Stack = styled(Flex)`
   flex-direction: column;
+  width: 100%;
 `
 
 export const Divider = styled.div<{

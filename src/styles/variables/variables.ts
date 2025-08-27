@@ -3,8 +3,8 @@ import { css } from '@emotion/react'
 export const variables = css`
   :root {
     /* Font Families */
-    --font-family: 'Geist', sans-serif;
-    --font-family-mono: 'League Mono', 'Fira Mono', monospace;
+    --font-family: -apple-system, 'system-ui', 'Segoe UI',
+      'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
 
     /* Font Sizes - Desktop */
     --font-size-extra-large: 2.25rem; /* ~36px - headlines */

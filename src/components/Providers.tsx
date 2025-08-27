@@ -7,7 +7,7 @@ import { ThemeProvider } from '@emotion/react'
 import { AuthProvider } from '@/contexts/AuthContext'
 import EmotionRegistry from '@/lib/emotion/EmotionRegistry'
 import { GlobalStyles } from '@/styles'
-import { lightTheme } from '@/styles/themes'
+import { lightTheme } from '@/styles/theme'
 
 export type ThemeContext = {
   theme: 'light' | 'dark'

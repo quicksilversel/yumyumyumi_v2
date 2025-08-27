@@ -121,18 +121,16 @@ export function BasicInfoFields({
           </Select>
         </FormField>
 
-        {setSource && (
-          <FormField>
-            <FormLabel htmlFor="source">Source</FormLabel>
-            <Input
-              id="source"
-              value={source || ''}
-              onChange={(e) => setSource?.(e.target.value)}
-              placeholder="Recipe source (optional)"
-              fullWidth
-            />
-          </FormField>
-        )}
+        <FormField>
+          <FormLabel htmlFor="source">Source</FormLabel>
+          <Input
+            id="source"
+            value={source || ''}
+            onChange={(e) => setSource?.(e.target.value)}
+            placeholder="Recipe source (optional)"
+            fullWidth
+          />
+        </FormField>
       </Grid>
     </>
   )

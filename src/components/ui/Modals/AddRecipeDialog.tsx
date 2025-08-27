@@ -23,7 +23,7 @@ import {
   DirectionsForm,
   TagsForm,
   ImageUploadForm,
-} from './forms'
+} from '../Forms'
 
 const ErrorMessage = styled.div`
   padding: ${spacing[3]} ${spacing[4]};

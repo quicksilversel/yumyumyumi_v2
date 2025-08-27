@@ -21,7 +21,7 @@ const nextConfig: NextConfig = {
   compiler: {
     emotion: {
       sourceMap: process.env.NODE_ENV !== 'production',
-      autoLabel: 'dev-only',
+      autoLabel: process.env.NODE_ENV !== 'production' ? 'always' : 'never',
       labelFormat: '[local]',
       importMap: {
         '@emotion/react': {

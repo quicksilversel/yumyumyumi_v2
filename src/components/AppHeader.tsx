@@ -12,68 +12,76 @@ import Link from 'next/link'
 
 import { Button } from '@/components/ui/Button'
 import { Container, Flex, Spacer, Divider } from '@/components/ui/Layout'
-import { H4 } from '@/components/ui/Typography'
 import { useAuth } from '@/contexts/AuthContext'
-import {
-  colors,
-  spacing,
-  shadow,
-  borderRadius,
-  transition,
-} from '@/styles/designTokens'
 
-import { AddRecipeDialog } from './AddRecipeDialog'
-import { AuthModal } from './AuthModal'
+import { SearchAndFilters } from './SearchAndFilters'
+import { AddRecipeDialog } from './ui/Modals/AddRecipeDialog'
+import { AuthModal } from './ui/Modals/AuthModal'
 
 // Styled Components
 const Header = styled.header`
   position: sticky;
   top: 0;
-  background-color: #f5b2ac;
-  color: ${colors.white};
+  background-color: ${({ theme }) => theme.colors.primary};
+  color: ${({ theme }) => theme.colors.white};
   z-index: 100;
-  box-shadow: ${shadow.sm};
+  box-shadow: ${({ theme }) => theme.shadow.sm};
+`
+
+const HeaderContent = styled.div`
+  display: flex;
+  flex-direction: column;
+`
+
+const FilterBar = styled.div`
+  background-color: rgba(255, 255, 255, 0.95);
+  padding: ${({ theme }) => theme.spacing[3]} 0;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 `
 
 const Toolbar = styled(Flex)`
   height: 64px;
-  padding: 0 ${spacing[4]};
+  padding: 0 ${({ theme }) => theme.spacing[4]};
 `
 
 const LogoLink = styled(Link)`
   display: flex;
   align-items: center;
-  gap: ${spacing[3]};
+  gap: ${({ theme }) => theme.spacing[3]};
   text-decoration: none;
-  color: ${colors.white};
-  transition: opacity ${transition.default};
+  color: ${({ theme }) => theme.colors.white};
+  transition: opacity ${({ theme }) => theme.transition.default};
 
   &:hover {
     opacity: 0.8;
   }
 `
 
-const LogoText = styled(H4)`
-  color: ${colors.white};
+const LogoText = styled.div`
+  color: ${({ theme }) => theme.colors.white};
   letter-spacing: 0.1em;
+  font-size: ${({ theme }) => theme.typography.fontSize.xl};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
+  line-height: ${({ theme }) => theme.typography.lineHeight.normal};
 `
 
 const AddButton = styled(Button)`
-  background-color: ${colors.white};
-  color: ${colors.black};
+  background-color: ${({ theme }) => theme.colors.white};
+  color: ${({ theme }) => theme.colors.black};
 
   &:hover {
-    background-color: ${colors.gray[100]};
+    background-color: ${({ theme }) => theme.colors.gray[100]};
   }
 `
 
 const SignInButton = styled(Button)`
-  border-color: ${colors.white};
-  color: ${colors.white};
+  border-color: ${({ theme }) => theme.colors.white};
+  color: ${({ theme }) => theme.colors.white};
 
   &:hover {
     background-color: rgba(255, 255, 255, 0.1);
-    border-color: ${colors.white};
+    border-color: ${({ theme }) => theme.colors.white};
   }
 `
 
@@ -84,13 +92,13 @@ const Avatar = styled.button`
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background-color: ${colors.white};
-  color: ${colors.black};
+  background-color: ${({ theme }) => theme.colors.white};
+  color: ${({ theme }) => theme.colors.black};
   border: none;
   cursor: pointer;
   font-size: 16px;
   font-weight: 600;
-  transition: opacity ${transition.default};
+  transition: opacity ${({ theme }) => theme.transition.default};
 
   &:hover {
     opacity: 0.8;
@@ -99,33 +107,33 @@ const Avatar = styled.button`
 
 const DropdownMenu = styled.div<{ open: boolean }>`
   position: absolute;
-  top: calc(100% + ${spacing[2]});
+  top: calc(100% + ${({ theme }) => theme.spacing[2]});
   right: 0;
-  background-color: ${colors.white};
-  border-radius: ${borderRadius.lg};
-  box-shadow: ${shadow.xl};
+  background-color: ${({ theme }) => theme.colors.white};
+  border-radius: ${({ theme }) => theme.borderRadius.lg};
+  box-shadow: ${({ theme }) => theme.shadow.xl};
   min-width: 200px;
   z-index: 1000;
-  display: ${(props) => (props.open ? 'block' : 'none')};
+  display: ${({ open }) => (open ? 'block' : 'none')};
   overflow: hidden;
 `
 
 const MenuItem = styled.button<{ disabled?: boolean }>`
   display: flex;
   align-items: center;
-  gap: ${spacing[3]};
+  gap: ${({ theme }) => theme.spacing[3]};
   width: 100%;
-  padding: ${spacing[3]} ${spacing[4]};
+  padding: ${({ theme }) => theme.spacing[3]} ${({ theme }) => theme.spacing[4]};
   background: none;
   border: none;
-  cursor: ${(props) => (props.disabled ? 'default' : 'pointer')};
+  cursor: ${({ disabled }) => (disabled ? 'default' : 'pointer')};
   font-size: 14px;
-  color: ${(props) => (props.disabled ? colors.gray[500] : colors.black)};
+  color: ${({ disabled, theme }) => (disabled ? theme.colors.gray[500] : theme.colors.black)};
   text-align: left;
-  transition: background-color ${transition.fast};
+  transition: background-color ${({ theme }) => theme.transition.fast};
 
   &:hover:not(:disabled) {
-    background-color: ${colors.gray[50]};
+    background-color: ${({ theme }) => theme.colors.gray[50]};
   }
 
   svg {
@@ -182,55 +190,63 @@ export function AppHeader() {
   return (
     <>
       <Header>
-        <Container maxWidth="lg" noPadding>
-          <Toolbar align="center">
-            <LogoLink href="/">
-              <RestaurantMenuIcon />
-              <LogoText>YumYumYumi</LogoText>
-            </LogoLink>
+        <HeaderContent>
+          <Container maxWidth="lg" noPadding>
+            <Toolbar align="center">
+              <LogoLink href="/">
+                <RestaurantMenuIcon />
+                <LogoText>YumYumYumi</LogoText>
+              </LogoLink>
 
-            <Spacer />
+              <Spacer />
 
-            <Flex gap={4} align="center">
-              <AddButton
-                variant="secondary"
-                size="md"
-                onClick={handleAddRecipe}
-              >
-                <AddIcon />
-                Add Recipe
-              </AddButton>
-
-              {user ? (
-                <div style={{ position: 'relative' }} ref={menuRef}>
-                  <Avatar onClick={handleMenuToggle}>
-                    {user.email?.charAt(0).toUpperCase()}
-                  </Avatar>
-                  <DropdownMenu open={menuOpen}>
-                    <MenuItem disabled>
-                      <AccountCircleIcon />
-                      {user.email}
-                    </MenuItem>
-                    <MenuDivider />
-                    <MenuItem onClick={handleSignOut}>
-                      <LogoutIcon />
-                      Sign Out
-                    </MenuItem>
-                  </DropdownMenu>
-                </div>
-              ) : (
-                <SignInButton
+              <Flex gap={4} align="center">
+                <AddButton
                   variant="secondary"
                   size="md"
-                  onClick={() => setAuthModalOpen(true)}
+                  onClick={handleAddRecipe}
                 >
-                  <LoginIcon />
-                  Sign In
-                </SignInButton>
-              )}
-            </Flex>
-          </Toolbar>
-        </Container>
+                  <AddIcon />
+                  Add Recipe
+                </AddButton>
+
+                {user ? (
+                  <div style={{ position: 'relative' }} ref={menuRef}>
+                    <Avatar onClick={handleMenuToggle}>
+                      {user.email?.charAt(0).toUpperCase()}
+                    </Avatar>
+                    <DropdownMenu open={menuOpen}>
+                      <MenuItem disabled>
+                        <AccountCircleIcon />
+                        {user.email}
+                      </MenuItem>
+                      <MenuDivider />
+                      <MenuItem onClick={handleSignOut}>
+                        <LogoutIcon />
+                        Sign Out
+                      </MenuItem>
+                    </DropdownMenu>
+                  </div>
+                ) : (
+                  <SignInButton
+                    variant="secondary"
+                    size="md"
+                    onClick={() => setAuthModalOpen(true)}
+                  >
+                    <LoginIcon />
+                    Sign In
+                  </SignInButton>
+                )}
+              </Flex>
+            </Toolbar>
+          </Container>
+
+          <FilterBar>
+            <Container maxWidth="lg">
+              <SearchAndFilters />
+            </Container>
+          </FilterBar>
+        </HeaderContent>
       </Header>
 
       <AuthModal open={authModalOpen} onClose={() => setAuthModalOpen(false)} />

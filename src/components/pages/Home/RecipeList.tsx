@@ -1,41 +1,63 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 import { keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
+import { useSearchParams } from 'next/navigation'
 
 import type { Recipe, RecipeFilters } from '@/types'
 
 import { Container, Flex } from '@/components/ui'
 import { useBookmarks } from '@/hooks/useBookmarks'
 import { searchRecipes } from '@/lib/supabase/recipeService'
-import { colors, spacing, borderRadius } from '@/styles/designTokens'
 
 import { RecipeGrid } from './RecipeGrid'
 
-import { EditRecipeDialog } from '../EditRecipeDialog'
-import { RecipeFiltersComponent } from '../RecipeFilters'
-import { SearchBar } from '../SearchBar'
+import { EditRecipeDialog } from '../../ui/Modals/EditRecipeDialog'
 
 type RecipeListProps = {
   initialRecipes: Recipe[]
 }
 
 export function RecipeList({ initialRecipes }: RecipeListProps) {
+  const searchParams = useSearchParams()
   const [recipes, setRecipes] = useState<Recipe[]>(initialRecipes)
   const [filteredRecipes, setFilteredRecipes] =
     useState<Recipe[]>(initialRecipes)
-  const [filters, setFilters] = useState<RecipeFilters>({})
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [editingRecipe, setEditingRecipe] = useState<Recipe | null>(null)
   const bookmarks = useBookmarks()
 
+  // Parse filters from URL parameters
+  const getFiltersFromParams = useCallback((): RecipeFilters => {
+    const filters: RecipeFilters = {}
+
+    const search = searchParams.get('search')
+    if (search) filters.searchTerm = search
+
+    const category = searchParams.get('category')
+    if (category) filters.category = category as any
+
+    const maxCookingTime = searchParams.get('maxCookingTime')
+    if (maxCookingTime) filters.maxCookingTime = Number(maxCookingTime)
+
+    const ingredients = searchParams.get('ingredients')
+    if (ingredients) filters.ingredients = ingredients.split(',')
+
+    const bookmarked = searchParams.get('bookmarked')
+    if (bookmarked === 'true') filters.showBookmarkedOnly = true
+
+    return filters
+  }, [searchParams])
+
   useEffect(() => {
     const applyFilters = async () => {
       setLoading(true)
       setError(null)
+
+      const filters = getFiltersFromParams()
 
       try {
         let results = await searchRecipes(filters)
@@ -57,19 +79,14 @@ export function RecipeList({ initialRecipes }: RecipeListProps) {
     }
 
     applyFilters()
-  }, [filters, bookmarks])
-
-  const handleSearch = (searchTerm: string) => {
-    setFilters((prev) => ({ ...prev, searchTerm }))
-  }
-
-  const handleFiltersChange = (newFilters: RecipeFilters) => {
-    setFilters(newFilters)
-  }
+  }, [searchParams, bookmarks, getFiltersFromParams])
 
   const handleBookmarkChange = () => {
+    // Trigger a re-fetch when bookmarks change
+    const filters = getFiltersFromParams()
     if (filters.showBookmarkedOnly) {
-      setFilters({ ...filters })
+      // Force update by changing a dummy state or refetch
+      window.location.reload()
     }
   }
 
@@ -95,18 +112,8 @@ export function RecipeList({ initialRecipes }: RecipeListProps) {
 
   return (
     <>
-      <SearchWrapper>
-        <SearchBar onSearch={handleSearch} />
-      </SearchWrapper>
-
       <Container maxWidth="lg">
         <MainContent>
-          <RecipeFiltersComponent
-            filters={filters}
-            onFiltersChange={handleFiltersChange}
-            bookmarkedCount={bookmarks.length}
-          />
-
           {error && <ErrorMessage>{error}</ErrorMessage>}
 
           {loading ? (
@@ -137,25 +144,19 @@ export function RecipeList({ initialRecipes }: RecipeListProps) {
   )
 }
 
-const SearchWrapper = styled.div`
-  width: 100%;
-  height: 5rem;
-  margin: 2rem auto;
-`
-
 const MainContent = styled.div`
-  margin-top: -${spacing[8]};
-  margin-bottom: ${spacing[8]};
+  margin-top: ${({ theme }) => theme.spacing[6]};
+  margin-bottom: ${({ theme }) => theme.spacing[8]};
   position: relative;
   z-index: 1;
 `
 
 const ErrorMessage = styled.div`
-  background-color: ${colors.error};
-  color: ${colors.white};
-  padding: ${spacing[4]};
-  border-radius: ${borderRadius.lg};
-  margin-bottom: ${spacing[6]};
+  background-color: ${({ theme }) => theme.colors.error};
+  color: ${({ theme }) => theme.colors.white};
+  padding: ${({ theme }) => theme.spacing[4]};
+  border-radius: ${({ theme }) => theme.borderRadius.lg};
+  margin-bottom: ${({ theme }) => theme.spacing[6]};
 `
 
 const spin = keyframes`
@@ -170,12 +171,12 @@ const spin = keyframes`
 const LoadingSpinner = styled.div`
   width: 48px;
   height: 48px;
-  border: 3px solid ${colors.gray[200]};
-  border-top-color: ${colors.black};
+  border: 3px solid ${({ theme }) => theme.colors.gray[200]};
+  border-top-color: ${({ theme }) => theme.colors.black};
   border-radius: 50%;
   animation: ${spin} 1s linear infinite;
 `
 
 const LoadingContainer = styled(Flex)`
-  padding: ${spacing[16]} 0;
+  padding: ${({ theme }) => theme.spacing[16]} 0;
 `

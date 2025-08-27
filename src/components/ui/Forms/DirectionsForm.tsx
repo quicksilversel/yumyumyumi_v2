@@ -79,7 +79,7 @@ export function DirectionsForm({ directions, onChange }: DirectionsFormProps) {
 
                 <FormField style={{ marginBottom: 0 }}>
                   <TextArea
-                    placeholder="Step description *"
+                    placeholder="Step description (optional)"
                     value={direction.description || ''}
                     onChange={(e) =>
                       handleDirectionChange(
@@ -88,7 +88,6 @@ export function DirectionsForm({ directions, onChange }: DirectionsFormProps) {
                         e.target.value,
                       )
                     }
-                    required
                     fullWidth
                     rows={3}
                   />

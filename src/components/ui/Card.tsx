@@ -1,33 +1,31 @@
 import { css } from '@emotion/react'
 import styled from '@emotion/styled'
 
-import { colors, spacing, borderRadius, shadow } from '@/styles/designTokens'
-
 export const Card = styled.div<{
   hoverable?: boolean
   noPadding?: boolean
 }>`
-  background-color: ${colors.white};
-  border: 1px solid ${colors.gray[200]};
-  border-radius: ${borderRadius.lg};
+  background-color: ${({ theme }) => theme.colors.white};
+  border: 1px solid ${({ theme }) => theme.colors.gray[200]};
+  border-radius: ${({ theme }) => theme.borderRadius.lg};
   overflow: hidden;
   transition: all 200ms ease;
 
-  ${(props) =>
-    !props.noPadding &&
+  ${({ theme, noPadding }) =>
+    !noPadding &&
     css`
-      padding: ${spacing[6]};
+      padding: ${theme.spacing[6]};
     `}
 
-  ${(props) =>
-    props.hoverable &&
+  ${({ theme, hoverable }) =>
+    hoverable &&
     css`
       cursor: pointer;
 
       &:hover {
         transform: translateY(-2px);
-        box-shadow: ${shadow.md};
-        border-color: ${colors.gray[300]};
+        box-shadow: ${theme.shadow.md};
+        border-color: ${theme.colors.gray[300]};
       }
     `}
 `
@@ -35,7 +33,7 @@ export const Card = styled.div<{
 export const CardMedia = styled.div`
   position: relative;
   width: 100%;
-  background-color: ${colors.gray[100]};
+  background-color: ${({ theme }) => theme.colors.gray[100]};
   overflow: hidden;
 
   img {
@@ -51,13 +49,13 @@ export const CardMedia = styled.div`
 `
 
 export const CardContent = styled.div`
-  padding: ${spacing[4]};
+  padding: ${({ theme }) => theme.spacing[4]};
 `
 
 export const CardActions = styled.div`
   display: flex;
   align-items: center;
-  gap: ${spacing[2]};
-  padding: ${spacing[4]};
+  gap: ${({ theme }) => theme.spacing[2]};
+  padding: ${({ theme }) => theme.spacing[4]};
   padding-top: 0;
 `

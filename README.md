@@ -1,36 +1,168 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# YumYumYumi 🍳
+
+A modern recipe sharing platform built with Next.js, TypeScript, Material-UI, and Supabase.
+
+## Features
+
+- 🔐 **User Authentication** - Sign up and log in to create your own recipes
+- 📝 **Recipe Management** - Create, edit, and delete your recipes
+- 🖼️ **Image Upload** - Upload recipe images with automatic compression and WebP conversion
+- 🔍 **Advanced Search** - Search recipes by title, ingredients, category, and cooking time
+- 💾 **Bookmarks** - Save your favorite recipes for quick access
+- 🎨 **Modern UI** - Beautiful Material-UI design with dark mode support
+- 📱 **Responsive** - Works perfectly on all devices
+
+## Tech Stack
+
+- **Frontend**: Next.js 14, TypeScript, React
+- **UI**: Material-UI (MUI), Emotion CSS
+- **Backend**: Supabase (PostgreSQL)
+- **Storage**: Supabase Storage
+- **Authentication**: Supabase Auth
+- **Image Processing**: Browser Image Compression
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
+- Node.js 18+ 
+- npm or yarn
+- Supabase account
+
+### Installation
+
+1. Clone the repository:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/yourusername/yumyumyumi.git
+cd yumyumyumi
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Install dependencies:
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Set up environment variables:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Create a `.env.local` file in the root directory:
 
-## Learn More
+```env
+# Supabase Configuration
+NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_anon_key_here
 
-To learn more about Next.js, take a look at the following resources:
+# Service role key - Keep this secret!
+SUPABASE_SERVICE_ROLE_KEY=your_service_role_key_here
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+4. Set up Supabase:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+   a. Create a new project in [Supabase](https://app.supabase.com)
+   
+   b. Run the database migrations in SQL Editor:
+   ```sql
+   -- Create recipes table
+   CREATE TABLE recipes (
+     id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+     user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE,
+     title TEXT NOT NULL,
+     summary TEXT,
+     ingredients TEXT[] NOT NULL,
+     directions TEXT[] NOT NULL,
+     tips TEXT,
+     prep_time INTEGER DEFAULT 0,
+     cook_time INTEGER DEFAULT 0,
+     total_time INTEGER DEFAULT 0,
+     servings INTEGER DEFAULT 1,
+     category TEXT,
+     image_url TEXT,
+     source TEXT,
+     is_public BOOLEAN DEFAULT true,
+     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+     updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+   );
 
-## Deploy on Vercel
+   -- Create bookmarks table
+   CREATE TABLE bookmarks (
+     id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+     user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE,
+     recipe_id UUID REFERENCES recipes(id) ON DELETE CASCADE,
+     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+     UNIQUE(user_id, recipe_id)
+   );
+   ```
+   
+   c. Set up Storage bucket:
+   - Go to Storage in Supabase Dashboard
+   - Create a bucket named `recipe-images`
+   - Set it as PUBLIC
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+5. Run the development server:
+```bash
+npm run dev
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Open [http://localhost:3000](http://localhost:3000) to see the app.
+
+## Environment Variables
+
+| Variable | Description | Required |
+|----------|-------------|----------|
+| `NEXT_PUBLIC_SUPABASE_URL` | Your Supabase project URL | Yes |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase anonymous key for client-side auth | Yes |
+| `SUPABASE_SERVICE_ROLE_KEY` | Service role key for server-side operations (image upload) | Yes |
+
+⚠️ **Security Note**: Never expose `SUPABASE_SERVICE_ROLE_KEY` to the client. It's only used in server-side API routes.
+
+## Project Structure
+
+```
+src/
+├── app/                 # Next.js app router pages
+│   ├── api/            # API routes
+│   └── recipes/        # Recipe pages
+├── components/         # React components
+├── contexts/          # React contexts (Auth)
+├── hooks/             # Custom React hooks
+├── lib/               # Utility functions and services
+└── types/             # TypeScript type definitions
+```
+
+## Scripts
+
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run start` - Start production server
+- `npm run lint` - Run ESLint
+- `npm run type-check` - Run TypeScript compiler check
+
+## Deployment
+
+### Vercel (Recommended)
+
+1. Push your code to GitHub
+2. Import the project in [Vercel](https://vercel.com)
+3. Add environment variables in Vercel dashboard
+4. Deploy!
+
+### Other Platforms
+
+The app can be deployed to any platform that supports Next.js:
+- Netlify
+- Railway
+- Render
+- AWS Amplify
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
+
+This project is licensed under the MIT License.
+
+## Acknowledgments
+
+- Original inspiration from the legacy YumYumYumi project
+- Icons and images from Unsplash
+- UI components from Material-UI

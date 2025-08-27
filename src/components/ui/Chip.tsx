@@ -1,7 +1,7 @@
 import { css } from '@emotion/react'
 import styled from '@emotion/styled'
 
-import { colors, typography, spacing, borderRadius, transition } from '@/styles/designTokens'
+import type { spacing } from '@/styles/designTokens'
 
 export const Chip = styled.span<{
   variant?: 'filled' | 'outlined'
@@ -11,46 +11,67 @@ export const Chip = styled.span<{
 }>`
   display: inline-flex;
   align-items: center;
-  gap: ${spacing[1]};
-  border-radius: ${borderRadius.full};
-  transition: all ${transition.default};
+  gap: ${({ theme }) => theme.spacing[1]};
+  border-radius: ${({ theme }) => theme.borderRadius.full};
+  transition: all ${({ theme }) => theme.transition.default};
   white-space: nowrap;
   user-select: none;
+
+  ${(props) =>
+    props.size === 'sm'
+      ? css`
+          padding: ${props.theme.spacing[1]} ${props.theme.spacing[2]};
+          font-size: ${props.theme.typography.fontSize.xs};
+        `
+      : css`
+          padding: ${props.theme.spacing[2]} ${props.theme.spacing[3]};
+          font-size: ${props.theme.typography.fontSize.sm};
+        `}
+
+  ${(props) =>
+    props.variant === 'outlined'
+      ? css`
+          background-color: transparent;
+          border: 1px solid
+            ${props.selected
+              ? props.theme.colors.black
+              : props.theme.colors.gray[300]};
+          color: ${props.selected
+            ? props.theme.colors.black
+            : props.theme.colors.gray[700]};
+        `
+      : css`
+          background-color: ${props.selected
+            ? props.theme.colors.black
+            : props.theme.colors.gray[100]};
+          color: ${props.selected
+            ? props.theme.colors.white
+            : props.theme.colors.gray[700]};
+          border: 1px solid transparent;
+        `}
   
-  ${props => props.size === 'sm' ? css`
-    padding: ${spacing[1]} ${spacing[2]};
-    font-size: ${typography.fontSize.xs};
-  ` : css`
-    padding: ${spacing[2]} ${spacing[3]};
-    font-size: ${typography.fontSize.sm};
-  `}
-  
-  ${props => props.variant === 'outlined' ? css`
-    background-color: transparent;
-    border: 1px solid ${props.selected ? colors.black : colors.gray[300]};
-    color: ${props.selected ? colors.black : colors.gray[700]};
-  ` : css`
-    background-color: ${props.selected ? colors.black : colors.gray[100]};
-    color: ${props.selected ? colors.white : colors.gray[700]};
-    border: 1px solid transparent;
-  `}
-  
-  ${props => props.clickable && css`
-    cursor: pointer;
-    
-    &:hover {
-      ${props.variant === 'outlined' ? css`
-        background-color: ${colors.gray[50]};
-        border-color: ${colors.gray[400]};
-      ` : css`
-        background-color: ${props.selected ? colors.gray[800] : colors.gray[200]};
-      `}
-    }
-    
-    &:active {
-      transform: scale(0.95);
-    }
-  `}
+  ${(props) =>
+    props.clickable &&
+    css`
+      cursor: pointer;
+
+      &:hover {
+        ${props.variant === 'outlined'
+          ? css`
+              background-color: ${props.theme.colors.gray[50]};
+              border-color: ${props.theme.colors.gray[400]};
+            `
+          : css`
+              background-color: ${props.selected
+                ? props.theme.colors.gray[800]
+                : props.theme.colors.gray[200]};
+            `}
+      }
+
+      &:active {
+        transform: scale(0.95);
+      }
+    `}
 `
 
 export const ChipGroup = styled.div<{
@@ -58,5 +79,5 @@ export const ChipGroup = styled.div<{
 }>`
   display: flex;
   flex-wrap: wrap;
-  gap: ${props => spacing[props.gap || 2]};
+  gap: ${({ theme, gap }) => theme.spacing[gap || 2]};
 `

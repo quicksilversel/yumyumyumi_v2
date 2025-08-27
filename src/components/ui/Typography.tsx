@@ -4,8 +4,8 @@ import { colors, typography, transition } from '@/styles/designTokens'
 
 export const H1 = styled.h1`
   margin: 0;
-  font-size: ${typography.fontSize['4xl']};
-  font-weight: ${typography.fontWeight.light};
+  font-size: ${typography.fontSize['3xl']};
+  font-weight: ${typography.fontWeight.bold};
   line-height: ${typography.lineHeight.tight};
   letter-spacing: ${typography.letterSpacing.tight};
   color: ${colors.black};
@@ -13,8 +13,8 @@ export const H1 = styled.h1`
 
 export const H2 = styled.h2`
   margin: 0;
-  font-size: ${typography.fontSize['3xl']};
-  font-weight: ${typography.fontWeight.light};
+  font-size: ${typography.fontSize['xl']};
+  font-weight: ${typography.fontWeight.bold};
   line-height: ${typography.lineHeight.tight};
   letter-spacing: ${typography.letterSpacing.tight};
   color: ${colors.black};

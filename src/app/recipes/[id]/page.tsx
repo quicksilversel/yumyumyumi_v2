@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation'
 
-import { RecipeDetail } from '@/components/RecipeDetail'
+import { RecipeDetail } from '@/components/Pages/Recipe/Recipe'
 import { getRecipeById, getRecipes } from '@/lib/supabase/recipeService'
 
 export async function generateStaticParams() {

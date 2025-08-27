@@ -23,7 +23,7 @@ import {
   DirectionsForm,
   TagsForm,
   ImageUploadForm,
-} from './forms'
+} from '../Forms'
 
 const ErrorMessage = styled.div`
   padding: ${spacing[3]} ${spacing[4]};
@@ -257,22 +257,20 @@ export function EditRecipeDialog({
         name: String(ing.name),
         amount: String(ing.amount),
         unit: String(ing.unit || ''),
-        isSpice: Boolean(ing.isSpice)
+        isSpice: Boolean(ing.isSpice),
       }))
-    
+
     if (validIngredients.length === 0) {
       setError('Please add at least one ingredient with name and amount')
       return
     }
 
-    // Validate and clean directions - ensure they're proper objects, not strings  
-    const validDirections = directions
-      .filter((dir) => dir.description)
-      .map((dir) => ({
-        title: String(dir.title || ''),
-        description: String(dir.description)
-      }))
-      
+    // Validate and clean directions - ensure they're proper objects, not strings
+    const validDirections = directions.map((dir) => ({
+      title: String(dir.title || ''),
+      description: String(dir.description || ''),
+    }))
+
     if (validDirections.length === 0) {
       setError('Please add at least one direction with description')
       return
@@ -312,7 +310,6 @@ export function EditRecipeDialog({
         setUploadingImage(false)
       }
 
-      // Prepare updates object
       const updates: Partial<Recipe> = {
         title,
         summary,
@@ -339,7 +336,6 @@ export function EditRecipeDialog({
         setError('Failed to update recipe. Please try again.')
       }
     } catch (err) {
-      // Error updating recipe
       setError('An unexpected error occurred. Please try again.')
     } finally {
       setLoading(false)
@@ -377,8 +373,6 @@ export function EditRecipeDialog({
     >
       <Stack gap={6}>
         {error && <ErrorMessage>{error}</ErrorMessage>}
-
-        {/* Basic Information */}
         <Stack gap={4}>
           <BasicInfoFields
             title={title}
@@ -400,10 +394,7 @@ export function EditRecipeDialog({
             setServings={setServings}
           />
         </Stack>
-
         <Divider />
-
-        {/* Image Upload */}
         <ImageUploadForm
           imageFile={imageFile}
           imagePreview={imagePreview}
@@ -413,25 +404,14 @@ export function EditRecipeDialog({
           onUrlChange={setImageUrl}
           uploading={uploadingImage}
         />
-
         <Divider />
-
-        {/* Ingredients */}
         <IngredientsForm ingredients={ingredients} onChange={setIngredients} />
-
         <Divider />
-
-        {/* Directions */}
         <DirectionsForm directions={directions} onChange={setDirections} />
 
         <Divider />
-
-        {/* Tags */}
         <TagsForm tags={tags} onChange={setTags} />
-
         <Divider />
-
-        {/* Additional Fields */}
         <AdditionalFields
           tips={tips}
           setTips={setTips}
