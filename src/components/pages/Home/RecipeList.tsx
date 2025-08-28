@@ -30,7 +30,6 @@ function RecipeListInner({ initialRecipes }: RecipeListProps) {
   const [editingRecipe, setEditingRecipe] = useState<Recipe | null>(null)
   const bookmarks = useBookmarks()
 
-  // Parse filters from URL parameters
   const getFiltersFromParams = useCallback((): RecipeFilters => {
     const filters: RecipeFilters = {}
 
@@ -42,9 +41,6 @@ function RecipeListInner({ initialRecipes }: RecipeListProps) {
 
     const maxCookingTime = searchParams.get('maxCookingTime')
     if (maxCookingTime) filters.maxCookingTime = Number(maxCookingTime)
-
-    const ingredients = searchParams.get('ingredients')
-    if (ingredients) filters.ingredients = ingredients.split(',')
 
     const bookmarked = searchParams.get('bookmarked')
     if (bookmarked === 'true') filters.showBookmarkedOnly = true
@@ -82,10 +78,8 @@ function RecipeListInner({ initialRecipes }: RecipeListProps) {
   }, [searchParams, bookmarks, getFiltersFromParams])
 
   const handleBookmarkChange = () => {
-    // Trigger a re-fetch when bookmarks change
     const filters = getFiltersFromParams()
     if (filters.showBookmarkedOnly) {
-      // Force update by changing a dummy state or refetch
       window.location.reload()
     }
   }
@@ -95,7 +89,6 @@ function RecipeListInner({ initialRecipes }: RecipeListProps) {
   }
 
   const handleRecipeUpdated = (updatedRecipe: Recipe) => {
-    // Update the recipe in the list
     setRecipes((prev) =>
       prev.map((r) => (r.id === updatedRecipe.id ? updatedRecipe : r)),
     )
@@ -106,7 +99,6 @@ function RecipeListInner({ initialRecipes }: RecipeListProps) {
   }
 
   const handleDeleteRecipe = () => {
-    // Refresh the page after deletion
     window.location.reload()
   }
 
@@ -130,8 +122,6 @@ function RecipeListInner({ initialRecipes }: RecipeListProps) {
           )}
         </MainContent>
       </Container>
-
-      {/* Edit Recipe Dialog */}
       {editingRecipe && (
         <EditRecipeDialog
           open={Boolean(editingRecipe)}

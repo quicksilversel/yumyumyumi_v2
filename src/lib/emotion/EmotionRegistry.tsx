@@ -1,19 +1,15 @@
 'use client'
 
-import React, { useState } from 'react'
+import { useState } from 'react'
+import type { ReactNode } from 'react'
 
 import createCache from '@emotion/cache'
 import { CacheProvider } from '@emotion/react'
 import { useServerInsertedHTML } from 'next/navigation'
 
-// This component handles Emotion's SSR for App Router
-export default function EmotionRegistry({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function EmotionRegistry({ children }: { children: ReactNode }) {
   const [cache] = useState(() => {
-    const cache = createCache({ 
+    const cache = createCache({
       key: 'css',
       prepend: true,
     })

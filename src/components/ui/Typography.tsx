@@ -4,7 +4,7 @@ import { colors, typography, transition } from '@/styles/designTokens'
 
 export const H1 = styled.h1`
   margin: 0;
-  font-size: ${typography.fontSize['3xl']};
+  font-size: ${typography.fontSize['2xl']};
   font-weight: ${typography.fontWeight.bold};
   line-height: ${typography.lineHeight.tight};
   letter-spacing: ${typography.letterSpacing.tight};

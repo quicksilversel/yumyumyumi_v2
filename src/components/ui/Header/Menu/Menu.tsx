@@ -1,0 +1,65 @@
+'use client'
+
+import { useState, Suspense } from 'react'
+
+import styled from '@emotion/styled'
+import { useSearchParams } from 'next/navigation'
+
+import { BookmarkFilter } from './BookmarkFilter'
+import { CategoryFilter } from './CategoryFilter'
+import { CookingTimeFilter } from './CookingTimeFilter'
+import { SearchBar } from './SearchBar'
+
+export const MenuInner = () => {
+  const searchParams = useSearchParams()
+
+  const [searchTerm, setSearchTerm] = useState(searchParams.get('search') || '')
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(
+    searchParams.get('category'),
+  )
+  const [selectedCookingTime, setSelectedCookingTime] = useState<number | null>(
+    searchParams.get('maxCookingTime')
+      ? Number(searchParams.get('maxCookingTime'))
+      : null,
+  )
+
+  const [showBookmarked, setShowBookmarked] = useState(
+    searchParams.get('bookmarked') === 'true',
+  )
+
+  return (
+    <Container>
+      <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+      <CategoryFilter
+        selectedCategory={selectedCategory}
+        setSelectedCategory={setSelectedCategory}
+      />
+      <CookingTimeFilter
+        selectedCookingTime={selectedCookingTime}
+        setSelectedCookingTime={setSelectedCookingTime}
+      />
+      <BookmarkFilter
+        showBookmarked={showBookmarked}
+        setShowBookmarked={setShowBookmarked}
+      />
+    </Container>
+  )
+}
+
+const Container = styled.div``
+
+const SearchAndFiltersFallback = styled.div`
+  display: flex;
+  align-items: center;
+  gap: ${({ theme }) => theme.spacing[2]};
+  height: 40px;
+  width: 100%;
+`
+
+export function Menu() {
+  return (
+    <Suspense fallback={<SearchAndFiltersFallback />}>
+      <MenuInner />
+    </Suspense>
+  )
+}

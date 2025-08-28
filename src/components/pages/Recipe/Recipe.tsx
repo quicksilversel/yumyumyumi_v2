@@ -17,13 +17,15 @@ export const RecipeDetail = (props: { recipe: Recipe }) => {
   return (
     <RecipeContainer>
       <Hero {...props} />
-      <Header {...props} />
-      <Info {...props} />
-      <Tags {...props} />
-      <Ingredients {...props} />
-      <Source {...props} />
-      <Directions {...props} />
-      <Tips {...props} />
+      <InnerContainer>
+        <Header {...props} />
+        <Info {...props} />
+        <Ingredients {...props} />
+        <Tips {...props} />
+        <Directions {...props} />
+        <Tags {...props} />
+        <Source {...props} />
+      </InnerContainer>
     </RecipeContainer>
   )
 }
@@ -31,4 +33,10 @@ export const RecipeDetail = (props: { recipe: Recipe }) => {
 const RecipeContainer = styled.div`
   max-width: 1000px;
   margin: 0 auto 1rem;
+`
+
+const InnerContainer = styled.div`
+  @media (max-width: 35.1875rem) {
+    margin: ${({ theme }) => theme.spacing[4]};
+  }
 `

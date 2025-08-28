@@ -24,139 +24,10 @@ import {
 } from '@/components/ui/Card'
 import { Chip } from '@/components/ui/Chip'
 import { Flex } from '@/components/ui/Layout'
-import { H5, Body, Caption } from '@/components/ui/Typography'
+import { Caption } from '@/components/ui/Typography'
 import { useAuth } from '@/contexts/AuthContext'
 import { isBookmarked, toggleBookmark } from '@/lib/supabase/bookmarkService'
 import { deleteRecipe } from '@/lib/supabase/supabaseRecipeService'
-import {
-  colors,
-  spacing,
-  shadow,
-  borderRadius,
-  transition,
-  typography,
-} from '@/styles/designTokens'
-
-// Styled Components
-const StyledCard = styled(BaseCard)`
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  overflow: hidden;
-`
-
-const CardOverlay = styled.div`
-  position: absolute;
-  top: ${spacing[2]};
-  right: ${spacing[2]};
-  z-index: 10;
-  display: flex;
-  gap: ${spacing[1]};
-`
-
-const CardMediaWrapper = styled(BaseCardMedia)`
-  height: 240px;
-  position: relative;
-  overflow: hidden;
-
-  img {
-    transition: transform ${transition.slow};
-  }
-
-  ${StyledCard}:hover & img {
-    transform: scale(1.05);
-  }
-`
-
-const MediaGradient = styled.div`
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 60%;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.6) 0%, transparent 100%);
-  pointer-events: none;
-`
-
-const CategoryChip = styled(Chip)`
-  position: absolute;
-  bottom: ${spacing[3]};
-  left: ${spacing[3]};
-  background-color: ${colors.white};
-  color: ${colors.black};
-`
-
-const StyledLink = styled(Link)`
-  text-decoration: none;
-  color: inherit;
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-`
-
-const StyledIconButton = styled(IconButton)`
-  background-color: rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(10px);
-
-  &:hover {
-    background-color: rgba(255, 255, 255, 0.95);
-  }
-`
-
-const Menu = styled.div<{ open: boolean }>`
-  position: absolute;
-  top: 100%;
-  right: 0;
-  margin-top: ${spacing[1]};
-  background-color: ${colors.white};
-  border: 1px solid ${colors.gray[200]};
-  border-radius: ${borderRadius.lg};
-  box-shadow: ${shadow.lg};
-  min-width: 180px;
-  z-index: 1000;
-  display: ${(props) => (props.open ? 'block' : 'none')};
-`
-
-const MenuItem = styled.button`
-  display: flex;
-  align-items: center;
-  gap: ${spacing[3]};
-  width: 100%;
-  padding: ${spacing[3]} ${spacing[4]};
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: ${typography.fontSize.sm};
-  color: ${colors.black};
-  text-align: left;
-  transition: background-color ${transition.fast};
-
-  &:hover {
-    background-color: ${colors.gray[50]};
-  }
-
-  &:first-of-type {
-    border-radius: ${borderRadius.lg} ${borderRadius.lg} 0 0;
-  }
-
-  &:last-of-type {
-    border-radius: 0 0 ${borderRadius.lg} ${borderRadius.lg};
-  }
-
-  svg {
-    font-size: 18px;
-  }
-`
-
-const RecipeInfo = styled(Flex)`
-  color: ${colors.gray[600]};
-  font-size: ${typography.fontSize.sm};
-
-  svg {
-    font-size: 18px;
-  }
-`
 
 type RecipeCardProps = {
   recipe: Recipe
@@ -178,8 +49,7 @@ export function RecipeCard({
   const [menuOpen, setMenuOpen] = useState(false)
   const [isDeleting, setIsDeleting] = useState(false)
   const menuRef = useRef<HTMLDivElement>(null)
-  
-  // Initialize bookmark state after mount to avoid hydration mismatch
+
   useEffect(() => {
     setIsBookmarkedState(isBookmarked(recipe.id))
   }, [recipe.id])
@@ -198,7 +68,6 @@ export function RecipeCard({
     }
   }, [menuOpen])
 
-  // Early return after all hooks have been called
   if (!recipe.title?.length) return null
 
   const isOwner = user && recipe.user_id === user.id
@@ -249,11 +118,7 @@ export function RecipeCard({
     <StyledCard hoverable noPadding>
       <CardOverlay>
         <StyledIconButton onClick={handleBookmarkClick} size="sm">
-          {isBookmarkedState ? (
-            <BookmarkIcon style={{ color: colors.black }} />
-          ) : (
-            <BookmarkBorderIcon />
-          )}
+          {isBookmarkedState ? <BookmarkIcon /> : <BookmarkBorderIcon />}
         </StyledIconButton>
 
         {isOwner && (
@@ -271,7 +136,7 @@ export function RecipeCard({
                 <span>Edit Recipe</span>
               </MenuItem>
               <MenuItem onClick={handleDelete}>
-                <DeleteIcon style={{ color: colors.error }} />
+                <StyledDeleteIcon />
                 <span>Delete Recipe</span>
               </MenuItem>
             </Menu>
@@ -296,32 +161,9 @@ export function RecipeCard({
         </CardMediaWrapper>
 
         <CardContent>
-          <H5
-            style={{
-              marginBottom: spacing[2],
-              display: '-webkit-box',
-              WebkitLineClamp: 2,
-              WebkitBoxOrient: 'vertical' as any,
-              overflow: 'hidden',
-            }}
-          >
-            {recipe.title}
-          </H5>
+          <RecipeTitle>{recipe.title}</RecipeTitle>
 
-          <Body
-            size="sm"
-            muted={true}
-            style={{
-              marginBottom: spacing[4],
-              display: '-webkit-box',
-              WebkitLineClamp: 2,
-              WebkitBoxOrient: 'vertical' as any,
-              overflow: 'hidden',
-              flexGrow: 1,
-            }}
-          >
-            {recipe.summary}
-          </Body>
+          <RecipeSummary>{recipe.summary}</RecipeSummary>
 
           <RecipeInfo gap={3}>
             <Flex align="center" gap={1}>
@@ -338,3 +180,138 @@ export function RecipeCard({
     </StyledCard>
   )
 }
+
+const StyledCard = styled(BaseCard)`
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+`
+
+const CardOverlay = styled.div`
+  position: absolute;
+  top: ${({ theme }) => theme.spacing[2]};
+  right: ${({ theme }) => theme.spacing[2]};
+  z-index: 10;
+  display: flex;
+  gap: ${({ theme }) => theme.spacing[1]};
+`
+
+const CardMediaWrapper = styled(BaseCardMedia)`
+  height: 240px;
+  position: relative;
+  overflow: hidden;
+
+  img {
+    transition: transform ${({ theme }) => theme.transition.slow};
+  }
+
+  ${StyledCard}:hover & img {
+    transform: scale(1.05);
+  }
+`
+
+const MediaGradient = styled.div`
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60%;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.6) 0%, transparent 100%);
+  pointer-events: none;
+`
+
+const CategoryChip = styled(Chip)`
+  position: absolute;
+  bottom: ${({ theme }) => theme.spacing[3]};
+  left: ${({ theme }) => theme.spacing[3]};
+  background-color: ${({ theme }) => theme.colors.white};
+  color: ${({ theme }) => theme.colors.black};
+`
+
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+`
+
+const StyledIconButton = styled(IconButton)`
+  background-color: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.95);
+  }
+`
+
+const Menu = styled.div<{ open: boolean }>`
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: ${({ theme }) => theme.spacing[1]};
+  background-color: ${({ theme }) => theme.colors.white};
+  border: 1px solid ${({ theme }) => theme.colors.gray[200]};
+  border-radius: ${({ theme }) => theme.borderRadius.lg};
+  box-shadow: ${({ theme }) => theme.shadow.lg};
+  min-width: 180px;
+  z-index: 1000;
+  display: ${(props) => (props.open ? 'block' : 'none')};
+`
+
+const MenuItem = styled.button`
+  display: flex;
+  align-items: center;
+  gap: ${({ theme }) => theme.spacing[2]};
+  width: 100%;
+  padding: ${({ theme }) => theme.spacing[3]} ${({ theme }) => theme.spacing[4]};
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: ${({ theme }) => theme.typography.fontSize.sm};
+  color: ${({ theme }) => theme.colors.black};
+  text-align: left;
+  transition: background-color ${({ theme }) => theme.transition.fast};
+
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.gray['50']};
+  }
+
+  svg {
+    font-size: 18px;
+  }
+`
+
+const RecipeTitle = styled.span`
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
+`
+
+const RecipeSummary = styled.span`
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin-bottom: ${({ theme }) => theme.spacing[4]};
+  flex-grow: 1;
+  font-size: ${({ theme }) => theme.typography.fontSize.sm};
+  color: ${({ theme }) => theme.colors.gray[600]};
+`
+
+const RecipeInfo = styled(Flex)`
+  color: ${({ theme }) => theme.colors.gray[600]};
+  font-size: ${({ theme }) => theme.typography.fontSize.sm};
+
+  svg {
+    font-size: 18px;
+  }
+`
+
+const StyledDeleteIcon = styled(DeleteIcon)`
+  color: ${({ theme }) => theme.colors.error};
+`

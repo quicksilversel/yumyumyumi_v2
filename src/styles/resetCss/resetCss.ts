@@ -26,6 +26,10 @@ export const resetCss = css`
     max-width: 100%;
   }
 
+  button {
+    cursor: pointer;
+  }
+
   input,
   button,
   textarea,

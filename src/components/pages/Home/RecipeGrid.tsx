@@ -1,12 +1,8 @@
-'use client'
-
 import styled from '@emotion/styled'
 
 import type { Recipe } from '@/types'
 
-import { Grid, Stack } from '@/components/ui/Layout'
-import { H5, Body } from '@/components/ui/Typography'
-import { spacing, colors } from '@/styles/designTokens'
+import { H2, Body, Grid, Stack } from '@/components/ui'
 
 import { RecipeCard } from './RecipeCard'
 
@@ -17,16 +13,6 @@ type RecipeGridProps = {
   onDelete?: () => void
 }
 
-const EmptyState = styled(Stack)`
-  text-align: center;
-  padding: ${spacing[12]} ${spacing[6]};
-  color: ${colors.gray[600]};
-`
-
-const RecipeGridContainer = styled(Grid)`
-  margin-top: ${spacing[6]};
-`
-
 export function RecipeGrid({
   recipes,
   onBookmarkChange,
@@ -36,7 +22,7 @@ export function RecipeGrid({
   if (recipes.length === 0) {
     return (
       <EmptyState align="center" gap={2}>
-        <H5>No recipes found</H5>
+        <H2>No recipes found</H2>
         <Body size="sm" muted>
           Try adjusting your search or filters to find more recipes
         </Body>
@@ -58,3 +44,14 @@ export function RecipeGrid({
     </RecipeGridContainer>
   )
 }
+
+const EmptyState = styled(Stack)`
+  text-align: center;
+  padding: ${({ theme }) => theme.spacing[6]};
+  color: ${({ theme }) => theme.colors.gray[600]};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
+`
+
+const RecipeGridContainer = styled(Grid)`
+  margin-top: ${({ theme }) => theme.spacing[6]};
+`

@@ -2,23 +2,18 @@ import styled from '@emotion/styled'
 
 import type { Recipe } from '@/types'
 
-import { H2 } from '@/components/ui'
-import { Container, Flex, Stack } from '@/components/ui'
-import { Caption, Label } from '@/components/ui/Typography'
-type RecipeDetailProps = {
-  recipe: Recipe
-}
+import { Flex, H2, Caption, Label } from '@/components/ui'
 
-export const Ingredients = ({ recipe }: RecipeDetailProps) => {
+export const Ingredients = ({ recipe }: { recipe: Recipe }) => {
   return (
-    <Container>
+    <section>
       <H2>材料（{recipe.servings}人前）</H2>
-      <Stack gap={2}>
+      <IngredientList>
         {recipe.ingredients?.map((ingredient) => {
           return (
             <IngredientItem key={ingredient.name}>
               <Flex justify="between" align="center">
-                <p>{ingredient.name}</p>
+                <span>{ingredient.name}</span>
                 <Label>
                   {ingredient.amount} {ingredient.unit}
                 </Label>
@@ -27,12 +22,19 @@ export const Ingredients = ({ recipe }: RecipeDetailProps) => {
             </IngredientItem>
           )
         })}
-      </Stack>
-    </Container>
+      </IngredientList>
+    </section>
   )
 }
 
-const IngredientItem = styled.div`
+const IngredientList = styled.ul`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 2;
+`
+
+const IngredientItem = styled.li`
   width: 100%;
   padding: ${({ theme }) => theme.spacing[3]} ${({ theme }) => theme.spacing[4]};
   border-top: 1px solid ${({ theme }) => theme.colors.gray[200]};

@@ -15,19 +15,10 @@ export const customStyles = (theme: Theme) => css`
 
   a:hover,
   button:hover {
-    color: ${theme.colors.primary};
-    transition: color 0.2s ease-in;
+    opacity: 0.7;
+    transition: opacity 0.2s ease-in;
   }
 
-  /* MUI Icon sizing constraints */
-  svg.MuiSvgIcon-root {
-    width: 1.5rem;
-    height: 1.5rem;
-    display: inline-block;
-    flex-shrink: 0;
-  }
-
-  /* Prevent images from overflowing */
   img {
     max-width: 100%;
     height: auto;

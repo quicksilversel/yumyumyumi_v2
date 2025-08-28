@@ -1,5 +1,3 @@
-'use client'
-
 import styled from '@emotion/styled'
 import AccessTimeIcon from '@mui/icons-material/AccessTime'
 import CategoryIcon from '@mui/icons-material/Category'
@@ -7,36 +5,28 @@ import GroupIcon from '@mui/icons-material/Group'
 
 import type { Recipe } from '@/types'
 
-import { Flex, Body, Label } from '@/components/ui'
-type RecipeDetailProps = {
-  recipe: Recipe
-}
+import { Flex } from '@/components/ui'
 
-export const Info = ({ recipe }: RecipeDetailProps) => {
+export const Info = ({ recipe }: { recipe: Recipe }) => {
   return (
     <HeaderSection>
       <InfoGrid>
         <InfoCard>
           <Flex direction="column" align="center" gap={1}>
             <CategoryIcon />
-            <Label>Category</Label>
-            <Body>{recipe.category}</Body>
+            <span>{recipe.category}</span>
           </Flex>
         </InfoCard>
-
         <InfoCard>
           <Flex direction="column" align="center" gap={1}>
             <AccessTimeIcon />
-            <Label>Total Time</Label>
-            <Body>{recipe.totalTime} min</Body>
+            <span>{recipe.totalTime} min</span>
           </Flex>
         </InfoCard>
-
         <InfoCard>
           <Flex direction="column" align="center" gap={1}>
             <GroupIcon />
-            <Label>Servings</Label>
-            <Body>{recipe.servings}</Body>
+            <span>{recipe.servings} Servings</span>
           </Flex>
         </InfoCard>
       </InfoGrid>
@@ -64,4 +54,5 @@ const InfoCard = styled.div`
   background-color: ${({ theme }) => theme.colors.gray[50]};
   border-radius: ${({ theme }) => theme.borderRadius.md};
   text-align: center;
+  font-size: ${({ theme }) => theme.typography.fontSize.sm};
 `

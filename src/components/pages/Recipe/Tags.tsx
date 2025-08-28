@@ -1,15 +1,10 @@
-'use client'
-
 import styled from '@emotion/styled'
 
 import type { Recipe } from '@/types'
 
 import { Chip, ChipGroup } from '@/components/ui'
-type RecipeDetailProps = {
-  recipe: Recipe
-}
 
-export const Tags = ({ recipe }: RecipeDetailProps) => {
+export const Tags = ({ recipe }: { recipe: Recipe }) => {
   return (
     <HeaderSection>
       {recipe.tags && recipe.tags.length > 0 && (

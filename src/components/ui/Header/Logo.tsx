@@ -1,0 +1,24 @@
+import styled from '@emotion/styled'
+import RestaurantMenuIcon from '@mui/icons-material/RestaurantMenu'
+import Link from 'next/link'
+
+export const Logo = () => {
+  return (
+    <LogoLink href="/">
+      <RestaurantMenuIcon />
+      <LogoText>YumYumYumi</LogoText>
+    </LogoLink>
+  )
+}
+
+const LogoLink = styled(Link)`
+  display: flex;
+  align-items: center;
+  gap: ${({ theme }) => theme.spacing[3]};
+`
+
+const LogoText = styled.span`
+  letter-spacing: 0.1em;
+  font-size: ${({ theme }) => theme.typography.fontSize.xl};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
+`
