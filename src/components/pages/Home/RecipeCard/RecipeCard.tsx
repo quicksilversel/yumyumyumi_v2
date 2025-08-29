@@ -38,8 +38,8 @@ export const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
 const StyledCard = styled.article`
   position: relative;
   display: flex;
+  height: 380px;
   flex-direction: column;
-  height: 100%;
   border: 1px solid ${({ theme }) => theme.colors.gray[200]};
   border-radius: ${({ theme }) => theme.borderRadius.lg};
   background-color: ${({ theme }) => theme.colors.white};

@@ -9,8 +9,8 @@ import { Flex, Caption } from '@/components/ui'
 export const RecipeCardBody = ({ recipe }: { recipe: Recipe }) => {
   return (
     <Container>
-      <RecipeTitle>{recipe.title}</RecipeTitle>
-      {recipe.summary && <Title>{recipe.summary}</Title>}
+      <Title>{recipe.title}</Title>
+      {recipe.summary && <Summary>{recipe.summary}</Summary>}
       <RecipeInfo gap={3}>
         <Flex align="center" gap={1}>
           <AccessTimeIcon />
@@ -29,15 +29,15 @@ const Container = styled.div`
   padding: ${({ theme }) => theme.spacing[4]};
 `
 
-const RecipeTitle = styled.span`
+const Title = styled.span`
   display: -webkit-box;
   font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
   overflow: hidden;
 `
 
-const Title = styled.span`
+const Summary = styled.span`
   display: -webkit-box;
   margin-bottom: ${({ theme }) => theme.spacing[4]};
   color: ${({ theme }) => theme.colors.gray[600]};
