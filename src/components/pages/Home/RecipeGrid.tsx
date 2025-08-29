@@ -1,25 +1,14 @@
 import styled from '@emotion/styled'
 
-import type { Recipe } from '@/types'
-
 import { H2, Body, Grid, Stack } from '@/components/ui'
+import { useRecipeContext } from '@/contexts/RecipeContext'
 
 import { RecipeCard } from './RecipeCard'
 
-type RecipeGridProps = {
-  recipes: Recipe[]
-  onBookmarkChange?: () => void
-  onEdit?: (recipe: Recipe) => void
-  onDelete?: () => void
-}
+export function RecipeGrid() {
+  const { filteredRecipes } = useRecipeContext()
 
-export function RecipeGrid({
-  recipes,
-  onBookmarkChange,
-  onEdit,
-  onDelete,
-}: RecipeGridProps) {
-  if (recipes.length === 0) {
+  if (filteredRecipes.length === 0) {
     return (
       <EmptyState align="center" gap={2}>
         <H2>No recipes found</H2>
@@ -32,24 +21,18 @@ export function RecipeGrid({
 
   return (
     <RecipeGridContainer cols={3} gap={6} responsive>
-      {recipes.map((recipe) => (
-        <RecipeCard
-          key={recipe.id}
-          recipe={recipe}
-          onBookmarkChange={onBookmarkChange}
-          onEdit={onEdit ? () => onEdit(recipe) : undefined}
-          onDelete={onDelete}
-        />
+      {filteredRecipes.map((recipe) => (
+        <RecipeCard key={recipe.id} recipe={recipe} />
       ))}
     </RecipeGridContainer>
   )
 }
 
 const EmptyState = styled(Stack)`
-  text-align: center;
   padding: ${({ theme }) => theme.spacing[6]};
   color: ${({ theme }) => theme.colors.gray[600]};
   font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
+  text-align: center;
 `
 
 const RecipeGridContainer = styled(Grid)`

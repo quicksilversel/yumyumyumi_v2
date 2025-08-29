@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react'
 import { ThemeProvider } from '@emotion/react'
 
 import { AuthProvider } from '@/contexts/AuthContext'
+import { RecipeProvider } from '@/contexts/RecipeContext'
 import EmotionRegistry from '@/lib/emotion/EmotionRegistry'
 import { GlobalStyles } from '@/styles'
 import { lightTheme } from '@/styles/theme'
@@ -36,8 +37,10 @@ export const Providers = ({ children }: { children: React.ReactNode }) => {
     <EmotionRegistry>
       <ThemeProvider theme={lightTheme}>
         <AuthProvider>
-          <GlobalStyles />
-          {children}
+          <RecipeProvider>
+            <GlobalStyles />
+            {children}
+          </RecipeProvider>
         </AuthProvider>
       </ThemeProvider>
     </EmotionRegistry>

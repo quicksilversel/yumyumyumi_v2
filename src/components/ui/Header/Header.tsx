@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 
+import { keyframes } from '@emotion/css'
 import styled from '@emotion/styled'
 import CloseIcon from '@mui/icons-material/Close'
 import MenuIcon from '@mui/icons-material/Menu'
@@ -27,17 +28,20 @@ export const Header = () => {
             <Flex gap={4} align="center">
               <User />
               {user && <AddRecipeButton />}
-              <BurgerButton onClick={() => setSlideMenuOpen(true)}>
+              <button onClick={() => setSlideMenuOpen(true)}>
                 <MenuIcon />
-              </BurgerButton>
+              </button>
             </Flex>
           </Toolbar>
         </InnerContainer>
       </Container>
-      <MenuOverlay
-        open={slideMenuOpen}
-        onClick={() => setSlideMenuOpen(false)}
-      />
+      {slideMenuOpen && (
+        <MenuOverlay
+          open={slideMenuOpen}
+          onClick={() => setSlideMenuOpen(false)}
+          aria-hidden="true"
+        />
+      )}
       <SlideMenu open={slideMenuOpen}>
         <MenuHeader>
           <MenuTitle>Filters</MenuTitle>
@@ -56,44 +60,39 @@ export const Header = () => {
 const Container = styled.header`
   position: sticky;
   top: 0;
-  padding-inline: 1rem;
+  z-index: 100;
   background-color: ${({ theme }) => theme.colors.primary};
   color: ${({ theme }) => theme.colors.white};
-  z-index: 100;
   box-shadow: ${({ theme }) => theme.shadow.sm};
+  padding-inline: 1rem;
 `
 
 const InnerContainer = styled.div`
+  width: 100%;
   max-width: 1000px;
   margin: 0 auto;
-  width: 100%;
 `
 
 const Toolbar = styled(Flex)`
   height: 56px;
 `
 
-const BurgerButton = styled.button``
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+`
 
 const MenuOverlay = styled.div<{ open: boolean }>`
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
   z-index: 998;
   display: ${({ open }) => (open ? 'block' : 'none')};
-  animation: ${({ open }) => (open ? 'fadeIn 0.3s ease' : 'none')};
-
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
+  background-color: rgb(0, 0, 0, 50%);
+  animation: ${({ open }) => (open ? `${fadeIn} 0.3s ease` : 'none')};
+  inset: 0;
 `
 
 const SlideMenu = styled.div<{ open: boolean }>`
@@ -101,16 +100,16 @@ const SlideMenu = styled.div<{ open: boolean }>`
   top: 0;
   right: 0;
   bottom: 0;
-  width: 320px;
-  background-color: ${({ theme }) => theme.colors.white};
-  box-shadow: -4px 0 20px rgba(0, 0, 0, 0.15);
   z-index: 999;
-  transform: translateX(${({ open }) => (open ? '0' : '100%')});
-  transition: transform 0.3s ease;
   display: flex;
   flex-direction: column;
+  width: 320px;
+  background-color: ${({ theme }) => theme.colors.white};
+  transition: transform 0.3s ease;
+  transform: translateX(${({ open }) => (open ? '0' : '100%')});
+  box-shadow: -4px 0 20px rgb(0, 0, 0, 15%);
 
-  @media (max-width: 480px) {
+  @media (width <= 480px) {
     width: 85%;
     max-width: 320px;
   }
@@ -125,10 +124,10 @@ const MenuHeader = styled.div`
 `
 
 const MenuTitle = styled.h2`
+  margin: 0;
+  color: ${({ theme }) => theme.colors.black};
   font-size: ${({ theme }) => theme.typography.fontSize.lg};
   font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
-  color: ${({ theme }) => theme.colors.black};
-  margin: 0;
 `
 
 const CloseButton = styled(IconButton)`
@@ -141,6 +140,6 @@ const CloseButton = styled(IconButton)`
 
 const MenuContent = styled.div`
   flex: 1;
-  overflow-y: auto;
   padding: ${({ theme }) => theme.spacing[4]};
+  overflow-y: auto;
 `

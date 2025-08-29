@@ -41,26 +41,25 @@ export const BookmarkFilter = ({
 }
 
 const FilterButton = styled.button<{ active?: boolean }>`
-  width: 100%;
   display: flex;
   align-items: center;
   gap: ${({ theme }) => theme.spacing[1]};
+  width: 100%;
+  height: 40px;
   padding: ${({ theme }) => theme.spacing[2]} ${({ theme }) => theme.spacing[3]};
-  cursor: pointer;
-  font-size: ${({ theme }) => theme.typography.fontSize.sm};
   color: ${({ active, theme }) =>
     active ? theme.colors.primary : theme.colors.gray[700]};
-
+  font-size: ${({ theme }) => theme.typography.fontSize.sm};
+  cursor: pointer;
   transition: background-color ${({ theme }) => theme.transition.fast};
-  height: 40px;
 
   &:hover {
-    background-color: rgba(245, 178, 172, 0.05);
+    background-color: rgb(245, 178, 172, 5%);
   }
 
   svg {
-    font-size: 18px;
     color: ${({ active, theme }) =>
       active ? theme.colors.primary : theme.colors.gray[500]};
+    font-size: 18px;
   }
 `

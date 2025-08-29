@@ -66,14 +66,14 @@ const DropdownMenu = styled.div<{ open: boolean }>`
   position: absolute;
   top: calc(100% + ${({ theme }) => theme.spacing[6]});
   right: 50%;
-  transform: translateX(50%);
-  background-color: ${({ theme }) => theme.colors.white};
-  border-radius: ${({ theme }) => theme.borderRadius.lg};
-  box-shadow: ${({ theme }) => theme.shadow.xl};
-  min-width: 200px;
   z-index: 1000;
   display: ${({ open }) => (open ? 'block' : 'none')};
+  min-width: 200px;
+  border-radius: ${({ theme }) => theme.borderRadius.lg};
+  background-color: ${({ theme }) => theme.colors.white};
+  transform: translateX(50%);
   overflow: hidden;
+  box-shadow: ${({ theme }) => theme.shadow.xl};
 `
 
 const UserLink = styled(Link)`
@@ -82,8 +82,8 @@ const UserLink = styled(Link)`
   gap: ${({ theme }) => theme.spacing[3]};
   width: 100%;
   padding: ${({ theme }) => theme.spacing[3]} ${({ theme }) => theme.spacing[4]};
-  background: none;
   border: none;
+  background: none;
   color: ${({ theme }) => theme.colors.black};
   text-align: left;
   transition: background-color ${({ theme }) => theme.transition.fast};
@@ -99,8 +99,8 @@ const MenuItem = styled.button`
   gap: ${({ theme }) => theme.spacing[3]};
   width: 100%;
   padding: ${({ theme }) => theme.spacing[3]} ${({ theme }) => theme.spacing[4]};
-  background: none;
   border: none;
+  background: none;
   color: ${({ theme }) => theme.colors.black};
   text-align: left;
   transition: background-color ${({ theme }) => theme.transition.fast};

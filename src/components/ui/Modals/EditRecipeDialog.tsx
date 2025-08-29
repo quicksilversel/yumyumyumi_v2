@@ -26,11 +26,11 @@ import {
 } from '../Forms'
 
 const ErrorMessage = styled.div`
+  margin-bottom: ${spacing[4]};
   padding: ${spacing[3]} ${spacing[4]};
+  border-radius: 8px;
   background-color: ${colors.error};
   color: ${colors.white};
-  border-radius: 8px;
-  margin-bottom: ${spacing[4]};
 `
 
 const DialogActions = styled.div`
@@ -73,7 +73,7 @@ export function EditRecipeDialog({
 
   // Content
   const [ingredients, setIngredients] = useState<Ingredient[]>([
-    { name: '', amount: '', unit: '', isSpice: false },
+    { name: '', amount: '', isSpice: false },
   ])
   const [directions, setDirections] = useState<Direction[]>([
     { title: '', description: '' },
@@ -89,7 +89,7 @@ export function EditRecipeDialog({
   useEffect(() => {
     if (open && recipe) {
       setTitle(recipe.title)
-      setSummary(recipe.summary)
+      setSummary(recipe.summary || '')
       setCategory(recipe.category || RecipeCategory.MAIN_COURSE)
       setPrepTime(recipe.prepTime)
       setCookTime(recipe.cookTime)
@@ -115,7 +115,6 @@ export function EditRecipeDialog({
               return parsed
             }
           } catch {
-            // Not JSON, might be old format like "aaaa (1 tsp)"
             const match = ing.match(/^(.+?)\s*\((.+?)\s*(.+?)?\)$/)
             if (match) {
               return {
@@ -129,7 +128,6 @@ export function EditRecipeDialog({
           }
         }
 
-        // If it's an object with JSON string in the name field
         if (typeof ing === 'object' && ing.name && ing.name.startsWith('{')) {
           try {
             return JSON.parse(ing.name)
@@ -157,7 +155,7 @@ export function EditRecipeDialog({
         ) {
           return {
             title: dir.title || '',
-            description: dir.description || ''
+            description: dir.description || '',
           }
         }
 
@@ -169,7 +167,7 @@ export function EditRecipeDialog({
             if (parsed && typeof parsed === 'object') {
               return {
                 title: parsed.title || '',
-                description: parsed.description || ''
+                description: parsed.description || '',
               }
             }
           } catch {
@@ -183,12 +181,16 @@ export function EditRecipeDialog({
           // Check if any field contains JSON
           const fields = ['title', 'description']
           for (const field of fields) {
-            if (dir[field] && typeof dir[field] === 'string' && dir[field].startsWith('{')) {
+            if (
+              dir[field] &&
+              typeof dir[field] === 'string' &&
+              dir[field].startsWith('{')
+            ) {
               try {
                 const parsed = JSON.parse(dir[field])
                 return {
                   title: parsed.title || '',
-                  description: parsed.description || ''
+                  description: parsed.description || '',
                 }
               } catch {
                 // Continue to next field
@@ -198,7 +200,7 @@ export function EditRecipeDialog({
           // Return the object as is with defaults
           return {
             title: dir.title || '',
-            description: dir.description || ''
+            description: dir.description || '',
           }
         }
 
@@ -257,12 +259,7 @@ export function EditRecipeDialog({
       return
     }
 
-    if (
-      !title ||
-      !summary ||
-      ingredients.length === 0 ||
-      directions.length === 0
-    ) {
+    if (!title || ingredients.length === 0 || directions.length === 0) {
       setError('Please fill in all required fields')
       return
     }
@@ -273,7 +270,6 @@ export function EditRecipeDialog({
       .map((ing) => ({
         name: String(ing.name),
         amount: String(ing.amount),
-        unit: String(ing.unit || ''),
         isSpice: Boolean(ing.isSpice),
       }))
 

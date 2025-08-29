@@ -1,5 +1,3 @@
-'use client'
-
 import styled from '@emotion/styled'
 import AddIcon from '@mui/icons-material/Add'
 import DeleteIcon from '@mui/icons-material/Delete'
@@ -8,14 +6,8 @@ import type { Direction } from '@/types'
 
 import { Button, IconButton } from '@/components/ui/Button'
 import { Input, TextArea, FormField } from '@/components/ui/Input'
-import { Flex, Stack } from '@/components/ui/Layout'
+import { Stack } from '@/components/ui/Layout'
 import { H6, Caption } from '@/components/ui/Typography'
-import {
-  colors,
-  spacing,
-  borderRadius,
-  typography,
-} from '@/styles/designTokens'
 
 type DirectionsFormProps = {
   directions: Direction[]
@@ -46,13 +38,13 @@ export function DirectionsForm({ directions, onChange }: DirectionsFormProps) {
 
   return (
     <Stack gap={3}>
-      <Flex justify="between" align="center">
+      <Title>
         <H6>Directions</H6>
         <Button variant="secondary" size="sm" onClick={addDirection}>
           <AddIcon />
           Add Step
         </Button>
-      </Flex>
+      </Title>
 
       {directions.length === 0 ? (
         <Caption>
@@ -62,10 +54,8 @@ export function DirectionsForm({ directions, onChange }: DirectionsFormProps) {
         <Stack gap={3}>
           {directions.map((direction, index) => (
             <DirectionRow key={index}>
-              <StepNumber>{index + 1}</StepNumber>
-
-              <DirectionContent gap={2}>
-                <FormField style={{ marginBottom: 0 }}>
+              <DirectionContent>
+                <FormField>
                   <Input
                     placeholder="Step title (e.g., 'Prepare ingredients')"
                     value={direction.title || ''}
@@ -77,7 +67,7 @@ export function DirectionsForm({ directions, onChange }: DirectionsFormProps) {
                   />
                 </FormField>
 
-                <FormField style={{ marginBottom: 0 }}>
+                <FormField>
                   <TextArea
                     placeholder="Step description (optional)"
                     value={direction.description || ''}
@@ -93,7 +83,6 @@ export function DirectionsForm({ directions, onChange }: DirectionsFormProps) {
                   />
                 </FormField>
               </DirectionContent>
-
               {directions.length > 1 && (
                 <DeleteButton size="sm" onClick={() => removeDirection(index)}>
                   <DeleteIcon />
@@ -107,37 +96,41 @@ export function DirectionsForm({ directions, onChange }: DirectionsFormProps) {
   )
 }
 
-const DirectionRow = styled.div`
-  position: relative;
-  padding: ${spacing[4]};
-  padding-left: ${spacing[12]};
-  background-color: ${colors.white};
-  border: 1px solid ${colors.gray[200]};
-  border-radius: ${borderRadius.lg};
-`
-
-const StepNumber = styled.div`
-  position: absolute;
-  left: ${spacing[4]};
-  top: ${spacing[4]};
-  width: 32px;
-  height: 32px;
-  background-color: ${colors.black};
-  color: ${colors.white};
-  border-radius: 50%;
+const Title = styled.div`
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
-  font-weight: ${typography.fontWeight.semibold};
-  font-size: ${typography.fontSize.sm};
+  width: 100%;
 `
 
-const DirectionContent = styled(Stack)`
+const DirectionRow = styled.ol`
+  position: relative;
+  width: 100%;
+  padding: ${({ theme }) => theme.spacing[6]};
+  counter-reset: list-item;
+`
+
+const DirectionContent = styled.li`
   flex: 1;
+  &::before {
+    position: absolute;
+    top: 30px;
+    left: -5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background-color: ${({ theme }) => theme.colors.primary};
+    color: ${({ theme }) => theme.colors.white};
+    font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
+    content: counter(list-item);
+  }
 `
 
 const DeleteButton = styled(IconButton)`
   position: absolute;
-  top: ${spacing[3]};
-  right: ${spacing[3]};
+  top: 25px;
+  right: -10px;
 `

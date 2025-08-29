@@ -23,30 +23,30 @@ const ToggleSwitch = styled.label`
 `
 
 const Switch = styled.input`
+  position: relative;
   width: 40px;
   height: 20px;
-  appearance: none;
-  background-color: ${colors.gray[300]};
   border-radius: 10px;
-  position: relative;
-  outline: none;
+  background-color: ${colors.gray[300]};
   cursor: pointer;
   transition: background-color 0.2s;
+  outline: none;
+  appearance: none;
 
   &:checked {
     background-color: ${colors.black};
   }
 
   &::after {
-    content: '';
     position: absolute;
     top: 2px;
     left: 2px;
     width: 16px;
     height: 16px;
-    background-color: ${colors.white};
     border-radius: 50%;
+    background-color: ${colors.white};
     transition: transform 0.2s;
+    content: '';
   }
 
   &:checked::after {
@@ -92,13 +92,12 @@ export function BasicInfoFields({
       </FormField>
 
       <FormField>
-        <FormLabel htmlFor="summary">Summary *</FormLabel>
+        <FormLabel htmlFor="summary">Summary</FormLabel>
         <TextArea
           id="summary"
           value={summary}
           onChange={(e) => setSummary(e.target.value)}
           placeholder="Brief description of the recipe"
-          required
           fullWidth
           rows={3}
         />

@@ -31,23 +31,23 @@ export const Chip = styled.span<{
   ${(props) =>
     props.variant === 'outlined'
       ? css`
-          background-color: transparent;
           border: 1px solid
             ${props.selected
               ? props.theme.colors.black
               : props.theme.colors.gray[300]};
+          background-color: transparent;
           color: ${props.selected
             ? props.theme.colors.black
             : props.theme.colors.gray[700]};
         `
       : css`
+          border: 1px solid transparent;
           background-color: ${props.selected
             ? props.theme.colors.black
             : props.theme.colors.gray[100]};
           color: ${props.selected
             ? props.theme.colors.white
             : props.theme.colors.gray[700]};
-          border: 1px solid transparent;
         `}
   
   ${(props) =>
@@ -58,8 +58,8 @@ export const Chip = styled.span<{
       &:hover {
         ${props.variant === 'outlined'
           ? css`
-              background-color: ${props.theme.colors.gray[50]};
               border-color: ${props.theme.colors.gray[400]};
+              background-color: ${props.theme.colors.gray[50]};
             `
           : css`
               background-color: ${props.selected

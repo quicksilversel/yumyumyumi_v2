@@ -1,7 +1,6 @@
 export type Ingredient = {
   name: string
   amount: string
-  unit?: string
   isSpice?: boolean
 }
 
@@ -14,7 +13,7 @@ export type Recipe = {
   id: string
   user_id?: string | null
   title: string
-  summary: string
+  summary?: string
   ingredients: Ingredient[]
   directions: Direction[]
   tags?: string[]

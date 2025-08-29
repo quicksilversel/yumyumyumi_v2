@@ -43,7 +43,7 @@ export async function searchRecipes(filters: RecipeFilters): Promise<Recipe[]> {
       const searchLower = filters.searchTerm.toLowerCase()
       const matchesSearch =
         recipe.title.toLowerCase().includes(searchLower) ||
-        recipe.summary.toLowerCase().includes(searchLower) ||
+        recipe.summary?.toLowerCase().includes(searchLower) ||
         recipe.ingredients.some((ing) =>
           ing.name.toLowerCase().includes(searchLower),
         )

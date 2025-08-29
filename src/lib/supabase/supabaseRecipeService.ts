@@ -33,7 +33,7 @@ function mapDbRecipeToRecipe(dbRecipe: Record<string, unknown>): Recipe {
         try {
           return JSON.parse(item) as Ingredient
         } catch {
-          return { name: item, amount: '', unit: '' } as Ingredient
+          return { name: item, amount: '' } as Ingredient
         }
       }
       return item as Ingredient

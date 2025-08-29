@@ -31,14 +31,14 @@ const DirectionContainer = styled.section`
 `
 
 const DirectionList = styled.ol`
-  counter-reset: list-item;
   margin-top: ${({ theme }) => theme.spacing[4]};
+  counter-reset: list-item;
 `
 
 const DirectionItem = styled.li`
   position: relative;
-  font-size: ${({ theme }) => theme.typography.fontSize.sm};
   padding: ${({ theme }) => theme.spacing[4]} ${({ theme }) => theme.spacing[8]};
+  font-size: ${({ theme }) => theme.typography.fontSize.sm};
   border-top: 1px solid ${({ theme }) => theme.colors.gray[200]};
 
   &:last-child {
@@ -46,23 +46,23 @@ const DirectionItem = styled.li`
   }
 
   &::before {
-    content: counter(list-item);
     position: absolute;
     top: 20px;
     left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 24px;
     height: 24px;
+    border-radius: 50%;
     background-color: ${({ theme }) => theme.colors.primary};
     color: ${({ theme }) => theme.colors.white};
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
+    content: counter(list-item);
   }
 `
 
 const Title = styled(H3)`
-  line-height: 1.6;
   font-size: ${({ theme }) => theme.typography.fontSize.base};
+  line-height: 1.6;
 `

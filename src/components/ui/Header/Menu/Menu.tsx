@@ -8,12 +8,10 @@ import { useSearchParams } from 'next/navigation'
 import { BookmarkFilter } from './BookmarkFilter'
 import { CategoryFilter } from './CategoryFilter'
 import { CookingTimeFilter } from './CookingTimeFilter'
-import { SearchBar } from './SearchBar'
 
 export const MenuInner = () => {
   const searchParams = useSearchParams()
 
-  const [searchTerm, setSearchTerm] = useState(searchParams.get('search') || '')
   const [selectedCategory, setSelectedCategory] = useState<string | null>(
     searchParams.get('category'),
   )
@@ -29,7 +27,6 @@ export const MenuInner = () => {
 
   return (
     <Container>
-      <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
       <CategoryFilter
         selectedCategory={selectedCategory}
         setSelectedCategory={setSelectedCategory}
@@ -52,8 +49,8 @@ const SearchAndFiltersFallback = styled.div`
   display: flex;
   align-items: center;
   gap: ${({ theme }) => theme.spacing[2]};
-  height: 40px;
   width: 100%;
+  height: 40px;
 `
 
 export function Menu() {

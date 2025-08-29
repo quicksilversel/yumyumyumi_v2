@@ -2,16 +2,35 @@ import { useEffect, useState } from 'react'
 
 import type { BookmarkedRecipe } from '@/types'
 
-import { getBookmarks } from '@/lib/supabase/bookmarkService'
+import {
+  getBookmarks,
+  isBookmarked,
+  toggleBookmark,
+} from '@/lib/supabase/bookmarkService'
 
-export function useBookmarks() {
+interface UseBookmarksOptions {
+  recipeId?: string
+  onToggle?: () => void
+}
+
+export function useBookmarks(options: UseBookmarksOptions = {}) {
   const [bookmarks, setBookmarks] = useState<BookmarkedRecipe[]>([])
+  const [isBookmarkedState, setIsBookmarkedState] = useState(false)
 
   useEffect(() => {
     setBookmarks(getBookmarks())
 
+    if (options.recipeId) {
+      setIsBookmarkedState(isBookmarked(options.recipeId))
+    }
+
     const handleBookmarksChange = (event: CustomEvent<BookmarkedRecipe[]>) => {
       setBookmarks(event.detail)
+      if (options.recipeId) {
+        setIsBookmarkedState(
+          event.detail.some((b) => b.recipeId === options.recipeId)
+        )
+      }
     }
 
     window.addEventListener(
@@ -25,7 +44,27 @@ export function useBookmarks() {
         handleBookmarksChange as EventListener,
       )
     }
-  }, [])
+  }, [options.recipeId])
 
-  return bookmarks
+  const handleToggleBookmark = (e?: React.MouseEvent) => {
+    if (e) {
+      e.preventDefault()
+      e.stopPropagation()
+    }
+    
+    if (!options.recipeId) {
+      console.warn('Cannot toggle bookmark without recipeId')
+      return
+    }
+
+    const newState = toggleBookmark(options.recipeId)
+    setIsBookmarkedState(newState)
+    options.onToggle?.()
+  }
+
+  return {
+    bookmarks,
+    isBookmarked: isBookmarkedState,
+    toggleBookmark: handleToggleBookmark,
+  }
 }

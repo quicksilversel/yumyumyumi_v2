@@ -22,10 +22,10 @@ import {
 } from '@/styles/designTokens'
 
 const PageContainer = styled.div`
-  min-height: 100vh;
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  min-height: 100vh;
   padding: ${spacing[4]};
   background: linear-gradient(
     180deg,
@@ -35,18 +35,18 @@ const PageContainer = styled.div`
 `
 
 const AuthCard = styled.div`
-  background: ${colors.white};
-  border-radius: ${borderRadius.xl};
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
   width: 100%;
   max-width: 420px;
   padding: ${spacing[8]};
+  border-radius: ${borderRadius.xl};
+  background: ${colors.white};
+  box-shadow: 0 10px 25px rgb(0, 0, 0, 10%);
 `
 
 const TabContainer = styled.div`
   display: flex;
-  border-bottom: 1px solid ${colors.gray[200]};
   margin-bottom: ${spacing[6]};
+  border-bottom: 1px solid ${colors.gray[200]};
 `
 
 const Tab = styled.button<{ active: boolean }>`
@@ -96,8 +96,8 @@ const InputWrapper = styled.div`
 
 const PasswordToggle = styled(IconButton)`
   position: absolute;
-  right: ${spacing[2]};
   top: 50%;
+  right: ${spacing[2]};
   transform: translateY(-50%);
 `
 
@@ -106,14 +106,14 @@ const Form = styled.form`
 `
 
 const LinkButton = styled.button`
-  background: none;
+  margin-left: ${spacing[1]};
+  padding: 0;
   border: none;
+  background: none;
   color: ${colors.black};
+  font-size: inherit;
   text-decoration: underline;
   cursor: pointer;
-  font-size: inherit;
-  padding: 0;
-  margin-left: ${spacing[1]};
 
   &:hover {
     opacity: 0.7;

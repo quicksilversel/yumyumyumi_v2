@@ -80,16 +80,6 @@ export const Flex = styled.div<{
   wrap?: boolean
 }>`
   display: flex;
-  flex-direction: ${(props) => props.direction || 'row'};
-  align-items: ${(props) => {
-    const alignMap = {
-      start: 'flex-start',
-      center: 'center',
-      end: 'flex-end',
-      stretch: 'stretch',
-    }
-    return alignMap[props.align || 'start']
-  }};
   justify-content: ${(props) => {
     const justifyMap = {
       start: 'flex-start',
@@ -101,8 +91,17 @@ export const Flex = styled.div<{
     }
     return justifyMap[props.justify || 'start']
   }};
+  align-items: ${(props) => {
+    const alignMap = {
+      start: 'flex-start',
+      center: 'center',
+      end: 'flex-end',
+      stretch: 'stretch',
+    }
+    return alignMap[props.align || 'start']
+  }};
   gap: ${(props) => spacing[props.gap || 0]};
-  flex-wrap: ${(props) => (props.wrap ? 'wrap' : 'nowrap')};
+  flex-flow: ${(props) => props.direction || 'row'} ${(props) => (props.wrap ? 'wrap' : 'nowrap')};
 `
 
 export const Stack = styled(Flex)`

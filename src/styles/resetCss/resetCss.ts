@@ -35,13 +35,13 @@ export const resetCss = css`
   textarea,
   select {
     padding: 0;
-    font: inherit;
+    border-style: none;
+    background: transparent;
     color: inherit;
+    font: inherit;
     text-align: inherit;
     text-transform: inherit;
     vertical-align: middle;
-    background: transparent;
-    border-style: none;
   }
 
   li {

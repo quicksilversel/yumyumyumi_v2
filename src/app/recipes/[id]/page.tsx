@@ -27,7 +27,7 @@ export async function generateMetadata({
 
   return {
     title: `${recipe.title} - YumYumYumi`,
-    description: recipe.summary,
+    description: recipe.summary || recipe.title,
   }
 }
 

@@ -14,9 +14,7 @@ export const Ingredients = ({ recipe }: { recipe: Recipe }) => {
             <IngredientItem key={ingredient.name}>
               <Flex justify="between" align="center">
                 <span>{ingredient.name}</span>
-                <Label>
-                  {ingredient.amount} {ingredient.unit}
-                </Label>
+                <Label>{ingredient.amount}</Label>
               </Flex>
               {ingredient.isSpice && <Caption>Spice</Caption>}
             </IngredientItem>
@@ -30,8 +28,8 @@ export const Ingredients = ({ recipe }: { recipe: Recipe }) => {
 const IngredientList = styled.ul`
   display: flex;
   flex-direction: column;
+  gap: ${({ theme }) => theme.spacing[2]};
   width: 100%;
-  gap: 2;
 `
 
 const IngredientItem = styled.li`

@@ -90,17 +90,14 @@ export const DialogOverlay = styled.div<{
   open?: boolean
 }>`
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.3);
   z-index: 1000;
   display: ${(props) => (props.open ? 'flex' : 'none')};
-  align-items: center;
   justify-content: center;
+  align-items: center;
   padding: ${({ theme }) => theme.spacing[4]};
+  background-color: rgb(0, 0, 0, 30%);
   animation: ${fadeIn} ${({ theme }) => theme.transition.fast};
+  inset: 0;
 `
 
 export const DialogContent = styled.div<{
@@ -130,17 +127,17 @@ export const DialogContent = styled.div<{
 
 export const DialogHeader = styled.div`
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
   padding: ${({ theme }) => theme.spacing[6]};
   border-bottom: 1px solid ${({ theme }) => theme.colors.gray[200]};
 `
 
 export const DialogTitle = styled.h2`
   margin: 0;
+  color: ${({ theme }) => theme.colors.black};
   font-size: ${({ theme }) => theme.typography.fontSize['2xl']};
   font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
-  color: ${({ theme }) => theme.colors.black};
 `
 
 export const DialogBody = styled.div`
@@ -149,8 +146,8 @@ export const DialogBody = styled.div`
 
 export const DialogActions = styled.div`
   display: flex;
-  align-items: center;
   justify-content: flex-end;
+  align-items: center;
   gap: ${({ theme }) => theme.spacing[3]};
   padding: ${({ theme }) => theme.spacing[6]};
   padding-top: 0;

@@ -8,7 +8,7 @@ export const Header = ({ recipe }: { recipe: Recipe }) => {
   return (
     <Container>
       <H1>{recipe.title}</H1>
-      <Body muted>{recipe.summary}</Body>
+      {recipe.summary && <Body muted>{recipe.summary}</Body>}
     </Container>
   )
 }

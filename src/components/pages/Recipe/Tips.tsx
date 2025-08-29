@@ -24,16 +24,16 @@ export const Tips = ({ recipe }: RecipeDetailProps) => {
 }
 
 const TipsBox = styled.div`
+  margin-top: ${({ theme }) => theme.spacing[6]};
   padding: ${({ theme }) => theme.spacing[4]};
-  background-color: ${({ theme }) => theme.colors.primary}20;
   border: 1px solid ${({ theme }) => theme.colors.primary};
   border-radius: ${({ theme }) => theme.borderRadius.md};
-  margin-top: ${({ theme }) => theme.spacing[6]};
+  background-color: ${({ theme }) => theme.colors.primary}20;
 `
 
 const StyledInfoIcon = styled(InfoIcon)`
-  color: ${({ theme }) => theme.colors.primary};
   margin-right: 0.25rem;
+  color: ${({ theme }) => theme.colors.primary};
 `
 
 const TitleContainer = styled.div`

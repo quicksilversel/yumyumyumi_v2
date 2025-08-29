@@ -26,11 +26,11 @@ import {
 } from '../Forms'
 
 const ErrorMessage = styled.div`
+  margin-bottom: ${spacing[4]};
   padding: ${spacing[3]} ${spacing[4]};
+  border-radius: 8px;
   background-color: ${colors.error};
   color: ${colors.white};
-  border-radius: 8px;
-  margin-bottom: ${spacing[4]};
 `
 
 const DialogActions = styled.div`
@@ -71,7 +71,7 @@ export function AddRecipeDialog({
 
   // Content
   const [ingredients, setIngredients] = useState<Ingredient[]>([
-    { name: '', amount: '', unit: '', isSpice: false },
+    { name: '', amount: '', isSpice: false },
   ])
   const [directions, setDirections] = useState<Direction[]>([
     { title: '', description: '' },
@@ -116,12 +116,7 @@ export function AddRecipeDialog({
       return
     }
 
-    if (
-      !title ||
-      !summary ||
-      ingredients.length === 0 ||
-      directions.length === 0
-    ) {
+    if (!title || ingredients.length === 0 || directions.length === 0) {
       setError('Please fill in all required fields')
       return
     }
@@ -211,7 +206,7 @@ export function AddRecipeDialog({
     setPrepTime(15)
     setCookTime(30)
     setServings(4)
-    setIngredients([{ name: '', amount: '', unit: '', isSpice: false }])
+    setIngredients([{ name: '', amount: '', isSpice: false }])
     setDirections([{ title: '', description: '' }])
     setTags([])
     setTips('')

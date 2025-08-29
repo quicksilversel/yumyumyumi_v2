@@ -18,7 +18,7 @@ const LogoLink = styled(Link)`
 `
 
 const LogoText = styled.span`
-  letter-spacing: 0.1em;
   font-size: ${({ theme }) => theme.typography.fontSize.xl};
   font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
+  letter-spacing: 0.1em;
 `

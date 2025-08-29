@@ -36,7 +36,7 @@ const RecipeContainer = styled.div`
 `
 
 const InnerContainer = styled.div`
-  @media (max-width: 35.1875rem) {
+  @media (width <= 35.1875rem) {
     margin: ${({ theme }) => theme.spacing[4]};
   }
 `

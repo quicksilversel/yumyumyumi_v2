@@ -98,19 +98,18 @@ const ImageContainer = styled.div`
   position: relative;
   width: 100%;
   max-width: 400px;
-  margin: 0 auto;
 `
 
 const ImagePreview = styled.div`
-  width: 100%;
-  aspect-ratio: 16/9;
-  border-radius: ${borderRadius.lg};
-  overflow: hidden;
-  background-color: ${colors.gray[100]};
-  display: flex;
-  align-items: center;
-  justify-content: center;
   position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  border-radius: ${borderRadius.lg};
+  background-color: ${colors.gray[100]};
+  overflow: hidden;
+  aspect-ratio: 16/9;
 
   img {
     width: 100%;
@@ -121,15 +120,15 @@ const ImagePreview = styled.div`
 
 const PlaceholderContent = styled.div`
   display: flex;
-  align-items: center;
   justify-content: center;
-  text-align: center;
+  align-items: center;
   color: ${colors.gray[500]};
+  text-align: center;
 
   svg {
-    font-size: 48px;
     margin-right: ${spacing[2]};
     margin-bottom: ${spacing[2]};
+    font-size: 48px;
   }
 `
 
@@ -137,10 +136,10 @@ const DeleteButton = styled(IconButton)`
   position: absolute;
   top: ${spacing[2]};
   right: ${spacing[2]};
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: rgb(255, 255, 255, 90%);
 
   &:hover {
-    background-color: rgba(255, 255, 255, 1);
+    background-color: rgb(255, 255, 255, 100%);
   }
 `
 

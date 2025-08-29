@@ -13,24 +13,24 @@ type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'text'
 type ButtonSize = 'sm' | 'md' | 'lg'
 
 const baseStyles = css`
+  position: relative;
   display: inline-flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   gap: ${spacing[2]};
+  border: none;
   font-family: ${typography.fontFamily.sans};
   font-weight: ${typography.fontWeight.medium};
-  cursor: pointer;
-  border: none;
-  outline: none;
-  transition: all ${transition.default};
   text-decoration: none;
+  cursor: pointer;
+  transition: all ${transition.default};
+  outline: none;
   white-space: nowrap;
   user-select: none;
-  position: relative;
 
   &:disabled {
-    opacity: 0.5;
     cursor: not-allowed;
+    opacity: 0.5;
   }
 
   &:focus-visible {
@@ -43,20 +43,20 @@ const sizeStyles = {
   sm: css`
     height: 32px;
     padding: 0 ${spacing[3]};
-    font-size: ${typography.fontSize.sm};
     border-radius: ${borderRadius.sm};
+    font-size: ${typography.fontSize.sm};
   `,
   md: css`
     height: 40px;
     padding: 0 ${spacing[4]};
-    font-size: ${typography.fontSize.base};
     border-radius: ${borderRadius.default};
+    font-size: ${typography.fontSize.base};
   `,
   lg: css`
     height: 48px;
     padding: 0 ${spacing[6]};
-    font-size: ${typography.fontSize.lg};
     border-radius: ${borderRadius.md};
+    font-size: ${typography.fontSize.lg};
   `,
 }
 
@@ -74,13 +74,13 @@ const variantStyles = {
     }
   `,
   secondary: css`
+    border: 1px solid ${colors.gray[300]};
     background-color: ${colors.white};
     color: ${colors.black};
-    border: 1px solid ${colors.gray[300]};
 
     &:hover:not(:disabled) {
-      background-color: ${colors.gray[50]};
       border-color: ${colors.gray[400]};
+      background-color: ${colors.gray[50]};
     }
 
     &:active:not(:disabled) {
@@ -88,9 +88,9 @@ const variantStyles = {
     }
   `,
   ghost: css`
+    border: 1px solid transparent;
     background-color: transparent;
     color: ${colors.black};
-    border: 1px solid transparent;
 
     &:hover:not(:disabled) {
       background-color: ${colors.gray[50]};
@@ -101,11 +101,11 @@ const variantStyles = {
     }
   `,
   text: css`
+    height: auto;
+    padding: 0;
+    border-radius: 0;
     background-color: transparent;
     color: ${colors.black};
-    padding: 0;
-    height: auto;
-    border-radius: 0;
 
     &:hover:not(:disabled) {
       opacity: 0.7;
@@ -136,10 +136,10 @@ export const IconButton = styled.button<{
   size?: ButtonSize
 }>`
   ${baseStyles}
-  background-color: transparent;
-  color: ${colors.gray[600]};
   padding: 0;
+  background-color: transparent;
   border-radius: ${borderRadius.full};
+  color: ${colors.gray[600]};
 
   ${(props) =>
     props.size === 'sm' &&

@@ -44,15 +44,15 @@ const InfoGrid = styled.div`
   gap: ${({ theme }) => theme.spacing[4]};
   margin-bottom: ${({ theme }) => theme.spacing[4]};
 
-  @media (max-width: 35.1875rem) {
+  @media (width <= 35.1875rem) {
     grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
   }
 `
 
 const InfoCard = styled.div`
   padding: ${({ theme }) => theme.spacing[4]};
-  background-color: ${({ theme }) => theme.colors.gray[50]};
   border-radius: ${({ theme }) => theme.borderRadius.md};
-  text-align: center;
+  background-color: ${({ theme }) => theme.colors.gray[50]};
   font-size: ${({ theme }) => theme.typography.fontSize.sm};
+  text-align: center;
 `

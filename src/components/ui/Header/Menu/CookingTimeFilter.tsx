@@ -74,10 +74,10 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   gap: ${({ theme }) => theme.spacing[2]};
-  background-color: transparent;
   width: 100%;
+  background-color: transparent;
 
-  @media (max-width: 35.1875rem) {
+  @media (width <= 35.1875rem) {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -93,14 +93,13 @@ const StyledSummary = styled.summary`
   display: flex;
   align-items: center;
   gap: ${({ theme }) => theme.spacing[1]};
-  padding: ${({ theme }) => theme.spacing[2]} ${({ theme }) => theme.spacing[3]};
-
-  cursor: pointer;
-  font-size: ${({ theme }) => theme.typography.fontSize.sm};
-  color: ${({ theme }) => theme.colors.gray[700]};
-  white-space: nowrap;
-  transition: all ${({ theme }) => theme.transition.fast};
   height: 40px;
+  padding: ${({ theme }) => theme.spacing[2]} ${({ theme }) => theme.spacing[3]};
+  color: ${({ theme }) => theme.colors.gray[700]};
+  font-size: ${({ theme }) => theme.typography.fontSize.sm};
+  cursor: pointer;
+  transition: all ${({ theme }) => theme.transition.fast};
+  white-space: nowrap;
   list-style: none;
 
   &::-webkit-details-marker {
@@ -109,12 +108,12 @@ const StyledSummary = styled.summary`
 
   &:hover {
     border-color: ${({ theme }) => theme.colors.primary};
-    background-color: rgba(245, 178, 172, 0.05);
+    background-color: rgb(245, 178, 172, 5%);
   }
 
   svg {
-    font-size: 18px;
     color: ${({ theme }) => theme.colors.gray[500]};
+    font-size: 18px;
     transition: transform ${({ theme }) => theme.transition.default};
   }
 
@@ -129,14 +128,14 @@ const StyledSummary = styled.summary`
 `
 
 const DropdownContainer = styled.div`
-  background-color: ${({ theme }) => theme.colors.white};
-  border-radius: ${({ theme }) => theme.borderRadius.lg};
-  box-shadow: ${({ theme }) => theme.shadow.xl};
+  z-index: 1000;
   min-width: 240px;
   max-height: 0;
-  overflow: hidden;
-  z-index: 1000;
+  border-radius: ${({ theme }) => theme.borderRadius.lg};
+  background-color: ${({ theme }) => theme.colors.white};
   transition: max-height ${({ theme }) => theme.transition.default};
+  overflow: hidden;
+  box-shadow: ${({ theme }) => theme.shadow.xl};
 
   details[open] & {
     max-height: 400px;
@@ -145,17 +144,17 @@ const DropdownContainer = styled.div`
 
 const DropdownItem = styled.button<{ selected?: boolean }>`
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
   width: 100%;
   padding: ${({ theme }) => theme.spacing[3]} ${({ theme }) => theme.spacing[4]};
+  border: none;
   background: ${({ selected, theme }) =>
     selected ? theme.colors.gray[50] : 'transparent'};
-  border: none;
-  cursor: pointer;
-  font-size: ${({ theme }) => theme.typography.fontSize.sm};
   color: ${({ theme }) => theme.colors.gray[800]};
+  font-size: ${({ theme }) => theme.typography.fontSize.sm};
   text-align: left;
+  cursor: pointer;
   transition: background-color ${({ theme }) => theme.transition.fast};
 
   &:hover {
@@ -178,10 +177,10 @@ const CheckMark = styled.span`
 `
 
 const StyledExpandMoreIcon = styled(ExpandMoreIcon)`
-  font-size: 18px;
-  color: ${({ theme }) => theme.colors.gray[500]};
-  transition: transform ${({ theme }) => theme.transition.default};
   margin-left: auto;
+  color: ${({ theme }) => theme.colors.gray[500]};
+  font-size: 18px;
+  transition: transform ${({ theme }) => theme.transition.default};
 
   details[open] & {
     transform: rotate(180deg);

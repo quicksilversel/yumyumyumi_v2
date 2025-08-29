@@ -1,69 +1,30 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 
 import styled from '@emotion/styled'
-import BookmarkIcon from '@mui/icons-material/Bookmark'
-import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder'
-import DeleteIcon from '@mui/icons-material/Delete'
-import EditIcon from '@mui/icons-material/Edit'
-import MoreVertIcon from '@mui/icons-material/MoreVert'
 import Image from 'next/image'
 
 import type { Recipe } from '@/types'
 
-import { IconButton } from '@/components/ui'
+import { BookmarkButton } from '@/components/ui/BookmarkButton'
 import { DeleteRecipeModal } from '@/components/ui/Modals/DeleteRecipeModal'
 import { EditRecipeDialog } from '@/components/ui/Modals/EditRecipeDialog'
+import { MoreActions } from '@/components/ui/MoreActions'
 import { useAuth } from '@/contexts/AuthContext'
-import { isBookmarked, toggleBookmark } from '@/lib/supabase/bookmarkService'
-import { deleteRecipe } from '@/lib/supabase/supabaseRecipeService'
+import { useRecipeActions } from '@/hooks/useRecipeActions'
 
 export const Hero = ({ recipe }: { recipe: Recipe }) => {
   const { user } = useAuth()
-  const [editDialogOpen, setEditDialogOpen] = useState(false)
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
   const [currentRecipe, setCurrentRecipe] = useState(recipe)
-  const [isBookmarkedState, setIsBookmarkedState] = useState(false)
-
-  useEffect(() => {
-    setIsBookmarkedState(isBookmarked(recipe.id))
-  }, [recipe.id])
-
-  const handleBookmarkClick = () => {
-    const newState = toggleBookmark(recipe.id)
-    setIsBookmarkedState(newState)
-  }
+  
+  const { isDeleting, editDialogOpen, setEditDialogOpen, handleEdit, handleDelete } = 
+    useRecipeActions(currentRecipe)
 
   const isOwner = user && currentRecipe.user_id === user.id
-
-  const handleEdit = () => {
-    setEditDialogOpen(true)
-  }
 
   const handleRecipeUpdated = (updatedRecipe: Recipe) => {
     setCurrentRecipe(updatedRecipe)
     window.location.reload()
-  }
-  const [isDeleting, setIsDeleting] = useState(false)
-  const [menuOpen, setMenuOpen] = useState(false)
-
-  const handleMenuToggle = (e: React.MouseEvent) => {
-    e.preventDefault()
-    e.stopPropagation()
-    setMenuOpen(!menuOpen)
-  }
-
-  const handleDelete = async () => {
-    setMenuOpen(false)
-    if (window.confirm(`Are you sure you want to delete "${recipe.title}"?`)) {
-      setIsDeleting(true)
-      const success = await deleteRecipe(recipe.id)
-      if (success) {
-        window.location.reload()
-      } else {
-        alert('Failed to delete recipe')
-      }
-      setIsDeleting(false)
-    }
   }
 
   return (
@@ -81,34 +42,14 @@ export const Hero = ({ recipe }: { recipe: Recipe }) => {
           sizes="(max-width: 1200px) 100vw, 1200px"
         />
         {user && (
-          <BookmarkButton
-            size="sm"
-            onClick={handleBookmarkClick}
-            aria-label={isBookmarkedState ? 'Remove bookmark' : 'Add bookmark'}
-          >
-            {isBookmarkedState ? <BookmarkIcon /> : <BookmarkBorderIcon />}
-          </BookmarkButton>
+          <StyledBookmarkButton recipeId={currentRecipe.id} size="sm" />
         )}
         {isOwner && (
-          <>
-            <StyledIconButton
-              onClick={handleMenuToggle}
-              size="sm"
-              disabled={isDeleting}
-            >
-              <MoreVertIcon />
-            </StyledIconButton>
-            <Menu open={menuOpen}>
-              <MenuItem onClick={handleEdit}>
-                <EditIcon />
-                <span>Edit Recipe</span>
-              </MenuItem>
-              <MenuItem onClick={handleDelete}>
-                <DeleteIcon />
-                <span>Delete Recipe</span>
-              </MenuItem>
-            </Menu>
-          </>
+          <StyledMoreActions
+            onEdit={handleEdit}
+            onDelete={handleDelete}
+            isDeleting={isDeleting}
+          />
         )}
       </ImageContainer>
       <EditRecipeDialog
@@ -132,60 +73,14 @@ const ImageContainer = styled.div`
   aspect-ratio: 16 / 9;
 `
 
-const StyledIconButton = styled(IconButton)`
+const StyledBookmarkButton = styled(BookmarkButton)`
   position: absolute;
   top: 12px;
-  right: 12px;
-  background-color: rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(10px);
-
-  &:hover {
-    background-color: rgba(255, 255, 255, 0.95);
-  }
-`
-
-const BookmarkButton = styled(StyledIconButton)`
   right: 50px;
 `
 
-const Menu = styled.div<{ open: boolean }>`
+const StyledMoreActions = styled(MoreActions)`
   position: absolute;
-  top: 50px;
+  top: 12px;
   right: 12px;
-  margin-top: ${({ theme }) => theme.spacing[1]};
-  background-color: ${({ theme }) => theme.colors.white};
-  border: 1px solid ${({ theme }) => theme.colors.gray[200]};
-  border-radius: ${({ theme }) => theme.borderRadius.lg};
-  box-shadow: ${({ theme }) => theme.shadow.lg};
-  min-width: 180px;
-  z-index: 1000;
-  display: ${(props) => (props.open ? 'block' : 'none')};
-`
-
-const MenuItem = styled.button`
-  display: flex;
-  align-items: center;
-  gap: ${({ theme }) => theme.spacing[4]};
-  width: 100%;
-  padding: ${({ theme }) => theme.spacing[3]} ${({ theme }) => theme.spacing[4]};
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: ${({ theme }) => theme.typography.fontSize.sm};
-  color: ${({ theme }) => theme.colors.black};
-  text-align: left;
-  transition: background-color ${({ theme }) => theme.transition.fast};
-
-  &:hover {
-    background-color: ${({ theme }) => theme.colors.gray[50]};
-  }
-
-  &:first-of-type {
-    border-radius: ${({ theme }) => theme.borderRadius.lg}
-      ${({ theme }) => theme.borderRadius.lg} 0 0;
-  }
-
-  svg {
-    font-size: 18px;
-  }
 `

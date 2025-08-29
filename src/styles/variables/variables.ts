@@ -16,7 +16,7 @@ export const variables = css`
   }
 
   /* Mobile Adjustments */
-  @media (max-width: 35.1875rem) {
+  @media (width <= 35.1875rem) {
     :root {
       --font-size-extra-large: 1.75rem; /* ~28px */
       --font-size-large: 1.5rem; /* ~24px */

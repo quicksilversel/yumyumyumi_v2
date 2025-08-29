@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback, useEffect, useState, Suspense } from 'react'
+import { useCallback, useEffect, Suspense } from 'react'
 
 import { keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
@@ -8,11 +8,13 @@ import { useSearchParams } from 'next/navigation'
 
 import type { Recipe, RecipeFilters } from '@/types'
 
-import { Container, Flex } from '@/components/ui'
+import { Flex } from '@/components/ui'
+import { useRecipeContext } from '@/contexts/RecipeContext'
 import { useBookmarks } from '@/hooks/useBookmarks'
 import { searchRecipes } from '@/lib/supabase/recipeService'
 
 import { RecipeGrid } from './RecipeGrid'
+import { SearchBar } from './SearchBar'
 
 import { EditRecipeDialog } from '../../ui/Modals/EditRecipeDialog'
 
@@ -22,19 +24,24 @@ type RecipeListProps = {
 
 function RecipeListInner({ initialRecipes }: RecipeListProps) {
   const searchParams = useSearchParams()
-  const [recipes, setRecipes] = useState<Recipe[]>(initialRecipes)
-  const [filteredRecipes, setFilteredRecipes] =
-    useState<Recipe[]>(initialRecipes)
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
-  const [editingRecipe, setEditingRecipe] = useState<Recipe | null>(null)
-  const bookmarks = useBookmarks()
+  const { bookmarks } = useBookmarks()
+  const {
+    recipes,
+    clientSearchTerm,
+    loading,
+    error,
+    editingRecipe,
+    setRecipes,
+    setFilteredRecipes,
+    setClientSearchTerm,
+    setLoading,
+    setError,
+    setEditingRecipe,
+    handleRecipeUpdated,
+  } = useRecipeContext()
 
   const getFiltersFromParams = useCallback((): RecipeFilters => {
     const filters: RecipeFilters = {}
-
-    const search = searchParams.get('search')
-    if (search) filters.searchTerm = search
 
     const category = searchParams.get('category')
     if (category) filters.category = category as any
@@ -65,6 +72,7 @@ function RecipeListInner({ initialRecipes }: RecipeListProps) {
           )
         }
 
+        setRecipes(results)
         setFilteredRecipes(results)
       } catch (err) {
         setError('Failed to filter recipes. Please try again.')
@@ -75,52 +83,56 @@ function RecipeListInner({ initialRecipes }: RecipeListProps) {
     }
 
     applyFilters()
-  }, [searchParams, bookmarks, getFiltersFromParams])
+  }, [
+    searchParams,
+    bookmarks,
+    getFiltersFromParams,
+    setLoading,
+    setError,
+    setRecipes,
+    setFilteredRecipes,
+  ])
 
-  const handleBookmarkChange = () => {
-    const filters = getFiltersFromParams()
-    if (filters.showBookmarkedOnly) {
-      window.location.reload()
+  useEffect(() => {
+    if (!clientSearchTerm) {
+      setFilteredRecipes(recipes)
+      return
     }
-  }
 
-  const handleEditRecipe = (recipe: Recipe) => {
-    setEditingRecipe(recipe)
-  }
+    const searchLower = clientSearchTerm.toLowerCase()
+    const filtered = recipes.filter((recipe) => {
+      return (
+        recipe.title.toLowerCase().includes(searchLower) ||
+        recipe.summary?.toLowerCase().includes(searchLower) ||
+        recipe.ingredients.some((ing) =>
+          ing.name.toLowerCase().includes(searchLower),
+        ) ||
+        recipe.category?.toLowerCase().includes(searchLower)
+      )
+    })
+    setFilteredRecipes(filtered)
+  }, [clientSearchTerm, recipes, setFilteredRecipes])
 
-  const handleRecipeUpdated = (updatedRecipe: Recipe) => {
-    setRecipes((prev) =>
-      prev.map((r) => (r.id === updatedRecipe.id ? updatedRecipe : r)),
-    )
-    setFilteredRecipes((prev) =>
-      prev.map((r) => (r.id === updatedRecipe.id ? updatedRecipe : r)),
-    )
-    window.location.reload()
-  }
-
-  const handleDeleteRecipe = () => {
-    window.location.reload()
-  }
+  useEffect(() => {
+    setRecipes(initialRecipes)
+    setFilteredRecipes(initialRecipes)
+  }, [initialRecipes, setRecipes, setFilteredRecipes])
 
   return (
     <>
-      <Container maxWidth="lg">
-        <MainContent>
-          {error && <ErrorMessage>{error}</ErrorMessage>}
-
-          {loading ? (
-            <LoadingContainer justify="center">
-              <LoadingSpinner />
-            </LoadingContainer>
-          ) : (
-            <RecipeGrid
-              recipes={filteredRecipes}
-              onBookmarkChange={handleBookmarkChange}
-              onEdit={handleEditRecipe}
-              onDelete={handleDeleteRecipe}
-            />
-          )}
-        </MainContent>
+      <Container>
+        <SearchBar
+          searchTerm={clientSearchTerm}
+          onSearchChange={setClientSearchTerm}
+        />
+        {error && <ErrorMessage>{error}</ErrorMessage>}
+        {loading ? (
+          <LoadingContainer justify="center">
+            <LoadingSpinner />
+          </LoadingContainer>
+        ) : (
+          <RecipeGrid />
+        )}
       </Container>
       {editingRecipe && (
         <EditRecipeDialog
@@ -134,19 +146,21 @@ function RecipeListInner({ initialRecipes }: RecipeListProps) {
   )
 }
 
-const MainContent = styled.div`
-  margin-top: ${({ theme }) => theme.spacing[6]};
-  margin-bottom: ${({ theme }) => theme.spacing[8]};
-  position: relative;
-  z-index: 1;
+const Container = styled.main`
+  max-width: 1000px;
+  margin: 0 auto;
+
+  @media (width <= 35.1875rem) {
+    margin: ${({ theme }) => theme.spacing[4]};
+  }
 `
 
 const ErrorMessage = styled.div`
-  background-color: ${({ theme }) => theme.colors.error};
-  color: ${({ theme }) => theme.colors.white};
+  margin-bottom: ${({ theme }) => theme.spacing[6]};
   padding: ${({ theme }) => theme.spacing[4]};
   border-radius: ${({ theme }) => theme.borderRadius.lg};
-  margin-bottom: ${({ theme }) => theme.spacing[6]};
+  background-color: ${({ theme }) => theme.colors.error};
+  color: ${({ theme }) => theme.colors.white};
 `
 
 const spin = keyframes`
@@ -162,9 +176,9 @@ const LoadingSpinner = styled.div`
   width: 48px;
   height: 48px;
   border: 3px solid ${({ theme }) => theme.colors.gray[200]};
-  border-top-color: ${({ theme }) => theme.colors.black};
   border-radius: 50%;
   animation: ${spin} 1s linear infinite;
+  border-top-color: ${({ theme }) => theme.colors.black};
 `
 
 const LoadingContainer = styled(Flex)`
@@ -173,12 +187,10 @@ const LoadingContainer = styled(Flex)`
 
 const RecipeListFallback = () => {
   return (
-    <Container maxWidth="lg">
-      <MainContent>
-        <LoadingContainer justify="center">
-          <LoadingSpinner />
-        </LoadingContainer>
-      </MainContent>
+    <Container>
+      <LoadingContainer justify="center">
+        <LoadingSpinner />
+      </LoadingContainer>
     </Container>
   )
 }

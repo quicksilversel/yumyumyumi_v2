@@ -16,10 +16,10 @@ import {
 } from '@/styles/designTokens'
 
 const PageContainer = styled.div`
-  min-height: 100vh;
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  min-height: 100vh;
   padding: ${spacing[4]};
   background: linear-gradient(
     180deg,
@@ -29,40 +29,40 @@ const PageContainer = styled.div`
 `
 
 const AccountCard = styled.div`
-  background: ${colors.white};
-  border-radius: ${borderRadius.xl};
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
   width: 100%;
   max-width: 420px;
   padding: ${spacing[8]};
+  border-radius: ${borderRadius.xl};
+  background: ${colors.white};
+  box-shadow: 0 10px 25px rgb(0, 0, 0, 10%);
 `
 
 const Title = styled.h1`
+  margin-bottom: ${spacing[6]};
+  color: ${colors.black};
   font-size: ${typography.fontSize.xl};
   font-weight: ${typography.fontWeight.bold};
-  color: ${colors.black};
-  margin-bottom: ${spacing[6]};
   text-align: center;
 `
 
 const InfoSection = styled.div`
-  background: ${colors.gray[50]};
-  border-radius: ${borderRadius.lg};
-  padding: ${spacing[4]};
   margin-bottom: ${spacing[6]};
+  padding: ${spacing[4]};
+  border-radius: ${borderRadius.lg};
+  background: ${colors.gray[50]};
 `
 
 const Label = styled.div`
-  font-size: ${typography.fontSize.sm};
-  color: ${colors.gray[600]};
   margin-bottom: ${spacing[1]};
+  color: ${colors.gray[600]};
+  font-size: ${typography.fontSize.sm};
   font-weight: ${typography.fontWeight.medium};
 `
 
 const Value = styled.div`
-  font-size: ${typography.fontSize.base};
   color: ${colors.black};
-  word-break: break-word;
+  font-size: ${typography.fontSize.base};
+  word-break: break-all;
 `
 
 export default function AccountPage() {

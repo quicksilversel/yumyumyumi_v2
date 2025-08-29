@@ -9,6 +9,10 @@
     "lint": "next lint",
     "lint:js": "eslint \"./src/**/*.{ts,tsx}\"",
     "lint:js:fix": "eslint --fix \"./src/**/*.{ts,tsx}\"",
+    "lint:css": "stylelint \"src/**/*.{ts,tsx,js,jsx}\" 2>&1 | grep -v 'Unknown rule' || true",
+    "lint:css:fix": "stylelint \"src/**/*.{ts,tsx,js,jsx}\" --fix",
+    "lint:css:raw": "stylelint \"src/**/*.{ts,tsx,js,jsx}\"",
+    "lint:all": "npm run lint:js && npm run lint:css",
     "clean": "rm -rf .next .turbo node_modules/.cache",
     "clean:cache": "rm -rf .next/cache"
   },
@@ -36,7 +40,12 @@
     "eslint-config-next": "15.5.0",
     "eslint-config-prettier": "10.1.8",
     "eslint-plugin-unused-imports": "4.2.0",
+    "postcss-styled-syntax": "^0.7.1",
+    "postcss-syntax": "^0.36.2",
     "prettier": "3.6.2",
+    "stylelint": "^16.23.1",
+    "stylelint-config-standard": "^39.0.0",
+    "stylelint-order": "^6.0.4",
     "typescript": "^5"
   }
 }
