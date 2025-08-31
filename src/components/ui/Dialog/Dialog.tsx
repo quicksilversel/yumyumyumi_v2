@@ -4,9 +4,9 @@ import { css, keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
 import CloseIcon from '@mui/icons-material/Close'
 
-import { IconButton } from './Button'
+import { IconButton } from '../Button'
 
-type DialogProps = {
+export type DialogProps = {
   open: boolean
   onClose: () => void
   title?: string | ReactNode
@@ -103,13 +103,13 @@ export const DialogOverlay = styled.div<{
 export const DialogContent = styled.div<{
   maxWidth?: 'sm' | 'md' | 'lg' | 'xl'
 }>`
-  background-color: ${({ theme }) => theme.colors.white};
-  border-radius: ${({ theme }) => theme.borderRadius.xl};
-  box-shadow: ${({ theme }) => theme.shadow.xl};
   position: relative;
   width: 100%;
   max-height: 90vh;
   overflow: auto;
+  background-color: ${({ theme }) => theme.colors.white};
+  border-radius: ${({ theme }) => theme.borderRadius.xl};
+  box-shadow: ${({ theme }) => theme.shadow.xl};
   animation: ${slideUp} ${({ theme }) => theme.transition.default};
 
   ${(props) => {
@@ -146,9 +146,9 @@ export const DialogBody = styled.div`
 
 export const DialogActions = styled.div`
   display: flex;
+  gap: ${({ theme }) => theme.spacing[3]};
   justify-content: flex-end;
   align-items: center;
-  gap: ${({ theme }) => theme.spacing[3]};
   padding: ${({ theme }) => theme.spacing[6]};
   padding-top: 0;
 `

@@ -55,7 +55,7 @@ export async function searchRecipes(filters: RecipeFilters): Promise<Recipe[]> {
       return false
     }
 
-    if (filters.maxCookingTime && recipe.totalTime > filters.maxCookingTime) {
+    if (filters.maxCookingTime && recipe.cookTime > filters.maxCookingTime) {
       return false
     }
 

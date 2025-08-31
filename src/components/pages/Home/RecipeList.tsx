@@ -16,7 +16,7 @@ import { searchRecipes } from '@/lib/supabase/recipeService'
 import { RecipeGrid } from './RecipeGrid'
 import { SearchBar } from './SearchBar'
 
-import { EditRecipeDialog } from '../../ui/Modals/EditRecipeDialog'
+import { EditRecipeDialog } from '../Modals/EditRecipeDialog'
 
 type RecipeListProps = {
   initialRecipes: Recipe[]

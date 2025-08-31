@@ -7,20 +7,52 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import type { Ingredient } from '@/types'
 
 import { Button, IconButton } from '@/components/ui/Button'
-import { Input, FormField } from '@/components/ui/Input'
+import { Input } from '@/components/ui/Forms/Input'
 import { Stack } from '@/components/ui/Layout'
 import { H6, Caption } from '@/components/ui/Typography'
+import { useRecipeForm } from '@/contexts/RecipeFormContext'
 import { colors, spacing, borderRadius } from '@/styles/designTokens'
 
-type IngredientsFormProps = {
-  ingredients: Ingredient[]
-  onChange: (ingredients: Ingredient[]) => void
+type Props = {
+  mode: 'new' | 'edit'
 }
 
-export function IngredientsForm({
-  ingredients,
-  onChange,
-}: IngredientsFormProps) {
+export function validateIngredients(ingredients: Ingredient[]): {
+  isValid: boolean
+  error?: string
+  validIngredients?: Ingredient[]
+} {
+  if (!ingredients || ingredients.length === 0) {
+    return {
+      isValid: false,
+      error: 'At least one ingredient is required',
+    }
+  }
+
+  const validIngredients = ingredients
+    .filter((ing) => ing.name?.trim() && ing.amount?.trim())
+    .map((ing) => ({
+      name: String(ing.name).trim(),
+      amount: String(ing.amount).trim(),
+      isSpice: Boolean(ing.isSpice),
+    }))
+
+  if (validIngredients.length === 0) {
+    return {
+      isValid: false,
+      error: 'Please add at least one ingredient with name and amount',
+    }
+  }
+
+  return {
+    isValid: true,
+    validIngredients,
+  }
+}
+
+export function IngredientsForm({ mode }: Props) {
+  const { recipe, setRecipe } = useRecipeForm(mode)
+  const ingredients = recipe.ingredients || []
   const handleIngredientChange = (
     index: number,
     field: keyof Ingredient,
@@ -31,15 +63,24 @@ export function IngredientsForm({
       ...newIngredients[index],
       [field]: value,
     }
-    onChange(newIngredients)
+    setRecipe((prev) => ({ ...prev, ingredients: newIngredients }))
   }
 
   const addIngredient = () => {
-    onChange([...ingredients, { name: '', amount: '', isSpice: false }])
+    setRecipe((prev) => ({
+      ...prev,
+      ingredients: [
+        ...(prev.ingredients || []),
+        { name: '', amount: '', isSpice: false },
+      ],
+    }))
   }
 
   const removeIngredient = (index: number) => {
-    onChange(ingredients.filter((_, i) => i !== index))
+    setRecipe((prev) => ({
+      ...prev,
+      ingredients: (prev.ingredients || []).filter((_, i) => i !== index),
+    }))
   }
 
   return (
@@ -60,29 +101,23 @@ export function IngredientsForm({
         <Stack gap={2}>
           {ingredients.map((ingredient, index) => (
             <IngredientRow key={index}>
-              <FormField>
-                <Input
-                  placeholder="Ingredient name *"
-                  value={ingredient.name || ''}
-                  onChange={(e) =>
-                    handleIngredientChange(index, 'name', e.target.value)
-                  }
-                  required
-                  fullWidth
-                />
-              </FormField>
+              <Input
+                placeholder="Ingredient name *"
+                value={ingredient.name || ''}
+                onChange={(e) =>
+                  handleIngredientChange(index, 'name', e.target.value)
+                }
+                required
+              />
 
-              <FormField>
-                <Input
-                  placeholder="Amount (e.g., 2 cups, 1 tbsp, 500g) *"
-                  value={ingredient.amount || ''}
-                  onChange={(e) =>
-                    handleIngredientChange(index, 'amount', e.target.value)
-                  }
-                  required
-                  fullWidth
-                />
-              </FormField>
+              <Input
+                placeholder="Amount (e.g., 2 cups, 1 tbsp, 500g) *"
+                value={ingredient.amount || ''}
+                onChange={(e) =>
+                  handleIngredientChange(index, 'amount', e.target.value)
+                }
+                required
+              />
 
               <SpiceToggle>
                 <Checkbox

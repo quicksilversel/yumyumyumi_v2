@@ -5,9 +5,9 @@ import Image from 'next/image'
 
 import type { Recipe } from '@/types'
 
+import { DeleteRecipeModal } from '@/components/pages/Modals/DeleteRecipeModal'
+import { EditRecipeDialog } from '@/components/pages/Modals/EditRecipeDialog'
 import { BookmarkButton } from '@/components/ui/BookmarkButton'
-import { DeleteRecipeModal } from '@/components/ui/Modals/DeleteRecipeModal'
-import { EditRecipeDialog } from '@/components/ui/Modals/EditRecipeDialog'
 import { MoreActions } from '@/components/ui/MoreActions'
 import { useAuth } from '@/contexts/AuthContext'
 import { useRecipeActions } from '@/hooks/useRecipeActions'
@@ -16,9 +16,14 @@ export const Hero = ({ recipe }: { recipe: Recipe }) => {
   const { user } = useAuth()
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
   const [currentRecipe, setCurrentRecipe] = useState(recipe)
-  
-  const { isDeleting, editDialogOpen, setEditDialogOpen, handleEdit, handleDelete } = 
-    useRecipeActions(currentRecipe)
+
+  const {
+    isDeleting,
+    editDialogOpen,
+    setEditDialogOpen,
+    handleEdit,
+    handleDelete,
+  } = useRecipeActions(currentRecipe)
 
   const isOwner = user && currentRecipe.user_id === user.id
 
@@ -41,9 +46,7 @@ export const Hero = ({ recipe }: { recipe: Recipe }) => {
           priority
           sizes="(max-width: 1200px) 100vw, 1200px"
         />
-        {user && (
-          <StyledBookmarkButton recipeId={currentRecipe.id} size="sm" />
-        )}
+        {user && <StyledBookmarkButton recipeId={currentRecipe.id} size="sm" />}
         {isOwner && (
           <StyledMoreActions
             onEdit={handleEdit}

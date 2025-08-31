@@ -70,9 +70,7 @@ function mapDbRecipeToRecipe(dbRecipe: Record<string, unknown>): Recipe {
     directions,
     tags: parseJsonField<string[] | undefined>(dbRecipe.tags, undefined),
     tips: (dbRecipe.tips as string) || undefined,
-    prepTime: dbRecipe.prep_time as number,
     cookTime: dbRecipe.cook_time as number,
-    totalTime: dbRecipe.total_time as number,
     servings: dbRecipe.servings as number,
     category:
       (dbRecipe.category as RecipeCategory) ||
@@ -98,9 +96,7 @@ function mapRecipeToInsert(
     directions: recipe.directions || [],
     tags: recipe.tags || null,
     tips: recipe.tips || null,
-    prep_time: recipe.prepTime || 0,
     cook_time: recipe.cookTime || 0,
-    total_time: recipe.totalTime || 0,
     servings: recipe.servings || 1,
     category: recipe.category || null,
     image_url: recipe.imageUrl || null,
@@ -123,9 +119,7 @@ function mapRecipeToUpdate(updates: Partial<Recipe>): Record<string, unknown> {
     ['directions', 'directions'],
     ['tags', 'tags'],
     ['tips', 'tips'],
-    ['prepTime', 'prep_time'],
     ['cookTime', 'cook_time'],
-    ['totalTime', 'total_time'],
     ['servings', 'servings'],
     ['category', 'category'],
     ['imageUrl', 'image_url'],
@@ -218,7 +212,7 @@ export async function searchRecipesInSupabase(
 
     // Apply cooking time filter
     if (filters.maxCookingTime) {
-      query = query.lte('total_time', filters.maxCookingTime)
+      query = query.lte('cook_time', filters.maxCookingTime)
     }
 
     const { data, error } = await query.order('created_at', {

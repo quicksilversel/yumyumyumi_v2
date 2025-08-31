@@ -7,26 +7,31 @@ import AddIcon from '@mui/icons-material/Add'
 
 import { Button } from '@/components/ui/Button'
 import { Chip, ChipGroup } from '@/components/ui/Chip'
-import { Input, FormField } from '@/components/ui/Input'
+import { Input } from '@/components/ui/Forms/Input'
 import { Flex, Stack } from '@/components/ui/Layout'
 import { H6, Caption } from '@/components/ui/Typography'
+import { useRecipeForm } from '@/contexts/RecipeFormContext'
 import { spacing } from '@/styles/designTokens'
 
 const TagInputRow = styled(Flex)`
   gap: ${spacing[2]};
 `
 
-type TagsFormProps = {
-  tags: string[]
-  onChange: (tags: string[]) => void
+type Props = {
+  mode: 'new' | 'edit'
 }
 
-export function TagsForm({ tags, onChange }: TagsFormProps) {
+export function TagsForm({ mode }: Props) {
+  const { recipe, setRecipe } = useRecipeForm(mode)
+  const tags = recipe.tags || []
   const [tagInput, setTagInput] = useState('')
 
   const handleAddTag = () => {
     if (tagInput.trim() && !tags.includes(tagInput.trim())) {
-      onChange([...tags, tagInput.trim()])
+      setRecipe((prev) => ({
+        ...prev,
+        tags: [...(prev.tags || []), tagInput.trim()],
+      }))
       setTagInput('')
     }
   }
@@ -39,33 +44,33 @@ export function TagsForm({ tags, onChange }: TagsFormProps) {
   }
 
   const removeTag = (tagToRemove: string) => {
-    onChange(tags.filter((tag) => tag !== tagToRemove))
+    setRecipe((prev) => ({
+      ...prev,
+      tags: (prev.tags || []).filter((tag) => tag !== tagToRemove),
+    }))
   }
 
   return (
     <Stack gap={3}>
       <H6>Tags</H6>
 
-      <FormField style={{ marginBottom: 0 }}>
-        <TagInputRow>
-          <Input
-            placeholder="Add a tag (e.g., 'vegetarian', 'quick')"
-            value={tagInput}
-            onChange={(e) => setTagInput(e.target.value)}
-            onKeyPress={handleKeyPress}
-            fullWidth
-          />
-          <Button
-            variant="secondary"
-            size="sm"
-            onClick={handleAddTag}
-            disabled={!tagInput.trim()}
-          >
-            <AddIcon />
-            Add
-          </Button>
-        </TagInputRow>
-      </FormField>
+      <TagInputRow>
+        <Input
+          placeholder="Add a tag (e.g., 'vegetarian', 'quick')"
+          value={tagInput}
+          onChange={(e) => setTagInput(e.target.value)}
+          onKeyPress={handleKeyPress}
+        />
+        <Button
+          variant="secondary"
+          size="sm"
+          onClick={handleAddTag}
+          disabled={!tagInput.trim()}
+        >
+          <AddIcon />
+          Add
+        </Button>
+      </TagInputRow>
 
       {tags.length === 0 ? (
         <Caption>No tags added yet.</Caption>

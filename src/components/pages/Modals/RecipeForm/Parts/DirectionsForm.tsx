@@ -5,16 +5,51 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import type { Direction } from '@/types'
 
 import { Button, IconButton } from '@/components/ui/Button'
-import { Input, TextArea, FormField } from '@/components/ui/Input'
+import { Input } from '@/components/ui/Forms/Input'
+import { Textarea } from '@/components/ui/Forms/Textarea'
 import { Stack } from '@/components/ui/Layout'
 import { H6, Caption } from '@/components/ui/Typography'
+import { useRecipeForm } from '@/contexts/RecipeFormContext'
 
-type DirectionsFormProps = {
-  directions: Direction[]
-  onChange: (directions: Direction[]) => void
+type Props = {
+  mode: 'new' | 'edit'
 }
 
-export function DirectionsForm({ directions, onChange }: DirectionsFormProps) {
+export function validateDirections(directions: Direction[]): {
+  isValid: boolean
+  error?: string
+  validDirections?: Direction[]
+} {
+  if (!directions || directions.length === 0) {
+    return {
+      isValid: false,
+      error: 'At least one direction is required',
+    }
+  }
+
+  const validDirections = directions
+    .filter((dir) => dir.title?.trim() || dir.description?.trim())
+    .map((dir) => ({
+      title: String(dir.title || '').trim(),
+      description: String(dir.description || '').trim(),
+    }))
+
+  if (validDirections.length === 0) {
+    return {
+      isValid: false,
+      error: 'Please add at least one direction with title or description',
+    }
+  }
+
+  return {
+    isValid: true,
+    validDirections,
+  }
+}
+
+export function DirectionsForm({ mode }: Props) {
+  const { recipe, setRecipe } = useRecipeForm(mode)
+  const directions = recipe.directions || []
   const handleDirectionChange = (
     index: number,
     field: keyof Direction,
@@ -25,15 +60,21 @@ export function DirectionsForm({ directions, onChange }: DirectionsFormProps) {
       ...newDirections[index],
       [field]: value,
     }
-    onChange(newDirections)
+    setRecipe((prev) => ({ ...prev, directions: newDirections }))
   }
 
   const addDirection = () => {
-    onChange([...directions, { title: '', description: '' }])
+    setRecipe((prev) => ({
+      ...prev,
+      directions: [...(prev.directions || []), { title: '', description: '' }],
+    }))
   }
 
   const removeDirection = (index: number) => {
-    onChange(directions.filter((_, i) => i !== index))
+    setRecipe((prev) => ({
+      ...prev,
+      directions: (prev.directions || []).filter((_, i) => i !== index),
+    }))
   }
 
   return (
@@ -55,33 +96,22 @@ export function DirectionsForm({ directions, onChange }: DirectionsFormProps) {
           {directions.map((direction, index) => (
             <DirectionRow key={index}>
               <DirectionContent>
-                <FormField>
-                  <Input
-                    placeholder="Step title (e.g., 'Prepare ingredients')"
-                    value={direction.title || ''}
-                    onChange={(e) =>
-                      handleDirectionChange(index, 'title', e.target.value)
-                    }
-                    fullWidth
-                    id={`direction-title-${index}`}
-                  />
-                </FormField>
+                <Input
+                  placeholder="Step title (e.g., 'Prepare ingredients')"
+                  value={direction.title || ''}
+                  onChange={(e) =>
+                    handleDirectionChange(index, 'title', e.target.value)
+                  }
+                  id={`direction-title-${index}`}
+                />
 
-                <FormField>
-                  <TextArea
-                    placeholder="Step description (optional)"
-                    value={direction.description || ''}
-                    onChange={(e) =>
-                      handleDirectionChange(
-                        index,
-                        'description',
-                        e.target.value,
-                      )
-                    }
-                    fullWidth
-                    rows={3}
-                  />
-                </FormField>
+                <Textarea
+                  placeholder="Step description (optional)"
+                  value={direction.description || ''}
+                  onChange={(e) =>
+                    handleDirectionChange(index, 'description', e.target.value)
+                  }
+                />
               </DirectionContent>
               {directions.length > 1 && (
                 <DeleteButton size="sm" onClick={() => removeDirection(index)}>

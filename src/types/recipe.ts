@@ -18,9 +18,7 @@ export type Recipe = {
   directions: Direction[]
   tags?: string[]
   tips?: string
-  prepTime: number
   cookTime: number
-  totalTime: number
   servings: number
   category: RecipeCategory
   imageUrl: string

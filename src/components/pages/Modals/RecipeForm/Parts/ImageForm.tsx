@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 
 import styled from '@emotion/styled'
 import CloudUploadIcon from '@mui/icons-material/CloudUpload'
@@ -11,33 +11,94 @@ import Image from 'next/image'
 import { Button, IconButton } from '@/components/ui/Button'
 import { Stack, Flex } from '@/components/ui/Layout'
 import { Caption, H6 } from '@/components/ui/Typography'
+import { useRecipeForm } from '@/contexts/RecipeFormContext'
+import { validateImage, deleteImage } from '@/lib/supabase/storage'
 import { colors, spacing, borderRadius } from '@/styles/designTokens'
 
-type ImageUploadFormProps = {
-  imageFile: File | null
-  imagePreview: string
-  imageUrl?: string
-  onImageSelect: (e: React.ChangeEvent<HTMLInputElement>) => void
-  onImageRemove: () => void
-  onUrlChange?: (url: string) => void
+type Props = {
+  mode: 'new' | 'edit'
+  onImageChange?: (file: File | null, preview: string) => void
   uploading?: boolean
+}
+
+export function handleImageSelect(file: File | null): {
+  isValid: boolean
   error?: string
+  preview?: string
+} {
+  if (!file) {
+    return { isValid: false, error: 'No file selected' }
+  }
+
+  const validationError = validateImage(file)
+  if (validationError) {
+    return { isValid: false, error: validationError }
+  }
+
+  // Create preview
+  const reader = new FileReader()
+  let preview = ''
+  reader.onloadend = () => {
+    preview = reader.result as string
+  }
+  reader.readAsDataURL(file)
+
+  return { isValid: true, preview }
+}
+
+export async function handleImageRemove(imageUrl?: string): Promise<void> {
+  // If there's an existing image URL and it's from Supabase, delete it
+  if (imageUrl && imageUrl.includes('supabase')) {
+    try {
+      await deleteImage(imageUrl)
+    } catch (err) {
+      // Error deleting image - continue
+      window.alert('Error deleting image')
+    }
+  }
 }
 
 export function ImageUploadForm({
-  imageFile,
-  imagePreview,
-  imageUrl,
-  onImageSelect,
-  onImageRemove,
-  onUrlChange,
+  mode,
+  onImageChange,
   uploading = false,
-  error,
-}: ImageUploadFormProps) {
+}: Props) {
+  const { recipe, setRecipe } = useRecipeForm(mode)
+  const [imagePreview, setImagePreview] = useState<string>('')
+  const [error, setError] = useState<string>('')
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   const handleUploadClick = () => {
     fileInputRef.current?.click()
+  }
+
+  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+
+    const validationError = validateImage(file)
+    if (validationError) {
+      setError(validationError)
+      return
+    }
+
+    setError('')
+
+    // Create preview
+    const reader = new FileReader()
+    reader.onloadend = () => {
+      const preview = reader.result as string
+      setImagePreview(preview)
+      onImageChange?.(file, preview)
+    }
+    reader.readAsDataURL(file)
+  }
+
+  const handleRemoveImage = async () => {
+    await handleImageRemove(recipe.imageUrl)
+    setImagePreview('')
+    setRecipe((prev) => ({ ...prev, imageUrl: '' }))
+    onImageChange?.(null, '')
   }
 
   return (
@@ -46,10 +107,14 @@ export function ImageUploadForm({
 
       <ImageContainer>
         <ImagePreview>
-          {imagePreview || imageUrl ? (
+          {imagePreview || recipe.imageUrl ? (
             <>
-              <Image src={imageUrl ?? imagePreview} alt="Recipe" fill />
-              <DeleteButton size="sm" onClick={onImageRemove}>
+              <Image
+                src={imagePreview || recipe.imageUrl || ''}
+                alt="Recipe"
+                fill
+              />
+              <DeleteButton size="sm" onClick={handleRemoveImage}>
                 <DeleteIcon />
               </DeleteButton>
             </>
@@ -78,7 +143,7 @@ export function ImageUploadForm({
         ref={fileInputRef}
         type="file"
         accept="image/*"
-        onChange={onImageSelect}
+        onChange={handleFileSelect}
       />
 
       {error && (
