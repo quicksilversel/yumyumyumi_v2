@@ -7,11 +7,11 @@ type ToggleSwitchSize = 'small' | 'medium' | 'large'
 export interface ToggleSwitchProps
   extends Omit<
     DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>,
-    'type' | 'size'
+    'type'
   > {
   label?: string
   labelPosition?: 'left' | 'right'
-  size?: ToggleSwitchSize
+  height?: ToggleSwitchSize
   helperText?: string
   error?: boolean
   checked?: boolean
@@ -21,7 +21,7 @@ export interface ToggleSwitchProps
 export const ToggleSwitch = ({
   label,
   labelPosition = 'right',
-  size = 'medium',
+  height = 'medium',
   helperText,
   error,
   disabled,
@@ -33,18 +33,18 @@ export const ToggleSwitch = ({
     <Container>
       <SwitchLabel disabled={disabled} labelPosition={labelPosition}>
         {label && labelPosition === 'left' && (
-          <LabelText size={size}>{label}</LabelText>
+          <LabelText height={height}>{label}</LabelText>
         )}
         <SwitchInput
           type="checkbox"
-          size={size}
+          height={height}
           disabled={disabled}
           {...inputProps}
           onChange={onChange}
           checked={checked}
         />
         {label && labelPosition === 'right' && (
-          <LabelText size={size}>{label}</LabelText>
+          <LabelText height={height}>{label}</LabelText>
         )}
       </SwitchLabel>
       {helperText && <HelperText error={error}>{helperText}</HelperText>}
@@ -72,7 +72,7 @@ const SwitchLabel = styled.label<{
     props.labelPosition === 'left' ? 'row-reverse' : 'row'};
 `
 
-const LabelText = styled.span<{ size?: ToggleSwitchSize }>`
+const LabelText = styled.span<{ height?: ToggleSwitchSize }>`
   color: ${({ theme }) => theme.colors.gray[700]};
   font-size: ${(props) => {
     const sizes = {
@@ -80,7 +80,7 @@ const LabelText = styled.span<{ size?: ToggleSwitchSize }>`
       medium: props.theme.typography.fontSize.base,
       large: props.theme.typography.fontSize.lg,
     }
-    return sizes[props.size || 'medium']
+    return sizes[props.height || 'medium']
   }};
   font-weight: ${({ theme }) => theme.typography.fontWeight.normal};
 `
@@ -92,21 +92,21 @@ const HelperText = styled.span<{ error?: boolean }>`
   margin-left: ${({ theme }) => theme.spacing[1]};
 `
 
-const SwitchInput = styled.input<{ size?: ToggleSwitchSize }>`
+const SwitchInput = styled.input<{ height?: ToggleSwitchSize }>`
   position: relative;
   width: ${(props) => {
     const widths = { small: '36px', medium: '44px', large: '52px' }
-    return widths[props.size || 'medium']
+    return widths[props.height || 'medium']
   }};
   height: ${(props) => {
     const heights = { small: '20px', medium: '24px', large: '28px' }
-    return heights[props.size || 'medium']
+    return heights[props.height || 'medium']
   }};
   background-color: ${({ theme }) => theme.colors.gray[300]};
   border: 2px solid transparent;
   border-radius: ${(props) => {
     const heights = { small: '10px', medium: '12px', large: '14px' }
-    return heights[props.size || 'medium']
+    return heights[props.height || 'medium']
   }};
   cursor: ${(props) => (props.disabled ? 'not-allowed' : 'pointer')};
   transition: all ${({ theme }) => theme.transition.default};
@@ -144,19 +144,19 @@ const SwitchInput = styled.input<{ size?: ToggleSwitchSize }>`
     position: absolute;
     top: ${(props) => {
       const tops = { small: '2px', medium: '3px', large: '4px' }
-      return tops[props.size || 'medium']
+      return tops[props.height || 'medium']
     }};
     left: ${(props) => {
       const lefts = { small: '2px', medium: '3px', large: '4px' }
-      return lefts[props.size || 'medium']
+      return lefts[props.height || 'medium']
     }};
     width: ${(props) => {
       const widths = { small: '14px', medium: '16px', large: '18px' }
-      return widths[props.size || 'medium']
+      return widths[props.height || 'medium']
     }};
     height: ${(props) => {
       const heights = { small: '14px', medium: '16px', large: '18px' }
-      return heights[props.size || 'medium']
+      return heights[props.height || 'medium']
     }};
     background-color: ${({ theme }) => theme.colors.white};
     border-radius: 50%;
@@ -169,7 +169,7 @@ const SwitchInput = styled.input<{ size?: ToggleSwitchSize }>`
     transform: translateX(
       ${(props) => {
         const distances = { small: '16px', medium: '20px', large: '24px' }
-        return distances[props.size || 'medium']
+        return distances[props.height || 'medium']
       }}
     );
   }

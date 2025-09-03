@@ -11,7 +11,7 @@ import type { Recipe, RecipeFilters } from '@/types'
 import { Flex } from '@/components/ui'
 import { useRecipeContext } from '@/contexts/RecipeContext'
 import { useBookmarks } from '@/hooks/useBookmarks'
-import { searchRecipes } from '@/lib/supabase/recipeService'
+import { searchRecipesInSupabase } from '@/lib/supabase/tables/recipe/searchRecipesInSupabase'
 
 import { RecipeGrid } from './RecipeGrid'
 import { SearchBar } from './SearchBar'
@@ -63,7 +63,7 @@ function RecipeListInner({ initialRecipes }: RecipeListProps) {
       const filters = getFiltersFromParams()
 
       try {
-        let results = await searchRecipes(filters)
+        let results = await searchRecipesInSupabase(filters)
 
         if (filters.showBookmarkedOnly) {
           const bookmarkedIds = bookmarks.map((b) => b.recipeId)

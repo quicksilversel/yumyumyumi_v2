@@ -1,8 +1,10 @@
+import styled from '@emotion/styled'
+
 import {
   CategoryForm,
   CookTimeForm,
   DirectionsForm,
-  ImageUploadForm,
+  ImageForm,
   IngredientsForm,
   IsPublicForm,
   ServingsForm,
@@ -13,54 +15,55 @@ import {
   TitleForm,
 } from '@/components/pages/Modals/RecipeForm/Parts'
 import { Stack, Divider, Grid } from '@/components/ui/Layout'
+import { colors } from '@/styles/designTokens'
 
 type Props = {
-  mode: 'edit' | 'new'
-  errors: string[]
-  handleImageChange: (file: File | null) => void
-  uploadingImage: boolean
+  errors?: string[]
+  handleImageChange?: (file: File | null, preview: string) => void
+  uploadingImage?: boolean
 }
 
+const ErrorMessage = styled.p`
+  color: ${colors.error};
+  font-size: 14px;
+`
+
 export const RecipeForm = ({
-  mode,
-  errors,
+  errors = [],
   handleImageChange,
-  uploadingImage,
+  uploadingImage = false,
 }: Props) => {
   return (
     <Stack gap={6}>
       {errors.length > 0 && (
         <Stack gap={2}>
           {errors.map((error, index) => (
-            <p key={index}>{error}</p>
+            <ErrorMessage key={index}>{error}</ErrorMessage>
           ))}
         </Stack>
       )}
       <Stack gap={4}>
-        <ImageUploadForm
-          mode={mode}
+        <ImageForm
           onImageChange={handleImageChange}
           uploading={uploadingImage}
         />
-        <TitleForm mode={mode} />
-        <SummaryForm mode={mode} />
-
-        <Grid cols={3} gap={4}>
-          <CategoryForm mode={mode} />
-
-          <CookTimeForm mode={mode} />
-          <ServingsForm mode={mode} />
+        <TitleForm />
+        <SummaryForm />
+        <Grid cols={3} gap={4} responsive>
+          <CategoryForm />
+          <CookTimeForm />
+          <ServingsForm />
         </Grid>
       </Stack>
       <Divider />
-      <IngredientsForm mode={mode} />
+      <IngredientsForm />
       <Divider />
-      <DirectionsForm mode={mode} />
+      <DirectionsForm />
       <Divider />
-      <TagsForm mode={mode} />
-      <SourceForm mode={mode} />
-      <TipsForm mode={mode} />
-      <IsPublicForm mode={mode} />
+      <TagsForm />
+      <SourceForm />
+      <TipsForm />
+      <IsPublicForm />
     </Stack>
   )
 }

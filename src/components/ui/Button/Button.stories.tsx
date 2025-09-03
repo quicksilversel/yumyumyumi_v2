@@ -1,8 +1,9 @@
-import type { Meta, StoryObj } from '@storybook/react'
 import AddIcon from '@mui/icons-material/Add'
 import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
 import SearchIcon from '@mui/icons-material/Search'
+
+import type { Meta, StoryObj } from '@storybook/react'
 
 import { Button, IconButton } from './Button'
 

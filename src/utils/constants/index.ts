@@ -1,0 +1,15 @@
+export const RECIPE_CATEGORY = {
+  APPETIZER: 'Appetizer',
+  MAIN_COURSE: 'Main Course',
+  DESSERT: 'Dessert',
+  BREAKFAST: 'Breakfast',
+  LUNCH: 'Lunch',
+  DINNER: 'Dinner',
+  SNACK: 'Snack',
+  BEVERAGE: 'Beverage',
+  SALAD: 'Salad',
+  SOUP: 'Soup',
+  SIDE_DISH: 'Side Dish',
+  SAUCE: 'Sauce',
+  BAKING: 'Baking',
+}

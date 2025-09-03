@@ -82,3 +82,9 @@ export const Label = styled.span`
   text-transform: uppercase;
   letter-spacing: ${({ theme }) => theme.typography.letterSpacing.wide};
 `
+
+export const ErrorText = styled.span`
+  color: ${({ theme }) => theme.colors.error};
+  font-size: 12px;
+  margin-top: 4px;
+`

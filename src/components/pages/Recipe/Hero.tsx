@@ -25,7 +25,7 @@ export const Hero = ({ recipe }: { recipe: Recipe }) => {
     handleDelete,
   } = useRecipeActions(currentRecipe)
 
-  const isOwner = user && currentRecipe.user_id === user.id
+  const isOwner = user && currentRecipe.userId === user.id
 
   const handleRecipeUpdated = (updatedRecipe: Recipe) => {
     setCurrentRecipe(updatedRecipe)

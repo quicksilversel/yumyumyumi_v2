@@ -1,3 +1,7 @@
+import React from 'react'
+
+import { fn } from 'storybook/test'
+
 import type { Meta, StoryObj } from '@storybook/react'
 
 import { Textarea } from './Textarea'
@@ -42,6 +46,9 @@ const meta: Meta<typeof Textarea> = {
     maxRows: {
       control: { type: 'number' },
     },
+    onChange: {
+      action: 'text-changed',
+    },
   },
   decorators: [
     (Story) => (
@@ -55,11 +62,12 @@ const meta: Meta<typeof Textarea> = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-// Basic Textarea Stories
+// Basic Stories
 export const Default: Story = {
   args: {
     placeholder: 'Enter your message...',
     height: 'medium',
+    onChange: fn(),
   },
 }
 
@@ -67,6 +75,7 @@ export const WithTitle: Story = {
   args: {
     title: 'Message',
     placeholder: 'Type your message here...',
+    onChange: fn(),
   },
 }
 
@@ -75,218 +84,72 @@ export const WithValue: Story = {
     title: 'Description',
     value: 'This is some pre-filled content in the textarea.',
     height: 'medium',
+    onChange: fn(),
   },
 }
 
-// Size Variants
-export const Small: Story = {
+// Interactive Example
+export const Interactive: Story = {
   args: {
-    title: 'Small Textarea',
-    placeholder: 'Small size textarea...',
-    height: 'small',
-  },
-}
-
-export const Medium: Story = {
-  args: {
-    title: 'Medium Textarea',
-    placeholder: 'Medium size textarea...',
+    title: 'Interactive Textarea',
+    placeholder: 'Start typing...',
     height: 'medium',
+    onChange: fn(),
+    helperText: 'Use controls above to modify properties',
   },
-}
-
-export const Large: Story = {
-  args: {
-    title: 'Large Textarea',
-    placeholder: 'Large size textarea...',
-    height: 'large',
-  },
-}
-
-// State Stories
-export const Disabled: Story = {
-  args: {
-    title: 'Disabled Field',
-    placeholder: 'This field is disabled',
-    value: 'You cannot edit this content',
-    disabled: true,
-  },
-}
-
-export const Error: Story = {
-  args: {
-    title: 'Error Field',
-    placeholder: 'Enter valid content...',
-    error: true,
-    helperText: 'This field has an error',
-  },
-}
-
-export const Required: Story = {
-  args: {
-    title: 'Required Field',
-    placeholder: 'This field is required',
-    required: true,
-    helperText: 'This field must be filled out',
-  },
-}
-
-// Helper Text
-export const WithHelperText: Story = {
-  args: {
-    title: 'Bio',
-    placeholder: 'Tell us about yourself...',
-    helperText: 'Maximum 500 characters',
-  },
-}
-
-export const WithErrorHelperText: Story = {
-  args: {
-    title: 'Comments',
-    placeholder: 'Enter your comments...',
-    error: true,
-    helperText: 'Please enter at least 10 characters',
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Use the controls panel to interact with this textarea. All change events will be logged in the Actions panel.',
+      },
+    },
   },
 }
 
 // Resize Options
-export const ResizeNone: Story = {
-  args: {
-    title: 'No Resize',
-    placeholder: 'This textarea cannot be resized',
-    resize: 'none',
-  },
-}
-
-export const ResizeVertical: Story = {
-  args: {
-    title: 'Vertical Resize Only',
-    placeholder: 'Can only resize vertically (default)',
-    resize: 'vertical',
-  },
-}
-
-export const ResizeHorizontal: Story = {
-  args: {
-    title: 'Horizontal Resize Only',
-    placeholder: 'Can only resize horizontally',
-    resize: 'horizontal',
-  },
-}
-
-export const ResizeBoth: Story = {
-  args: {
-    title: 'Resize Both',
-    placeholder: 'Can resize in both directions',
-    resize: 'both',
-  },
-}
-
-// Row Constraints
-export const MinRows: Story = {
-  args: {
-    title: 'Minimum 5 Rows',
-    placeholder: 'This textarea has a minimum of 5 rows',
-    minRows: 5,
-  },
-}
-
-export const MaxRows: Story = {
-  args: {
-    title: 'Maximum 5 Rows',
-    placeholder: 'This textarea has a maximum of 5 rows (will scroll after that)',
-    maxRows: 5,
-    value: `Line 1
-Line 2
-Line 3
-Line 4
-Line 5
-Line 6 - This will cause scrolling
-Line 7
-Line 8`,
-  },
-}
-
-export const MinMaxRows: Story = {
-  args: {
-    title: 'Min 3, Max 8 Rows',
-    placeholder: 'Between 3 and 8 rows',
-    minRows: 3,
-    maxRows: 8,
-  },
-}
-
-// All Sizes Demo
-export const AllSizes: Story = {
+export const ResizeOptions: Story = {
   render: () => (
     <div
       style={{
-        display: 'flex',
-        flexDirection: 'column',
+        display: 'grid',
+        gridTemplateColumns: '1fr 1fr',
         gap: '20px',
-        width: '400px',
+        width: '800px',
       }}
     >
       <Textarea
-        height="small"
-        title="Small"
-        placeholder="Small textarea"
-        helperText="Small size with helper text"
+        title="No Resize"
+        placeholder="Cannot be resized"
+        resize="none"
+        onChange={fn()}
       />
       <Textarea
-        height="medium"
-        title="Medium"
-        placeholder="Medium textarea"
-        helperText="Medium size with helper text"
+        title="Vertical Only"
+        placeholder="Resize vertically only"
+        resize="vertical"
+        onChange={fn()}
       />
       <Textarea
-        height="large"
-        title="Large"
-        placeholder="Large textarea"
-        helperText="Large size with helper text"
+        title="Horizontal Only"
+        placeholder="Resize horizontally only"
+        resize="horizontal"
+        onChange={fn()}
+      />
+      <Textarea
+        title="Both Directions"
+        placeholder="Resize both ways"
+        resize="both"
+        onChange={fn()}
       />
     </div>
   ),
 }
 
-// State Variations Demo
-export const StateVariations: Story = {
+// Row Controls
+export const RowControls: Story = {
   render: () => (
     <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '20px',
-        width: '400px',
-      }}
-    >
-      <Textarea title="Normal" placeholder="Normal textarea" />
-      <Textarea
-        title="Disabled"
-        placeholder="Disabled textarea"
-        disabled
-        value="This is disabled"
-      />
-      <Textarea
-        title="Error"
-        placeholder="Error textarea"
-        error
-        helperText="This field has an error"
-      />
-      <Textarea
-        title="Required"
-        placeholder="Required textarea"
-        required
-        helperText="This field is required"
-      />
-    </div>
-  ),
-}
-
-// Form Example
-export const FormExample: Story = {
-  render: () => (
-    <form
       style={{
         display: 'flex',
         flexDirection: 'column',
@@ -295,87 +158,254 @@ export const FormExample: Story = {
       }}
     >
       <Textarea
-        id="bio"
-        title="Bio"
-        placeholder="Tell us about yourself..."
-        helperText="Write a brief description about yourself (max 500 characters)"
+        title="Minimum 5 Rows"
+        placeholder="Always shows at least 5 rows"
+        minRows={5}
+        onChange={fn()}
+      />
+      <Textarea
+        title="Maximum 4 Rows"
+        placeholder="Scrolls after 4 rows"
+        maxRows={4}
+        value={`Row one
+Row two  
+Row three
+Row four
+Row five (will scroll)
+Row six`}
+        onChange={fn()}
+      />
+      <Textarea
+        title="Min 3, Max 6 Rows"
+        placeholder="Between 3-6 rows"
+        minRows={3}
+        maxRows={6}
+        onChange={fn()}
+      />
+    </div>
+  ),
+}
+
+// Size Comparison
+export const SizeComparison: Story = {
+  render: () => (
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '24px',
+        width: '450px',
+      }}
+    >
+      <Textarea
+        height="small"
+        title="Small Size"
+        placeholder="Compact textarea"
+        helperText="Small height variant"
+        onChange={fn()}
+      />
+      <Textarea
+        height="medium"
+        title="Medium Size"
+        placeholder="Standard textarea"
+        helperText="Default medium height"
+        onChange={fn()}
+      />
+      <Textarea
+        height="large"
+        title="Large Size"
+        placeholder="Spacious textarea"
+        helperText="Large height for more content"
+        onChange={fn()}
+      />
+    </div>
+  ),
+}
+
+// Field States
+export const FieldStates: Story = {
+  render: () => (
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '24px',
+        width: '450px',
+      }}
+    >
+      <Textarea
+        title="Default State"
+        placeholder="Normal textarea"
+        onChange={fn()}
+      />
+      <Textarea
+        title="Disabled State"
+        placeholder="Cannot be edited"
+        disabled
+        value="This content is read-only"
+        onChange={fn()}
+      />
+      <Textarea
+        title="Error State"
+        placeholder="Has validation error"
+        error
+        helperText="Please correct this field"
+        onChange={fn()}
+      />
+      <Textarea
+        title="Required Field"
+        placeholder="Must be filled"
+        required
+        helperText="This field is mandatory"
+        onChange={fn()}
+      />
+    </div>
+  ),
+}
+
+// Helper Text Variants
+export const HelperTextVariants: Story = {
+  render: () => (
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '24px',
+        width: '450px',
+      }}
+    >
+      <Textarea
+        title="With Info Helper"
+        placeholder="Enter description..."
+        helperText="Provide detailed information here"
+        onChange={fn()}
+      />
+      <Textarea
+        title="With Error Helper"
+        placeholder="Enter comments..."
+        error
+        helperText="Minimum 10 characters required"
+        onChange={fn()}
+      />
+      <Textarea
+        title="With Character Limit"
+        placeholder="Write summary..."
+        helperText="Maximum 250 characters allowed"
+        maxLength={250}
+        onChange={fn()}
+      />
+    </div>
+  ),
+}
+
+// Contact Form Example
+export const ContactFormExample: Story = {
+  render: () => (
+    <form
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '24px',
+        width: '500px',
+        padding: '20px',
+        border: '1px solid #ddd',
+        borderRadius: '8px',
+      }}
+      onSubmit={(e) => {
+        e.preventDefault()
+        alert('Contact form submitted! Check Actions panel.')
+      }}
+    >
+      <h3 style={{ margin: '0 0 16px 0' }}>Contact Us</h3>
+
+      <Textarea
+        title="Your Message"
+        placeholder="How can we help you?"
+        helperText="Please describe your inquiry in detail"
         minRows={4}
         required
+        onChange={fn()}
       />
+
       <Textarea
-        id="experience"
-        title="Experience"
-        placeholder="Describe your relevant experience..."
-        helperText="List your work experience and achievements"
-        minRows={5}
-        maxRows={10}
+        title="Additional Comments"
+        placeholder="Any other information..."
+        helperText="Optional: share any extra details"
+        minRows={2}
+        maxRows={5}
+        onChange={fn()}
       />
-      <Textarea
-        id="notes"
-        title="Additional Notes"
-        placeholder="Any additional information..."
-        helperText="Optional field for any other details"
-        minRows={3}
-      />
+
+      <button
+        type="submit"
+        style={{
+          padding: '12px 24px',
+          backgroundColor: '#007bff',
+          color: 'white',
+          border: 'none',
+          borderRadius: '4px',
+          cursor: 'pointer',
+          fontSize: '16px',
+        }}
+      >
+        Send Message
+      </button>
     </form>
   ),
 }
 
-// Character Counter Example
-export const WithCharacterCounter: Story = {
-  render: () => {
-    const maxLength = 200
-    const [value, setValue] = React.useState('')
-    const remaining = maxLength - value.length
-
-    return (
+// Character Tracking Demo (Static)
+export const CharacterTrackingDemo: Story = {
+  render: () => (
+    <div style={{ width: '450px' }}>
       <Textarea
-        title="Limited Input"
+        title="Message with Character Count"
         placeholder="Type your message..."
-        value={value}
-        onChange={(e) => setValue(e.target.value)}
-        maxLength={maxLength}
-        helperText={`${remaining} characters remaining`}
-        error={remaining < 0}
+        value="This is a sample message to demonstrate character counting functionality."
+        onChange={fn()}
+        maxLength={200}
+        helperText="125 characters remaining (static demo)"
       />
-    )
+      <p style={{ marginTop: '16px', fontSize: '14px', color: '#666' }}>
+        Note: Use the Interactive story for real character counting behavior.
+      </p>
+    </div>
+  ),
+}
+
+// Code Snippet Input
+export const CodeSnippetInput: Story = {
+  args: {
+    title: 'Code Block',
+    placeholder: 'Paste your code here...',
+    value: `function greetUser(name) {
+  // Display personalized greeting
+  const message = \`Hello, \${name}! Welcome back.\`;
+  console.log(message);
+  return message;
+}
+
+// Usage example
+greetUser('Alice');`,
+    minRows: 8,
+    style: { fontFamily: 'monospace', fontSize: '14px' },
+    onChange: fn(),
   },
 }
 
-// Long Content Example
-export const LongContent: Story = {
+// Article Content Example
+export const ArticleContentExample: Story = {
   args: {
     title: 'Article Content',
-    value: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+    value: `Introduction paragraph that sets the context for the article content. This demonstrates how the textarea handles longer blocks of text.
 
-Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+Main content section with multiple paragraphs and detailed information. The textarea automatically adjusts its height based on the content length when configured properly.
 
-Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
+Conclusion section that wraps up the article content. This example shows how the component handles substantial amounts of text while maintaining good usability.
 
-Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.`,
-    minRows: 5,
-    maxRows: 10,
+Additional notes and references can be added here to complete the content example.`,
+    minRows: 6,
+    maxRows: 12,
+    onChange: fn(),
   },
 }
-
-// Code Input Example
-export const CodeInput: Story = {
-  args: {
-    title: 'Code Snippet',
-    placeholder: 'Paste your code here...',
-    value: `function calculateSum(a, b) {
-  // Add two numbers together
-  const result = a + b;
-  console.log(\`The sum of \${a} and \${b} is \${result}\`);
-  return result;
-}
-
-// Example usage
-const sum = calculateSum(5, 10);`,
-    minRows: 8,
-    style: { fontFamily: 'monospace' },
-  },
-}
-
-// import React for the interactive example
-import React from 'react'

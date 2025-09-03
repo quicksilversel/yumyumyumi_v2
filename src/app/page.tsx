@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 
 import { RecipeList } from '@/components/pages/Home/RecipeList'
-import { getRecipes } from '@/lib/supabase/recipeService'
+import { getRecipesFromSupabase } from '@/lib/supabase/tables/recipe/getRecipesFromSupabase'
 
 export const metadata: Metadata = {
   title: 'YumYumYumi - Discover Amazing Recipes',
@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 }
 
 export default async function HomePage() {
-  const recipes = await getRecipes()
+  const recipes = await getRecipesFromSupabase()
 
   return <RecipeList initialRecipes={recipes} />
 }

@@ -1,25 +1,42 @@
+import { useMemo } from 'react'
+
 import styled from '@emotion/styled'
 
 import type { Recipe } from '@/types'
 
-import { Flex, H2, Caption, Label } from '@/components/ui'
+import { Flex, H2, H3, Label } from '@/components/ui'
 
 export const Ingredients = ({ recipe }: { recipe: Recipe }) => {
+  const { spices, regular } = useMemo(() => {
+    const ingredients = recipe.ingredients || []
+    return {
+      spices: ingredients.filter((ingredient) => ingredient.isSpice),
+      regular: ingredients.filter((ingredient) => !ingredient.isSpice),
+    }
+  }, [recipe.ingredients])
+
+  const renderIngredients = (ingredientList: Recipe['ingredients']) => {
+    return (
+      <>
+        {ingredientList?.map((ingredient) => (
+          <IngredientItem key={ingredient.name}>
+            <Flex justify="between" align="center">
+              <span>{ingredient.name}</span>
+              <Label>{ingredient.amount}</Label>
+            </Flex>
+          </IngredientItem>
+        ))}
+      </>
+    )
+  }
+
   return (
     <section>
       <H2>材料（{recipe.servings}人前）</H2>
       <IngredientList>
-        {recipe.ingredients?.map((ingredient) => {
-          return (
-            <IngredientItem key={ingredient.name}>
-              <Flex justify="between" align="center">
-                <span>{ingredient.name}</span>
-                <Label>{ingredient.amount}</Label>
-              </Flex>
-              {ingredient.isSpice && <Caption>Spice</Caption>}
-            </IngredientItem>
-          )
-        })}
+        {renderIngredients(regular)}
+        <H3>(A)</H3>
+        {renderIngredients(spices)}
       </IngredientList>
     </section>
   )

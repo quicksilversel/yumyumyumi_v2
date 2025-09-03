@@ -9,7 +9,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff'
 import { useRouter } from 'next/navigation'
 
 import { Button, IconButton } from '@/components/ui/Button'
-import { Input, FormField, FormLabel } from '@/components/ui/Input'
+import { Input } from '@/components/ui/Forms/Input'
 import { Stack } from '@/components/ui/Layout'
 import { Caption } from '@/components/ui/Typography'
 import { useAuth } from '@/contexts/AuthContext'
@@ -232,65 +232,53 @@ export default function LoginPage() {
           {success && <Alert variant="success">{success}</Alert>}
 
           <Stack gap={4}>
-            <FormField>
-              <FormLabel htmlFor="email">Email</FormLabel>
-              <Input
-                id="email"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                fullWidth
-                placeholder="Enter your email"
-                autoComplete="email"
-              />
-            </FormField>
+            <Input
+              id="email"
+              title="Email"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              placeholder="Enter your email"
+              autoComplete="email"
+            />
 
-            <FormField>
-              <FormLabel htmlFor="password">Password</FormLabel>
-              <InputWrapper>
-                <Input
-                  id="password"
-                  type={showPassword ? 'text' : 'password'}
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                  fullWidth
-                  placeholder="Enter your password"
-                  autoComplete={tab === 0 ? 'current-password' : 'new-password'}
-                  style={{ paddingRight: spacing[10] }}
-                />
-                <PasswordToggle
-                  onClick={() => setShowPassword(!showPassword)}
-                  size="sm"
-                  type="button"
-                >
-                  {showPassword ? <VisibilityOff /> : <Visibility />}
-                </PasswordToggle>
-              </InputWrapper>
-            </FormField>
+            <InputWrapper>
+              <Input
+                id="password"
+                title="Password"
+                type={showPassword ? 'text' : 'password'}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                placeholder="Enter your password"
+                autoComplete={tab === 0 ? 'current-password' : 'new-password'}
+                style={{ paddingRight: spacing[10] }}
+              />
+              <PasswordToggle
+                onClick={() => setShowPassword(!showPassword)}
+                size="sm"
+                type="button"
+              >
+                {showPassword ? <VisibilityOff /> : <Visibility />}
+              </PasswordToggle>
+            </InputWrapper>
 
             {tab === 1 && (
-              <FormField>
-                <FormLabel htmlFor="confirmPassword">
-                  Confirm Password
-                </FormLabel>
-                <Input
-                  id="confirmPassword"
-                  type={showPassword ? 'text' : 'password'}
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                  required
-                  fullWidth
-                  placeholder="Confirm your password"
-                  autoComplete="new-password"
-                />
-              </FormField>
+              <Input
+                id="confirmPassword"
+                title="Confirm Password"
+                type={showPassword ? 'text' : 'password'}
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                required
+                placeholder="Confirm your password"
+                autoComplete="new-password"
+              />
             )}
 
             <Button
               type="submit"
-              fullWidth
               variant="primary"
               size="lg"
               disabled={loading}

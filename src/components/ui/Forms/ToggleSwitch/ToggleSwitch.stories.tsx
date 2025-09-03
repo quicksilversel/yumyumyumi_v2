@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { fn } from 'storybook/test'
 
 import type { Meta, StoryObj } from '@storybook/react'
 
@@ -12,7 +12,7 @@ const meta: Meta<typeof ToggleSwitch> = {
   },
   tags: ['autodocs'],
   argTypes: {
-    size: {
+    height: {
       control: { type: 'select' },
       options: ['small', 'medium', 'large'],
     },
@@ -35,6 +35,9 @@ const meta: Meta<typeof ToggleSwitch> = {
     checked: {
       control: { type: 'boolean' },
     },
+    onChange: {
+      action: 'changed',
+    },
   },
 }
 
@@ -45,7 +48,8 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {
   args: {
     label: 'Toggle me',
-    size: 'medium',
+    height: 'medium',
+    onChange: fn(),
   },
 }
 
@@ -53,12 +57,14 @@ export const Checked: Story = {
   args: {
     label: 'Checked by default',
     checked: true,
+    onChange: fn(),
   },
 }
 
 export const NoLabel: Story = {
   args: {
-    size: 'medium',
+    height: 'medium',
+    onChange: fn(),
   },
 }
 
@@ -66,21 +72,24 @@ export const NoLabel: Story = {
 export const Small: Story = {
   args: {
     label: 'Small toggle',
-    size: 'small',
+    height: 'small',
+    onChange: fn(),
   },
 }
 
 export const Medium: Story = {
   args: {
     label: 'Medium toggle',
-    size: 'medium',
+    height: 'medium',
+    onChange: fn(),
   },
 }
 
 export const Large: Story = {
   args: {
     label: 'Large toggle',
-    size: 'large',
+    height: 'large',
+    onChange: fn(),
   },
 }
 
@@ -89,6 +98,7 @@ export const LabelLeft: Story = {
   args: {
     label: 'Label on the left',
     labelPosition: 'left',
+    onChange: fn(),
   },
 }
 
@@ -96,6 +106,7 @@ export const LabelRight: Story = {
   args: {
     label: 'Label on the right',
     labelPosition: 'right',
+    onChange: fn(),
   },
 }
 
@@ -104,6 +115,7 @@ export const Disabled: Story = {
   args: {
     label: 'Disabled toggle',
     disabled: true,
+    onChange: fn(),
   },
 }
 
@@ -112,6 +124,7 @@ export const DisabledChecked: Story = {
     label: 'Disabled and checked',
     disabled: true,
     checked: true,
+    onChange: fn(),
   },
 }
 
@@ -120,6 +133,7 @@ export const WithHelperText: Story = {
   args: {
     label: 'Enable notifications',
     helperText: 'You will receive email notifications',
+    onChange: fn(),
   },
 }
 
@@ -128,6 +142,7 @@ export const WithErrorHelperText: Story = {
     label: 'Accept terms',
     helperText: 'You must accept the terms to continue',
     error: true,
+    onChange: fn(),
   },
 }
 
@@ -135,9 +150,21 @@ export const WithErrorHelperText: Story = {
 export const AllSizes: Story = {
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-      <ToggleSwitch size="small" label="Small toggle switch" />
-      <ToggleSwitch size="medium" label="Medium toggle switch" />
-      <ToggleSwitch size="large" label="Large toggle switch" />
+      <ToggleSwitch
+        height="small"
+        label="Small toggle switch"
+        onChange={fn()}
+      />
+      <ToggleSwitch
+        height="medium"
+        label="Medium toggle switch"
+        onChange={fn()}
+      />
+      <ToggleSwitch
+        height="large"
+        label="Large toggle switch"
+        onChange={fn()}
+      />
     </div>
   ),
 }
@@ -146,112 +173,88 @@ export const AllSizes: Story = {
 export const StateVariations: Story = {
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-      <ToggleSwitch label="Normal state" />
-      <ToggleSwitch label="Checked state" checked />
-      <ToggleSwitch label="Disabled state" disabled />
-      <ToggleSwitch label="Disabled checked" disabled checked />
+      <ToggleSwitch label="Normal state" onChange={fn()} />
+      <ToggleSwitch label="Checked state" checked onChange={fn()} />
+      <ToggleSwitch label="Disabled state" disabled onChange={fn()} />
+      <ToggleSwitch label="Disabled checked" disabled checked onChange={fn()} />
     </div>
   ),
 }
 
-// Interactive Example
+// Interactive Example - Use Storybook's controls instead
 export const Interactive: Story = {
-  render: () => {
-    const [isChecked, setIsChecked] = useState(false)
-
-    return (
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-        <ToggleSwitch
-          label={isChecked ? 'ON' : 'OFF'}
-          checked={isChecked}
-          onChange={(e) => setIsChecked(e.target.checked)}
-          helperText={`The switch is currently ${isChecked ? 'on' : 'off'}`}
-        />
-        <p style={{ marginTop: '8px', fontSize: '14px', color: '#666' }}>
-          Current value: {isChecked.toString()}
-        </p>
-      </div>
-    )
+  args: {
+    label: 'Interactive toggle',
+    checked: false,
+    onChange: fn(),
+    helperText: 'Use the controls panel to toggle the checked state',
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Use the controls panel above to interact with this toggle switch. The onChange events will be logged in the Actions panel.',
+      },
+    },
   },
 }
 
 // Settings Form Example
 export const SettingsForm: Story = {
-  render: () => {
-    const [settings, setSettings] = useState({
-      notifications: true,
-      darkMode: false,
-      autoSave: true,
-      analytics: false,
-      newsletter: true,
-    })
-
-    const handleChange =
-      (setting: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
-        setSettings((prev) => ({ ...prev, [setting]: e.target.checked }))
-      }
-
-    return (
-      <div style={{ width: '400px' }}>
-        <h3 style={{ marginBottom: '24px' }}>Settings</h3>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-          <div>
-            <h4
-              style={{ marginBottom: '16px', fontSize: '14px', color: '#666' }}
-            >
-              Preferences
-            </h4>
-            <div
-              style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}
-            >
-              <ToggleSwitch
-                label="Enable notifications"
-                checked={settings.notifications}
-                onChange={handleChange('notifications')}
-                helperText="Get notified about important updates"
-              />
-              <ToggleSwitch
-                label="Dark mode"
-                checked={settings.darkMode}
-                onChange={handleChange('darkMode')}
-                helperText="Use dark theme for the interface"
-              />
-              <ToggleSwitch
-                label="Auto-save"
-                checked={settings.autoSave}
-                onChange={handleChange('autoSave')}
-                helperText="Automatically save your work"
-              />
-            </div>
+  render: () => (
+    <div style={{ width: '400px' }}>
+      <h3 style={{ marginBottom: '24px' }}>Settings</h3>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+        <div>
+          <h4 style={{ marginBottom: '16px', fontSize: '14px', color: '#666' }}>
+            Preferences
+          </h4>
+          <div
+            style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}
+          >
+            <ToggleSwitch
+              label="Enable notifications"
+              checked
+              onChange={fn()}
+              helperText="Get notified about important updates"
+            />
+            <ToggleSwitch
+              label="Dark mode"
+              onChange={fn()}
+              helperText="Use dark theme for the interface"
+            />
+            <ToggleSwitch
+              label="Auto-save"
+              checked
+              onChange={fn()}
+              helperText="Automatically save your work"
+            />
           </div>
+        </div>
 
-          <div>
-            <h4
-              style={{ marginBottom: '16px', fontSize: '14px', color: '#666' }}
-            >
-              Privacy
-            </h4>
-            <div
-              style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}
-            >
-              <ToggleSwitch
-                label="Share analytics"
-                checked={settings.analytics}
-                onChange={handleChange('analytics')}
-                helperText="Help us improve by sharing usage data"
-              />
-              <ToggleSwitch
-                label="Newsletter subscription"
-                checked={settings.newsletter}
-                onChange={handleChange('newsletter')}
-                helperText="Receive weekly updates and tips"
-              />
-            </div>
+        <div>
+          <h4 style={{ marginBottom: '16px', fontSize: '14px', color: '#666' }}>
+            Privacy
+          </h4>
+          <div
+            style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}
+          >
+            <ToggleSwitch
+              label="Share analytics"
+              onChange={fn()}
+              helperText="Help us improve by sharing usage data"
+            />
+            <ToggleSwitch
+              label="Newsletter subscription"
+              checked
+              onChange={fn()}
+              helperText="Receive weekly updates and tips"
+            />
           </div>
         </div>
       </div>
-    )
-  },
+    </div>
+  ),
 }
 
 // Feature Toggles Example
@@ -263,18 +266,21 @@ export const FeatureToggles: Story = {
         <ToggleSwitch
           label="Beta features"
           helperText="Access experimental features before release"
-          size="large"
+          height="large"
+          onChange={fn()}
         />
         <ToggleSwitch
           label="Advanced mode"
           helperText="Show advanced options and settings"
-          size="large"
+          height="large"
+          onChange={fn()}
         />
         <ToggleSwitch
           label="Developer tools"
           helperText="Enable debugging and development features"
-          size="large"
+          height="large"
           disabled
+          onChange={fn()}
         />
       </div>
     </div>
@@ -291,21 +297,25 @@ export const AccessibilitySettings: Story = {
           label="High contrast mode"
           labelPosition="left"
           helperText="Increase contrast for better visibility"
+          onChange={fn()}
         />
         <ToggleSwitch
           label="Reduce motion"
           labelPosition="left"
           helperText="Minimize animations and transitions"
+          onChange={fn()}
         />
         <ToggleSwitch
           label="Screen reader mode"
           labelPosition="left"
           helperText="Optimize for screen reader compatibility"
+          onChange={fn()}
         />
         <ToggleSwitch
           label="Large text"
           labelPosition="left"
-          helperText="Increase text size throughout the app"
+          helperText="Increase text height throughout the app"
+          onChange={fn()}
         />
       </div>
     </div>
@@ -323,74 +333,79 @@ export const MixedDemo: Story = {
         maxWidth: '600px',
       }}
     >
-      <ToggleSwitch size="small" label="Small OFF" />
-      <ToggleSwitch size="small" label="Small ON" checked />
-      <ToggleSwitch size="small" label="Small Disabled" disabled />
+      <ToggleSwitch height="small" label="Small OFF" onChange={fn()} />
+      <ToggleSwitch height="small" label="Small ON" checked onChange={fn()} />
+      <ToggleSwitch
+        height="small"
+        label="Small Disabled"
+        disabled
+        onChange={fn()}
+      />
 
-      <ToggleSwitch size="medium" label="Medium OFF" />
-      <ToggleSwitch size="medium" label="Medium ON" checked />
-      <ToggleSwitch size="medium" label="Medium Disabled" disabled />
+      <ToggleSwitch height="medium" label="Medium OFF" onChange={fn()} />
+      <ToggleSwitch height="medium" label="Medium ON" checked onChange={fn()} />
+      <ToggleSwitch
+        height="medium"
+        label="Medium Disabled"
+        disabled
+        onChange={fn()}
+      />
 
-      <ToggleSwitch size="large" label="Large OFF" />
-      <ToggleSwitch size="large" label="Large ON" checked />
-      <ToggleSwitch size="large" label="Large Disabled" disabled />
+      <ToggleSwitch height="large" label="Large OFF" onChange={fn()} />
+      <ToggleSwitch height="large" label="Large ON" checked onChange={fn()} />
+      <ToggleSwitch
+        height="large"
+        label="Large Disabled"
+        disabled
+        onChange={fn()}
+      />
     </div>
   ),
 }
 
-// Controlled Component Example
-export const ControlledComponent: Story = {
-  render: () => {
-    const [isPublic, setIsPublic] = useState(false)
-    const [acceptTerms, setAcceptTerms] = useState(false)
+// Form Example
+export const FormExample: Story = {
+  render: () => (
+    <form
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '24px',
+        width: '400px',
+      }}
+      onSubmit={(e) => {
+        e.preventDefault()
+        alert(
+          'Form submitted! Check the Actions panel for toggle interactions.',
+        )
+      }}
+    >
+      <ToggleSwitch
+        label="Make profile public"
+        onChange={fn()}
+        helperText="Your profile will be visible to everyone"
+      />
 
-    return (
-      <form
+      <ToggleSwitch
+        label="I accept the terms and conditions"
+        onChange={fn()}
+        helperText="Required to proceed"
+        error
+      />
+
+      <button
+        type="submit"
         style={{
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '24px',
-          width: '400px',
-        }}
-        onSubmit={(e) => {
-          e.preventDefault()
-          alert(`Public: ${isPublic}, Terms: ${acceptTerms}`)
+          padding: '10px 20px',
+          backgroundColor: '#000',
+          color: '#fff',
+          border: 'none',
+          borderRadius: '4px',
+          cursor: 'pointer',
         }}
       >
-        <ToggleSwitch
-          label="Make profile public"
-          checked={isPublic}
-          onChange={(e) => setIsPublic(e.target.checked)}
-          helperText="Your profile will be visible to everyone"
-        />
-
-        <ToggleSwitch
-          label="I accept the terms and conditions"
-          checked={acceptTerms}
-          onChange={(e) => setAcceptTerms(e.target.checked)}
-          error={!acceptTerms}
-          helperText={
-            !acceptTerms
-              ? 'You must accept the terms'
-              : 'Thank you for accepting'
-          }
-        />
-
-        <button
-          type="submit"
-          disabled={!acceptTerms}
-          style={{
-            padding: '10px 20px',
-            backgroundColor: acceptTerms ? '#000' : '#ccc',
-            color: '#fff',
-            border: 'none',
-            borderRadius: '4px',
-            cursor: acceptTerms ? 'pointer' : 'not-allowed',
-          }}
-        >
-          Submit
-        </button>
-      </form>
-    )
-  },
+        Submit
+      </button>
+    </form>
+  ),
 }

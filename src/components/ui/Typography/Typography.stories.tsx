@@ -32,16 +32,17 @@ export const BodyText: Story = {
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
       <Body size="lg">
-        Large body text - Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-        Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        Large body text - Lorem ipsum dolor sit amet, consectetur adipiscing
+        elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
       </Body>
       <Body>
-        Base body text (default) - Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-        Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        Base body text (default) - Lorem ipsum dolor sit amet, consectetur
+        adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore
+        magna aliqua.
       </Body>
       <Body size="sm">
-        Small body text - Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-        Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        Small body text - Lorem ipsum dolor sit amet, consectetur adipiscing
+        elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
       </Body>
     </div>
   ),
@@ -114,33 +115,49 @@ export const ArticleExample: Story = {
       <Body muted style={{ marginTop: '8px', marginBottom: '24px' }}>
         Published on December 1, 2023 • 5 min read
       </Body>
-      
+
       <Body size="lg" style={{ marginBottom: '24px' }}>
-        Creating consistent and accessible typography is crucial for any design system. 
-        It helps establish visual hierarchy and improves readability across your application.
+        Creating consistent and accessible typography is crucial for any design
+        system. It helps establish visual hierarchy and improves readability
+        across your application.
       </Body>
-      
-      <H2 style={{ marginTop: '32px', marginBottom: '16px' }}>Why Typography Matters</H2>
+
+      <H2 style={{ marginTop: '32px', marginBottom: '16px' }}>
+        Why Typography Matters
+      </H2>
       <Body style={{ marginBottom: '16px' }}>
-        Good typography enhances the user experience by making content easy to scan and read. 
-        It guides users through your interface and helps them understand the importance and 
-        relationship of different pieces of information.
+        Good typography enhances the user experience by making content easy to
+        scan and read. It guides users through your interface and helps them
+        understand the importance and relationship of different pieces of
+        information.
       </Body>
-      
-      <H3 style={{ marginTop: '24px', marginBottom: '12px' }}>Key Principles</H3>
+
+      <H3 style={{ marginTop: '24px', marginBottom: '12px' }}>
+        Key Principles
+      </H3>
       <Body style={{ marginBottom: '12px' }}>
-        There are several key principles to consider when designing a typography system:
+        There are several key principles to consider when designing a typography
+        system:
       </Body>
-      
+
       <ul style={{ marginBottom: '16px' }}>
-        <li><Body>Consistency in sizes and weights</Body></li>
-        <li><Body>Clear hierarchy through scale</Body></li>
-        <li><Body>Appropriate line heights for readability</Body></li>
-        <li><Body>Sufficient contrast for accessibility</Body></li>
+        <li>
+          <Body>Consistency in sizes and weights</Body>
+        </li>
+        <li>
+          <Body>Clear hierarchy through scale</Body>
+        </li>
+        <li>
+          <Body>Appropriate line heights for readability</Body>
+        </li>
+        <li>
+          <Body>Sufficient contrast for accessibility</Body>
+        </li>
       </ul>
-      
+
       <Caption style={{ display: 'block', marginTop: '24px' }}>
-        Note: This is an example of how different typography components work together in a real article.
+        Note: This is an example of how different typography components work
+        together in a real article.
       </Caption>
     </article>
   ),
@@ -149,9 +166,18 @@ export const ArticleExample: Story = {
 // Form Example
 export const FormExample: Story = {
   render: () => (
-    <form style={{ maxWidth: '400px', display: 'flex', flexDirection: 'column', gap: '24px' }}>
+    <form
+      style={{
+        maxWidth: '400px',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '24px',
+      }}
+    >
       <div>
-        <Label style={{ display: 'block', marginBottom: '8px' }}>Full Name</Label>
+        <Label style={{ display: 'block', marginBottom: '8px' }}>
+          Full Name
+        </Label>
         <input
           type="text"
           placeholder="Enter your name"
@@ -167,9 +193,11 @@ export const FormExample: Story = {
           Enter your first and last name
         </Caption>
       </div>
-      
+
       <div>
-        <Label style={{ display: 'block', marginBottom: '8px' }}>Email Address</Label>
+        <Label style={{ display: 'block', marginBottom: '8px' }}>
+          Email Address
+        </Label>
         <input
           type="email"
           placeholder="email@example.com"
@@ -182,10 +210,10 @@ export const FormExample: Story = {
           }}
         />
         <Caption style={{ display: 'block', marginTop: '4px' }}>
-          We'll never share your email
+          We&apos;ll never share your email
         </Caption>
       </div>
-      
+
       <div>
         <Label style={{ display: 'block', marginBottom: '8px' }}>Message</Label>
         <textarea
@@ -210,7 +238,14 @@ export const FormExample: Story = {
 // Card Example
 export const CardExample: Story = {
   render: () => (
-    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '20px', maxWidth: '800px' }}>
+    <div
+      style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+        gap: '20px',
+        maxWidth: '800px',
+      }}
+    >
       {[1, 2, 3].map((i) => (
         <div
           key={i}
@@ -224,7 +259,8 @@ export const CardExample: Story = {
           <H6 style={{ marginBottom: '8px' }}>Featured</H6>
           <H4 style={{ marginBottom: '12px' }}>Card Title {i}</H4>
           <Body size="sm" muted style={{ marginBottom: '16px' }}>
-            This is a description of the card content. It provides additional context and information.
+            This is a description of the card content. It provides additional
+            context and information.
           </Body>
           <Caption>Updated 2 hours ago</Caption>
         </div>
@@ -239,7 +275,14 @@ export const SizeComparison: Story = {
     <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
       <div>
         <H6 style={{ marginBottom: '12px' }}>Heading Sizes</H6>
-        <div style={{ display: 'flex', alignItems: 'baseline', gap: '24px', flexWrap: 'wrap' }}>
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'baseline',
+            gap: '24px',
+            flexWrap: 'wrap',
+          }}
+        >
           <H1>H1</H1>
           <H2>H2</H2>
           <H3>H3</H3>
@@ -248,17 +291,24 @@ export const SizeComparison: Story = {
           <H6>H6</H6>
         </div>
       </div>
-      
+
       <div>
         <H6 style={{ marginBottom: '12px' }}>Body Sizes</H6>
-        <div style={{ display: 'flex', alignItems: 'baseline', gap: '24px', flexWrap: 'wrap' }}>
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'baseline',
+            gap: '24px',
+            flexWrap: 'wrap',
+          }}
+        >
           <Body size="lg">Large</Body>
           <Body>Base</Body>
           <Body size="sm">Small</Body>
           <Caption>Caption</Caption>
         </div>
       </div>
-      
+
       <div>
         <H6 style={{ marginBottom: '12px' }}>Font Weights</H6>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>

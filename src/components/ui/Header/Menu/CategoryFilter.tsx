@@ -7,9 +7,9 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import LocalDiningIcon from '@mui/icons-material/LocalDining'
 import { useRouter } from 'next/navigation'
 
-import { RecipeCategory } from '@/types'
+import { RECIPE_CATEGORY } from '@/utils/constants'
 
-const categories = Object.values(RecipeCategory)
+const categories = Object.values(RECIPE_CATEGORY)
 
 type Props = {
   selectedCategory: string | null

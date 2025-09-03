@@ -1,6 +1,12 @@
 'use client'
 
-import { createContext, useContext, useState, useCallback, ReactNode } from 'react'
+import {
+  createContext,
+  useContext,
+  useState,
+  useCallback,
+  ReactNode,
+} from 'react'
 
 import type { Recipe } from '@/types'
 
@@ -10,15 +16,12 @@ type RecipeContextType = {
   filteredRecipes: Recipe[]
   editingRecipe: Recipe | null
   expandedRecipeId: string | null
-  
-  // Search and filter
+
   clientSearchTerm: string
-  
-  // Loading states
+
   loading: boolean
   error: string | null
-  
-  // Actions
+
   setRecipes: (recipes: Recipe[]) => void
   setFilteredRecipes: (recipes: Recipe[]) => void
   setEditingRecipe: (recipe: Recipe | null) => void
@@ -26,8 +29,7 @@ type RecipeContextType = {
   setClientSearchTerm: (term: string) => void
   setLoading: (loading: boolean) => void
   setError: (error: string | null) => void
-  
-  // Handlers
+
   handleBookmarkChange: () => void
   handleEditRecipe: (recipe: Recipe) => void
   handleDeleteRecipe: () => void
@@ -43,11 +45,10 @@ export function RecipeProvider({ children }: { children: ReactNode }) {
   const [editingRecipe, setEditingRecipe] = useState<Recipe | null>(null)
   const [expandedRecipeId, setExpandedRecipeId] = useState<string | null>(null)
   const [clientSearchTerm, setClientSearchTerm] = useState('')
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
   const handleBookmarkChange = useCallback(() => {
-    // This will trigger a reload if bookmarks filter is active
     const params = new URLSearchParams(window.location.search)
     if (params.get('bookmarked') === 'true') {
       window.location.reload()
@@ -64,17 +65,20 @@ export function RecipeProvider({ children }: { children: ReactNode }) {
 
   const handleRecipeUpdated = useCallback((updatedRecipe: Recipe) => {
     setRecipes((prev) =>
-      prev.map((r) => (r.id === updatedRecipe.id ? updatedRecipe : r))
+      prev.map((r) => (r.id === updatedRecipe.id ? updatedRecipe : r)),
     )
     setFilteredRecipes((prev) =>
-      prev.map((r) => (r.id === updatedRecipe.id ? updatedRecipe : r))
+      prev.map((r) => (r.id === updatedRecipe.id ? updatedRecipe : r)),
     )
     window.location.reload()
   }, [])
 
-  const handleToggleIngredients = useCallback((recipeId: string) => {
-    setExpandedRecipeId(expandedRecipeId === recipeId ? null : recipeId)
-  }, [expandedRecipeId])
+  const handleToggleIngredients = useCallback(
+    (recipeId: string) => {
+      setExpandedRecipeId(expandedRecipeId === recipeId ? null : recipeId)
+    },
+    [expandedRecipeId],
+  )
 
   const value: RecipeContextType = {
     recipes,
@@ -98,7 +102,9 @@ export function RecipeProvider({ children }: { children: ReactNode }) {
     handleToggleIngredients,
   }
 
-  return <RecipeContext.Provider value={value}>{children}</RecipeContext.Provider>
+  return (
+    <RecipeContext.Provider value={value}>{children}</RecipeContext.Provider>
+  )
 }
 
 export function useRecipeContext() {

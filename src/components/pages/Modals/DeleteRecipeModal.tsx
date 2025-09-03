@@ -10,7 +10,7 @@ import type { Recipe } from '@/types'
 import { Button } from '@/components/ui'
 import { Dialog } from '@/components/ui'
 import { Body } from '@/components/ui'
-import { deleteRecipe } from '@/lib/supabase/supabaseRecipeService'
+import { deleteRecipe } from '@/lib/supabase/tables/recipe/deleteRecipe'
 import { spacing } from '@/styles/designTokens'
 
 type Props = {
