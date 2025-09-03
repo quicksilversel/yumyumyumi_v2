@@ -20,7 +20,7 @@ export const Info = ({ recipe }: { recipe: Recipe }) => {
         <InfoCard>
           <Flex direction="column" align="center" gap={1}>
             <AccessTimeIcon />
-            <span>{recipe.totalTime} min</span>
+            <span>{recipe.cookTime} min</span>
           </Flex>
         </InfoCard>
         <InfoCard>

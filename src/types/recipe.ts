@@ -1,63 +1,84 @@
-export type Ingredient = {
-  name: string
-  amount: string
-  isSpice?: boolean
-}
+import { z } from 'zod'
 
-export type Direction = {
-  title: string
-  description?: string
-}
+import { RECIPE_CATEGORY } from '@/utils/constants'
 
-export type Recipe = {
-  id: string
-  user_id?: string | null
-  title: string
-  summary?: string
-  ingredients: Ingredient[]
-  directions: Direction[]
-  tags?: string[]
-  tips?: string
-  prepTime: number
-  cookTime: number
-  totalTime: number
-  servings: number
-  category: RecipeCategory
-  imageUrl: string
-  source?: string
-  isPublic?: boolean
-  createdAt: string
-  updatedAt: string
-}
+const ingredientSchema = z.object({
+  name: z.string().min(1, 'Ingredient name is required'),
+  amount: z.string().min(1, 'Amount is required'),
+  isSpice: z.boolean().optional(),
+})
 
-export const RecipeCategory = {
-  APPETIZER: 'Appetizer',
-  MAIN_COURSE: 'Main Course',
-  DESSERT: 'Dessert',
-  BREAKFAST: 'Breakfast',
-  LUNCH: 'Lunch',
-  DINNER: 'Dinner',
-  SNACK: 'Snack',
-  BEVERAGE: 'Beverage',
-  SALAD: 'Salad',
-  SOUP: 'Soup',
-  SIDE_DISH: 'Side Dish',
-  SAUCE: 'Sauce',
-  BAKING: 'Baking',
-} as const
+const directionSchema = z
+  .object({
+    title: z.string(),
+    description: z.string().optional(),
+  })
+  .refine((data) => data.title || data.description, {
+    message: 'Either title or description is required',
+  })
 
-export type RecipeCategory =
-  (typeof RecipeCategory)[keyof typeof RecipeCategory]
+const recipeCategorySchema = z.enum([...Object.values(RECIPE_CATEGORY)])
 
-export type RecipeFilters = {
-  searchTerm?: string
-  category?: RecipeCategory
-  maxCookingTime?: number
-  ingredients?: string[]
-  showBookmarkedOnly?: boolean
-}
+export const recipeFormSchema = z.object({
+  title: z.string().min(1, 'Title must be at least 1 characters'),
+  summary: z.string().optional(),
+  ingredients: z
+    .array(ingredientSchema)
+    .min(1, 'At least one ingredient is required'),
+  directions: z
+    .array(directionSchema)
+    .min(1, 'At least one direction is required'),
+  tags: z.array(z.string()).optional(),
+  tips: z.string().optional(),
+  cookTime: z.number().min(1, 'Cook time must be at least 1 minute'),
+  servings: z.number().min(1, 'Servings must be at least 1'),
+  category: recipeCategorySchema,
+  imageUrl: z.string().optional(),
+  source: z.string().optional(),
+  isPublic: z.boolean(),
+})
 
-export type BookmarkedRecipe = {
-  recipeId: string
-  bookmarkedAt: string
+export const recipeSchema = recipeFormSchema.extend({
+  id: z.string(),
+  userId: z.string().nullable().optional(), // Maps to user_id in database
+  createdAt: z.string(),
+  updatedAt: z.string().optional(),
+})
+
+export const recipeListSchema = z.array(recipeSchema)
+
+const recipeFiltersSchema = z.object({
+  searchTerm: z.string().optional(),
+  category: recipeCategorySchema.optional(),
+  maxCookingTime: z.number().optional(),
+  ingredients: z.array(z.string()).optional(),
+  showBookmarkedOnly: z.boolean().optional(),
+})
+
+const bookmarkedRecipeSchema = z.object({
+  recipeId: z.string(),
+  bookmarkedAt: z.string(),
+})
+
+export type Ingredient = z.input<typeof ingredientSchema>
+export type Direction = z.infer<typeof directionSchema>
+export type RecipeCategory = z.infer<typeof recipeCategorySchema>
+export type RecipeForm = z.infer<typeof recipeFormSchema>
+export type RecipeFormInput = z.input<typeof recipeFormSchema>
+export type Recipe = z.infer<typeof recipeSchema>
+export type RecipeFilters = z.infer<typeof recipeFiltersSchema>
+export type BookmarkedRecipe = z.infer<typeof bookmarkedRecipeSchema>
+
+export const defaultRecipeFormValues: RecipeForm = {
+  title: '',
+  summary: '',
+  ingredients: [{ name: '', amount: '' }],
+  directions: [{ title: '', description: '' }],
+  tips: '',
+  cookTime: 0,
+  servings: 2,
+  category: 'Main Course',
+  imageUrl: '',
+  source: '',
+  isPublic: true,
 }

@@ -1,10 +1,8 @@
-'use client'
-
 import { useState } from 'react'
 
 import AddIcon from '@mui/icons-material/Add'
 
-import { AddRecipeDialog } from '../Modals/AddRecipeDialog'
+import { AddRecipeDialog } from '../../pages/Modals/AddRecipeDialog'
 
 export const AddRecipeButton = () => {
   const [addRecipeOpen, setAddRecipeOpen] = useState(false)

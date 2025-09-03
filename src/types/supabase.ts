@@ -15,8 +15,15 @@ export type Database = {
           user_id: string | null
           title: string
           summary: string | null
-          ingredients: string[]
-          directions: string[]
+          ingredients: {
+            amount: string
+            isSpice?: boolean | null
+            name: string
+          }[]
+          directions: {
+            title: string
+            description: string
+          }
           tips: string | null
           prep_time: number
           cook_time: number

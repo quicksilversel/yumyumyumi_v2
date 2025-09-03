@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation'
 
 import type { Recipe } from '@/types'
 
-import { deleteRecipe } from '@/lib/supabase/supabaseRecipeService'
+import { deleteRecipe } from '@/lib/supabase/tables/recipe/deleteRecipe'
 
 interface UseRecipeActionsOptions {
   onEditOpen?: (recipe: Recipe) => void
@@ -14,7 +14,7 @@ interface UseRecipeActionsOptions {
 
 export const useRecipeActions = (
   recipe: Recipe,
-  options: UseRecipeActionsOptions = {}
+  options: UseRecipeActionsOptions = {},
 ) => {
   const [isDeleting, setIsDeleting] = useState(false)
   const [editDialogOpen, setEditDialogOpen] = useState(false)

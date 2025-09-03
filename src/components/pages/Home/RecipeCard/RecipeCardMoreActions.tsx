@@ -35,7 +35,7 @@ export const RecipeCardMoreActions = ({
 
   if (!recipe.title?.length) return null
 
-  const isOwner = user && recipe.user_id === user.id
+  const isOwner = user && recipe.userId === user.id
 
   const handleToggleIngredientsClick = (e: React.MouseEvent) => {
     e.preventDefault()

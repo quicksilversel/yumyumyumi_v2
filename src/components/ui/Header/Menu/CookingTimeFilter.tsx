@@ -135,7 +135,6 @@ const DropdownContainer = styled.div`
   background-color: ${({ theme }) => theme.colors.white};
   transition: max-height ${({ theme }) => theme.transition.default};
   overflow: hidden;
-  box-shadow: ${({ theme }) => theme.shadow.xl};
 
   details[open] & {
     max-height: 400px;

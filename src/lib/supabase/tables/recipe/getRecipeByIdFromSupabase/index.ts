@@ -1,0 +1,1 @@
+export { getRecipeByIdFromSupabase } from './getRecipeByIdFromSupabase'

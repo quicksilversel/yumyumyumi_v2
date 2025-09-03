@@ -14,7 +14,7 @@ export const RecipeCardBody = ({ recipe }: { recipe: Recipe }) => {
       <RecipeInfo gap={3}>
         <Flex align="center" gap={1}>
           <AccessTimeIcon />
-          <Caption>{recipe.totalTime} min</Caption>
+          <Caption>{recipe.cookTime} min</Caption>
         </Flex>
         <Flex align="center" gap={1}>
           <LocalDiningIcon />
