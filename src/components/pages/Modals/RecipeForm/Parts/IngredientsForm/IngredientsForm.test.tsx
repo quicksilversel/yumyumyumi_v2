@@ -8,7 +8,7 @@ import { useForm, FormProvider } from 'react-hook-form'
 
 import type { RecipeForm } from '@/types/recipe'
 
-import { ThemeWrapper } from '@/test-utils/test-setup'
+import { ThemeWrapper } from '@/lib/jest/ThemeWrapper'
 import { recipeFormSchema } from '@/types/recipe'
 
 import { IngredientsForm } from './IngredientsForm'
