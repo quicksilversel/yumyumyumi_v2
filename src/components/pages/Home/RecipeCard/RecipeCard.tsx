@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import Link from 'next/link'
 
-import type { Recipe } from '@/types'
+import type { Recipe } from '@/types/recipe'
 
 import { useRecipeContext } from '@/contexts/RecipeContext'
 
@@ -43,7 +43,6 @@ const StyledCard = styled.article`
   border: 1px solid ${({ theme }) => theme.colors.gray[200]};
   border-radius: ${({ theme }) => theme.borderRadius.lg};
   background-color: ${({ theme }) => theme.colors.white};
-  transition: all 200ms ease;
   overflow: hidden;
 `
 
@@ -51,4 +50,5 @@ const StyledLink = styled(Link)`
   display: flex;
   flex-direction: column;
   flex-grow: 1;
+  height: 100%;
 `

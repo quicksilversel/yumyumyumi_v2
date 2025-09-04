@@ -2,7 +2,7 @@ import { useMemo } from 'react'
 
 import styled from '@emotion/styled'
 
-import type { Recipe } from '@/types'
+import type { Recipe } from '@/types/recipe'
 
 import { Flex, H2, H3, Label } from '@/components/ui'
 
@@ -31,16 +31,20 @@ export const Ingredients = ({ recipe }: { recipe: Recipe }) => {
   }
 
   return (
-    <section>
-      <H2>材料（{recipe.servings}人前）</H2>
+    <Section>
+      <H2>Ingredients</H2>
       <IngredientList>
         {renderIngredients(regular)}
         <H3>(A)</H3>
         {renderIngredients(spices)}
       </IngredientList>
-    </section>
+    </Section>
   )
 }
+
+const Section = styled.section`
+  margin-block: ${({ theme }) => theme.spacing[6]};
+`
 
 const IngredientList = styled.ul`
   display: flex;
@@ -52,13 +56,9 @@ const IngredientList = styled.ul`
 const IngredientItem = styled.li`
   width: 100%;
   padding: ${({ theme }) => theme.spacing[3]} ${({ theme }) => theme.spacing[4]};
-  border-top: 1px solid ${({ theme }) => theme.colors.gray[200]};
+  border-bottom: 1px solid ${({ theme }) => theme.colors.gray[200]};
 
-  &:last-child {
-    border-bottom: 1px solid ${({ theme }) => theme.colors.gray[200]};
-  }
-
-  &:first-child {
-    margin-top: ${({ theme }) => theme.spacing[4]};
+  h3 + & {
+    border-top: 1px solid ${({ theme }) => theme.colors.gray[200]};
   }
 `

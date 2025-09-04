@@ -1,14 +1,12 @@
-'use client'
-
 import styled from '@emotion/styled'
 import AddIcon from '@mui/icons-material/Add'
 import DeleteIcon from '@mui/icons-material/Delete'
 import { useFormContext, useFieldArray, Controller } from 'react-hook-form'
 
-import type { RecipeForm } from '@/types'
+import type { RecipeForm } from '@/types/recipe'
 
 import {
-  H6,
+  H2,
   Caption,
   ErrorText,
   Stack,
@@ -40,7 +38,7 @@ export function DirectionsForm() {
   return (
     <Stack gap={3}>
       <Title>
-        <H6>Directions</H6>
+        <H2>Directions</H2>
         <Button
           variant="secondary"
           size="sm"

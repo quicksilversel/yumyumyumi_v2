@@ -62,7 +62,7 @@ const SearchWrapper = styled.div`
   border: 1px solid ${({ theme }) => theme.colors.gray[300]};
   border-radius: ${({ theme }) => theme.borderRadius.full};
   background-color: ${({ theme }) => theme.colors.white};
-  transition: all ${({ theme }) => theme.transition.fast};
+  transition: border-color ${({ theme }) => theme.transition.fast};
 
   &:focus-within {
     border-color: ${({ theme }) => theme.colors.primary};

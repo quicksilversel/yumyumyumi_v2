@@ -1,16 +1,8 @@
-import styled from '@emotion/styled'
 import { useFormContext } from 'react-hook-form'
 
-import type { RecipeForm } from '@/types'
+import type { RecipeForm } from '@/types/recipe'
 
-import { Input } from '@/components/ui/Forms/Input'
-import { colors } from '@/styles/designTokens'
-
-const ErrorText = styled.span`
-  color: ${colors.error};
-  font-size: 12px;
-  margin-top: 4px;
-`
+import { Input, ErrorText } from '@/components/ui'
 
 export const ServingsForm = () => {
   const {

@@ -1,6 +1,6 @@
 import { useFormContext } from 'react-hook-form'
 
-import type { RecipeForm } from '@/types'
+import type { RecipeForm } from '@/types/recipe'
 
 import { Input } from '@/components/ui/Forms/Input'
 

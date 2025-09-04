@@ -13,112 +13,6 @@ import { Input } from '@/components/ui/Forms/Input'
 import { Stack } from '@/components/ui/Layout'
 import { Caption } from '@/components/ui/Typography'
 import { useAuth } from '@/contexts/AuthContext'
-import {
-  colors,
-  spacing,
-  borderRadius,
-  transition,
-  typography,
-} from '@/styles/designTokens'
-
-const PageContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  padding: ${spacing[4]};
-  background: linear-gradient(
-    180deg,
-    ${colors.gray[50]} 0%,
-    ${colors.white} 100%
-  );
-`
-
-const AuthCard = styled.div`
-  width: 100%;
-  max-width: 420px;
-  padding: ${spacing[8]};
-  border-radius: ${borderRadius.xl};
-  background: ${colors.white};
-  box-shadow: 0 10px 25px rgb(0, 0, 0, 10%);
-`
-
-const TabContainer = styled.div`
-  display: flex;
-  margin-bottom: ${spacing[6]};
-  border-bottom: 1px solid ${colors.gray[200]};
-`
-
-const Tab = styled.button<{ active: boolean }>`
-  flex: 1;
-  padding: ${spacing[3]} ${spacing[4]};
-  background: none;
-  border: none;
-  border-bottom: 2px solid transparent;
-  cursor: pointer;
-  font-size: ${typography.fontSize.base};
-  font-weight: ${typography.fontWeight.medium};
-  color: ${(props) => (props.active ? colors.black : colors.gray[500])};
-  transition: all ${transition.default};
-
-  ${(props) =>
-    props.active &&
-    css`
-      border-bottom-color: ${colors.black};
-    `}
-
-  &:hover:not(:disabled) {
-    color: ${colors.black};
-  }
-`
-
-const Alert = styled.div<{ variant: 'error' | 'success' }>`
-  padding: ${spacing[3]} ${spacing[4]};
-  border-radius: ${borderRadius.lg};
-  margin-bottom: ${spacing[4]};
-  font-size: ${typography.fontSize.sm};
-
-  ${(props) =>
-    props.variant === 'error'
-      ? css`
-          background-color: ${colors.error};
-          color: ${colors.white};
-        `
-      : css`
-          background-color: ${colors.success};
-          color: ${colors.white};
-        `}
-`
-
-const InputWrapper = styled.div`
-  position: relative;
-`
-
-const PasswordToggle = styled(IconButton)`
-  position: absolute;
-  top: 50%;
-  right: ${spacing[2]};
-  transform: translateY(-50%);
-`
-
-const Form = styled.form`
-  width: 100%;
-`
-
-const LinkButton = styled.button`
-  margin-left: ${spacing[1]};
-  padding: 0;
-  border: none;
-  background: none;
-  color: ${colors.black};
-  font-size: inherit;
-  text-decoration: underline;
-  cursor: pointer;
-
-  &:hover {
-    opacity: 0.7;
-  }
-`
 
 export default function LoginPage() {
   const [tab, setTab] = useState(0)
@@ -253,7 +147,6 @@ export default function LoginPage() {
                 required
                 placeholder="Enter your password"
                 autoComplete={tab === 0 ? 'current-password' : 'new-password'}
-                style={{ paddingRight: spacing[10] }}
               />
               <PasswordToggle
                 onClick={() => setShowPassword(!showPassword)}
@@ -309,3 +202,103 @@ export default function LoginPage() {
     </PageContainer>
   )
 }
+
+const PageContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: ${({ theme }) => theme.spacing[4]};
+  background: linear-gradient(
+    180deg,
+    ${({ theme }) => theme.colors.gray[50]} 0%,
+    ${({ theme }) => theme.colors.white} 100%
+  );
+`
+
+const AuthCard = styled.div`
+  width: 100%;
+  max-width: 420px;
+  padding: ${({ theme }) => theme.spacing[8]};
+  border-radius: ${({ theme }) => theme.borderRadius.xl};
+  background: ${({ theme }) => theme.colors.white};
+  box-shadow: 0 10px 25px rgb(0, 0, 0, 10%);
+`
+
+const TabContainer = styled.div`
+  display: flex;
+  margin-bottom: ${({ theme }) => theme.spacing[6]};
+  border-bottom: 1px solid ${({ theme }) => theme.colors.gray[200]};
+`
+
+const Tab = styled.button<{ active: boolean }>`
+  flex: 1;
+  padding: ${({ theme }) => theme.spacing[3]} ${({ theme }) => theme.spacing[4]};
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  font-size: ${({ theme }) => theme.typography.fontSize.base};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
+  color: ${({ theme, active }) =>
+    active ? theme.colors.black : theme.colors.gray[500]};
+  transition: color ${({ theme }) => theme.transition.default};
+
+  ${({ theme, active }) =>
+    active &&
+    css`
+      border-bottom-color: ${theme.colors.black};
+    `}
+
+  &:hover:not(:disabled) {
+    color: ${({ theme }) => theme.colors.black};
+  }
+`
+
+const Alert = styled.div<{ variant: 'error' | 'success' }>`
+  padding: ${({ theme }) => theme.spacing[3]} ${({ theme }) => theme.spacing[4]};
+  border-radius: ${({ theme }) => theme.borderRadius.lg};
+  margin-bottom: ${({ theme }) => theme.spacing[4]};
+  font-size: ${({ theme }) => theme.typography.fontSize.sm};
+
+  ${({ theme, variant }) =>
+    variant === 'error'
+      ? css`
+          background-color: ${theme.colors.error};
+          color: ${theme.colors.white};
+        `
+      : css`
+          background-color: ${theme.colors.success};
+          color: ${theme.colors.white};
+        `}
+`
+
+const InputWrapper = styled.div`
+  position: relative;
+`
+
+const PasswordToggle = styled(IconButton)`
+  position: absolute;
+  top: 50%;
+  right: ${({ theme }) => theme.spacing[2]};
+  transform: translateY(-50%);
+`
+
+const Form = styled.form`
+  width: 100%;
+`
+
+const LinkButton = styled.button`
+  margin-left: ${({ theme }) => theme.spacing[1]};
+  padding: 0;
+  border: none;
+  background: none;
+  color: ${({ theme }) => theme.colors.black};
+  font-size: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.7;
+  }
+`

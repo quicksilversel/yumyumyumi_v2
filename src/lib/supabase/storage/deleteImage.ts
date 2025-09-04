@@ -28,11 +28,7 @@ export async function deleteImage(imageUrl: string): Promise<boolean> {
       .from(STORAGE_BUCKET)
       .remove([filePath])
 
-    if (error) {
-      // eslint-disable-next-line no-console
-      console.error('Error deleting image:', error)
-      return false
-    }
+    if (error) throw error
 
     return true
   } catch (error) {

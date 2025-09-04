@@ -1,13 +1,12 @@
 import { useEffect, useState, useCallback } from 'react'
 
-import type { BookmarkedRecipe } from '@/types'
+import type { Bookmark } from '@/types/bookmarks'
 
 import {
   getBookmarks,
-  isBookmarked,
   toggleBookmark,
   getBookmarkedRecipeIds,
-} from '@/lib/supabase/supabaseBookmarkService'
+} from '@/lib/supabase/tables/bookmarks'
 
 interface UseBookmarksOptions {
   recipeId?: string
@@ -15,15 +14,14 @@ interface UseBookmarksOptions {
 }
 
 export function useBookmarks(options: UseBookmarksOptions = {}) {
-  const [bookmarks, setBookmarks] = useState<BookmarkedRecipe[]>([])
+  const [bookmarks, setBookmarks] = useState<Partial<Bookmark>[]>([])
   const [bookmarkedIds, setBookmarkedIds] = useState<Set<string>>(new Set())
   const [isBookmarkedState, setIsBookmarkedState] = useState(false)
-  const [isLoading, setIsLoading] = useState(true)
+  const [isInitialLoading, setIsInitialLoading] = useState(true)
+  const [isToggling, setIsToggling] = useState(false)
 
-  // Fetch bookmarks on mount and when they change
   const fetchBookmarks = useCallback(async () => {
     try {
-      setIsLoading(true)
       const [bookmarksList, bookmarkedIdsSet] = await Promise.all([
         getBookmarks(),
         getBookmarkedRecipeIds(),
@@ -39,49 +37,13 @@ export function useBookmarks(options: UseBookmarksOptions = {}) {
       // eslint-disable-next-line no-console
       console.error('Error fetching bookmarks:', error)
     } finally {
-      setIsLoading(false)
-    }
-  }, [options.recipeId])
-
-  // Check if specific recipe is bookmarked
-  const checkBookmarkStatus = useCallback(async () => {
-    if (!options.recipeId) return
-
-    try {
-      const bookmarked = await isBookmarked(options.recipeId)
-      setIsBookmarkedState(bookmarked)
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error('Error checking bookmark status:', error)
+      setIsInitialLoading(false)
     }
   }, [options.recipeId])
 
   useEffect(() => {
     fetchBookmarks()
-
-    // Listen for bookmark changes from other components
-    const handleBookmarksChange = (event: CustomEvent<BookmarkedRecipe[]>) => {
-      setBookmarks(event.detail)
-      const newBookmarkedIds = new Set(event.detail.map((b) => b.recipeId))
-      setBookmarkedIds(newBookmarkedIds)
-
-      if (options.recipeId) {
-        setIsBookmarkedState(newBookmarkedIds.has(options.recipeId))
-      }
-    }
-
-    window.addEventListener(
-      'bookmarksChanged',
-      handleBookmarksChange as EventListener,
-    )
-
-    return () => {
-      window.removeEventListener(
-        'bookmarksChanged',
-        handleBookmarksChange as EventListener,
-      )
-    }
-  }, [fetchBookmarks, options.recipeId])
+  }, [fetchBookmarks])
 
   const handleToggleBookmark = useCallback(
     async (e?: React.MouseEvent) => {
@@ -96,22 +58,49 @@ export function useBookmarks(options: UseBookmarksOptions = {}) {
       }
 
       try {
-        setIsLoading(true)
-        const newState = await toggleBookmark(options.recipeId)
+        setIsToggling(true)
+
+        const newState = !isBookmarkedState
         setIsBookmarkedState(newState)
 
-        // Refresh bookmarks list
-        await fetchBookmarks()
+        const newBookmarkedIds = new Set(bookmarkedIds)
+        if (newState) {
+          newBookmarkedIds.add(options.recipeId)
+        } else {
+          newBookmarkedIds.delete(options.recipeId)
+        }
+        setBookmarkedIds(newBookmarkedIds)
+
+        const actualState = await toggleBookmark(options.recipeId)
+
+        if (actualState !== newState) {
+          setIsBookmarkedState(actualState)
+          const updatedIds = new Set(bookmarkedIds)
+          if (actualState) {
+            updatedIds.add(options.recipeId)
+          } else {
+            updatedIds.delete(options.recipeId)
+          }
+          setBookmarkedIds(updatedIds)
+        }
 
         options.onToggle?.()
       } catch (error) {
         // eslint-disable-next-line no-console
         console.error('Error toggling bookmark:', error)
+        setIsBookmarkedState(!isBookmarkedState)
+        const revertedIds = new Set(bookmarkedIds)
+        if (isBookmarkedState) {
+          revertedIds.add(options.recipeId)
+        } else {
+          revertedIds.delete(options.recipeId)
+        }
+        setBookmarkedIds(revertedIds)
       } finally {
-        setIsLoading(false)
+        setIsToggling(false)
       }
     },
-    [options, fetchBookmarks],
+    [options, isBookmarkedState, bookmarkedIds],
   )
 
   return {
@@ -120,6 +109,7 @@ export function useBookmarks(options: UseBookmarksOptions = {}) {
     isBookmarked: isBookmarkedState,
     toggleBookmark: handleToggleBookmark,
     refreshBookmarks: fetchBookmarks,
-    isLoading,
+    isLoading: isInitialLoading,
+    isToggling,
   }
 }

@@ -83,7 +83,7 @@ const Menu = styled.div<{ open: boolean }>`
   top: 38px;
   right: 0;
   z-index: 1000;
-  display: ${(props) => (props.open ? 'block' : 'none')};
+  display: ${({ open }) => (open ? 'block' : 'none')};
   min-width: 180px;
   margin-top: ${({ theme }) => theme.spacing[1]};
   border: 1px solid ${({ theme }) => theme.colors.gray[200]};

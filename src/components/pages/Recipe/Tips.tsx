@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import InfoIcon from '@mui/icons-material/Info'
 
-import type { Recipe } from '@/types'
+import type { Recipe } from '@/types/recipe'
 
 import { H2, Body } from '@/components/ui'
 

@@ -1,6 +1,6 @@
 import { useFormContext, Controller } from 'react-hook-form'
 
-import type { RecipeForm } from '@/types'
+import type { RecipeForm } from '@/types/recipe'
 
 import { ToggleSwitch } from '@/components/ui/Forms/ToggleSwitch'
 import { Caption } from '@/components/ui/Typography'

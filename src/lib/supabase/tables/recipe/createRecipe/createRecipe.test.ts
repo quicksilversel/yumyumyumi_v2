@@ -1,6 +1,6 @@
 import { objectToCamel, objectToSnake } from 'ts-case-convert'
 
-import type { Recipe } from '@/types'
+import type { Recipe } from '@/types/recipe'
 
 import { isValidOf } from '@/lib/functions/isValidOf'
 
@@ -37,7 +37,6 @@ describe('createRecipe', () => {
     imageUrl: 'https://example.com/image.jpg',
     source: 'https://example.com',
     isPublic: true,
-    createdAt: '2024-01-01T00:00:00Z',
     updatedAt: '2024-01-01T00:00:00Z',
   }
 

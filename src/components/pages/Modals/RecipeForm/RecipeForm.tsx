@@ -1,5 +1,3 @@
-import styled from '@emotion/styled'
-
 import {
   CategoryForm,
   CookTimeForm,
@@ -14,19 +12,13 @@ import {
   TipsForm,
   TitleForm,
 } from '@/components/pages/Modals/RecipeForm/Parts'
-import { Stack, Divider, Grid } from '@/components/ui/Layout'
-import { colors } from '@/styles/designTokens'
+import { Stack, Divider, Grid, ErrorText } from '@/components/ui'
 
 type Props = {
   errors?: string[]
   handleImageChange?: (file: File | null, preview: string) => void
   uploadingImage?: boolean
 }
-
-const ErrorMessage = styled.p`
-  color: ${colors.error};
-  font-size: 14px;
-`
 
 export const RecipeForm = ({
   errors = [],
@@ -38,7 +30,7 @@ export const RecipeForm = ({
       {errors.length > 0 && (
         <Stack gap={2}>
           {errors.map((error, index) => (
-            <ErrorMessage key={index}>{error}</ErrorMessage>
+            <ErrorText key={index}>{error}</ErrorText>
           ))}
         </Stack>
       )}

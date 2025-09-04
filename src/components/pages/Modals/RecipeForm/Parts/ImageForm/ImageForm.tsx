@@ -1,5 +1,3 @@
-'use client'
-
 import { useRef, useState } from 'react'
 
 import styled from '@emotion/styled'
@@ -9,13 +7,18 @@ import ImageIcon from '@mui/icons-material/Image'
 import Image from 'next/image'
 import { useFormContext, Controller } from 'react-hook-form'
 
-import type { RecipeForm } from '@/types'
+import type { RecipeForm } from '@/types/recipe'
 
-import { Button, IconButton } from '@/components/ui/Button'
-import { Stack, Flex } from '@/components/ui/Layout'
-import { Caption, H6 } from '@/components/ui/Typography'
+import {
+  Button,
+  IconButton,
+  Stack,
+  Flex,
+  Caption,
+  ErrorText,
+  H2,
+} from '@/components/ui'
 import { validateImage, deleteImage } from '@/lib/supabase/storage'
-import { colors, spacing, borderRadius } from '@/styles/designTokens'
 
 type Props = {
   onImageChange?: (file: File | null, preview: string) => void
@@ -101,8 +104,7 @@ export function ImageForm({ onImageChange, uploading = false }: Props) {
 
   return (
     <Stack gap={3}>
-      <H6>Recipe Image</H6>
-
+      <H2>Recipe Image</H2>
       <Controller
         name="imageUrl"
         control={control}
@@ -150,11 +152,7 @@ export function ImageForm({ onImageChange, uploading = false }: Props) {
         onChange={handleFileSelect}
       />
 
-      {error && (
-        <Caption style={{ color: colors.error, textAlign: 'center' }}>
-          {error}
-        </Caption>
-      )}
+      {error && <ErrorText>{error}</ErrorText>}
 
       <Caption style={{ textAlign: 'center' }}>
         Max file size: 2MB. Supported formats: JPG, PNG, WebP
@@ -175,8 +173,8 @@ const ImagePreview = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-  border-radius: ${borderRadius.lg};
-  background-color: ${colors.gray[100]};
+  border-radius: ${({ theme }) => theme.borderRadius.lg};
+  background-color: ${({ theme }) => theme.colors.gray[100]};
   overflow: hidden;
   aspect-ratio: 16/9;
 
@@ -191,20 +189,20 @@ const PlaceholderContent = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  color: ${colors.gray[500]};
+  color: ${({ theme }) => theme.colors.gray[500]};
   text-align: center;
 
   svg {
-    margin-right: ${spacing[2]};
-    margin-bottom: ${spacing[2]};
+    margin-right: ${({ theme }) => theme.spacing[2]};
+    margin-bottom: ${({ theme }) => theme.spacing[2]};
     font-size: 48px;
   }
 `
 
 const DeleteButton = styled(IconButton)`
   position: absolute;
-  top: ${spacing[2]};
-  right: ${spacing[2]};
+  top: ${({ theme }) => theme.spacing[2]};
+  right: ${({ theme }) => theme.spacing[2]};
   background-color: rgb(255, 255, 255, 90%);
 
   &:hover {

@@ -1,6 +1,6 @@
 import { useFormContext } from 'react-hook-form'
 
-import type { RecipeForm } from '@/types'
+import type { RecipeForm } from '@/types/recipe'
 
 import { ErrorText, Select } from '@/components/ui'
 import { RECIPE_CATEGORY } from '@/utils/constants'

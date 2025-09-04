@@ -2,7 +2,7 @@ import styled from '@emotion/styled'
 import AccessTimeIcon from '@mui/icons-material/AccessTime'
 import LocalDiningIcon from '@mui/icons-material/LocalDining'
 
-import type { Recipe } from '@/types'
+import type { Recipe } from '@/types/recipe'
 
 import { Flex, Caption } from '@/components/ui'
 

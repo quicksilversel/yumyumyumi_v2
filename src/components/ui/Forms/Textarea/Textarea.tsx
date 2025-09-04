@@ -80,8 +80,8 @@ const RequiredMark = styled.span`
 const HelperText = styled.span<{ error?: boolean }>`
   display: block;
   margin-top: ${({ theme }) => theme.spacing[1]};
-  color: ${(props) =>
-    props.error ? props.theme.colors.error : props.theme.colors.gray[500]};
+  color: ${({ error, theme }) =>
+    error ? theme.colors.error : theme.colors.gray[500]};
   font-size: ${({ theme }) => theme.typography.fontSize.xs};
 `
 
@@ -111,52 +111,51 @@ const StyledTextarea = styled.textarea<{
   maxRows?: number
 }>`
   width: 100%;
-  min-height: ${(props) => {
+  min-height: ${({ height, minRows }) => {
     const lineHeights = { small: 20, medium: 24, large: 29 }
     const paddings = { small: 16, medium: 20, large: 24 }
-    const lineHeight = lineHeights[props.height || 'medium']
-    const padding = paddings[props.height || 'medium']
-    return `${(props.minRows || 3) * lineHeight + padding}px`
+    const lineHeight = lineHeights[height || 'medium']
+    const padding = paddings[height || 'medium']
+    return `${(minRows || 3) * lineHeight + padding}px`
   }};
-  ${(props) =>
-    props.maxRows &&
+  ${({ maxRows, height }) =>
+    maxRows &&
     css`
       max-height: ${(() => {
         const lineHeights = { small: 20, medium: 24, large: 29 }
         const paddings = { small: 16, medium: 20, large: 24 }
-        const lineHeight = lineHeights[props.height || 'medium']
-        const padding = paddings[props.height || 'medium']
-        return `${props.maxRows * lineHeight + padding}px`
+        const lineHeight = lineHeights[height || 'medium']
+        const padding = paddings[height || 'medium']
+        return `${maxRows * lineHeight + padding}px`
       })()};
     `}
   border: 1px solid
-    ${(props) =>
-      props.error ? props.theme.colors.error : props.theme.colors.gray[300]};
+    ${({ error, theme }) =>
+    error ? theme.colors.error : theme.colors.gray[300]};
   border-radius: ${({ theme }) => theme.borderRadius.default};
   background-color: ${({ theme }) => theme.colors.white};
   color: ${({ theme }) => theme.colors.black};
-  font-family: ${({ theme }) => theme.typography.fontFamily.sans};
-  resize: ${(props) => props.resize || 'vertical'};
-  transition: all ${({ theme }) => theme.transition.default};
+  resize: ${({ resize }) => resize || 'vertical'};
+  transition: border-color ${({ theme }) => theme.transition.default};
+  transition-property: border-color, box-shadow;
   outline: none;
 
-  ${(props) => sizeStyles[props.height || 'medium']}
+  ${({ height }) => sizeStyles[height || 'medium']}
 
   &::placeholder {
     color: ${({ theme }) => theme.colors.gray[400]};
   }
 
   &:hover:not(:disabled) {
-    border-color: ${(props) =>
-      props.error ? props.theme.colors.error : props.theme.colors.gray[400]};
+    border-color: ${({ error, theme }) =>
+      error ? theme.colors.error : theme.colors.gray[400]};
   }
 
   &:focus {
-    border-color: ${(props) =>
-      props.error ? props.theme.colors.error : props.theme.colors.black};
+    border-color: ${({ error, theme }) =>
+      error ? theme.colors.error : theme.colors.black};
     box-shadow: 0 0 0 1px
-      ${(props) =>
-        props.error ? props.theme.colors.error : props.theme.colors.black};
+      ${({ error, theme }) => (error ? theme.colors.error : theme.colors.black)};
   }
 
   &:disabled {
@@ -166,7 +165,6 @@ const StyledTextarea = styled.textarea<{
     resize: none;
   }
 
-  /* Custom scrollbar */
   &::-webkit-scrollbar {
     width: 8px;
   }

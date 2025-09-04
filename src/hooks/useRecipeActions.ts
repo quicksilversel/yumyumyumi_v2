@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 import { useRouter } from 'next/navigation'
 
-import type { Recipe } from '@/types'
+import type { Recipe } from '@/types/recipe'
 
 import { deleteRecipe } from '@/lib/supabase/tables/recipe/deleteRecipe'
 

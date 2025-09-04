@@ -5,44 +5,9 @@ export const H1 = styled.h1`
   color: ${({ theme }) => theme.colors.black};
   font-size: ${({ theme }) => theme.typography.fontSize['2xl']};
   font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
-  line-height: ${({ theme }) => theme.typography.lineHeight.tight};
-  letter-spacing: ${({ theme }) => theme.typography.letterSpacing.tight};
 `
 
 export const H2 = styled.h2`
-  margin: 0;
-  color: ${({ theme }) => theme.colors.black};
-  font-size: ${({ theme }) => theme.typography.fontSize['xl']};
-  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
-  line-height: ${({ theme }) => theme.typography.lineHeight.tight};
-  letter-spacing: ${({ theme }) => theme.typography.letterSpacing.tight};
-`
-
-export const H3 = styled.h3`
-  margin: 0;
-  color: ${({ theme }) => theme.colors.black};
-  font-size: ${({ theme }) => theme.typography.fontSize['base']};
-  font-weight: ${({ theme }) => theme.typography.fontWeight.normal};
-  line-height: ${({ theme }) => theme.typography.lineHeight.tight};
-`
-
-export const H4 = styled.h4`
-  margin: 0;
-  color: ${({ theme }) => theme.colors.black};
-  font-size: ${({ theme }) => theme.typography.fontSize.xl};
-  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
-  line-height: ${({ theme }) => theme.typography.lineHeight.normal};
-`
-
-export const H5 = styled.h5`
-  margin: 0;
-  color: ${({ theme }) => theme.colors.black};
-  font-size: ${({ theme }) => theme.typography.fontSize.lg};
-  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
-  line-height: ${({ theme }) => theme.typography.lineHeight.normal};
-`
-
-export const H6 = styled.h6`
   margin: 0;
   color: ${({ theme }) => theme.colors.gray[600]};
   font-size: ${({ theme }) => theme.typography.fontSize.base};
@@ -52,6 +17,13 @@ export const H6 = styled.h6`
   letter-spacing: ${({ theme }) => theme.typography.letterSpacing.wider};
 `
 
+export const H3 = styled.h3`
+  margin: 0;
+  color: ${({ theme }) => theme.colors.black};
+  font-size: ${({ theme }) => theme.typography.fontSize['lg']};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.normal};
+`
+
 export const Body = styled('p', {
   shouldForwardProp: (prop) => prop !== 'muted',
 })<{
@@ -59,10 +31,9 @@ export const Body = styled('p', {
   muted?: boolean
 }>`
   margin: 0;
-  color: ${(props) =>
-    props.muted ? props.theme.colors.gray[600] : props.theme.colors.black};
-  font-size: ${(props) =>
-    props.theme.typography.fontSize[props.size || 'base']};
+  color: ${({ muted, theme }) =>
+    muted ? theme.colors.gray[600] : theme.colors.black};
+  font-size: ${({ theme, size }) => theme.typography.fontSize[size || 'base']};
   font-weight: ${({ theme }) => theme.typography.fontWeight.normal};
   line-height: ${({ theme }) => theme.typography.lineHeight.relaxed};
 `
@@ -85,6 +56,5 @@ export const Label = styled.span`
 
 export const ErrorText = styled.span`
   color: ${({ theme }) => theme.colors.error};
-  font-size: 12px;
-  margin-top: 4px;
+  font-size: ${({ theme }) => theme.typography.fontSize.sm};
 `

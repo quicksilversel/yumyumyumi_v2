@@ -5,13 +5,10 @@ import { useState } from 'react'
 import styled from '@emotion/styled'
 import { useRouter } from 'next/navigation'
 
-import type { Recipe } from '@/types'
+import type { Recipe } from '@/types/recipe'
 
-import { Button } from '@/components/ui'
-import { Dialog } from '@/components/ui'
-import { Body } from '@/components/ui'
+import { Button, Dialog, Body } from '@/components/ui'
 import { deleteRecipe } from '@/lib/supabase/tables/recipe/deleteRecipe'
-import { spacing } from '@/styles/designTokens'
 
 type Props = {
   open: boolean
@@ -68,12 +65,12 @@ export const DeleteRecipeModal = ({ recipe, open, onClose }: Props) => {
 }
 
 const DialogContent = styled.div`
-  padding: ${spacing[4]};
+  padding: ${({ theme }) => theme.spacing[4]};
 `
 
 const DialogActions = styled.div`
   display: flex;
   justify-content: flex-end;
-  gap: ${spacing[3]};
-  margin-top: ${spacing[6]};
+  gap: ${({ theme }) => theme.spacing[3]};
+  margin-top: ${({ theme }) => theme.spacing[6]};
 `

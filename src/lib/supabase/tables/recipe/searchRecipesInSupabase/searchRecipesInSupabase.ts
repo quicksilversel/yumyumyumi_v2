@@ -1,6 +1,6 @@
 import { objectToCamel } from 'ts-case-convert'
 
-import type { Recipe, RecipeFilters } from '@/types'
+import type { Recipe, RecipeFilters } from '@/types/recipe'
 
 import { getSupabaseClient } from '../../../getSupabaseClient'
 

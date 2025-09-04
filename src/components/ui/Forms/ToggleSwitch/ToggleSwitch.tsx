@@ -65,64 +65,60 @@ const SwitchLabel = styled.label<{
   display: inline-flex;
   align-items: center;
   gap: ${({ theme }) => theme.spacing[3]};
-  cursor: ${(props) => (props.disabled ? 'not-allowed' : 'pointer')};
+  cursor: ${({ theme, disabled }) => (disabled ? 'not-allowed' : 'pointer')};
   user-select: none;
-  opacity: ${(props) => (props.disabled ? 0.6 : 1)};
-  flex-direction: ${(props) =>
-    props.labelPosition === 'left' ? 'row-reverse' : 'row'};
+  opacity: ${({ disabled }) => (disabled ? 0.6 : 1)};
+  flex-direction: ${({ labelPosition }) =>
+    labelPosition === 'left' ? 'row-reverse' : 'row'};
 `
 
 const LabelText = styled.span<{ height?: ToggleSwitchSize }>`
   color: ${({ theme }) => theme.colors.gray[700]};
-  font-size: ${(props) => {
+  font-size: ${({ height, theme }) => {
     const sizes = {
-      small: props.theme.typography.fontSize.sm,
-      medium: props.theme.typography.fontSize.base,
-      large: props.theme.typography.fontSize.lg,
+      small: theme.typography.fontSize.sm,
+      medium: theme.typography.fontSize.base,
+      large: theme.typography.fontSize.lg,
     }
-    return sizes[props.height || 'medium']
+    return sizes[height || 'medium']
   }};
   font-weight: ${({ theme }) => theme.typography.fontWeight.normal};
 `
 
 const HelperText = styled.span<{ error?: boolean }>`
-  color: ${(props) =>
-    props.error ? props.theme.colors.error : props.theme.colors.gray[500]};
+  color: ${({ error, theme }) =>
+    error ? theme.colors.error : theme.colors.gray[500]};
   font-size: ${({ theme }) => theme.typography.fontSize.xs};
   margin-left: ${({ theme }) => theme.spacing[1]};
 `
 
 const SwitchInput = styled.input<{ height?: ToggleSwitchSize }>`
   position: relative;
-  width: ${(props) => {
+  width: ${({ height }) => {
     const widths = { small: '36px', medium: '44px', large: '52px' }
-    return widths[props.height || 'medium']
+    return widths[height || 'medium']
   }};
-  height: ${(props) => {
+  height: ${({ height }) => {
     const heights = { small: '20px', medium: '24px', large: '28px' }
-    return heights[props.height || 'medium']
+    return heights[height || 'medium']
   }};
   background-color: ${({ theme }) => theme.colors.gray[300]};
   border: 2px solid transparent;
-  border-radius: ${(props) => {
+  border-radius: ${({ height }) => {
     const heights = { small: '10px', medium: '12px', large: '14px' }
-    return heights[props.height || 'medium']
+    return heights[height || 'medium']
   }};
-  cursor: ${(props) => (props.disabled ? 'not-allowed' : 'pointer')};
-  transition: all ${({ theme }) => theme.transition.default};
+  cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
+  transition: opacity ${({ theme }) => theme.transition.default};
   outline: none;
   appearance: none;
 
   &:checked {
-    background-color: ${({ theme }) => theme.colors.black};
+    background-color: ${({ theme }) => theme.colors.primary};
   }
 
   &:hover:not(:disabled) {
-    background-color: ${({ theme }) => theme.colors.gray[400]};
-
-    &:checked {
-      background-color: ${({ theme }) => theme.colors.gray[800]};
-    }
+    opacity: 0.8;
   }
 
   &:focus-visible {
@@ -142,21 +138,21 @@ const SwitchInput = styled.input<{ height?: ToggleSwitchSize }>`
 
   &::after {
     position: absolute;
-    top: ${(props) => {
+    top: ${({ height }) => {
       const tops = { small: '2px', medium: '3px', large: '4px' }
-      return tops[props.height || 'medium']
+      return tops[height || 'medium']
     }};
-    left: ${(props) => {
+    left: ${({ height }) => {
       const lefts = { small: '2px', medium: '3px', large: '4px' }
-      return lefts[props.height || 'medium']
+      return lefts[height || 'medium']
     }};
-    width: ${(props) => {
+    width: ${({ height }) => {
       const widths = { small: '14px', medium: '16px', large: '18px' }
-      return widths[props.height || 'medium']
+      return widths[height || 'medium']
     }};
-    height: ${(props) => {
+    height: ${({ height }) => {
       const heights = { small: '14px', medium: '16px', large: '18px' }
-      return heights[props.height || 'medium']
+      return heights[height || 'medium']
     }};
     background-color: ${({ theme }) => theme.colors.white};
     border-radius: 50%;
@@ -167,9 +163,9 @@ const SwitchInput = styled.input<{ height?: ToggleSwitchSize }>`
 
   &:checked::after {
     transform: translateX(
-      ${(props) => {
+      ${({ height }) => {
         const distances = { small: '16px', medium: '20px', large: '24px' }
-        return distances[props.height || 'medium']
+        return distances[height || 'medium']
       }}
     );
   }

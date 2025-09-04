@@ -2,7 +2,7 @@ import styled from '@emotion/styled'
 import CloseIcon from '@mui/icons-material/Close'
 import VisibilityIcon from '@mui/icons-material/Visibility'
 
-import type { Recipe } from '@/types'
+import type { Recipe } from '@/types/recipe'
 
 import { BookmarkButton } from '@/components/ui/BookmarkButton'
 import { IconButton } from '@/components/ui/Button'
@@ -22,7 +22,6 @@ export const RecipeCardMoreActions = ({
 }: RecipeCardProps) => {
   const { user } = useAuth()
   const {
-    handleBookmarkChange,
     handleEditRecipe,
     handleDeleteRecipe,
     handleToggleIngredients,
@@ -55,7 +54,6 @@ export const RecipeCardMoreActions = ({
       <BookmarkButton
         recipeId={recipe.id}
         size="sm"
-        onToggle={handleBookmarkChange}
       />
       {isOwner && (
         <MoreActions

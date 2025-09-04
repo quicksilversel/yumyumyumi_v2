@@ -8,7 +8,7 @@ import {
   ReactNode,
 } from 'react'
 
-import type { Recipe } from '@/types'
+import type { Recipe } from '@/types/recipe'
 
 type RecipeContextType = {
   // Recipe data
