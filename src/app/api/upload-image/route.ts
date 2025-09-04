@@ -4,7 +4,6 @@ import { NextRequest, NextResponse } from 'next/server'
 
 export async function POST(request: NextRequest) {
   try {
-    // Get the form data
     const formData = await request.formData()
     const file = formData.get('file') as File
     const userId = formData.get('userId') as string
@@ -17,7 +16,6 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Validate file size (2MB max)
     if (file.size > 2 * 1024 * 1024) {
       return NextResponse.json(
         { error: 'File size must be less than 2MB' },
@@ -25,7 +23,6 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Create Supabase client with service role key (bypasses RLS)
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
     const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY
 
@@ -38,7 +35,6 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Create admin client with service role
     const supabaseAdmin = createClient(supabaseUrl, serviceRoleKey, {
       auth: {
         autoRefreshToken: false,
@@ -46,7 +42,6 @@ export async function POST(request: NextRequest) {
       },
     })
 
-    // Verify the user is authenticated (optional but recommended)
     const cookieStore = await cookies()
     const token =
       cookieStore.get('sb-access-token')?.value ||
@@ -55,21 +50,16 @@ export async function POST(request: NextRequest) {
       )?.value
 
     if (!token) {
-      // For now, we'll allow uploads without checking auth since service role bypasses it
-      // In production, you should verify the user
       console.warn('No auth token found, but proceeding with service role')
     }
 
-    // Convert file to buffer
     const arrayBuffer = await file.arrayBuffer()
     const buffer = Buffer.from(arrayBuffer)
 
-    // Generate filename
     const timestamp = Date.now()
     const randomString = Math.random().toString(36).substring(2, 8)
     const fileName = `${userId}_${recipeId}_${timestamp}_${randomString}.webp`
 
-    // Upload to Supabase Storage using service role (bypasses all RLS)
     const { data, error } = await supabaseAdmin.storage
       .from('recipe-images')
       .upload(fileName, buffer, {
@@ -87,7 +77,6 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Get public URL
     const {
       data: { publicUrl },
     } = supabaseAdmin.storage.from('recipe-images').getPublicUrl(fileName)
@@ -109,6 +98,6 @@ export async function POST(request: NextRequest) {
 
 export const config = {
   api: {
-    bodyParser: false, // Disable body parsing to handle file upload
+    bodyParser: false,
   },
 }

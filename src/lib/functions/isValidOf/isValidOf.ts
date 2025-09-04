@@ -1,7 +1,6 @@
 import type { z } from 'zod'
 import type { ZodTypeAny } from 'zod'
 
-/** Zodスキーマを満たしているか判定する関数 */
 export const isValidOf = <T extends ZodTypeAny>(
   schema: T,
   value: unknown,

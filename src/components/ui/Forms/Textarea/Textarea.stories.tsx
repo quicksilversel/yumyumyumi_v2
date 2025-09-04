@@ -62,7 +62,6 @@ const meta: Meta<typeof Textarea> = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-// Basic Stories
 export const Default: Story = {
   args: {
     placeholder: 'Enter your message...',
@@ -88,7 +87,6 @@ export const WithValue: Story = {
   },
 }
 
-// Interactive Example
 export const Interactive: Story = {
   args: {
     title: 'Interactive Textarea',
@@ -107,7 +105,6 @@ export const Interactive: Story = {
   },
 }
 
-// Resize Options
 export const ResizeOptions: Story = {
   render: () => (
     <div
@@ -146,7 +143,6 @@ export const ResizeOptions: Story = {
   ),
 }
 
-// Row Controls
 export const RowControls: Story = {
   render: () => (
     <div
@@ -186,7 +182,6 @@ Row six`}
   ),
 }
 
-// Size Comparison
 export const SizeComparison: Story = {
   render: () => (
     <div
@@ -222,7 +217,6 @@ export const SizeComparison: Story = {
   ),
 }
 
-// Field States
 export const FieldStates: Story = {
   render: () => (
     <div
@@ -263,7 +257,6 @@ export const FieldStates: Story = {
   ),
 }
 
-// Helper Text Variants
 export const HelperTextVariants: Story = {
   render: () => (
     <div
@@ -298,7 +291,6 @@ export const HelperTextVariants: Story = {
   ),
 }
 
-// Contact Form Example
 export const ContactFormExample: Story = {
   render: () => (
     <form
@@ -354,7 +346,6 @@ export const ContactFormExample: Story = {
   ),
 }
 
-// Character Tracking Demo (Static)
 export const CharacterTrackingDemo: Story = {
   render: () => (
     <div style={{ width: '450px' }}>
@@ -373,19 +364,16 @@ export const CharacterTrackingDemo: Story = {
   ),
 }
 
-// Code Snippet Input
 export const CodeSnippetInput: Story = {
   args: {
     title: 'Code Block',
     placeholder: 'Paste your code here...',
     value: `function greetUser(name) {
-  // Display personalized greeting
   const message = \`Hello, \${name}! Welcome back.\`;
   console.log(message);
   return message;
 }
 
-// Usage example
 greetUser('Alice');`,
     minRows: 8,
     style: { fontFamily: 'monospace', fontSize: '14px' },
@@ -393,7 +381,6 @@ greetUser('Alice');`,
   },
 }
 
-// Article Content Example
 export const ArticleContentExample: Story = {
   args: {
     title: 'Article Content',

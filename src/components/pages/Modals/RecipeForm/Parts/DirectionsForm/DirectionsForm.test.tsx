@@ -13,7 +13,6 @@ import { recipeFormSchema } from '@/types/recipe'
 
 import { DirectionsForm } from './DirectionsForm'
 
-// Mock MUI icons
 jest.mock('@mui/icons-material/Add', () => ({
   __esModule: true,
   default: () => <span>Add Icon</span>,
@@ -24,7 +23,6 @@ jest.mock('@mui/icons-material/Delete', () => ({
   default: () => <span data-testid="DeleteIcon">Delete Icon</span>,
 }))
 
-// Mock all UI components
 jest.mock('@/components/ui', () => ({
   Input: React.forwardRef<HTMLInputElement, any>(
     ({ error, ...props }: any, ref) => (
@@ -58,7 +56,6 @@ jest.mock('@/components/ui', () => ({
   Stack: ({ children, gap }: any) => <div style={{ gap }}>{children}</div>,
 }))
 
-// Wrapper component to provide form context
 const FormWrapper = ({
   children,
   defaultValues = {},
@@ -107,7 +104,6 @@ describe('DirectionsForm', () => {
     const addButton = screen.getByRole('button', { name: /add step/i })
     await user.click(addButton)
 
-    // Should now show direction input fields
     expect(screen.getByPlaceholderText(/step title/i)).toBeInTheDocument()
     expect(screen.getByPlaceholderText(/step description/i)).toBeInTheDocument()
     expect(
@@ -123,17 +119,15 @@ describe('DirectionsForm', () => {
       </FormWrapper>,
     )
 
-    // Add a direction
     const addButton = screen.getByRole('button', { name: /add step/i })
     await user.click(addButton)
 
-    // Leave both fields empty and blur
     const titleInput = screen.getByPlaceholderText(/step title/i)
     const descriptionInput = screen.getByPlaceholderText(/step description/i)
 
     await user.click(titleInput)
     await user.click(descriptionInput)
-    await user.tab() // Blur to trigger validation
+    await user.tab()
 
     await waitFor(() => {
       expect(
@@ -158,7 +152,6 @@ describe('DirectionsForm', () => {
 
     expect(titleInput).toHaveValue('Preheat oven')
 
-    // Should not show validation error
     await waitFor(() => {
       expect(
         screen.queryByText(/either title or description is required/i),
@@ -184,7 +177,6 @@ describe('DirectionsForm', () => {
       'Mix all dry ingredients in a large bowl',
     )
 
-    // Should not show validation error
     await waitFor(() => {
       expect(
         screen.queryByText(/either title or description is required/i),
@@ -234,7 +226,6 @@ describe('DirectionsForm', () => {
       </FormWrapper>,
     )
 
-    // Check that step numbers are displayed
     expect(screen.getByText('1')).toBeInTheDocument()
     expect(screen.getByText('2')).toBeInTheDocument()
     expect(screen.getByText('3')).toBeInTheDocument()
@@ -250,18 +241,15 @@ describe('DirectionsForm', () => {
 
     const addButton = screen.getByRole('button', { name: /add step/i })
 
-    // Add first step
     await user.click(addButton)
     let titleInputs = screen.getAllByPlaceholderText(/step title/i)
     await user.type(titleInputs[0], 'Preheat oven')
 
-    // Add second step
     await user.click(addButton)
     titleInputs = screen.getAllByPlaceholderText(/step title/i)
     expect(titleInputs).toHaveLength(2)
     await user.type(titleInputs[1], 'Mix ingredients')
 
-    // Add third step
     await user.click(addButton)
     titleInputs = screen.getAllByPlaceholderText(/step title/i)
     expect(titleInputs).toHaveLength(3)
@@ -288,15 +276,12 @@ describe('DirectionsForm', () => {
       </FormWrapper>,
     )
 
-    // Should have 3 steps
     let titleInputs = screen.getAllByPlaceholderText(/step title/i)
     expect(titleInputs).toHaveLength(3)
 
-    // Delete the second step
     const deleteButtons = screen.getAllByTestId('DeleteIcon')
     await user.click(deleteButtons[1])
 
-    // Should now have 2 steps
     titleInputs = screen.getAllByPlaceholderText(/step title/i)
     expect(titleInputs).toHaveLength(2)
     expect(titleInputs[0]).toHaveValue('First step')
@@ -314,13 +299,10 @@ describe('DirectionsForm', () => {
     const addButton = screen.getByRole('button', { name: /add step/i })
     await user.click(addButton)
 
-    // Should not have delete button with only one step
     expect(screen.queryByTestId('DeleteIcon')).not.toBeInTheDocument()
 
-    // Add another step
     await user.click(addButton)
 
-    // Now should have delete buttons
     const deleteButtons = screen.getAllByTestId('DeleteIcon')
     expect(deleteButtons).toHaveLength(2)
   })
@@ -332,7 +314,6 @@ describe('DirectionsForm', () => {
       </FormWrapper>,
     )
 
-    // Error should be shown for empty directions
     expect(
       screen.getByText(/at least one direction is required/i),
     ).toBeInTheDocument()
@@ -375,7 +356,6 @@ describe('DirectionsForm', () => {
     )
 
     const deleteButtons = screen.getAllByTestId('DeleteIcon')
-    // Delete Step B (index 1)
     await user.click(deleteButtons[1])
 
     const titleInputs = screen.getAllByPlaceholderText(/step title/i)
@@ -384,7 +364,6 @@ describe('DirectionsForm', () => {
     expect(titleInputs[1]).toHaveValue('Step C')
     expect(titleInputs[2]).toHaveValue('Step D')
 
-    // Step numbers should update correctly
     expect(screen.getByText('1')).toBeInTheDocument()
     expect(screen.getByText('2')).toBeInTheDocument()
     expect(screen.getByText('3')).toBeInTheDocument()
@@ -404,7 +383,6 @@ describe('DirectionsForm', () => {
 
     const descriptionInput = screen.getByPlaceholderText(/step description/i)
 
-    // Trigger validation by focusing and blurring empty fields
     await user.click(descriptionInput)
     await user.tab()
 
@@ -414,7 +392,6 @@ describe('DirectionsForm', () => {
       ).toBeInTheDocument()
     })
 
-    // Now enter valid data
     await user.type(descriptionInput, 'Mix ingredients')
 
     await waitFor(() => {

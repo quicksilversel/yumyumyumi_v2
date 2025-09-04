@@ -14,20 +14,9 @@ import { RECIPE_CATEGORY } from '@/utils/constants'
 
 import { CategoryForm } from './CategoryForm'
 
-// Mock the Select component to avoid ref issues
 jest.mock('@/components/ui/Forms/Select', () => ({
   Select: React.forwardRef<HTMLSelectElement, any>(
-    (
-      {
-        title,
-        options,
-        error,
-        fullWidth, // Filter out non-DOM props
-        height, // Filter out non-DOM props
-        ...props
-      },
-      ref,
-    ) => (
+    ({ title, options, error, fullWidth, height, ...props }, ref) => (
       <div>
         {title && <label htmlFor={props.id}>{title}</label>}
         <select
@@ -47,7 +36,6 @@ jest.mock('@/components/ui/Forms/Select', () => ({
   ),
 }))
 
-// Wrapper component to provide form context
 const FormWrapper = ({
   children,
   defaultValues = {},
@@ -95,7 +83,6 @@ describe('CategoryForm', () => {
     const select = screen.getByLabelText(/category/i)
     const options = select.querySelectorAll('option')
 
-    // Check that all categories are present as options
     categories.forEach((category) => {
       const option = Array.from(options).find(
         (opt) => opt.textContent === category,
@@ -125,7 +112,6 @@ describe('CategoryForm', () => {
 
     const select = screen.getByLabelText(/category/i) as HTMLSelectElement
 
-    // Change selection using fireEvent (more reliable for select elements)
     fireEvent.change(select, { target: { value: 'Dessert' } })
     expect(select.value).toBe('Dessert')
 
@@ -143,7 +129,6 @@ describe('CategoryForm', () => {
     const select = screen.getByLabelText(/category/i) as HTMLSelectElement
     expect(select.value).toBe('Soup')
 
-    // Re-render the component
     rerender(
       <FormWrapper defaultValues={{ category: 'Soup' }}>
         <CategoryForm />
@@ -209,7 +194,6 @@ describe('CategoryForm', () => {
 
     const select = screen.getByLabelText(/category/i) as HTMLSelectElement
 
-    // Rapidly change categories
     fireEvent.change(select, { target: { value: 'Appetizer' } })
     fireEvent.change(select, { target: { value: 'Dessert' } })
     fireEvent.change(select, { target: { value: 'Snack' } })
@@ -246,10 +230,8 @@ describe('CategoryForm', () => {
 
     expect(select.value).toBe('Salad')
 
-    // Change another field
     await user.type(titleInput, 'My Recipe')
 
-    // Category should remain unchanged
     expect(select.value).toBe('Salad')
   })
 
@@ -310,7 +292,6 @@ describe('CategoryForm', () => {
     const select = screen.getByLabelText(/category/i)
     const options = Array.from(select.querySelectorAll('option'))
 
-    // Check that options have correct values
     expect(options).toHaveLength(categories.length)
     options.forEach((option, index) => {
       expect(option.textContent).toBe(categories[index])

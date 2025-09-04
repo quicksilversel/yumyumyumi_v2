@@ -382,7 +382,7 @@ describe('searchRecipesInSupabase', () => {
       const result = await searchRecipesInSupabase(filters)
 
       expect(mockQueryBuilder.or).not.toHaveBeenCalled()
-      expect(mockQueryBuilder.eq).toHaveBeenCalledTimes(1) // Only for is_public
+      expect(mockQueryBuilder.eq).toHaveBeenCalledTimes(1)
       expect(mockQueryBuilder.lte).not.toHaveBeenCalled()
       expect(result).toEqual(mockRecipes)
     })

@@ -33,15 +33,13 @@ describe('isBookmarked', () => {
       error: null,
     })
 
-    // Setup default chaining for eq calls
     mockQueryBuilder.eq.mockReturnThis()
   })
 
   it('should return true when bookmark exists', async () => {
     mockQueryBuilder.eq
-      .mockReturnValueOnce(mockQueryBuilder) // First eq returns queryBuilder
+      .mockReturnValueOnce(mockQueryBuilder)
       .mockResolvedValueOnce({
-        // Second eq resolves
         data: [{ id: 'bookmark1' }],
         error: null,
       })
@@ -58,9 +56,8 @@ describe('isBookmarked', () => {
 
   it('should return false when bookmark does not exist', async () => {
     mockQueryBuilder.eq
-      .mockReturnValueOnce(mockQueryBuilder) // First eq returns queryBuilder
+      .mockReturnValueOnce(mockQueryBuilder)
       .mockResolvedValueOnce({
-        // Second eq resolves
         data: [],
         error: null,
       })
@@ -72,9 +69,8 @@ describe('isBookmarked', () => {
 
   it('should return false when data is null', async () => {
     mockQueryBuilder.eq
-      .mockReturnValueOnce(mockQueryBuilder) // First eq returns queryBuilder
+      .mockReturnValueOnce(mockQueryBuilder)
       .mockResolvedValueOnce({
-        // Second eq resolves
         data: null,
         error: null,
       })
@@ -99,9 +95,8 @@ describe('isBookmarked', () => {
   it('should handle database query errors', async () => {
     const mockError = new Error('Query failed')
     mockQueryBuilder.eq
-      .mockReturnValueOnce(mockQueryBuilder) // First eq returns queryBuilder
+      .mockReturnValueOnce(mockQueryBuilder)
       .mockResolvedValueOnce({
-        // Second eq resolves with error
         data: null,
         error: mockError,
       })
@@ -138,9 +133,8 @@ describe('isBookmarked', () => {
 
   it('should call eq methods in correct order', async () => {
     mockQueryBuilder.eq
-      .mockReturnValueOnce(mockQueryBuilder) // First eq returns queryBuilder
+      .mockReturnValueOnce(mockQueryBuilder)
       .mockResolvedValueOnce({
-        // Second eq resolves
         data: [],
         error: null,
       })
@@ -156,11 +150,9 @@ describe('isBookmarked', () => {
   })
 
   it('should handle multiple bookmarks in result', async () => {
-    // This shouldn't happen due to unique constraint, but testing edge case
     mockQueryBuilder.eq
-      .mockReturnValueOnce(mockQueryBuilder) // First eq returns queryBuilder
+      .mockReturnValueOnce(mockQueryBuilder)
       .mockResolvedValueOnce({
-        // Second eq resolves
         data: [{ id: 'bookmark1' }, { id: 'bookmark2' }],
         error: null,
       })

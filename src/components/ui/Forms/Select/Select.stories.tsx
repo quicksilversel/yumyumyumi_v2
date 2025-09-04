@@ -42,7 +42,6 @@ const meta: Meta<typeof Select> = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-// Sample options
 const fruitOptions = [
   { value: 'apple', label: 'Apple' },
   { value: 'banana', label: 'Banana' },
@@ -70,7 +69,6 @@ const sizeOptions = [
   { value: 'xl', label: 'Extra Large' },
 ]
 
-// Basic Select Stories
 export const Default: Story = {
   args: {
     placeholder: 'Select an option...',
@@ -88,7 +86,6 @@ export const WithValue: Story = {
   },
 }
 
-// Size Variants
 export const Small: Story = {
   args: {
     placeholder: 'Small select',
@@ -113,7 +110,6 @@ export const Large: Story = {
   },
 }
 
-// State Stories
 export const Disabled: Story = {
   args: {
     placeholder: 'Disabled select',
@@ -139,7 +135,6 @@ export const Required: Story = {
   },
 }
 
-// With Disabled Options
 export const WithDisabledOptions: Story = {
   args: {
     placeholder: 'Some options disabled',
@@ -153,7 +148,6 @@ export const WithDisabledOptions: Story = {
   },
 }
 
-// All Sizes Demo
 export const AllSizes: Story = {
   render: () => (
     <div
@@ -183,7 +177,6 @@ export const AllSizes: Story = {
   ),
 }
 
-// State Variations Demo
 export const StateVariations: Story = {
   render: () => (
     <div
@@ -207,7 +200,6 @@ export const StateVariations: Story = {
   ),
 }
 
-// Different Option Sets
 export const DifferentOptionSets: Story = {
   render: () => (
     <div
@@ -225,7 +217,6 @@ export const DifferentOptionSets: Story = {
   ),
 }
 
-// Interactive Form Example
 export const FormExample: Story = {
   render: () => (
     <form
@@ -281,7 +272,6 @@ export const FormExample: Story = {
   ),
 }
 
-// Long List Example
 export const LongList: Story = {
   args: {
     placeholder: 'Select a number...',
@@ -292,7 +282,6 @@ export const LongList: Story = {
   },
 }
 
-// Width Variations
 export const FullWidth: Story = {
   args: {
     placeholder: 'Full width select',

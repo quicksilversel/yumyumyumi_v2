@@ -39,7 +39,6 @@ export function handleImageSelect(file: File | null): {
     return { isValid: false, error: validationError }
   }
 
-  // Create preview
   const reader = new FileReader()
   let preview = ''
   reader.onloadend = () => {
@@ -51,12 +50,10 @@ export function handleImageSelect(file: File | null): {
 }
 
 export async function handleImageRemove(imageUrl?: string): Promise<void> {
-  // If there's an existing image URL and it's from Supabase, delete it
   if (imageUrl && imageUrl.includes('supabase')) {
     try {
       await deleteImage(imageUrl)
     } catch (err) {
-      // Error deleting image - continue
       window.alert('Error deleting image')
     }
   }
@@ -85,7 +82,6 @@ export function ImageForm({ onImageChange, uploading = false }: Props) {
 
     setError('')
 
-    // Create preview
     const reader = new FileReader()
     reader.onloadend = () => {
       const preview = reader.result as string

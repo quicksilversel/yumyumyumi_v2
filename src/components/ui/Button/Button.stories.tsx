@@ -35,7 +35,6 @@ const meta: Meta<typeof Button> = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-// Basic Button Stories
 export const Primary: Story = {
   args: {
     children: 'Primary Button',
@@ -68,7 +67,6 @@ export const Text: Story = {
   },
 }
 
-// Size Variants
 export const Small: Story = {
   args: {
     children: 'Small Button',
@@ -90,7 +88,6 @@ export const Large: Story = {
   },
 }
 
-// State Stories
 export const Disabled: Story = {
   args: {
     children: 'Disabled Button',
@@ -108,7 +105,6 @@ export const FullWidth: Story = {
   },
 }
 
-// Button with Icons
 export const WithIcon: Story = {
   args: {
     children: (
@@ -128,7 +124,6 @@ export const IconOnly: Story = {
   ),
 }
 
-// All Variants Demo
 export const AllVariants: Story = {
   render: () => (
     <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
@@ -140,7 +135,6 @@ export const AllVariants: Story = {
   ),
 }
 
-// All Sizes Demo
 export const AllSizes: Story = {
   render: () => (
     <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
@@ -151,7 +145,6 @@ export const AllSizes: Story = {
   ),
 }
 
-// Icon Button Stories
 export const IconButtonSmall: Story = {
   render: () => (
     <IconButton size="sm">
@@ -192,7 +185,6 @@ export const IconButtonVariants: Story = {
   ),
 }
 
-// Interactive Examples
 export const ButtonWithLongText: Story = {
   args: {
     children: 'This is a button with very long text content',

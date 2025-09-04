@@ -62,7 +62,7 @@ describe('getBookmarkedRecipeIds', () => {
       {
         id: 'bookmark2',
         userId: 'user123',
-        recipeId: 'recipe123', // Duplicate recipe ID
+        recipeId: 'recipe123',
         createdAt: '2024-01-01T00:00:00Z',
       },
       {
@@ -76,7 +76,7 @@ describe('getBookmarkedRecipeIds', () => {
 
     const result = await getBookmarkedRecipeIds()
 
-    expect(result.size).toBe(2) // Set should contain only unique values
+    expect(result.size).toBe(2)
     expect(result.has('recipe123')).toBe(true)
     expect(result.has('recipe456')).toBe(true)
   })
@@ -110,7 +110,7 @@ describe('getBookmarkedRecipeIds', () => {
       {
         id: 'bookmark2',
         userId: 'user123',
-        recipeId: undefined, // Missing recipe ID
+        recipeId: undefined,
         createdAt: '2024-01-01T00:00:00Z',
       },
       {
@@ -124,7 +124,7 @@ describe('getBookmarkedRecipeIds', () => {
 
     const result = await getBookmarkedRecipeIds()
 
-    expect(result.size).toBe(3) // Will include undefined
+    expect(result.size).toBe(3)
     expect(result.has('recipe123')).toBe(true)
     expect(result.has('recipe456')).toBe(true)
     expect(result.has(undefined as any)).toBe(true)

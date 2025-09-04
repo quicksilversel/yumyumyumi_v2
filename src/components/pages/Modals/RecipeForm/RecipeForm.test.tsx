@@ -11,7 +11,6 @@ import { recipeFormSchema } from '@/types/recipe'
 
 import { RecipeForm } from './RecipeForm'
 
-// Mock the form part components
 jest.mock('./Parts/ImageForm', () => ({
   ImageForm: () => <div data-testid="image-form">ImageForm</div>,
 }))
@@ -103,7 +102,6 @@ describe('RecipeForm Integration', () => {
   it('renders all form sections', () => {
     render(<RecipeForm {...defaultProps} />)
 
-    // Check all form sections are present
     expect(screen.getByTestId('image-form')).toBeInTheDocument()
     expect(screen.getByTestId('title-input')).toBeInTheDocument()
     expect(screen.getByTestId('summary-input')).toBeInTheDocument()
@@ -153,7 +151,6 @@ describe('RecipeForm Integration', () => {
   it('renders dividers between major sections', () => {
     const { container } = render(<RecipeForm {...defaultProps} />)
 
-    // Check for Divider components (they render as hr elements)
     const dividers = container.querySelectorAll('hr')
     expect(dividers.length).toBeGreaterThan(0)
   })
@@ -161,12 +158,10 @@ describe('RecipeForm Integration', () => {
   it('groups related fields in grid layout', () => {
     render(<RecipeForm {...defaultProps} />)
 
-    // Category, CookTime, and Servings should be in a grid
     const categorySelect = screen.getByTestId('category-select')
     const cookTimeInput = screen.getByTestId('cooktime-input')
     const servingsInput = screen.getByTestId('servings-input')
 
-    // Check they exist (grid layout would be tested with CSS)
     expect(categorySelect).toBeInTheDocument()
     expect(cookTimeInput).toBeInTheDocument()
     expect(servingsInput).toBeInTheDocument()
@@ -262,9 +257,9 @@ describe('RecipeForm with FormProvider Integration', () => {
         resolver: zodResolver(recipeFormSchema),
         mode: 'onSubmit',
         defaultValues: {
-          title: '', // Empty required field
-          ingredients: [], // Empty required array
-          directions: [], // Empty required array
+          title: '',
+          ingredients: [],
+          directions: [],
           category: 'Main Course',
           cookTime: 30,
           servings: 4,
@@ -305,7 +300,6 @@ describe('RecipeForm with FormProvider Integration', () => {
       expect(onSubmit).not.toHaveBeenCalled()
     })
 
-    // Check for validation errors
     await waitFor(() => {
       expect(screen.getByTestId('title-error')).toBeInTheDocument()
       expect(screen.getByTestId('ingredients-error')).toBeInTheDocument()

@@ -33,7 +33,6 @@ const meta: Meta<typeof Dialog> = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-// Basic Dialog - Show open state
 export const Default: Story = {
   args: {
     open: true,
@@ -43,7 +42,6 @@ export const Default: Story = {
   },
 }
 
-// With Actions
 export const WithActions: Story = {
   args: {
     open: true,
@@ -63,7 +61,6 @@ export const WithActions: Story = {
   },
 }
 
-// Different Sizes
 export const SmallDialog: Story = {
   args: {
     open: true,
@@ -114,7 +111,6 @@ export const ExtraLargeDialog: Story = {
   },
 }
 
-// Without Title
 export const NoTitle: Story = {
   args: {
     open: true,
@@ -128,7 +124,6 @@ export const NoTitle: Story = {
   },
 }
 
-// Long Content
 export const LongContent: Story = {
   args: {
     open: true,
@@ -160,7 +155,6 @@ export const LongContent: Story = {
   },
 }
 
-// Form Example
 export const FormDialog: Story = {
   args: {
     open: true,
@@ -234,7 +228,6 @@ export const FormDialog: Story = {
   },
 }
 
-// Closed state for comparison
 export const Closed: Story = {
   args: {
     open: false,
@@ -254,7 +247,6 @@ export const Closed: Story = {
   },
 }
 
-// Interactive Example - Use Storybook's controls
 export const Interactive: Story = {
   args: {
     open: true,
@@ -293,7 +285,6 @@ export const Interactive: Story = {
   },
 }
 
-// Size Comparison
 export const SizeComparison: Story = {
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
@@ -338,7 +329,6 @@ export const SizeComparison: Story = {
   },
 }
 
-// Action Types Demo
 export const ActionTypes: Story = {
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
@@ -395,7 +385,6 @@ export const ActionTypes: Story = {
   },
 }
 
-// Real-world Examples
 export const ConfirmationDialog: Story = {
   args: {
     open: true,

@@ -33,16 +33,13 @@ describe('removeBookmark', () => {
       error: null,
     })
 
-    // Setup chaining for eq calls
     mockQueryBuilder.eq.mockReturnThis()
   })
 
   it('should remove bookmark successfully', async () => {
-    // Make the last eq call resolve with the result
     mockQueryBuilder.eq
-      .mockReturnValueOnce(mockQueryBuilder) // First eq returns queryBuilder
+      .mockReturnValueOnce(mockQueryBuilder)
       .mockResolvedValueOnce({
-        // Second eq resolves
         data: null,
         error: null,
       })
@@ -72,9 +69,8 @@ describe('removeBookmark', () => {
   it('should handle database delete errors', async () => {
     const mockError = new Error('Delete failed')
     mockQueryBuilder.eq
-      .mockReturnValueOnce(mockQueryBuilder) // First eq returns queryBuilder
+      .mockReturnValueOnce(mockQueryBuilder)
       .mockResolvedValueOnce({
-        // Second eq resolves with error
         data: null,
         error: mockError,
       })
@@ -105,9 +101,8 @@ describe('removeBookmark', () => {
 
   it('should call eq methods in correct order', async () => {
     mockQueryBuilder.eq
-      .mockReturnValueOnce(mockQueryBuilder) // First eq returns queryBuilder
+      .mockReturnValueOnce(mockQueryBuilder)
       .mockResolvedValueOnce({
-        // Second eq resolves
         data: null,
         error: null,
       })

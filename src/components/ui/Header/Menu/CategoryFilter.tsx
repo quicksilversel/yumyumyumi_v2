@@ -31,7 +31,6 @@ export const CategoryFilter = ({
       router.push('/')
     }
 
-    // Close the dropdown
     if (detailsRef.current) {
       detailsRef.current.open = false
     }

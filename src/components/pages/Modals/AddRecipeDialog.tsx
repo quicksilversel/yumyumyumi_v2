@@ -76,7 +76,6 @@ export function AddRecipeDialog({
     try {
       let finalImageUrl = data.imageUrl || ''
 
-      // Upload image if selected
       if (imageFile) {
         setUploadingImage(true)
         const tempRecipeId = `temp-${Date.now()}`

@@ -11,7 +11,6 @@ import {
 import type { Recipe } from '@/types/recipe'
 
 type RecipeContextType = {
-  // Recipe data
   recipes: Recipe[]
   filteredRecipes: Recipe[]
   editingRecipe: Recipe | null

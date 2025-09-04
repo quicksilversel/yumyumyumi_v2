@@ -13,7 +13,6 @@ import { recipeFormSchema } from '@/types/recipe'
 
 import { CookTimeForm } from './CookTimeForm'
 
-// Mock the ui components
 jest.mock('@/components/ui', () => ({
   Input: React.forwardRef<HTMLInputElement, any>(
     ({ error, title, ...props }: any, ref) => (
@@ -26,7 +25,6 @@ jest.mock('@/components/ui', () => ({
   ErrorText: ({ children }: any) => <span role="alert">{children}</span>,
 }))
 
-// Wrapper component to provide form context
 const FormWrapper = ({
   children,
   defaultValues = {},
@@ -177,11 +175,9 @@ describe('CookTimeForm', () => {
 
     const input = screen.getByPlaceholderText(/enter cook time in minutes/i)
     await user.clear(input)
-    await user.type(input, '480') // 8 hours
-
+    await user.type(input, '480')
     expect(input).toHaveValue(480)
 
-    // Should not show validation error
     await waitFor(() => {
       expect(screen.queryByText(/cook time must/i)).not.toBeInTheDocument()
     })
@@ -199,7 +195,6 @@ describe('CookTimeForm', () => {
     await user.clear(input)
     await user.type(input, '30.5')
 
-    // HTML number input may show decimal, but form value should be integer
     expect(input).toHaveValue(30.5)
   })
 
@@ -213,7 +208,6 @@ describe('CookTimeForm', () => {
 
     const input = screen.getByPlaceholderText(/enter cook time in minutes/i)
 
-    // Create an error
     await user.clear(input)
     await user.type(input, '0')
     await user.tab()
@@ -224,7 +218,6 @@ describe('CookTimeForm', () => {
       ).toBeInTheDocument()
     })
 
-    // Fix the error
     await user.clear(input)
     await user.type(input, '60')
 
@@ -263,7 +256,6 @@ describe('CookTimeForm', () => {
 
     const input = screen.getByPlaceholderText(/enter cook time in minutes/i)
 
-    // Rapidly change values
     await user.clear(input)
     await user.type(input, '15')
     await user.clear(input)

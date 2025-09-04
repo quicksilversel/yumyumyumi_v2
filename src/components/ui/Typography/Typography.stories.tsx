@@ -13,7 +13,6 @@ const meta: Meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-// Headings
 export const Headings: Story = {
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
@@ -26,7 +25,6 @@ export const Headings: Story = {
   ),
 }
 
-// Body Text
 export const BodyText: Story = {
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
@@ -47,7 +45,6 @@ export const BodyText: Story = {
   ),
 }
 
-// Muted Text
 export const MutedText: Story = {
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
@@ -62,7 +59,6 @@ export const MutedText: Story = {
   ),
 }
 
-// Caption and Label
 export const CaptionAndLabel: Story = {
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
@@ -82,7 +78,6 @@ export const CaptionAndLabel: Story = {
   ),
 }
 
-// Complete Typography Scale
 export const CompleteScale: Story = {
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
@@ -105,7 +100,6 @@ export const CompleteScale: Story = {
   ),
 }
 
-// Real-world Example
 export const ArticleExample: Story = {
   render: () => (
     <article style={{ maxWidth: '600px' }}>
@@ -161,7 +155,6 @@ export const ArticleExample: Story = {
   ),
 }
 
-// Form Example
 export const FormExample: Story = {
   render: () => (
     <form
@@ -233,7 +226,6 @@ export const FormExample: Story = {
   ),
 }
 
-// Card Example
 export const CardExample: Story = {
   render: () => (
     <div
@@ -267,7 +259,6 @@ export const CardExample: Story = {
   ),
 }
 
-// Comparison
 export const SizeComparison: Story = {
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>

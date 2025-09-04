@@ -13,11 +13,12 @@ const meta: Meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-// Container Stories
 export const ContainerDefault: Story = {
   render: () => (
     <Container>
-      <div style={{ background: '#f0f0f0', padding: '20px', textAlign: 'center' }}>
+      <div
+        style={{ background: '#f0f0f0', padding: '20px', textAlign: 'center' }}
+      >
         Default Container (max-width: xl)
       </div>
     </Container>
@@ -28,27 +29,57 @@ export const ContainerSizes: Story = {
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
       <Container maxWidth="sm">
-        <div style={{ background: '#e0e0e0', padding: '20px', textAlign: 'center' }}>
+        <div
+          style={{
+            background: '#e0e0e0',
+            padding: '20px',
+            textAlign: 'center',
+          }}
+        >
           Small Container (sm)
         </div>
       </Container>
       <Container maxWidth="md">
-        <div style={{ background: '#d0d0d0', padding: '20px', textAlign: 'center' }}>
+        <div
+          style={{
+            background: '#d0d0d0',
+            padding: '20px',
+            textAlign: 'center',
+          }}
+        >
           Medium Container (md)
         </div>
       </Container>
       <Container maxWidth="lg">
-        <div style={{ background: '#c0c0c0', padding: '20px', textAlign: 'center' }}>
+        <div
+          style={{
+            background: '#c0c0c0',
+            padding: '20px',
+            textAlign: 'center',
+          }}
+        >
           Large Container (lg)
         </div>
       </Container>
       <Container maxWidth="xl">
-        <div style={{ background: '#b0b0b0', padding: '20px', textAlign: 'center' }}>
+        <div
+          style={{
+            background: '#b0b0b0',
+            padding: '20px',
+            textAlign: 'center',
+          }}
+        >
           Extra Large Container (xl)
         </div>
       </Container>
       <Container maxWidth="2xl">
-        <div style={{ background: '#a0a0a0', padding: '20px', textAlign: 'center' }}>
+        <div
+          style={{
+            background: '#a0a0a0',
+            padding: '20px',
+            textAlign: 'center',
+          }}
+        >
           2XL Container (2xl)
         </div>
       </Container>
@@ -59,14 +90,15 @@ export const ContainerSizes: Story = {
 export const ContainerNoPadding: Story = {
   render: () => (
     <Container noPadding>
-      <div style={{ background: '#f0f0f0', padding: '20px', textAlign: 'center' }}>
+      <div
+        style={{ background: '#f0f0f0', padding: '20px', textAlign: 'center' }}
+      >
         Container with no padding
       </div>
     </Container>
   ),
 }
 
-// Grid Stories
 export const GridDefault: Story = {
   render: () => (
     <Grid cols={3} gap={4}>
@@ -111,35 +143,89 @@ export const GridDifferentColumns: Story = {
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
       <Grid cols={2} gap={3}>
-        <div style={{ background: '#e0e0e0', padding: '20px', textAlign: 'center' }}>
+        <div
+          style={{
+            background: '#e0e0e0',
+            padding: '20px',
+            textAlign: 'center',
+          }}
+        >
           2 Columns
         </div>
-        <div style={{ background: '#e0e0e0', padding: '20px', textAlign: 'center' }}>
+        <div
+          style={{
+            background: '#e0e0e0',
+            padding: '20px',
+            textAlign: 'center',
+          }}
+        >
           2 Columns
         </div>
       </Grid>
       <Grid cols={3} gap={3}>
-        <div style={{ background: '#d0d0d0', padding: '20px', textAlign: 'center' }}>
+        <div
+          style={{
+            background: '#d0d0d0',
+            padding: '20px',
+            textAlign: 'center',
+          }}
+        >
           3 Columns
         </div>
-        <div style={{ background: '#d0d0d0', padding: '20px', textAlign: 'center' }}>
+        <div
+          style={{
+            background: '#d0d0d0',
+            padding: '20px',
+            textAlign: 'center',
+          }}
+        >
           3 Columns
         </div>
-        <div style={{ background: '#d0d0d0', padding: '20px', textAlign: 'center' }}>
+        <div
+          style={{
+            background: '#d0d0d0',
+            padding: '20px',
+            textAlign: 'center',
+          }}
+        >
           3 Columns
         </div>
       </Grid>
       <Grid cols={4} gap={3}>
-        <div style={{ background: '#c0c0c0', padding: '20px', textAlign: 'center' }}>
+        <div
+          style={{
+            background: '#c0c0c0',
+            padding: '20px',
+            textAlign: 'center',
+          }}
+        >
           4 Cols
         </div>
-        <div style={{ background: '#c0c0c0', padding: '20px', textAlign: 'center' }}>
+        <div
+          style={{
+            background: '#c0c0c0',
+            padding: '20px',
+            textAlign: 'center',
+          }}
+        >
           4 Cols
         </div>
-        <div style={{ background: '#c0c0c0', padding: '20px', textAlign: 'center' }}>
+        <div
+          style={{
+            background: '#c0c0c0',
+            padding: '20px',
+            textAlign: 'center',
+          }}
+        >
           4 Cols
         </div>
-        <div style={{ background: '#c0c0c0', padding: '20px', textAlign: 'center' }}>
+        <div
+          style={{
+            background: '#c0c0c0',
+            padding: '20px',
+            textAlign: 'center',
+          }}
+        >
           4 Cols
         </div>
       </Grid>
@@ -147,7 +233,6 @@ export const GridDifferentColumns: Story = {
   ),
 }
 
-// Flex Stories
 export const FlexDefault: Story = {
   render: () => (
     <Flex gap={4}>
@@ -178,16 +263,40 @@ export const FlexDirection: Story = {
 export const FlexAlignment: Story = {
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-      <Flex align="start" justify="start" gap={3} style={{ height: '100px', background: '#f5f5f5' }}>
-        <div style={{ background: '#e0e0e0', padding: '10px' }}>Start/Start</div>
+      <Flex
+        align="start"
+        justify="start"
+        gap={3}
+        style={{ height: '100px', background: '#f5f5f5' }}
+      >
+        <div style={{ background: '#e0e0e0', padding: '10px' }}>
+          Start/Start
+        </div>
       </Flex>
-      <Flex align="center" justify="center" gap={3} style={{ height: '100px', background: '#f5f5f5' }}>
-        <div style={{ background: '#d0d0d0', padding: '10px' }}>Center/Center</div>
+      <Flex
+        align="center"
+        justify="center"
+        gap={3}
+        style={{ height: '100px', background: '#f5f5f5' }}
+      >
+        <div style={{ background: '#d0d0d0', padding: '10px' }}>
+          Center/Center
+        </div>
       </Flex>
-      <Flex align="end" justify="end" gap={3} style={{ height: '100px', background: '#f5f5f5' }}>
+      <Flex
+        align="end"
+        justify="end"
+        gap={3}
+        style={{ height: '100px', background: '#f5f5f5' }}
+      >
         <div style={{ background: '#c0c0c0', padding: '10px' }}>End/End</div>
       </Flex>
-      <Flex align="center" justify="between" gap={3} style={{ height: '100px', background: '#f5f5f5' }}>
+      <Flex
+        align="center"
+        justify="between"
+        gap={3}
+        style={{ height: '100px', background: '#f5f5f5' }}
+      >
         <div style={{ background: '#b0b0b0', padding: '10px' }}>Between</div>
         <div style={{ background: '#b0b0b0', padding: '10px' }}>Between</div>
         <div style={{ background: '#b0b0b0', padding: '10px' }}>Between</div>
@@ -216,7 +325,6 @@ export const FlexWrap: Story = {
   ),
 }
 
-// Stack Stories
 export const StackDefault: Story = {
   render: () => (
     <Stack gap={4}>
@@ -228,7 +336,6 @@ export const StackDefault: Story = {
   ),
 }
 
-// Divider Stories
 export const DividerHorizontal: Story = {
   render: () => (
     <div>
@@ -263,7 +370,6 @@ export const DividerSpacing: Story = {
   ),
 }
 
-// Spacer Stories
 export const SpacerFlex: Story = {
   render: () => (
     <Flex style={{ width: '100%', background: '#f5f5f5', padding: '10px' }}>
@@ -286,29 +392,54 @@ export const SpacerFixed: Story = {
   ),
 }
 
-// Combined Layout Example
 export const ComplexLayout: Story = {
   render: () => (
     <Container maxWidth="lg">
       <Stack gap={6}>
-        <div style={{ background: '#f0f0f0', padding: '40px', textAlign: 'center' }}>
+        <div
+          style={{
+            background: '#f0f0f0',
+            padding: '40px',
+            textAlign: 'center',
+          }}
+        >
           Header
         </div>
         <Divider />
         <Grid cols={3} gap={4} responsive>
-          <div style={{ background: '#e0e0e0', padding: '60px', textAlign: 'center' }}>
+          <div
+            style={{
+              background: '#e0e0e0',
+              padding: '60px',
+              textAlign: 'center',
+            }}
+          >
             Card 1
           </div>
-          <div style={{ background: '#e0e0e0', padding: '60px', textAlign: 'center' }}>
+          <div
+            style={{
+              background: '#e0e0e0',
+              padding: '60px',
+              textAlign: 'center',
+            }}
+          >
             Card 2
           </div>
-          <div style={{ background: '#e0e0e0', padding: '60px', textAlign: 'center' }}>
+          <div
+            style={{
+              background: '#e0e0e0',
+              padding: '60px',
+              textAlign: 'center',
+            }}
+          >
             Card 3
           </div>
         </Grid>
         <Divider />
         <Flex justify="between" align="center">
-          <div style={{ background: '#d0d0d0', padding: '20px' }}>Footer Left</div>
+          <div style={{ background: '#d0d0d0', padding: '20px' }}>
+            Footer Left
+          </div>
           <Spacer />
           <Flex gap={3}>
             <div style={{ background: '#c0c0c0', padding: '20px' }}>Link 1</div>

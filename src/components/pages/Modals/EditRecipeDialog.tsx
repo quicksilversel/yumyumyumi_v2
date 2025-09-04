@@ -47,7 +47,6 @@ export function EditRecipeDialog({
     setError,
   } = methods
 
-  // Reset form when recipe changes
   useEffect(() => {
     reset(recipe)
   }, [recipe, reset])
@@ -80,12 +79,12 @@ export function EditRecipeDialog({
       if (imageFile) {
         setUploadingImage(true)
 
-        // Delete old image if it exists
         if (recipe.imageUrl && recipe.imageUrl.includes('supabase')) {
           try {
             await deleteImage(recipe.imageUrl)
           } catch (err) {
-            // Error deleting old image - continue with upload
+            // eslint-disable-next-line no-console
+            console.error('Error deleting old image:', err)
           }
         }
 

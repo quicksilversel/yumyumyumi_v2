@@ -3,7 +3,7 @@ import { z } from 'zod'
 import { isValidOf } from './isValidOf'
 
 describe(isValidOf, () => {
-  describe('Zodスキーマにマッチする場合', () => {
+  describe('Matching Zod schemas', () => {
     test.each([
       [z.string(), 'a'],
       [z.number(), 0],
@@ -19,7 +19,7 @@ describe(isValidOf, () => {
       expect(isValidOf(schema, value)).toBeTruthy()
     })
   })
-  describe('Zodスキーマにマッチしない場合', () => {
+  describe('Not matching Zod schemas', () => {
     test.each([
       [z.string(), 0],
       [z.number(), '0'],

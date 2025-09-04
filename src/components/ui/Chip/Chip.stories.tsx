@@ -37,7 +37,6 @@ const meta: Meta<typeof Chip> = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-// Basic Chip Stories
 export const Default: Story = {
   args: {
     children: 'Default Chip',
@@ -54,7 +53,6 @@ export const Outlined: Story = {
   },
 }
 
-// Size Variants
 export const Small: Story = {
   args: {
     children: 'Small Chip',
@@ -69,7 +67,6 @@ export const Medium: Story = {
   },
 }
 
-// State Variants
 export const Clickable: Story = {
   args: {
     children: 'Clickable Chip',
@@ -94,7 +91,6 @@ export const ClickableSelected: Story = {
   },
 }
 
-// With Icons
 export const WithIcon: Story = {
   render: () => (
     <ChipGroup>
@@ -125,7 +121,6 @@ export const WithCloseIcon: Story = {
   ),
 }
 
-// All Variants Demo
 export const AllVariants: Story = {
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
@@ -157,7 +152,6 @@ export const AllVariants: Story = {
   ),
 }
 
-// All Sizes Demo
 export const AllSizes: Story = {
   render: () => (
     <ChipGroup>
@@ -173,7 +167,6 @@ export const AllSizes: Story = {
   ),
 }
 
-// Chip Group Demo
 export const ChipGroupDemo: Story = {
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
@@ -221,7 +214,6 @@ export const ChipGroupDemo: Story = {
   ),
 }
 
-// Interactive Selection - Static version showing different states
 export const SelectionStates: Story = {
   render: () => (
     <div>
@@ -253,7 +245,6 @@ export const SelectionStates: Story = {
   ),
 }
 
-// Deletable Chips - Static version
 export const DeletableChips: Story = {
   render: () => (
     <div>
@@ -295,7 +286,6 @@ export const DeletableChips: Story = {
   ),
 }
 
-// Interactive Example - Use Storybook's controls
 export const Interactive: Story = {
   args: {
     children: 'Interactive Chip',
@@ -315,7 +305,6 @@ export const Interactive: Story = {
   },
 }
 
-// Color Variations (Custom)
 export const ColorVariations: Story = {
   render: () => (
     <ChipGroup>
@@ -351,7 +340,6 @@ export const ColorVariations: Story = {
   ),
 }
 
-// Long Text
 export const LongText: Story = {
   render: () => (
     <div style={{ maxWidth: '400px' }}>
@@ -365,7 +353,6 @@ export const LongText: Story = {
   ),
 }
 
-// Filter Example - Shows common use case
 export const FilterExample: Story = {
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
@@ -413,7 +400,6 @@ export const FilterExample: Story = {
   ),
 }
 
-// Sizes Comparison
 export const SizesComparison: Story = {
   render: () => (
     <div
@@ -448,7 +434,6 @@ export const SizesComparison: Story = {
   ),
 }
 
-// Form Tags Example
 export const FormTags: Story = {
   render: () => (
     <div style={{ width: '400px' }}>

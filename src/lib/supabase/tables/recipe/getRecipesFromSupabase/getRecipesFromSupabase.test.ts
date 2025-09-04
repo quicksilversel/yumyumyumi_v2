@@ -315,7 +315,6 @@ describe('getRecipesFromSupabase', () => {
       const result = await getRecipesFromSupabase()
 
       expect(objectToCamel).toHaveBeenCalledWith(incompleteRecipes)
-      // Result depends on validation
       expect(result).toBeDefined()
     })
 

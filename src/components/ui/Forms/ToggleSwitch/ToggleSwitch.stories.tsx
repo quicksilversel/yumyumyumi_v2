@@ -44,7 +44,6 @@ const meta: Meta<typeof ToggleSwitch> = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-// Basic Toggle Stories
 export const Default: Story = {
   args: {
     label: 'Toggle me',
@@ -68,7 +67,6 @@ export const NoLabel: Story = {
   },
 }
 
-// Size Variants
 export const Small: Story = {
   args: {
     label: 'Small toggle',
@@ -93,7 +91,6 @@ export const Large: Story = {
   },
 }
 
-// Label Position
 export const LabelLeft: Story = {
   args: {
     label: 'Label on the left',
@@ -110,7 +107,6 @@ export const LabelRight: Story = {
   },
 }
 
-// State Stories
 export const Disabled: Story = {
   args: {
     label: 'Disabled toggle',
@@ -128,7 +124,6 @@ export const DisabledChecked: Story = {
   },
 }
 
-// With Helper Text
 export const WithHelperText: Story = {
   args: {
     label: 'Enable notifications',
@@ -146,7 +141,6 @@ export const WithErrorHelperText: Story = {
   },
 }
 
-// All Sizes Demo
 export const AllSizes: Story = {
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
@@ -169,7 +163,6 @@ export const AllSizes: Story = {
   ),
 }
 
-// State Variations
 export const StateVariations: Story = {
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
@@ -181,7 +174,6 @@ export const StateVariations: Story = {
   ),
 }
 
-// Interactive Example - Use Storybook's controls instead
 export const Interactive: Story = {
   args: {
     label: 'Interactive toggle',
@@ -199,7 +191,6 @@ export const Interactive: Story = {
   },
 }
 
-// Settings Form Example
 export const SettingsForm: Story = {
   render: () => (
     <div style={{ width: '400px' }}>
@@ -257,7 +248,6 @@ export const SettingsForm: Story = {
   ),
 }
 
-// Feature Toggles Example
 export const FeatureToggles: Story = {
   render: () => (
     <div style={{ width: '400px' }}>
@@ -287,7 +277,6 @@ export const FeatureToggles: Story = {
   ),
 }
 
-// Accessibility Example
 export const AccessibilitySettings: Story = {
   render: () => (
     <div style={{ width: '400px' }}>
@@ -322,7 +311,6 @@ export const AccessibilitySettings: Story = {
   ),
 }
 
-// Mixed Sizes and States
 export const MixedDemo: Story = {
   render: () => (
     <div
@@ -363,7 +351,6 @@ export const MixedDemo: Story = {
   ),
 }
 
-// Form Example
 export const FormExample: Story = {
   render: () => (
     <form

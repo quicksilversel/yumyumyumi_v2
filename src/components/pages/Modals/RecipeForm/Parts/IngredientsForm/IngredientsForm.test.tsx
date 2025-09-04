@@ -13,7 +13,6 @@ import { recipeFormSchema } from '@/types/recipe'
 
 import { IngredientsForm } from './IngredientsForm'
 
-// Mock MUI icons
 jest.mock('@mui/icons-material/Add', () => ({
   __esModule: true,
   default: () => <span>Add Icon</span>,
@@ -24,7 +23,6 @@ jest.mock('@mui/icons-material/Delete', () => ({
   default: () => <span data-testid="DeleteIcon">Delete Icon</span>,
 }))
 
-// Mock all UI components
 jest.mock('@/components/ui', () => ({
   Input: React.forwardRef<HTMLInputElement, any>(
     ({ error, ...props }: any, ref) => (
@@ -54,7 +52,6 @@ jest.mock('@/components/ui', () => ({
   Checkbox: ({ ...props }: any) => <input type="checkbox" {...props} />,
 }))
 
-// Wrapper component to provide form context
 const FormWrapper = ({
   children,
   defaultValues = {},
@@ -103,7 +100,6 @@ describe('IngredientsForm', () => {
     const addButton = screen.getByRole('button', { name: /add ingredient/i })
     await user.click(addButton)
 
-    // Should now show ingredient input fields
     expect(screen.getByPlaceholderText(/ingredient name/i)).toBeInTheDocument()
     expect(screen.getByPlaceholderText(/amount/i)).toBeInTheDocument()
     expect(
@@ -119,17 +115,15 @@ describe('IngredientsForm', () => {
       </FormWrapper>,
     )
 
-    // Add an ingredient
     const addButton = screen.getByRole('button', { name: /add ingredient/i })
     await user.click(addButton)
 
-    // Try to submit without filling in the name
     const nameInput = screen.getByPlaceholderText(/ingredient name/i)
     const amountInput = screen.getByPlaceholderText(/amount/i)
 
     await user.type(amountInput, '1 cup')
     await user.click(nameInput)
-    await user.tab() // Blur to trigger validation
+    await user.tab()
 
     await waitFor(() => {
       expect(
@@ -146,17 +140,15 @@ describe('IngredientsForm', () => {
       </FormWrapper>,
     )
 
-    // Add an ingredient
     const addButton = screen.getByRole('button', { name: /add ingredient/i })
     await user.click(addButton)
 
-    // Try to submit without filling in the amount
     const nameInput = screen.getByPlaceholderText(/ingredient name/i)
     const amountInput = screen.getByPlaceholderText(/amount/i)
 
     await user.type(nameInput, 'Flour')
     await user.click(amountInput)
-    await user.tab() // Blur to trigger validation
+    await user.tab()
 
     await waitFor(() => {
       expect(screen.getByText(/amount is required/i)).toBeInTheDocument()
@@ -215,7 +207,6 @@ describe('IngredientsForm', () => {
 
     const addButton = screen.getByRole('button', { name: /add ingredient/i })
 
-    // Add first ingredient
     await user.click(addButton)
     let nameInputs = screen.getAllByPlaceholderText(/ingredient name/i)
     let amountInputs = screen.getAllByPlaceholderText(/amount/i)
@@ -223,7 +214,6 @@ describe('IngredientsForm', () => {
     await user.type(nameInputs[0], 'Flour')
     await user.type(amountInputs[0], '2 cups')
 
-    // Add second ingredient
     await user.click(addButton)
     nameInputs = screen.getAllByPlaceholderText(/ingredient name/i)
     amountInputs = screen.getAllByPlaceholderText(/amount/i)
@@ -255,15 +245,12 @@ describe('IngredientsForm', () => {
       </FormWrapper>,
     )
 
-    // Should have 2 ingredients
     let nameInputs = screen.getAllByPlaceholderText(/ingredient name/i)
     expect(nameInputs).toHaveLength(2)
 
-    // Find and click the first delete button
     const deleteButtons = screen.getAllByTestId('DeleteIcon')
     await user.click(deleteButtons[0])
 
-    // Should now have 1 ingredient
     nameInputs = screen.getAllByPlaceholderText(/ingredient name/i)
     expect(nameInputs).toHaveLength(1)
     expect(nameInputs[0]).toHaveValue('Sugar')
@@ -280,13 +267,10 @@ describe('IngredientsForm', () => {
     const addButton = screen.getByRole('button', { name: /add ingredient/i })
     await user.click(addButton)
 
-    // Should not have delete button with only one ingredient
     expect(screen.queryByTestId('DeleteIcon')).not.toBeInTheDocument()
 
-    // Add another ingredient
     await user.click(addButton)
 
-    // Now should have delete buttons
     const deleteButtons = screen.getAllByTestId('DeleteIcon')
     expect(deleteButtons).toHaveLength(2)
   })
@@ -298,7 +282,6 @@ describe('IngredientsForm', () => {
       </FormWrapper>,
     )
 
-    // Error should be shown for empty ingredients
     expect(
       screen.getByText(/at least one ingredient is required/i),
     ).toBeInTheDocument()
@@ -342,7 +325,6 @@ describe('IngredientsForm', () => {
     )
 
     const deleteButtons = screen.getAllByTestId('DeleteIcon')
-    // Delete the middle ingredient (Second)
     await user.click(deleteButtons[1])
 
     const nameInputs = screen.getAllByPlaceholderText(/ingredient name/i)
@@ -359,13 +341,12 @@ describe('IngredientsForm', () => {
       </FormWrapper>,
     )
 
-    // Add an ingredient
     const addButton = screen.getByRole('button', { name: /add ingredient/i })
     await user.click(addButton)
 
     const nameInput = screen.getByPlaceholderText(/ingredient name/i)
     await user.click(nameInput)
-    await user.tab() // Trigger validation
+    await user.tab()
 
     await waitFor(() => {
       expect(
@@ -373,7 +354,6 @@ describe('IngredientsForm', () => {
       ).toBeInTheDocument()
     })
 
-    // Now enter valid data
     await user.type(nameInput, 'Flour')
 
     await waitFor(() => {
@@ -398,12 +378,10 @@ describe('IngredientsForm', () => {
     const spiceCheckbox = screen.getByRole('checkbox', { name: /spice/i })
     expect(spiceCheckbox).toBeChecked()
 
-    // Edit the name
     const nameInput = screen.getByPlaceholderText(/ingredient name/i)
     await user.clear(nameInput)
     await user.type(nameInput, 'Sea Salt')
 
-    // Spice checkbox should still be checked
     expect(spiceCheckbox).toBeChecked()
   })
 })

@@ -105,13 +105,11 @@ describe('clearAllBookmarks', () => {
 
     await clearAllBookmarks()
 
-    // Verify that eq was called with the correct user_id
     expect(mockQueryBuilder.eq).toHaveBeenCalledWith('user_id', 'user123')
     expect(mockQueryBuilder.eq).toHaveBeenCalledTimes(1)
   })
 
   it('should handle successful deletion with no bookmarks', async () => {
-    // Simulating the case where user has no bookmarks to delete
     mockQueryBuilder.eq.mockResolvedValue({
       data: [],
       error: null,

@@ -46,7 +46,6 @@ const meta: Meta<typeof Input> = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-// Basic Input Stories
 export const Default: Story = {
   args: {
     placeholder: 'Enter text...',
@@ -64,7 +63,6 @@ export const WithValue: Story = {
   },
 }
 
-// Size Variants
 export const Small: Story = {
   args: {
     placeholder: 'Small input',
@@ -86,7 +84,6 @@ export const Large: Story = {
   },
 }
 
-// Type Variants
 export const TextInput: Story = {
   args: {
     type: 'text',
@@ -139,7 +136,6 @@ export const UrlInput: Story = {
   },
 }
 
-// State Stories
 export const Disabled: Story = {
   args: {
     placeholder: 'Disabled input',
@@ -163,7 +159,6 @@ export const Required: Story = {
   },
 }
 
-// All Sizes Demo
 export const AllSizes: Story = {
   render: () => (
     <div
@@ -181,7 +176,6 @@ export const AllSizes: Story = {
   ),
 }
 
-// All Types Demo
 export const AllTypes: Story = {
   render: () => (
     <div
@@ -203,7 +197,6 @@ export const AllTypes: Story = {
   ),
 }
 
-// State Variations Demo
 export const StateVariations: Story = {
   render: () => (
     <div
@@ -222,7 +215,6 @@ export const StateVariations: Story = {
   ),
 }
 
-// Interactive Form Example
 export const FormExample: Story = {
   render: () => (
     <form
