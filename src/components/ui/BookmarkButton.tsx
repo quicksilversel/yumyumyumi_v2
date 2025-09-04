@@ -18,13 +18,17 @@ export const BookmarkButton = ({
   onToggle,
   className,
 }: BookmarkButtonProps) => {
-  const { isBookmarked, toggleBookmark } = useBookmarks({ recipeId, onToggle })
+  const { isBookmarked, toggleBookmark, isLoading, isToggling } = useBookmarks({
+    recipeId,
+    onToggle,
+  })
 
   return (
     <StyledIconButton
       onClick={toggleBookmark}
       size={size}
       className={className}
+      disabled={isLoading || isToggling}
       aria-label={isBookmarked ? 'Remove bookmark' : 'Add bookmark'}
     >
       {isBookmarked ? <BookmarkIcon /> : <BookmarkBorderIcon />}

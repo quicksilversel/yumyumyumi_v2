@@ -6,24 +6,15 @@ import styled from '@emotion/styled'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm, FormProvider, SubmitHandler } from 'react-hook-form'
 
-import type { Recipe, RecipeForm } from '@/types'
+import type { Recipe, RecipeForm } from '@/types/recipe'
 
-import { Button } from '@/components/ui/Button'
-import { Dialog } from '@/components/ui/Dialog'
+import { Button, Dialog } from '@/components/ui'
 import { useAuth } from '@/contexts/AuthContext'
 import { uploadImage, deleteImage } from '@/lib/supabase/storage'
 import { updateRecipe } from '@/lib/supabase/tables/recipe/updateRecipe'
-import { spacing } from '@/styles/designTokens'
-import { recipeFormSchema } from '@/types'
+import { recipeFormSchema } from '@/types/recipe'
 
 import { RecipeForm as RecipeFormComponent } from './RecipeForm/RecipeForm'
-
-const DialogActions = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  gap: ${spacing[3]};
-  margin-top: ${spacing[6]};
-`
 
 type EditRecipeDialogProps = {
   open: boolean
@@ -181,3 +172,10 @@ export function EditRecipeDialog({
     </Dialog>
   )
 }
+
+const DialogActions = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  gap: ${({ theme }) => theme.spacing[3]};
+  margin-top: ${({ theme }) => theme.spacing[6]};
+`

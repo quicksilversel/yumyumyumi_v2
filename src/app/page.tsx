@@ -4,7 +4,7 @@ import { RecipeList } from '@/components/pages/Home/RecipeList'
 import { getRecipesFromSupabase } from '@/lib/supabase/tables/recipe/getRecipesFromSupabase'
 
 export const metadata: Metadata = {
-  title: 'YumYumYumi - Discover Amazing Recipes',
+  title: 'YumYumYumi',
   description: 'Find, save, and share your favorite recipes with YumYumYumi',
 }
 

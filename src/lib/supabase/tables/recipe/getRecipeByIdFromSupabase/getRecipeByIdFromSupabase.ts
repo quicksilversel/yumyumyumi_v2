@@ -1,9 +1,9 @@
 import { objectToCamel } from 'ts-case-convert'
 
-import type { Recipe } from '@/types'
+import type { Recipe } from '@/types/recipe'
 
 import { isValidOf } from '@/lib/functions/isValidOf'
-import { recipeSchema } from '@/types'
+import { recipeSchema } from '@/types/recipe'
 
 import { getSupabaseClient } from '../../../getSupabaseClient'
 

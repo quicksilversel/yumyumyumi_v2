@@ -6,10 +6,10 @@ import { render, screen, waitFor, fireEvent } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { useForm, FormProvider } from 'react-hook-form'
 
-import type { RecipeForm } from '@/types'
+import type { RecipeForm } from '@/types/recipe'
 
 import { ThemeWrapper } from '@/test-utils/test-setup'
-import { recipeFormSchema } from '@/types'
+import { recipeFormSchema } from '@/types/recipe'
 import { RECIPE_CATEGORY } from '@/utils/constants'
 
 import { CategoryForm } from './CategoryForm'

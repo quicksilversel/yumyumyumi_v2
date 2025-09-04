@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 
-import type { Recipe } from '@/types'
+import type { Recipe } from '@/types/recipe'
 
 import { Chip, ChipGroup } from '@/components/ui'
 

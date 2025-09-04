@@ -91,7 +91,7 @@ export const DialogOverlay = styled.div<{
 }>`
   position: fixed;
   z-index: 1000;
-  display: ${(props) => (props.open ? 'flex' : 'none')};
+  display: ${({ open }) => (open ? 'flex' : 'none')};
   justify-content: center;
   align-items: center;
   padding: ${({ theme }) => theme.spacing[4]};
@@ -112,7 +112,7 @@ export const DialogContent = styled.div<{
   box-shadow: ${({ theme }) => theme.shadow.xl};
   animation: ${slideUp} ${({ theme }) => theme.transition.default};
 
-  ${(props) => {
+  ${({ maxWidth }) => {
     const widths = {
       sm: '400px',
       md: '600px',
@@ -120,7 +120,7 @@ export const DialogContent = styled.div<{
       xl: '1000px',
     }
     return css`
-      max-width: ${widths[props.maxWidth || 'md']};
+      max-width: ${widths[maxWidth || 'md']};
     `
   }}
 `

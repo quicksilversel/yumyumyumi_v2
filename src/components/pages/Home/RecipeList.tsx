@@ -6,7 +6,7 @@ import { keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
 import { useSearchParams } from 'next/navigation'
 
-import type { Recipe, RecipeFilters } from '@/types'
+import type { Recipe, RecipeFilters } from '@/types/recipe'
 
 import { Flex } from '@/components/ui'
 import { useRecipeContext } from '@/contexts/RecipeContext'

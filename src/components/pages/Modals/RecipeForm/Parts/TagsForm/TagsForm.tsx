@@ -1,19 +1,21 @@
-'use client'
-
 import { useState } from 'react'
 
 import styled from '@emotion/styled'
 import AddIcon from '@mui/icons-material/Add'
 import { useFormContext, Controller } from 'react-hook-form'
 
-import type { RecipeForm } from '@/types'
+import type { RecipeForm } from '@/types/recipe'
 
-import { Button } from '@/components/ui/Button'
-import { Chip, ChipGroup } from '@/components/ui/Chip'
-import { Input } from '@/components/ui/Forms/Input'
-import { Flex, Stack } from '@/components/ui/Layout'
-import { H6, Caption } from '@/components/ui/Typography'
-import { spacing } from '@/styles/designTokens'
+import {
+  H2,
+  Caption,
+  Flex,
+  Stack,
+  Chip,
+  Input,
+  ChipGroup,
+  Button,
+} from '@/components/ui'
 
 export function TagsForm() {
   const { control, watch, setValue } = useFormContext<RecipeForm>()
@@ -48,7 +50,7 @@ export function TagsForm() {
       control={control}
       render={() => (
         <Stack gap={3}>
-          <H6>Tags</H6>
+          <H2>Tags</H2>
 
           <TagInputRow>
             <Input
@@ -93,5 +95,5 @@ export function TagsForm() {
 
 const TagInputRow = styled(Flex)`
   width: 100%;
-  gap: ${spacing[2]};
+  gap: ${({ theme }) => theme.spacing[2]};
 `

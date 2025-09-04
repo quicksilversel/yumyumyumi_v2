@@ -1,7 +1,7 @@
 import { keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
 
-import type { Recipe } from '@/types'
+import type { Recipe } from '@/types/recipe'
 
 export const IngredientsView = ({ recipe }: { recipe: Recipe }) => {
   return (

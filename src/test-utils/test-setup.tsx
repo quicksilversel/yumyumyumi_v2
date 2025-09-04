@@ -3,7 +3,7 @@ import React from 'react'
 import { ThemeProvider } from '@emotion/react'
 import { render } from '@testing-library/react'
 
-import { lightTheme } from '@/styles/theme'
+import { lightTheme } from '@/styles/themes'
 
 // Wrapper component that provides theme context
 export const ThemeWrapper = ({ children }: { children: React.ReactNode }) => {

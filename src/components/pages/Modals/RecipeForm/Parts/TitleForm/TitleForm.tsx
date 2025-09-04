@@ -1,10 +1,9 @@
 import styled from '@emotion/styled'
 import { useFormContext } from 'react-hook-form'
 
-import type { RecipeForm } from '@/types'
+import type { RecipeForm } from '@/types/recipe'
 
-import { Input } from '@/components/ui/Forms/Input'
-import { colors } from '@/styles/designTokens'
+import { Input } from '@/components/ui'
 
 export const TitleForm = () => {
   const {
@@ -30,7 +29,7 @@ export const TitleForm = () => {
 }
 
 const ErrorText = styled.span`
-  color: ${colors.error};
+  color: ${({ theme }) => theme.colors.error};
   font-size: 12px;
   margin-top: 4px;
 `

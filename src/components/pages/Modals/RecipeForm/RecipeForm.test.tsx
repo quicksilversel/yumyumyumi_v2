@@ -5,9 +5,9 @@ import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { useForm, FormProvider } from 'react-hook-form'
 
-import type { RecipeForm as RecipeFormType } from '@/types'
+import type { RecipeForm as RecipeFormType } from '@/types/recipe'
 
-import { recipeFormSchema } from '@/types'
+import { recipeFormSchema } from '@/types/recipe'
 
 import { RecipeForm } from './RecipeForm'
 

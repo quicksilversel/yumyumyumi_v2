@@ -6,10 +6,10 @@ import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { useForm, FormProvider } from 'react-hook-form'
 
-import type { RecipeForm } from '@/types'
+import type { RecipeForm } from '@/types/recipe'
 
 import { ThemeWrapper } from '@/test-utils/test-setup'
-import { recipeFormSchema } from '@/types'
+import { recipeFormSchema } from '@/types/recipe'
 
 import { DirectionsForm } from './DirectionsForm'
 
@@ -26,9 +26,11 @@ jest.mock('@mui/icons-material/Delete', () => ({
 
 // Mock all UI components
 jest.mock('@/components/ui', () => ({
-  Input: React.forwardRef<HTMLInputElement, any>(({ error, ...props }: any, ref) => (
-    <input ref={ref} {...props} data-error={error} />
-  )),
+  Input: React.forwardRef<HTMLInputElement, any>(
+    ({ error, ...props }: any, ref) => (
+      <input ref={ref} {...props} data-error={error} />
+    ),
+  ),
   Textarea: React.forwardRef<HTMLTextAreaElement, any>(
     ({ error, rows = 3, ...props }: any, ref) => (
       <textarea ref={ref} rows={rows} {...props} data-error={error} />

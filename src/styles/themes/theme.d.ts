@@ -24,21 +24,12 @@ declare module '@emotion/react' {
         800: string
         900: string
       }
-      accent: {
-        light: string
-        default: string
-        dark: string
-      }
       error: string
       success: string
       warning: string
       info: string
     }
     typography: {
-      fontFamily: {
-        sans: string
-        mono: string
-      }
       fontSize: {
         xs: string
         sm: string

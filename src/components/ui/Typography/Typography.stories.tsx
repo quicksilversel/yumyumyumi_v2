@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { H1, H2, H3, H4, H5, H6, Body, Caption, Label } from './Typography'
+import { H1, H2, H3, Body, Caption, Label, ErrorText } from './Typography'
 
 const meta: Meta = {
   title: 'Components/Typography',
@@ -20,9 +20,8 @@ export const Headings: Story = {
       <H1>Heading 1 - The quick brown fox</H1>
       <H2>Heading 2 - The quick brown fox</H2>
       <H3>Heading 3 - The quick brown fox</H3>
-      <H4>Heading 4 - The quick brown fox</H4>
-      <H5>Heading 5 - The quick brown fox</H5>
-      <H6>Heading 6 - The quick brown fox</H6>
+
+      <ErrorText>This is an error message</ErrorText>
     </div>
   ),
 }
@@ -93,14 +92,13 @@ export const CompleteScale: Story = {
           <H1>H1 - Page Title</H1>
           <H2>H2 - Section Header</H2>
           <H3>H3 - Subsection</H3>
-          <H4>H4 - Card Title</H4>
-          <H5>H5 - List Header</H5>
-          <H6>H6 - Overline</H6>
+
           <Body size="lg">Body Large - Lead paragraph</Body>
           <Body>Body Base - Regular content</Body>
           <Body size="sm">Body Small - Secondary text</Body>
           <Label>Label - Form labels</Label>
           <Caption>Caption - Helper text</Caption>
+          <ErrorText>Error Text - Validation messages</ErrorText>
         </div>
       </section>
     </div>
@@ -256,8 +254,8 @@ export const CardExample: Story = {
             backgroundColor: '#fff',
           }}
         >
-          <H6 style={{ marginBottom: '8px' }}>Featured</H6>
-          <H4 style={{ marginBottom: '12px' }}>Card Title {i}</H4>
+          <Body style={{ marginBottom: '8px' }}>Featured</Body>
+          <H3 style={{ marginBottom: '12px' }}>Card Title {i}</H3>
           <Body size="sm" muted style={{ marginBottom: '16px' }}>
             This is a description of the card content. It provides additional
             context and information.
@@ -274,7 +272,7 @@ export const SizeComparison: Story = {
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
       <div>
-        <H6 style={{ marginBottom: '12px' }}>Heading Sizes</H6>
+        <H3 style={{ marginBottom: '12px' }}>Heading Sizes</H3>
         <div
           style={{
             display: 'flex',
@@ -286,14 +284,11 @@ export const SizeComparison: Story = {
           <H1>H1</H1>
           <H2>H2</H2>
           <H3>H3</H3>
-          <H4>H4</H4>
-          <H5>H5</H5>
-          <H6>H6</H6>
         </div>
       </div>
 
       <div>
-        <H6 style={{ marginBottom: '12px' }}>Body Sizes</H6>
+        <H3 style={{ marginBottom: '12px' }}>Body Sizes</H3>
         <div
           style={{
             display: 'flex',
@@ -310,11 +305,11 @@ export const SizeComparison: Story = {
       </div>
 
       <div>
-        <H6 style={{ marginBottom: '12px' }}>Font Weights</H6>
+        <H3 style={{ marginBottom: '12px' }}>Font Weights</H3>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
           <H1>Bold (H1, H2)</H1>
-          <H4>Medium (H4, H5, Label)</H4>
-          <H6>Semibold (H6)</H6>
+          <Label>Medium (Label)</Label>
+          <H3>Semibold (H3)</H3>
           <Body>Normal (Body, Caption)</Body>
         </div>
       </div>

@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import { objectToCamel } from 'ts-case-convert'
 
-import type { Recipe } from '@/types'
+import type { Recipe } from '@/types/recipe'
 
 import { isValidOf } from '@/lib/functions/isValidOf'
 

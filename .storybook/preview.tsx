@@ -1,9 +1,9 @@
-import type { Preview } from '@storybook/nextjs-vite'
 import { ThemeProvider } from '@emotion/react'
 
-import { GlobalStyles } from '../src/styles/GlobalStyles'
+import type { Preview } from '@storybook/nextjs-vite'
 
-import { lightTheme } from '../src/styles/theme'
+import { GlobalStyles } from '../src/styles/GlobalStyles'
+import { lightTheme } from '../src/styles/themes'
 
 const preview: Preview = {
   decorators: [

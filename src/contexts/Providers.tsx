@@ -8,7 +8,7 @@ import { AuthProvider } from '@/contexts/AuthContext'
 import { RecipeProvider } from '@/contexts/RecipeContext'
 import EmotionRegistry from '@/lib/emotion/EmotionRegistry'
 import { GlobalStyles } from '@/styles'
-import { lightTheme } from '@/styles/theme'
+import { lightTheme } from '@/styles/themes'
 
 export type ThemeContext = {
   theme: 'light' | 'dark'

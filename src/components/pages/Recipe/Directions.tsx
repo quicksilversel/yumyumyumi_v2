@@ -1,8 +1,8 @@
 import styled from '@emotion/styled'
 
-import type { Recipe } from '@/types'
+import type { Recipe } from '@/types/recipe'
 
-import { H2, H3, Body } from '@/components/ui'
+import { H2, Body } from '@/components/ui'
 
 type RecipeDetailProps = {
   recipe: Recipe
@@ -11,7 +11,7 @@ type RecipeDetailProps = {
 export const Directions = ({ recipe }: RecipeDetailProps) => {
   return (
     <DirectionContainer>
-      <H2>手順</H2>
+      <H2>Directions</H2>
       <DirectionList>
         {recipe.directions?.map((direction, index) => (
           <DirectionItem key={index}>
@@ -62,7 +62,7 @@ const DirectionItem = styled.li`
   }
 `
 
-const Title = styled(H3)`
+const Title = styled(H2)`
   font-size: ${({ theme }) => theme.typography.fontSize.base};
   line-height: 1.6;
 `

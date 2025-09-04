@@ -3,7 +3,7 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime'
 import CategoryIcon from '@mui/icons-material/Category'
 import GroupIcon from '@mui/icons-material/Group'
 
-import type { Recipe } from '@/types'
+import type { Recipe } from '@/types/recipe'
 
 import { Flex } from '@/components/ui'
 

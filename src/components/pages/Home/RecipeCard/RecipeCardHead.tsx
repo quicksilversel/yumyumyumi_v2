@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import Image from 'next/image'
 
-import type { Recipe } from '@/types'
+import type { Recipe } from '@/types/recipe'
 
 import { Chip } from '@/components/ui/Chip'
 

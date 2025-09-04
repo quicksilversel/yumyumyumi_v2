@@ -98,7 +98,8 @@ const StyledSummary = styled.summary`
   color: ${({ theme }) => theme.colors.gray[700]};
   font-size: ${({ theme }) => theme.typography.fontSize.sm};
   cursor: pointer;
-  transition: all ${({ theme }) => theme.transition.fast};
+  transition: border-color ${({ theme }) => theme.transition.fast};
+  transition-property: border-color, box-shadow;
   white-space: nowrap;
   list-style: none;
 

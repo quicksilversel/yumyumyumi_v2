@@ -40,8 +40,7 @@ export const recipeFormSchema = z.object({
 
 export const recipeSchema = recipeFormSchema.extend({
   id: z.string(),
-  userId: z.string().nullable().optional(), // Maps to user_id in database
-  createdAt: z.string(),
+  userId: z.string().nullable().optional(),
   updatedAt: z.string().optional(),
 })
 
@@ -68,17 +67,3 @@ export type RecipeFormInput = z.input<typeof recipeFormSchema>
 export type Recipe = z.infer<typeof recipeSchema>
 export type RecipeFilters = z.infer<typeof recipeFiltersSchema>
 export type BookmarkedRecipe = z.infer<typeof bookmarkedRecipeSchema>
-
-export const defaultRecipeFormValues: RecipeForm = {
-  title: '',
-  summary: '',
-  ingredients: [{ name: '', amount: '' }],
-  directions: [{ title: '', description: '' }],
-  tips: '',
-  cookTime: 0,
-  servings: 2,
-  category: 'Main Course',
-  imageUrl: '',
-  source: '',
-  isPublic: true,
-}

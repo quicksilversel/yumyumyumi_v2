@@ -3,7 +3,7 @@ import { useState } from 'react'
 import styled from '@emotion/styled'
 import Image from 'next/image'
 
-import type { Recipe } from '@/types'
+import type { Recipe } from '@/types/recipe'
 
 import { DeleteRecipeModal } from '@/components/pages/Modals/DeleteRecipeModal'
 import { EditRecipeDialog } from '@/components/pages/Modals/EditRecipeDialog'

@@ -2,12 +2,11 @@
 
 import styled from '@emotion/styled'
 
-import type { Recipe } from '@/types'
+import type { Recipe } from '@/types/recipe'
 
 import { Directions } from './Directions'
 import { Header } from './Header'
 import { Hero } from './Hero'
-import { Info } from './Info'
 import { Ingredients } from './Ingredients'
 import { Source } from './Source'
 import { Tags } from './Tags'
@@ -19,7 +18,6 @@ export const RecipeDetail = (props: { recipe: Recipe }) => {
       <Hero {...props} />
       <InnerContainer>
         <Header {...props} />
-        <Info {...props} />
         <Ingredients {...props} />
         <Tips {...props} />
         <Directions {...props} />

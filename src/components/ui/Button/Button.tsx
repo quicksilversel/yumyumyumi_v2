@@ -1,120 +1,97 @@
 import { css } from '@emotion/react'
 import styled from '@emotion/styled'
 
-import {
-  colors,
-  typography,
-  spacing,
-  borderRadius,
-  transition,
-} from '@/styles/designTokens'
+import type { Theme } from '@emotion/react'
 
 type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'text'
 type ButtonSize = 'sm' | 'md' | 'lg'
 
-const baseStyles = css`
-  position: relative;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  gap: ${spacing[2]};
-  border: none;
-  font-family: ${typography.fontFamily.sans};
-  font-weight: ${typography.fontWeight.medium};
-  text-decoration: none;
-  cursor: pointer;
-  transition: all ${transition.default};
-  outline: none;
-  white-space: nowrap;
-  user-select: none;
+const baseStyles = ({ theme }: { theme: Theme }) => {
+  return css`
+    position: relative;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: ${theme.spacing[2]};
+    font-weight: ${theme.typography.fontWeight.medium};
+    text-decoration: none;
+    transition: opacity ${theme.transition.default};
+    white-space: nowrap;
+    user-select: none;
 
-  &:disabled {
-    cursor: not-allowed;
-    opacity: 0.5;
-  }
-
-  &:focus-visible {
-    outline: 2px solid ${colors.black};
-    outline-offset: 2px;
-  }
-`
-
-const sizeStyles = {
-  sm: css`
-    height: 32px;
-    padding: 0 ${spacing[3]};
-    border-radius: ${borderRadius.sm};
-    font-size: ${typography.fontSize.sm};
-  `,
-  md: css`
-    height: 40px;
-    padding: 0 ${spacing[4]};
-    border-radius: ${borderRadius.default};
-    font-size: ${typography.fontSize.base};
-  `,
-  lg: css`
-    height: 48px;
-    padding: 0 ${spacing[6]};
-    border-radius: ${borderRadius.md};
-    font-size: ${typography.fontSize.lg};
-  `,
-}
-
-const variantStyles = {
-  primary: css`
-    background-color: ${colors.black};
-    color: ${colors.white};
-
-    &:hover:not(:disabled) {
-      background-color: ${colors.gray[800]};
-    }
-
-    &:active:not(:disabled) {
-      background-color: ${colors.gray[900]};
-    }
-  `,
-  secondary: css`
-    border: 1px solid ${colors.gray[300]};
-    background-color: ${colors.white};
-    color: ${colors.black};
-
-    &:hover:not(:disabled) {
-      border-color: ${colors.gray[400]};
-      background-color: ${colors.gray[50]};
-    }
-
-    &:active:not(:disabled) {
-      background-color: ${colors.gray[100]};
-    }
-  `,
-  ghost: css`
-    border: 1px solid transparent;
-    background-color: transparent;
-    color: ${colors.black};
-
-    &:hover:not(:disabled) {
-      background-color: ${colors.gray[50]};
-    }
-
-    &:active:not(:disabled) {
-      background-color: ${colors.gray[100]};
-    }
-  `,
-  text: css`
-    height: auto;
-    padding: 0;
-    border-radius: 0;
-    background-color: transparent;
-    color: ${colors.black};
-
-    &:hover:not(:disabled) {
-      opacity: 0.7;
-    }
-
-    &:active:not(:disabled) {
+    &:disabled {
+      cursor: not-allowed;
       opacity: 0.5;
     }
-  `,
+
+    &:focus-visible {
+      outline: 2px solid ${theme.colors.black};
+      outline-offset: 2px;
+    }
+
+    &:hover:not(:disabled),
+    &:active:not(:disabled) {
+      opacity: 0.7;
+    }
+  `
+}
+
+const sizeStyles = ({ size, theme }: { size: ButtonSize; theme: Theme }) => {
+  switch (size) {
+    case 'sm':
+      return css`
+        height: 32px;
+        padding: 0 ${theme.spacing[3]};
+        border-radius: ${theme.borderRadius.sm};
+        font-size: ${theme.typography.fontSize.sm};
+      `
+    case 'md':
+      return css`
+        height: 40px;
+        padding: 0 ${theme.spacing[4]};
+        border-radius: ${theme.borderRadius.default};
+        font-size: ${theme.typography.fontSize.base};
+      `
+    case 'lg':
+      return css`
+        height: 48px;
+        padding: 0 ${theme.spacing[6]};
+        border-radius: ${theme.borderRadius.md};
+        font-size: ${theme.typography.fontSize.lg};
+      `
+  }
+}
+
+const variantStyles = ({
+  variant,
+  theme,
+}: {
+  variant: ButtonVariant
+  theme: Theme
+}) => {
+  switch (variant) {
+    case 'primary':
+      return css`
+        background-color: ${theme.colors.primary};
+        color: ${theme.colors.white};
+      `
+    case 'secondary':
+      return css`
+        background-color: ${theme.colors.black};
+        color: ${theme.colors.white};
+      `
+    case 'ghost':
+      return css`
+        border: 1px solid transparent;
+        background-color: transparent;
+        color: ${theme.colors.black};
+      `
+    case 'text':
+      return css`
+        background-color: transparent;
+        color: ${theme.colors.black};
+      `
+  }
 }
 
 export const Button = styled.button<{
@@ -122,11 +99,20 @@ export const Button = styled.button<{
   size?: ButtonSize
   fullWidth?: boolean
 }>`
-  ${baseStyles}
-  ${(props) => sizeStyles[props.size || 'md']}
-  ${(props) => variantStyles[props.variant || 'primary']}
-  ${(props) =>
-    props.fullWidth &&
+  ${({ theme }) => {
+    return baseStyles({ theme })
+  }}
+
+  ${({ size, theme }) => {
+    return sizeStyles({ size: size ?? 'md', theme })
+  }}
+
+  ${({ variant, theme }) => {
+    return variantStyles({ variant: variant ?? 'primary', theme })
+  }}
+
+  ${({ fullWidth }) =>
+    fullWidth &&
     css`
       width: 100%;
     `}
@@ -135,42 +121,40 @@ export const Button = styled.button<{
 export const IconButton = styled.button<{
   size?: ButtonSize
 }>`
-  ${baseStyles}
+  ${({ theme }) => {
+    return baseStyles({ theme })
+  }}
+
   padding: 0;
   background-color: transparent;
-  border-radius: ${borderRadius.full};
-  color: ${colors.gray[600]};
+  border-radius: ${({ theme }) => theme.borderRadius.full};
+  color: ${({ theme }) => theme.colors.gray[600]};
 
-  ${(props) =>
-    props.size === 'sm' &&
-    css`
-      width: 32px;
-      height: 32px;
-      font-size: 18px;
-    `}
-
-  ${(props) =>
-    props.size === 'md' &&
-    css`
-      width: 40px;
-      height: 40px;
-      font-size: 20px;
-    `}
-  
-  ${(props) =>
-    props.size === 'lg' &&
-    css`
-      width: 48px;
-      height: 48px;
-      font-size: 24px;
-    `}
-  
-  &:hover:not(:disabled) {
-    background-color: ${colors.gray[50]};
-    color: ${colors.black};
-  }
-
+  &:hover:not(:disabled),
   &:active:not(:disabled) {
-    background-color: ${colors.gray[100]};
+    opacity: 0.7;
   }
+
+  ${({ size }) => {
+    switch (size) {
+      case 'sm':
+        return css`
+          width: 32px;
+          height: 32px;
+          font-size: 18px;
+        `
+      case 'md':
+        return css`
+          width: 40px;
+          height: 40px;
+          font-size: 20px;
+        `
+      case 'lg':
+        return css`
+          width: 48px;
+          height: 48px;
+          font-size: 24px;
+        `
+    }
+  }}
 `

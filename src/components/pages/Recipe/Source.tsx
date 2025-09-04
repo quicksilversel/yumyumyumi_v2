@@ -1,4 +1,4 @@
-import type { Recipe } from '@/types'
+import type { Recipe } from '@/types/recipe'
 
 import { Caption } from '@/components/ui'
 

@@ -88,7 +88,7 @@ const StyledInput = styled.input<{
   border-radius: ${({ theme }) => theme.borderRadius.default};
   background-color: ${({ theme }) => theme.colors.white};
   color: ${({ theme }) => theme.colors.black};
-  transition: all ${({ theme }) => theme.transition.default};
+  transition: border-color ${({ theme }) => theme.transition.default};
   outline: none;
 
   ${({ theme, height }) => sizeStyles({ theme, size: height || 'medium' })}
