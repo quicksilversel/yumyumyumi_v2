@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
-import BookmarkIcon from '@mui/icons-material/Bookmark'
-import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder'
+import FavoriteIcon from '@mui/icons-material/Favorite'
+import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined'
 
 import { IconButton } from '@/components/ui/Button'
 import { useBookmarks } from '@/hooks/useBookmarks'
@@ -31,7 +31,11 @@ export const BookmarkButton = ({
       disabled={isLoading || isToggling}
       aria-label={isBookmarked ? 'Remove bookmark' : 'Add bookmark'}
     >
-      {isBookmarked ? <BookmarkIcon /> : <BookmarkBorderIcon />}
+      {isBookmarked ? (
+        <FavoriteIcon fontSize="inherit" />
+      ) : (
+        <FavoriteBorderOutlinedIcon fontSize="inherit" />
+      )}
     </StyledIconButton>
   )
 }

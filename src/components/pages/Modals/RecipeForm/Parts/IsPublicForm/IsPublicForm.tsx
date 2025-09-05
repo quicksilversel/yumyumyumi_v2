@@ -1,27 +1,18 @@
-import { useFormContext, Controller } from 'react-hook-form'
+import { useFormContext } from 'react-hook-form'
 
 import type { RecipeForm } from '@/types/recipe'
 
-import { ToggleSwitch } from '@/components/ui/Forms/ToggleSwitch'
-import { Caption } from '@/components/ui/Typography'
+import { ToggleSwitch } from '@/components/ui'
 
 export function IsPublicForm() {
-  const { control } = useFormContext<RecipeForm>()
+  const { register } = useFormContext<RecipeForm>()
 
   return (
-    <>
-      <Controller
-        name="isPublic"
-        control={control}
-        render={({ field }) => (
-          <ToggleSwitch
-            label="Make this recipe public"
-            checked={field.value ?? true}
-            onChange={(e) => field.onChange(e.target.checked)}
-          />
-        )}
-      />
-      <Caption>Public recipes can be viewed by anyone</Caption>
-    </>
+    <ToggleSwitch
+      label="Make this recipe public"
+      {...register('isPublic')}
+      helperText="Public recipes can be viewed by anyone"
+      height="small"
+    />
   )
 }

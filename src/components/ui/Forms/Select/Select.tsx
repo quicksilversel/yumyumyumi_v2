@@ -29,7 +29,7 @@ export interface SelectProps {
 
 export const Select = ({
   title,
-  height = 'medium',
+  height = 'small',
   placeholder,
   value,
   onChange,

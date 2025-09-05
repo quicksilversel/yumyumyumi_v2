@@ -1,5 +1,3 @@
-'use client'
-
 import { useRef } from 'react'
 
 import styled from '@emotion/styled'
@@ -98,9 +96,10 @@ const StyledSummary = styled.summary`
   font-size: ${({ theme }) => theme.typography.fontSize.sm};
   cursor: pointer;
   transition: border-color ${({ theme }) => theme.transition.fast};
-  transition-property: border-color, box-shadow;
+  transition-property: border-color, box-shadow, max-height, background-color;
   white-space: nowrap;
   list-style: none;
+  user-select: none;
 
   &::-webkit-details-marker {
     display: none;
@@ -118,11 +117,12 @@ const StyledSummary = styled.summary`
   }
 
   details[open] & {
-    border-color: ${({ theme }) => theme.colors.primary};
-    color: ${({ theme }) => theme.colors.primary};
+    border-color: ${({ theme }) => theme.colors.white};
+    color: ${({ theme }) => theme.colors.white};
+    background-color: ${({ theme }) => theme.colors.primary};
 
     svg {
-      color: ${({ theme }) => theme.colors.primary};
+      color: ${({ theme }) => theme.colors.white};
     }
   }
 `

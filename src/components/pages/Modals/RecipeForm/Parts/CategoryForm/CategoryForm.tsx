@@ -29,6 +29,7 @@ export const CategoryForm = () => {
         options={options}
         fullWidth
         error={!!errors.category}
+        required
       />
       {errors.category && <ErrorText>{errors.category.message}</ErrorText>}
     </div>

@@ -1,9 +1,10 @@
 import styled from '@emotion/styled'
 import CloseIcon from '@mui/icons-material/Close'
-import VisibilityIcon from '@mui/icons-material/Visibility'
+import MenuBookIcon from '@mui/icons-material/MenuBook'
 
 import type { Recipe } from '@/types/recipe'
 
+import { Flex } from '@/components/ui'
 import { BookmarkButton } from '@/components/ui/BookmarkButton'
 import { IconButton } from '@/components/ui/Button'
 import { MoreActions } from '@/components/ui/MoreActions'
@@ -16,16 +17,13 @@ type RecipeCardProps = {
   isInIngredientView: boolean
 }
 
-export const RecipeCardMoreActions = ({
+export const RecipeCardMenu = ({
   recipe,
   isInIngredientView,
 }: RecipeCardProps) => {
   const { user } = useAuth()
-  const {
-    handleEditRecipe,
-    handleDeleteRecipe,
-    handleToggleIngredients,
-  } = useRecipeContext()
+  const { handleEditRecipe, handleDeleteRecipe, handleToggleIngredients } =
+    useRecipeContext()
 
   const { isDeleting, handleEdit, handleDelete } = useRecipeActions(recipe, {
     onEditOpen: handleEditRecipe,
@@ -49,34 +47,36 @@ export const RecipeCardMoreActions = ({
         size="sm"
         title="Show Ingredients"
       >
-        {isInIngredientView ? <CloseIcon /> : <VisibilityIcon />}
+        {isInIngredientView ? (
+          <CloseIcon fontSize="inherit" />
+        ) : (
+          <MenuBookIcon fontSize="inherit" />
+        )}
       </StyledIconButton>
-      <BookmarkButton
-        recipeId={recipe.id}
-        size="sm"
-      />
-      {isOwner && (
-        <MoreActions
-          onEdit={handleEdit}
-          onDelete={handleDelete}
-          isDeleting={isDeleting}
-        />
-      )}
+      <Flex gap={0}>
+        <BookmarkButton recipeId={recipe.id} size="sm" />
+        {isOwner && (
+          <MoreActions
+            onEdit={handleEdit}
+            onDelete={handleDelete}
+            isDeleting={isDeleting}
+          />
+        )}
+      </Flex>
     </CardOverlay>
   )
 }
 
 const CardOverlay = styled.div`
-  position: absolute;
-  top: ${({ theme }) => theme.spacing[2]};
-  right: ${({ theme }) => theme.spacing[2]};
+  padding: ${({ theme }) => theme.spacing[2]};
+  width: 100%;
   z-index: 10;
   display: flex;
-  gap: ${({ theme }) => theme.spacing[1]};
+  justify-content: space-between;
+  background-color: ${({ theme }) => theme.colors.white};
 `
 
 const StyledIconButton = styled(IconButton)`
-  background-color: rgb(255, 255, 255, 90%);
   backdrop-filter: blur(10px);
 
   &:hover {

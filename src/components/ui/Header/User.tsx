@@ -1,6 +1,4 @@
-'use client'
-
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 
 import styled from '@emotion/styled'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
@@ -16,6 +14,22 @@ export const User = () => {
   const [menuOpen, setMenuOpen] = useState(false)
 
   const menuRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setMenuOpen(false)
+      }
+    }
+
+    if (menuOpen) {
+      document.addEventListener('mousedown', handleClickOutside)
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [menuOpen])
 
   const handleMenuToggle = () => {
     setMenuOpen(!menuOpen)
@@ -60,6 +74,7 @@ export const User = () => {
 
 const Container = styled.div`
   position: relative;
+  font-size: ${({ theme }) => theme.typography.fontSize.sm};
 `
 
 const DropdownMenu = styled.div<{ open: boolean }>`

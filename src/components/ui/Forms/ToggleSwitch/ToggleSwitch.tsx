@@ -16,6 +16,7 @@ export interface ToggleSwitchProps
   error?: boolean
   checked?: boolean
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
+  className?: string
 }
 
 export const ToggleSwitch = ({
@@ -27,10 +28,11 @@ export const ToggleSwitch = ({
   disabled,
   onChange,
   checked,
+  className,
   ...inputProps
 }: ToggleSwitchProps) => {
   return (
-    <Container>
+    <Container className={className}>
       <SwitchLabel disabled={disabled} labelPosition={labelPosition}>
         {label && labelPosition === 'left' && (
           <LabelText height={height}>{label}</LabelText>
@@ -65,7 +67,7 @@ const SwitchLabel = styled.label<{
   display: inline-flex;
   align-items: center;
   gap: ${({ theme }) => theme.spacing[3]};
-  cursor: ${({ theme, disabled }) => (disabled ? 'not-allowed' : 'pointer')};
+  cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
   user-select: none;
   opacity: ${({ disabled }) => (disabled ? 0.6 : 1)};
   flex-direction: ${({ labelPosition }) =>
@@ -89,7 +91,7 @@ const HelperText = styled.span<{ error?: boolean }>`
   color: ${({ error, theme }) =>
     error ? theme.colors.error : theme.colors.gray[500]};
   font-size: ${({ theme }) => theme.typography.fontSize.xs};
-  margin-left: ${({ theme }) => theme.spacing[1]};
+  margin-top: ${({ theme }) => theme.spacing[1]};
 `
 
 const SwitchInput = styled.input<{ height?: ToggleSwitchSize }>`

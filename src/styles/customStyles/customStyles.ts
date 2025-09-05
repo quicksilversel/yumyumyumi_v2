@@ -6,7 +6,6 @@ export const customStyles = (theme: Theme) => css`
   body {
     background: ${theme.colors.background};
     color: ${theme.colors.text};
-    font-family: var(--font-family);
     transition:
       background 0.2s ease-in,
       color 0.2s ease-in;

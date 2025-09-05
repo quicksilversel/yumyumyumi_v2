@@ -42,6 +42,7 @@ export const ServingsForm = () => {
         max={100}
         step={1}
         error={!!errors.servings}
+        required
       />
       {errors.servings && <ErrorText>{errors.servings.message}</ErrorText>}
     </div>

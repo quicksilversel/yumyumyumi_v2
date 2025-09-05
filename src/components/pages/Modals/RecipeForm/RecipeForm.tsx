@@ -12,7 +12,7 @@ import {
   TipsForm,
   TitleForm,
 } from '@/components/pages/Modals/RecipeForm/Parts'
-import { Stack, Divider, Grid, ErrorText } from '@/components/ui'
+import { Stack, Divider, Grid, ErrorText, H2 } from '@/components/ui'
 
 type Props = {
   errors?: string[]
@@ -34,24 +34,21 @@ export const RecipeForm = ({
           ))}
         </Stack>
       )}
-      <Stack gap={4}>
-        <ImageForm
-          onImageChange={handleImageChange}
-          uploading={uploadingImage}
-        />
-        <TitleForm />
-        <SummaryForm />
-        <Grid cols={3} gap={4} responsive>
-          <CategoryForm />
-          <CookTimeForm />
-          <ServingsForm />
-        </Grid>
-      </Stack>
+      <H2>General</H2>
+      <TitleForm />
+      <SummaryForm />
+      <Grid cols={3} gap={4} responsive>
+        <CategoryForm />
+        <CookTimeForm />
+        <ServingsForm />
+      </Grid>
       <Divider />
       <IngredientsForm />
       <Divider />
       <DirectionsForm />
       <Divider />
+      <H2>Details</H2>
+      <ImageForm onImageChange={handleImageChange} uploading={uploadingImage} />
       <TagsForm />
       <SourceForm />
       <TipsForm />

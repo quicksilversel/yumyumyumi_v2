@@ -38,7 +38,7 @@ export const Hero = ({ recipe }: { recipe: Recipe }) => {
         <Image
           src={
             recipe.imageUrl ||
-            'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800'
+            'https://images.unsplash.com/photo-1614597330453-ecf2c06e1f55?w=800'
           }
           alt={recipe.title}
           fill

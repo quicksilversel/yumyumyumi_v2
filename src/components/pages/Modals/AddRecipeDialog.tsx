@@ -141,11 +141,17 @@ export function AddRecipeDialog({
       title="Add New Recipe"
       actions={
         <DialogActions>
-          <Button variant="ghost" onClick={handleClose} disabled={loading}>
+          <Button
+            variant="ghost"
+            onClick={handleClose}
+            size="sm"
+            disabled={loading}
+          >
             Cancel
           </Button>
           <Button
             variant="primary"
+            size="sm"
             onClick={handleSubmit(onSubmit)}
             disabled={loading || uploadingImage}
           >

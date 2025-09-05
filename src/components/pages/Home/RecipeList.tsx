@@ -151,7 +151,7 @@ const Container = styled.main`
   margin: 0 auto;
 
   @media (width <= 35.1875rem) {
-    margin: ${({ theme }) => theme.spacing[4]};
+    margin: ${({ theme }) => theme.spacing[6]};
   }
 `
 

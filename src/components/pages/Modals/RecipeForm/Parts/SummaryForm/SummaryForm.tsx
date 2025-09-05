@@ -2,13 +2,13 @@ import { useFormContext } from 'react-hook-form'
 
 import type { RecipeForm } from '@/types/recipe'
 
-import { Input } from '@/components/ui/Forms/Input'
+import { Textarea } from '@/components/ui'
 
 export const SummaryForm = () => {
   const { register } = useFormContext<RecipeForm>()
 
   return (
-    <Input
+    <Textarea
       {...register('summary')}
       id="summary"
       title="Summary"

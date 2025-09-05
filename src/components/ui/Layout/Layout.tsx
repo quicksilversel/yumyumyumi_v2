@@ -47,6 +47,7 @@ export const Grid = styled.div<{
   gap?: keyof Theme['spacing']
   responsive?: boolean
 }>`
+  width: 100%;
   display: grid;
   grid-template-columns: repeat(${({ cols }) => cols || 1}, 1fr);
   gap: ${({ theme, gap }) => theme.spacing[gap || 4]};

@@ -1,3 +1,4 @@
+import styled from '@emotion/styled'
 import { useFormContext } from 'react-hook-form'
 
 import type { RecipeForm } from '@/types/recipe'
@@ -11,7 +12,7 @@ export const CookTimeForm = () => {
   } = useFormContext<RecipeForm>()
 
   return (
-    <div>
+    <Container>
       <Input
         {...register('cookTime', {
           required: 'Cook time is required',
@@ -36,8 +37,13 @@ export const CookTimeForm = () => {
         placeholder="Enter cook time in minutes"
         min={1}
         error={!!errors.cookTime}
+        required
       />
       {errors.cookTime && <ErrorText>{errors.cookTime.message}</ErrorText>}
-    </div>
+    </Container>
   )
 }
+
+const Container = styled.div`
+  width: 100%;
+`

@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import AddIcon from '@mui/icons-material/Add'
 import DeleteIcon from '@mui/icons-material/Delete'
-import { useFormContext, useFieldArray, Controller } from 'react-hook-form'
+import { useFormContext, useFieldArray } from 'react-hook-form'
 
 import type { RecipeForm } from '@/types/recipe'
 
@@ -11,19 +11,18 @@ import {
   ErrorText,
   Stack,
   Textarea,
-  Input,
   Button,
   IconButton,
+  Input,
 } from '@/components/ui'
 
 export function DirectionsForm() {
   const {
-    control,
+    register,
     formState: { errors },
   } = useFormContext<RecipeForm>()
 
   const { fields, append, remove } = useFieldArray({
-    control,
     name: 'directions',
   })
 
@@ -39,23 +38,12 @@ export function DirectionsForm() {
     <Stack gap={3}>
       <Title>
         <H2>Directions</H2>
-        <Button
-          variant="secondary"
-          size="sm"
-          onClick={addDirection}
-          type="button"
-        >
-          <AddIcon />
-          Add Step
-        </Button>
       </Title>
-
       {errors.directions &&
         typeof errors.directions === 'object' &&
         'message' in errors.directions && (
           <ErrorText>{errors.directions.message}</ErrorText>
         )}
-
       {fields.length === 0 ? (
         <Caption>
           No directions added yet. Click &quot;Add Step&quot; to start.
@@ -67,23 +55,8 @@ export function DirectionsForm() {
               <StepNumber>{index + 1}</StepNumber>
               <DirectionContent>
                 <FieldContainer>
-                  <Controller
-                    name={`directions.${index}.title`}
-                    control={control}
-                    render={({ field }) => (
-                      <Input
-                        {...field}
-                        placeholder="Step title (e.g., 'Prepare ingredients')"
-                      />
-                    )}
-                  />
-                </FieldContainer>
-
-                <FieldContainer>
-                  <Controller
-                    name={`directions.${index}.description`}
-                    control={control}
-                    rules={{
+                  <Textarea
+                    {...register(`directions.${index}.title`, {
                       validate: (value, formValues) => {
                         const title = formValues.directions?.[index]?.title
                         if (!value && !title) {
@@ -91,15 +64,22 @@ export function DirectionsForm() {
                         }
                         return true
                       },
-                    }}
-                    render={({ field }) => (
-                      <Textarea
-                        {...field}
-                        placeholder="Step description"
-                        rows={3}
-                        error={!!errors.directions?.[index]?.description}
-                      />
-                    )}
+                    })}
+                    placeholder="Step title (e.g., 'Prepare ingredients')"
+                    rows={4}
+                  />
+                  <Input
+                    {...register(`directions.${index}.description`, {
+                      validate: (value, formValues) => {
+                        const title = formValues.directions?.[index]?.title
+                        if (!value && !title) {
+                          return 'Either title or description is required'
+                        }
+                        return true
+                      },
+                    })}
+                    placeholder="Step description"
+                    error={!!errors.directions?.[index]?.description}
                   />
                   {errors.directions?.[index]?.description && (
                     <ErrorText>
@@ -107,21 +87,24 @@ export function DirectionsForm() {
                     </ErrorText>
                   )}
                 </FieldContainer>
+                {fields.length > 1 && (
+                  <IconButton
+                    size="sm"
+                    onClick={() => removeDirection(index)}
+                    type="button"
+                  >
+                    <DeleteIcon />
+                  </IconButton>
+                )}
               </DirectionContent>
-
-              {fields.length > 1 && (
-                <DeleteButton
-                  size="sm"
-                  onClick={() => removeDirection(index)}
-                  type="button"
-                >
-                  <DeleteIcon />
-                </DeleteButton>
-              )}
             </DirectionRow>
           ))}
         </Stack>
       )}
+      <Button variant="primary" size="sm" onClick={addDirection} type="button">
+        <AddIcon fontSize="inherit" />
+        Add Step
+      </Button>
     </Stack>
   )
 }
@@ -134,45 +117,40 @@ const Title = styled.div`
 `
 
 const DirectionRow = styled.div`
-  position: relative;
   width: 100%;
-  padding: ${({ theme }) => theme.spacing[6]};
-  border-radius: ${({ theme }) => theme.borderRadius.md};
-  background-color: ${({ theme }) => theme.colors.gray[50]};
 `
 
 const DirectionContent = styled.div`
-  flex: 1;
+  position: relative;
+  width: 100%;
   display: flex;
-  flex-direction: column;
-  padding-left: ${({ theme }) => theme.spacing[6]};
+  justify-content: space-between;
+  align-items: start;
   gap: ${({ theme }) => theme.spacing[2]};
-`
-
-const DeleteButton = styled(IconButton)`
-  position: absolute;
-  top: ${({ theme }) => theme.spacing[2]};
-  right: ${({ theme }) => theme.spacing[2]};
+  margin-top: ${({ theme }) => theme.spacing[2]};
+  width: 100%;
+  border-radius: ${({ theme }) => theme.borderRadius.md};
+  font-size: ${({ theme }) => theme.typography.fontSize.sm};
 `
 
 const StepNumber = styled.div`
-  position: absolute;
-  top: ${({ theme }) => theme.spacing[3]};
-  left: ${({ theme }) => theme.spacing[3]};
   width: 24px;
   height: 24px;
   border-radius: 50%;
-  background-color: ${({ theme }) => theme.colors.black};
+  background-color: ${({ theme }) => theme.colors.primary};
   color: ${({ theme }) => theme.colors.white};
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: bold;
-  font-size: 12px;
+  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
+  font-size: 14px;
+  flex-shrink: 0;
 `
 
 const FieldContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: ${({ theme }) => theme.spacing[2]};
+  min-width: 0;
+  flex-grow: 1;
 `

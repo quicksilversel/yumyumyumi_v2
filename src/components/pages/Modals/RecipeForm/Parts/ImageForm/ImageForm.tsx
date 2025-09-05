@@ -1,23 +1,15 @@
 import { useRef, useState } from 'react'
 
 import styled from '@emotion/styled'
-import CloudUploadIcon from '@mui/icons-material/CloudUpload'
 import DeleteIcon from '@mui/icons-material/Delete'
+import EditIcon from '@mui/icons-material/Edit'
 import ImageIcon from '@mui/icons-material/Image'
 import Image from 'next/image'
 import { useFormContext, Controller } from 'react-hook-form'
 
 import type { RecipeForm } from '@/types/recipe'
 
-import {
-  Button,
-  IconButton,
-  Stack,
-  Flex,
-  Caption,
-  ErrorText,
-  H2,
-} from '@/components/ui'
+import { IconButton, Stack, Caption, ErrorText } from '@/components/ui'
 import { validateImage, deleteImage } from '@/lib/supabase/storage'
 
 type Props = {
@@ -25,7 +17,7 @@ type Props = {
   uploading?: boolean
 }
 
-export function handleImageSelect(file: File | null): {
+function handleImageSelect(file: File | null): {
   isValid: boolean
   error?: string
   preview?: string
@@ -49,7 +41,7 @@ export function handleImageSelect(file: File | null): {
   return { isValid: true, preview }
 }
 
-export async function handleImageRemove(imageUrl?: string): Promise<void> {
+async function handleImageRemove(imageUrl?: string): Promise<void> {
   if (imageUrl && imageUrl.includes('supabase')) {
     try {
       await deleteImage(imageUrl)
@@ -99,8 +91,8 @@ export function ImageForm({ onImageChange, uploading = false }: Props) {
   }
 
   return (
-    <Stack gap={3}>
-      <H2>Recipe Image</H2>
+    <Stack gap={1}>
+      <Title>Recipe Image</Title>
       <Controller
         name="imageUrl"
         control={control}
@@ -114,9 +106,6 @@ export function ImageForm({ onImageChange, uploading = false }: Props) {
                     alt="Recipe"
                     fill
                   />
-                  <DeleteButton size="sm" onClick={handleRemoveImage}>
-                    <DeleteIcon />
-                  </DeleteButton>
                 </>
               ) : (
                 <PlaceholderContent>
@@ -125,31 +114,31 @@ export function ImageForm({ onImageChange, uploading = false }: Props) {
                 </PlaceholderContent>
               )}
             </ImagePreview>
+            <ButtonContainer>
+              <IconButton
+                size="sm"
+                onClick={handleUploadClick}
+                disabled={uploading}
+              >
+                <EditIcon fontSize="inherit" />
+              </IconButton>
+              {imagePreview ||
+                (field.value && (
+                  <IconButton size="sm" onClick={handleRemoveImage}>
+                    <DeleteIcon fontSize="inherit" />
+                  </IconButton>
+                ))}
+            </ButtonContainer>
           </ImageContainer>
         )}
       />
-
-      <Flex justify="center" gap={2}>
-        <Button
-          variant="secondary"
-          size="sm"
-          onClick={handleUploadClick}
-          disabled={uploading}
-        >
-          <CloudUploadIcon />
-          {uploading ? 'Uploading...' : 'Upload Image'}
-        </Button>
-      </Flex>
-
       <HiddenInput
         ref={fileInputRef}
         type="file"
         accept="image/*"
         onChange={handleFileSelect}
       />
-
       {error && <ErrorText>{error}</ErrorText>}
-
       <Caption style={{ textAlign: 'center' }}>
         Max file size: 2MB. Supported formats: JPG, PNG, WebP
       </Caption>
@@ -157,10 +146,23 @@ export function ImageForm({ onImageChange, uploading = false }: Props) {
   )
 }
 
+const Title = styled.span`
+  display: block;
+  margin-bottom: ${({ theme }) => theme.spacing['1']};
+  font-size: ${({ theme }) => theme.typography.fontSize['sm']};
+  color: ${({ theme }) => theme.colors.gray[800]};
+`
+
 const ImageContainer = styled.div`
   position: relative;
   width: 100%;
-  max-width: 300px;
+  max-width: 450px;
+`
+
+const ButtonContainer = styled.div`
+  position: absolute;
+  top: ${({ theme }) => theme.spacing[1]};
+  right: ${({ theme }) => theme.spacing[1]};
 `
 
 const ImagePreview = styled.div`
@@ -173,37 +175,15 @@ const ImagePreview = styled.div`
   background-color: ${({ theme }) => theme.colors.gray[100]};
   overflow: hidden;
   aspect-ratio: 16/9;
-
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
 `
 
 const PlaceholderContent = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: ${({ theme }) => theme.spacing[2]};
   color: ${({ theme }) => theme.colors.gray[500]};
   text-align: center;
-
-  svg {
-    margin-right: ${({ theme }) => theme.spacing[2]};
-    margin-bottom: ${({ theme }) => theme.spacing[2]};
-    font-size: 48px;
-  }
-`
-
-const DeleteButton = styled(IconButton)`
-  position: absolute;
-  top: ${({ theme }) => theme.spacing[2]};
-  right: ${({ theme }) => theme.spacing[2]};
-  background-color: rgb(255, 255, 255, 90%);
-
-  &:hover {
-    background-color: rgb(255, 255, 255, 100%);
-  }
 `
 
 const HiddenInput = styled.input`

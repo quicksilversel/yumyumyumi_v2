@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import AddIcon from '@mui/icons-material/Add'
 import DeleteIcon from '@mui/icons-material/Delete'
-import { useFormContext, useFieldArray, Controller } from 'react-hook-form'
+import { useFormContext, useFieldArray } from 'react-hook-form'
 
 import type { RecipeForm } from '@/types/recipe'
 
@@ -13,16 +13,16 @@ import {
   Input,
   Button,
   IconButton,
+  ToggleSwitch,
 } from '@/components/ui'
 
 export function IngredientsForm() {
   const {
-    control,
+    register,
     formState: { errors },
   } = useFormContext<RecipeForm>()
 
   const { fields, append, remove } = useFieldArray({
-    control,
     name: 'ingredients',
   })
 
@@ -38,110 +38,75 @@ export function IngredientsForm() {
     <Stack gap={3}>
       <Title>
         <H2>Ingredients</H2>
-        <Button
-          variant="secondary"
-          size="sm"
-          onClick={addIngredient}
-          type="button"
-        >
-          <AddIcon />
-          Add Ingredient
-        </Button>
       </Title>
-
       {errors.ingredients &&
         typeof errors.ingredients === 'object' &&
         'message' in errors.ingredients && (
           <ErrorText>{errors.ingredients.message}</ErrorText>
         )}
-
       {fields.length === 0 ? (
         <Caption>
-          No ingredients added yet. Click &quot;Add Ingredient&quot; to start.
+          No ingredients added yet. Click &quot;Add&quot; to start.
         </Caption>
       ) : (
         <Stack gap={2}>
           {fields.map((field, index) => (
             <IngredientRow key={field.id}>
               <FieldContainer>
-                <Controller
-                  name={`ingredients.${index}.name`}
-                  control={control}
-                  rules={{
+                <Input
+                  {...register(`ingredients.${index}.name`, {
                     required: 'Ingredient name is required',
                     minLength: {
                       value: 1,
                       message: 'Name cannot be empty',
                     },
-                  }}
-                  render={({ field }) => (
-                    <Input
-                      {...field}
-                      placeholder="Ingredient name *"
-                      error={!!errors.ingredients?.[index]?.name}
-                    />
-                  )}
+                  })}
+                  placeholder="材料名"
+                  error={!!errors.ingredients?.[index]?.name}
                 />
                 {errors.ingredients?.[index]?.name && (
                   <ErrorText>
                     {errors.ingredients[index].name?.message}
                   </ErrorText>
                 )}
-              </FieldContainer>
-
-              <FieldContainer>
-                <Controller
-                  name={`ingredients.${index}.amount`}
-                  control={control}
-                  rules={{
+                <Input
+                  {...register(`ingredients.${index}.amount`, {
                     required: 'Amount is required',
                     minLength: {
                       value: 1,
                       message: 'Amount cannot be empty',
                     },
-                  }}
-                  render={({ field }) => (
-                    <Input
-                      {...field}
-                      placeholder="Amount (e.g., 2 cups) *"
-                      error={!!errors.ingredients?.[index]?.amount}
-                    />
-                  )}
+                  })}
+                  placeholder="量"
+                  error={!!errors.ingredients?.[index]?.amount}
                 />
                 {errors.ingredients?.[index]?.amount && (
                   <ErrorText>
                     {errors.ingredients[index].amount?.message}
                   </ErrorText>
                 )}
+                <IconButton
+                  size="sm"
+                  onClick={() => removeIngredient(index)}
+                  disabled={fields.length === 1}
+                  type="button"
+                >
+                  <DeleteIcon />
+                </IconButton>
               </FieldContainer>
-
-              <Controller
-                name={`ingredients.${index}.isSpice`}
-                control={control}
-                render={({ field: { value, onChange } }) => (
-                  <SpiceToggle>
-                    <Checkbox
-                      type="checkbox"
-                      checked={value || false}
-                      onChange={(e) => onChange(e.target.checked)}
-                    />
-                    Spice
-                  </SpiceToggle>
-                )}
+              <StyledToggleSwitch
+                label="Spice"
+                {...register(`ingredients.${index}.isSpice`)}
+                height="small"
               />
-
-              <IconButton
-                size="sm"
-                onClick={() => removeIngredient(index)}
-                disabled={fields.length === 1}
-                type="button"
-              >
-                <DeleteIcon />
-              </IconButton>
             </IngredientRow>
           ))}
         </Stack>
       )}
+      <Button variant="primary" size="sm" onClick={addIngredient} type="button">
+        <AddIcon fontSize="inherit" />
+        Add Ingredients
+      </Button>
     </Stack>
   )
 }
@@ -155,36 +120,15 @@ const Title = styled.div`
 
 const IngredientRow = styled.div`
   width: 100%;
-  display: grid;
-  align-items: start;
-  grid-template-columns: 2fr 2fr auto auto;
-  gap: ${({ theme }) => theme.spacing[2]};
-  padding: ${({ theme }) => theme.spacing[3]};
-  border-radius: ${({ theme }) => theme.borderRadius.md};
-  background-color: ${({ theme }) => theme.colors.gray[50]};
-
-  @media (width <= 768px) {
-    grid-template-columns: 1fr;
-  }
-`
-
-const SpiceToggle = styled.label`
-  display: flex;
-  align-items: center;
-  gap: ${({ theme }) => theme.spacing[2]};
-  padding: ${({ theme }) => theme.spacing[2]} 0;
-  font-size: 14px;
-  cursor: pointer;
-`
-
-const Checkbox = styled.input`
-  width: 18px;
-  height: 18px;
-  cursor: pointer;
 `
 
 const FieldContainer = styled.div`
-  display: flex;
-  flex-direction: column;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 4fr 2fr 1fr;
   gap: 4px;
+`
+
+const StyledToggleSwitch = styled(ToggleSwitch)`
+  margin-top: ${({ theme }) => theme.spacing[2]};
 `

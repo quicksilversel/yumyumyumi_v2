@@ -8,7 +8,7 @@ import { useRecipeContext } from '@/contexts/RecipeContext'
 import { IngredientsView } from './IngredientsView'
 import { RecipeCardBody } from './RecipeCardBody'
 import { RecipeCardHead } from './RecipeCardHead'
-import { RecipeCardMoreActions } from './RecipeCardMoreActions'
+import { RecipeCardMenu } from './RecipeCardMenu'
 
 export const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
   const { expandedRecipeId } = useRecipeContext()
@@ -19,10 +19,7 @@ export const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
 
   return (
     <StyledCard>
-      <RecipeCardMoreActions
-        recipe={recipe}
-        isInIngredientView={isInIngredientView}
-      />
+      <RecipeCardMenu recipe={recipe} isInIngredientView={isInIngredientView} />
       {isInIngredientView ? (
         <IngredientsView recipe={recipe} />
       ) : (
@@ -38,7 +35,6 @@ export const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
 const StyledCard = styled.article`
   position: relative;
   display: flex;
-  height: 380px;
   flex-direction: column;
   border: 1px solid ${({ theme }) => theme.colors.gray[200]};
   border-radius: ${({ theme }) => theme.borderRadius.lg};

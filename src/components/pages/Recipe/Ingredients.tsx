@@ -1,42 +1,33 @@
 import { useMemo } from 'react'
 
+import { css } from '@emotion/react'
 import styled from '@emotion/styled'
 
 import type { Recipe } from '@/types/recipe'
 
-import { Flex, H2, H3, Label } from '@/components/ui'
+import { Flex, H2, Label } from '@/components/ui'
 
 export const Ingredients = ({ recipe }: { recipe: Recipe }) => {
-  const { spices, regular } = useMemo(() => {
-    const ingredients = recipe.ingredients || []
-    return {
-      spices: ingredients.filter((ingredient) => ingredient.isSpice),
-      regular: ingredients.filter((ingredient) => !ingredient.isSpice),
-    }
-  }, [recipe.ingredients])
-
-  const renderIngredients = (ingredientList: Recipe['ingredients']) => {
-    return (
-      <>
-        {ingredientList?.map((ingredient) => (
-          <IngredientItem key={ingredient.name}>
-            <Flex justify="between" align="center">
-              <span>{ingredient.name}</span>
-              <Label>{ingredient.amount}</Label>
-            </Flex>
-          </IngredientItem>
-        ))}
-      </>
+  const sortedIngredientList = useMemo(() => {
+    return (recipe.ingredients || []).sort(
+      (a, b) => Number(a.isSpice) - Number(b.isSpice),
     )
-  }
+  }, [recipe.ingredients])
 
   return (
     <Section>
       <H2>Ingredients</H2>
       <IngredientList>
-        {renderIngredients(regular)}
-        <H3>(A)</H3>
-        {renderIngredients(spices)}
+        {sortedIngredientList?.map((ingredient) => (
+          <IngredientItem key={ingredient.name} isSpice={!!ingredient.isSpice}>
+            <Flex justify="between" align="center">
+              <span>
+                {!!ingredient.isSpice && '（A）'} {ingredient.name}
+              </span>
+              <Label>{ingredient.amount}</Label>
+            </Flex>
+          </IngredientItem>
+        ))}
       </IngredientList>
     </Section>
   )
@@ -53,12 +44,20 @@ const IngredientList = styled.ul`
   width: 100%;
 `
 
-const IngredientItem = styled.li`
+const IngredientItem = styled.li<{ isSpice: boolean }>`
+  position: relative;
   width: 100%;
   padding: ${({ theme }) => theme.spacing[3]} ${({ theme }) => theme.spacing[4]};
-  border-bottom: 1px solid ${({ theme }) => theme.colors.gray[200]};
+  border-top: 1px solid ${({ theme }) => theme.colors.gray[200]};
+  font-size: ${({ theme }) => theme.typography.fontSize.sm};
 
-  h3 + & {
-    border-top: 1px solid ${({ theme }) => theme.colors.gray[200]};
+  &:first-child {
+    margin-top: ${({ theme }) => theme.spacing[4]};
   }
+
+  ${({ isSpice, theme }) =>
+    isSpice &&
+    css`
+      background-color: ${theme.colors.gray[100]};
+    `}
 `

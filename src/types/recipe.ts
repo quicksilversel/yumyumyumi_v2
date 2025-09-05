@@ -41,6 +41,7 @@ export const recipeFormSchema = z.object({
 export const recipeSchema = recipeFormSchema.extend({
   id: z.string(),
   userId: z.string().nullable().optional(),
+  createdAt: z.string().optional(),
   updatedAt: z.string().optional(),
 })
 

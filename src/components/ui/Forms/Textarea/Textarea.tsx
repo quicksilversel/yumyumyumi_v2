@@ -25,7 +25,7 @@ export interface TextareaProps
 
 export const Textarea = ({
   title,
-  height = 'medium',
+  height = 'small',
   error,
   helperText,
   resize = 'vertical',

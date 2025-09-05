@@ -83,8 +83,7 @@ export function EditRecipeDialog({
           try {
             await deleteImage(recipe.imageUrl)
           } catch (err) {
-            // eslint-disable-next-line no-console
-            console.error('Error deleting old image:', err)
+            window.alert('Error Deleting old image')
           }
         }
 
@@ -148,11 +147,17 @@ export function EditRecipeDialog({
       title="Edit Recipe"
       actions={
         <DialogActions>
-          <Button variant="ghost" onClick={handleClose} disabled={loading}>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={handleClose}
+            disabled={loading}
+          >
             Cancel
           </Button>
           <Button
             variant="primary"
+            size="sm"
             onClick={handleSubmit(onSubmit)}
             disabled={loading || uploadingImage}
           >

@@ -1,8 +1,6 @@
-'use client'
-
 import styled from '@emotion/styled'
-import BookmarkIcon from '@mui/icons-material/Bookmark'
-import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder'
+import FavoriteIcon from '@mui/icons-material/Favorite'
+import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined'
 import { useRouter } from 'next/navigation'
 
 import { useAuth } from '@/contexts/AuthContext'
@@ -34,7 +32,7 @@ export const BookmarkFilter = ({
 
   return (
     <FilterButton onClick={handleBookmarkToggle} active={showBookmarked}>
-      {showBookmarked ? <BookmarkIcon /> : <BookmarkBorderIcon />}
+      {showBookmarked ? <FavoriteIcon /> : <FavoriteBorderOutlinedIcon />}
       Bookmarks
     </FilterButton>
   )

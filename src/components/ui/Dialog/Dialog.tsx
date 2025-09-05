@@ -141,7 +141,7 @@ export const DialogTitle = styled.h2`
 `
 
 export const DialogBody = styled.div`
-  padding: ${({ theme }) => theme.spacing[6]};
+  padding: ${({ theme }) => theme.spacing[4]};
 `
 
 export const DialogActions = styled.div`

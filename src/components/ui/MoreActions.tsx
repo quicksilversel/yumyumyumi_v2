@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 
 import styled from '@emotion/styled'
 import DeleteIcon from '@mui/icons-material/Delete'
@@ -21,6 +21,24 @@ export const MoreActions = ({
   className,
 }: MoreActionsProps) => {
   const [menuOpen, setMenuOpen] = useState(false)
+
+  const menuRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setMenuOpen(false)
+      }
+    }
+
+    if (menuOpen) {
+      document.addEventListener('mousedown', handleClickOutside)
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [menuOpen])
 
   const handleMenuToggle = (e: React.MouseEvent) => {
     e.preventDefault()
@@ -49,15 +67,15 @@ export const MoreActions = ({
         size="sm"
         disabled={isDeleting}
       >
-        <MoreVertIcon />
+        <MoreVertIcon fontSize="inherit" />
       </StyledIconButton>
-      <Menu open={menuOpen}>
+      <Menu open={menuOpen} ref={menuRef}>
         <MenuItem onClick={handleEdit}>
-          <EditIcon />
+          <EditIcon fontSize="inherit" />
           <span>Edit Recipe</span>
         </MenuItem>
         <MenuItem onClick={handleDelete}>
-          <DeleteIcon />
+          <DeleteIcon fontSize="inherit" />
           <span>Delete Recipe</span>
         </MenuItem>
       </Menu>

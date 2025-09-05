@@ -6,17 +6,15 @@ import type { Recipe } from '@/types/recipe'
 export const IngredientsView = ({ recipe }: { recipe: Recipe }) => {
   return (
     <Container>
-      <IngredientsContent>
-        <IngredientsTitle>材料（{recipe.servings}人分）</IngredientsTitle>
-        <IngredientsList>
-          {recipe.ingredients?.map((ingredient, index) => (
-            <IngredientItem key={index}>
-              <IngredientName>{ingredient.name}</IngredientName>
-              <IngredientAmount>{ingredient.amount}</IngredientAmount>
-            </IngredientItem>
-          ))}
-        </IngredientsList>
-      </IngredientsContent>
+      <Title>材料（{recipe.servings}人分）</Title>
+      <ul>
+        {recipe.ingredients?.map((ingredient, index) => (
+          <Item key={index}>
+            <Name>{ingredient.name}</Name>
+            <Amount>{ingredient.amount}</Amount>
+          </Item>
+        ))}
+      </ul>
     </Container>
   )
 }
@@ -31,33 +29,23 @@ const fadeInAnimation = keyframes`
 `
 
 const Container = styled.div`
-  position: absolute;
-  z-index: 5;
   padding: ${({ theme }) => theme.spacing[4]};
   background: rgb(255, 255, 255, 98%);
   animation: ${fadeInAnimation} 0.3s ease;
   inset: 0;
-`
-
-const IngredientsContent = styled.div`
   width: 100%;
-  max-height: 100%;
+  max-height: 360px;
   overflow-y: auto;
 `
 
-const IngredientsTitle = styled.span`
+const Title = styled.span`
+  display: block;
   margin-bottom: ${({ theme }) => theme.spacing[4]};
   font-size: ${({ theme }) => theme.typography.fontSize.lg};
   font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
 `
 
-const IngredientsList = styled.ul`
-  margin: 0;
-  padding: 0;
-  list-style: none;
-`
-
-const IngredientItem = styled.li`
+const Item = styled.li`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -69,12 +57,12 @@ const IngredientItem = styled.li`
   }
 `
 
-const IngredientName = styled.span`
+const Name = styled.span`
   color: ${({ theme }) => theme.colors.black};
   font-size: ${({ theme }) => theme.typography.fontSize.sm};
 `
 
-const IngredientAmount = styled.span`
+const Amount = styled.span`
   color: ${({ theme }) => theme.colors.gray[600]};
   font-size: ${({ theme }) => theme.typography.fontSize.sm};
   font-weight: ${({ theme }) => theme.typography.fontWeight.medium};

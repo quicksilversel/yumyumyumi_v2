@@ -15,7 +15,9 @@ export const Directions = ({ recipe }: RecipeDetailProps) => {
       <DirectionList>
         {recipe.directions?.map((direction, index) => (
           <DirectionItem key={index}>
-            {direction.title && <Title>{direction.title}</Title>}
+            {direction.title && (
+              <DirectionTitle size="sm">{direction.title}</DirectionTitle>
+            )}
             {direction.description && (
               <Body size="sm">{direction.description}</Body>
             )}
@@ -44,11 +46,15 @@ const DirectionItem = styled.li`
   &:last-child {
     border-bottom: 1px solid ${({ theme }) => theme.colors.gray[200]};
   }
+`
+
+const DirectionTitle = styled(Body)`
+  position: relative;
 
   &::before {
     position: absolute;
-    top: 20px;
-    left: 0;
+    top: 0;
+    left: -${({ theme }) => theme.spacing[8]};
     display: flex;
     justify-content: center;
     align-items: center;
@@ -60,9 +66,4 @@ const DirectionItem = styled.li`
     font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
     content: counter(list-item);
   }
-`
-
-const Title = styled(H2)`
-  font-size: ${({ theme }) => theme.typography.fontSize.base};
-  line-height: 1.6;
 `

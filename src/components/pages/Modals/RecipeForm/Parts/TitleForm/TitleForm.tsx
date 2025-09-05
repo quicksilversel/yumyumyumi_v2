@@ -3,7 +3,7 @@ import { useFormContext } from 'react-hook-form'
 
 import type { RecipeForm } from '@/types/recipe'
 
-import { Input } from '@/components/ui'
+import { Input, ErrorText } from '@/components/ui'
 
 export const TitleForm = () => {
   const {
@@ -18,7 +18,7 @@ export const TitleForm = () => {
           required: 'Recipe title is required',
         })}
         id="title"
-        title="料理名"
+        title="Title"
         placeholder="Enter recipe title"
         required
         error={!!errors.title?.message}
@@ -27,12 +27,6 @@ export const TitleForm = () => {
     </Container>
   )
 }
-
-const ErrorText = styled.span`
-  color: ${({ theme }) => theme.colors.error};
-  font-size: 12px;
-  margin-top: 4px;
-`
 
 const Container = styled.div`
   width: 100%;
