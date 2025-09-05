@@ -14,12 +14,45 @@ A modern recipe sharing platform built with Next.js, TypeScript, Material-UI, an
 
 ## Tech Stack
 
-- **Frontend**: Next.js 14, TypeScript, React
-- **UI**: Material-UI (MUI), Emotion CSS
-- **Backend**: Supabase (PostgreSQL)
-- **Storage**: Supabase Storage
+### Frontend
+- **Framework**: [Next.js 15](https://nextjs.org/) with Turbopack
+- **Language**: [TypeScript](https://www.typescriptlang.org/)
+- **UI Library**: [React 18](https://react.dev/)
+- **State Management**: React Context API
+
+### Styling & UI Components
+- **Component Library**: [Material-UI (MUI) v5](https://mui.com/)
+- **CSS-in-JS**: [Emotion](https://emotion.sh/) (styled-components)
+- **Icons**: [Material Icons](https://mui.com/material-ui/material-icons/)
+
+### Backend & Database
+- **Backend as a Service**: [Supabase](https://supabase.com/)
+- **Database**: PostgreSQL (via Supabase)
 - **Authentication**: Supabase Auth
-- **Image Processing**: Browser Image Compression
+- **File Storage**: Supabase Storage
+- **Real-time**: Supabase Realtime subscriptions
+
+### Form & Validation
+- **Form Management**: [React Hook Form](https://react-hook-form.com/)
+- **Schema Validation**: [Zod](https://zod.dev/)
+- **Form Resolvers**: [@hookform/resolvers](https://github.com/react-hook-form/resolvers)
+
+### Development Tools
+- **Bundler**: Next.js with Turbopack
+- **Testing**: [Jest](https://jestjs.io/) & [React Testing Library](https://testing-library.com/react)
+- **Component Development**: [Storybook](https://storybook.js.org/)
+- **Linting**: ESLint, Stylelint, Prettier
+- **Type Conversion**: [ts-case-convert](https://github.com/tonivj5/ts-case-convert)
+
+### Deployment & Hosting
+- **Platform**: [Vercel](https://vercel.com/)
+- **Edge Functions**: Vercel Edge Runtime
+- **CDN**: Vercel Edge Network
+
+### Additional Features
+- **Image Processing**: [Browser Image Compression](https://github.com/Donaldcwl/browser-image-compression)
+- **SSR Support**: [@supabase/ssr](https://github.com/supabase/ssr)
+- **Auth Helpers**: [@supabase/auth-helpers-nextjs](https://github.com/supabase/auth-helpers)
 
 ## Getting Started
 
