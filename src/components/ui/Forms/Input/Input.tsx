@@ -125,3 +125,5 @@ const StyledInput = styled.input<{
     appearance: textfield;
   }
 `
+
+Input.Label = Label

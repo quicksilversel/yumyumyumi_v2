@@ -122,9 +122,7 @@ export default function LoginPage() {
 
         <Form onSubmit={handleSubmit}>
           {error && <Alert variant="error">{error}</Alert>}
-
           {success && <Alert variant="success">{success}</Alert>}
-
           <Stack gap={4}>
             <Input
               id="email"
@@ -135,8 +133,8 @@ export default function LoginPage() {
               required
               placeholder="Enter your email"
               autoComplete="email"
+              height="medium"
             />
-
             <InputWrapper>
               <Input
                 id="password"
@@ -145,6 +143,7 @@ export default function LoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
+                height="medium"
                 placeholder="Enter your password"
                 autoComplete={tab === 0 ? 'current-password' : 'new-password'}
               />
@@ -156,7 +155,6 @@ export default function LoginPage() {
                 {showPassword ? <VisibilityOff /> : <Visibility />}
               </PasswordToggle>
             </InputWrapper>
-
             {tab === 1 && (
               <Input
                 id="confirmPassword"
@@ -167,19 +165,19 @@ export default function LoginPage() {
                 required
                 placeholder="Confirm your password"
                 autoComplete="new-password"
+                height="medium"
               />
             )}
 
             <Button
               type="submit"
               variant="primary"
-              size="lg"
+              size="md"
               disabled={loading}
             >
               {loading ? 'Please wait...' : tab === 0 ? 'Sign In' : 'Sign Up'}
             </Button>
-
-            <Caption style={{ textAlign: 'center' }}>
+            <Caption>
               {tab === 0 ? (
                 <>
                   Don&apos;t have an account?
@@ -207,7 +205,7 @@ const PageContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  min-height: 50vh;
   padding: ${({ theme }) => theme.spacing[4]};
   background: linear-gradient(
     180deg,
@@ -232,6 +230,7 @@ const TabContainer = styled.div`
 `
 
 const Tab = styled.button<{ active: boolean }>`
+  text-align: center;
   flex: 1;
   padding: ${({ theme }) => theme.spacing[3]} ${({ theme }) => theme.spacing[4]};
   background: none;
@@ -275,11 +274,12 @@ const Alert = styled.div<{ variant: 'error' | 'success' }>`
 
 const InputWrapper = styled.div`
   position: relative;
+  width: 100%;
 `
 
 const PasswordToggle = styled(IconButton)`
   position: absolute;
-  top: 50%;
+  top: calc(50% + 10px);
   right: ${({ theme }) => theme.spacing[2]};
   transform: translateY(-50%);
 `
