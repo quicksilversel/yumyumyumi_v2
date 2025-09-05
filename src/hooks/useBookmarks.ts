@@ -3,7 +3,6 @@ import { useEffect, useState, useCallback } from 'react'
 import type { Bookmark } from '@/types/bookmarks'
 
 import { useAuth } from '@/contexts/AuthContext'
-
 import {
   getBookmarks,
   toggleBookmark,
@@ -109,7 +108,7 @@ export function useBookmarks(options: UseBookmarksOptions = {}) {
         setIsToggling(false)
       }
     },
-    [options, isBookmarkedState, bookmarkedIds],
+    [options, isBookmarkedState, bookmarkedIds, user],
   )
 
   return {
