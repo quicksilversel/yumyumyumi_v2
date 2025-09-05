@@ -51,7 +51,7 @@ const recipeFiltersSchema = z.object({
   searchTerm: z.string().optional(),
   category: recipeCategorySchema.optional(),
   maxCookingTime: z.number().optional(),
-  ingredients: z.array(z.string()).optional(),
+  tag: z.string().optional(),
   showBookmarkedOnly: z.boolean().optional(),
 })
 

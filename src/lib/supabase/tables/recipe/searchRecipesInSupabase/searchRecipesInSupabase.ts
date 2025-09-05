@@ -22,6 +22,10 @@ export async function searchRecipesInSupabase(
       query = query.eq('category', filters.category)
     }
 
+    if (filters.tag) {
+      query = query.contains('tags', [decodeURI(filters.tag)])
+    }
+
     if (filters.maxCookingTime) {
       query = query.lte('cook_time', filters.maxCookingTime)
     }

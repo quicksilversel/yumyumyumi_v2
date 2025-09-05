@@ -44,13 +44,16 @@ function RecipeListInner({ initialRecipes }: RecipeListProps) {
     const filters: RecipeFilters = {}
 
     const category = searchParams.get('category')
-    if (category) filters.category = category as any
+    if (category) filters.category = category
 
     const maxCookingTime = searchParams.get('maxCookingTime')
     if (maxCookingTime) filters.maxCookingTime = Number(maxCookingTime)
 
     const bookmarked = searchParams.get('bookmarked')
     if (bookmarked === 'true') filters.showBookmarkedOnly = true
+
+    const tag = searchParams.get('tag')
+    if (tag) filters.tag = tag
 
     return filters
   }, [searchParams])

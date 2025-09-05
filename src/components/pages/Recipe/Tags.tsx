@@ -1,4 +1,5 @@
 import styled from '@emotion/styled'
+import Link from 'next/link'
 
 import type { Recipe } from '@/types/recipe'
 
@@ -9,8 +10,10 @@ export const Tags = ({ recipe }: { recipe: Recipe }) => {
     <HeaderSection>
       {recipe.tags && recipe.tags.length > 0 && (
         <ChipGroup>
-          {recipe.tags.map((tag, index) => (
-            <Chip key={index}>{tag}</Chip>
+          {recipe.tags.map((tag) => (
+            <Link key={tag} href={`/?tag=${encodeURI(tag)}`}>
+              <Chip>{tag}</Chip>
+            </Link>
           ))}
         </ChipGroup>
       )}

@@ -2,6 +2,8 @@ import { useEffect, useState, useCallback } from 'react'
 
 import type { Bookmark } from '@/types/bookmarks'
 
+import { useAuth } from '@/contexts/AuthContext'
+
 import {
   getBookmarks,
   toggleBookmark,
@@ -19,6 +21,8 @@ export function useBookmarks(options: UseBookmarksOptions = {}) {
   const [isBookmarkedState, setIsBookmarkedState] = useState(false)
   const [isInitialLoading, setIsInitialLoading] = useState(true)
   const [isToggling, setIsToggling] = useState(false)
+
+  const { user } = useAuth()
 
   const fetchBookmarks = useCallback(async () => {
     try {
@@ -54,6 +58,11 @@ export function useBookmarks(options: UseBookmarksOptions = {}) {
 
       if (!options.recipeId) {
         console.warn('Cannot toggle bookmark without recipeId')
+        return
+      }
+
+      if (!user) {
+        window.location.href = '/login'
         return
       }
 

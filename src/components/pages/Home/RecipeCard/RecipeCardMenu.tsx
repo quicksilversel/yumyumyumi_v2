@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
+import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome'
 import CloseIcon from '@mui/icons-material/Close'
-import MenuBookIcon from '@mui/icons-material/MenuBook'
 
 import type { Recipe } from '@/types/recipe'
 
@@ -50,7 +50,7 @@ export const RecipeCardMenu = ({
         {isInIngredientView ? (
           <CloseIcon fontSize="inherit" />
         ) : (
-          <MenuBookIcon fontSize="inherit" />
+          <AutoAwesomeIcon fontSize="inherit" />
         )}
       </StyledIconButton>
       <Flex gap={0}>
