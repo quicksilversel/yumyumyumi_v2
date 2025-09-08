@@ -92,7 +92,7 @@ export function ImageForm({ onImageChange, uploading = false }: Props) {
 
   return (
     <Stack gap={1}>
-      <Title>Recipe Image</Title>
+      <Title>レシピ画像</Title>
       <Controller
         name="imageUrl"
         control={control}

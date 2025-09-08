@@ -28,7 +28,9 @@ export const DeleteRecipeModal = ({ recipe, open, onClose }: Props) => {
     if (success) {
       router.push('/')
     } else {
-      alert('Failed to delete recipe')
+      alert(
+        'ご迷惑をお掛けし申し訳ありません。\n時間をおいて再度お試しください。',
+      )
     }
     setIsDeleting(false)
     onClose()
@@ -42,22 +44,22 @@ export const DeleteRecipeModal = ({ recipe, open, onClose }: Props) => {
       actions={
         <DialogActions>
           <Button variant="ghost" onClick={onClose} disabled={isDeleting}>
-            Cancel
+            キャンセル
           </Button>
           <Button
             variant="primary"
             onClick={handleDelete}
             disabled={isDeleting}
           >
-            {isDeleting ? 'Deleting...' : 'Delete'}
+            {isDeleting ? '削除中...' : '削除する'}
           </Button>
         </DialogActions>
       }
     >
       <DialogContent>
         <Body>
-          Are you sure you want to delete &quot;{recipe.title}&quot;? This
-          action cannot be undone.
+          「{recipe.title}」を削除してもよろしいですか？
+          この操作は元に戻すことができません。
         </Body>
       </DialogContent>
     </Dialog>

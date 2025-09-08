@@ -13,7 +13,7 @@ export const Source = ({ recipe }: RecipeDetailProps) => {
 
   return (
     <Section>
-      {recipe.source && <Caption>Source: {recipe.source}</Caption>}
+      {recipe.source && <Caption>参考：{recipe.source}</Caption>}
     </Section>
   )
 }

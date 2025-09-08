@@ -18,21 +18,21 @@ export const CookTimeForm = () => {
           required: 'Cook time is required',
           min: {
             value: 1,
-            message: 'Cook time must be at least 1 minute',
+            message: '調理時間は1分以上で入力してください',
           },
           valueAsNumber: true,
           validate: (value) => {
             if (isNaN(value)) {
-              return 'Cook time must be a valid number'
+              return '調理時間は有効な数字で入力してください'
             }
             if (value <= 0) {
-              return 'Cook time must be greater than 0'
+              return '調理時間は0分より大きい数字で入力してください'
             }
             return true
           },
         })}
         id="cookTime"
-        title="Cook Time (minutes)"
+        title="調理時間（分)"
         type="number"
         placeholder="調理時間を分単位で入力してください"
         min={1}

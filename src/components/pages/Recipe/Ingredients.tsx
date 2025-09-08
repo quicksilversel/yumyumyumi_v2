@@ -18,8 +18,11 @@ export const Ingredients = ({ recipe }: { recipe: Recipe }) => {
     <Section>
       <H2>Ingredients</H2>
       <IngredientList>
-        {sortedIngredientList?.map((ingredient) => (
-          <IngredientItem key={ingredient.name} isSpice={!!ingredient.isSpice}>
+        {sortedIngredientList?.map((ingredient, index) => (
+          <IngredientItem
+            key={ingredient.name + index}
+            isSpice={!!ingredient.isSpice}
+          >
             <Flex justify="between" align="center">
               <span>
                 {!!ingredient.isSpice && '（A）'} {ingredient.name}

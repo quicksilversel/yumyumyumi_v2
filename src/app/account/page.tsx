@@ -41,10 +41,9 @@ export default function AccountPage() {
   return (
     <PageContainer>
       <AccountCard>
-        <Title>My Account</Title>
-
+        <Title>マイページ</Title>
         <InfoSection>
-          <Label>Email Address</Label>
+          <Label>メールアドレス</Label>
           <Value>{user.email}</Value>
         </InfoSection>
 
@@ -54,10 +53,10 @@ export default function AccountPage() {
             variant="secondary"
             onClick={() => router.push('/')}
           >
-            Back to Home
+            サイトトップへ戻る
           </Button>
           <Button fullWidth variant="primary" onClick={handleSignOut}>
-            Sign Out
+            ログアウト
           </Button>
         </Stack>
       </AccountCard>
@@ -78,6 +77,7 @@ const PageContainer = styled.div`
 const AccountCard = styled.div`
   width: 100%;
   max-width: 420px;
+  margin-inline: auto;
   padding: ${({ theme }) => theme.spacing[8]};
   border-radius: ${({ theme }) => theme.borderRadius.xl};
   background: ${({ theme }) => theme.colors.white};

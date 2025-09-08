@@ -60,7 +60,8 @@ export const RecipeCardMenu = ({
       <StyledIconButton
         onClick={handleToggleIngredientsClick}
         size="sm"
-        title="Show Ingredients"
+        title="材料を見る"
+        type="button"
       >
         {isInIngredientView ? (
           <CloseIcon fontSize="inherit" />

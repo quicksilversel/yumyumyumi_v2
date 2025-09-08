@@ -66,17 +66,18 @@ export const MoreActions = ({
         onClick={handleMenuToggle}
         size="sm"
         disabled={isDeleting}
+        type="button"
       >
         <MoreVertIcon fontSize="inherit" />
       </StyledIconButton>
       <Menu open={menuOpen} ref={menuRef}>
         <MenuItem onClick={handleEdit}>
           <EditIcon fontSize="inherit" />
-          <span>Edit Recipe</span>
+          <span>編集する</span>
         </MenuItem>
         <MenuItem onClick={handleDelete}>
           <DeleteIcon fontSize="inherit" />
-          <span>Delete Recipe</span>
+          <span>削除する</span>
         </MenuItem>
       </Menu>
     </Container>
@@ -102,7 +103,7 @@ const Menu = styled.div<{ open: boolean }>`
   right: 0;
   z-index: 1000;
   display: ${({ open }) => (open ? 'block' : 'none')};
-  min-width: 180px;
+  min-width: 140px;
   margin-top: ${({ theme }) => theme.spacing[1]};
   border: 1px solid ${({ theme }) => theme.colors.gray[200]};
   border-radius: ${({ theme }) => theme.borderRadius.lg};

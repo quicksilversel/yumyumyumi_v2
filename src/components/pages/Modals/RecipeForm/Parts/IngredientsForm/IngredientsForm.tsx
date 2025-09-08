@@ -56,7 +56,7 @@ export function IngredientsForm() {
         )}
       {fields.length === 0 ? (
         <Caption>
-          No ingredients added yet. Click &quot;Add&quot; to start.
+          まだ材料が追加されていません。「材料を追加」ボタンを押して追加してください。
         </Caption>
       ) : (
         <Stack gap={2}>
@@ -72,7 +72,7 @@ export function IngredientsForm() {
                         message: 'Name cannot be empty',
                       },
                     })}
-                    placeholder="材料名"
+                    placeholder="材料"
                     error={!!errors.ingredients?.[index]?.name}
                   />
                   {errors.ingredients?.[index]?.name && (
@@ -90,7 +90,7 @@ export function IngredientsForm() {
                         message: 'Amount cannot be empty',
                       },
                     })}
-                    placeholder="量"
+                    placeholder="分量"
                     error={!!errors.ingredients?.[index]?.amount}
                   />
                   {errors.ingredients?.[index]?.amount && (
@@ -119,7 +119,7 @@ export function IngredientsForm() {
       )}
       <Button variant="primary" size="sm" onClick={addIngredient} type="button">
         <AddIcon fontSize="inherit" />
-        Add Ingredient
+        材料を追加
       </Button>
     </Stack>
   )

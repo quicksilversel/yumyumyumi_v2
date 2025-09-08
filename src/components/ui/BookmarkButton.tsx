@@ -29,7 +29,13 @@ export const BookmarkButton = ({
       size={size}
       className={className}
       disabled={isLoading || isToggling}
-      aria-label={isBookmarked ? 'Remove bookmark' : 'Add bookmark'}
+      aria-label={
+        isBookmarked ? 'お気に入りレシピから外す' : 'お気に入りレシピに追加する'
+      }
+      title={
+        isBookmarked ? 'お気に入りレシピから外す' : 'お気に入りレシピに追加する'
+      }
+      type="button"
     >
       {isBookmarked ? (
         <FavoriteIcon fontSize="inherit" />

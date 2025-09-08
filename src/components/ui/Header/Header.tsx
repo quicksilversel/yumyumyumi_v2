@@ -22,18 +22,16 @@ export const Header = () => {
   return (
     <>
       <Container>
-        <InnerContainer>
-          <Toolbar align="center" justify="between">
-            <Logo />
-            <Flex gap={4} align="center">
-              <User />
-              {user && <AddRecipeButton />}
-              <button onClick={() => setSlideMenuOpen(true)}>
-                <MenuIcon />
-              </button>
-            </Flex>
-          </Toolbar>
-        </InnerContainer>
+        <Toolbar align="center" justify="between">
+          <Logo />
+          <Flex gap={4} align="center">
+            <User />
+            {user && <AddRecipeButton />}
+            <button onClick={() => setSlideMenuOpen(true)}>
+              <MenuIcon />
+            </button>
+          </Flex>
+        </Toolbar>
       </Container>
       {slideMenuOpen && (
         <MenuOverlay
@@ -67,14 +65,11 @@ const Container = styled.header`
   padding-inline: 1rem;
 `
 
-const InnerContainer = styled.div`
+const Toolbar = styled(Flex)`
+  height: 56px;
   width: 100%;
   max-width: 1000px;
   margin: 0 auto;
-`
-
-const Toolbar = styled(Flex)`
-  height: 56px;
 `
 
 const fadeIn = keyframes`

@@ -19,8 +19,7 @@ export async function updateRecipe(
     } = await supabase.auth.getUser()
 
     if (!user) {
-      // eslint-disable-next-line no-console
-      console.error('User must be logged in to update recipes')
+      alert('ログインが必要です')
       return null
     }
 
@@ -40,8 +39,9 @@ export async function updateRecipe(
 
     return objectToCamel(data)
   } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error('updating recipe', error)
+    alert(
+      'ご迷惑をお掛けし申し訳ありません。\n時間をおいて再度お試しください。',
+    )
     return null
   }
 }

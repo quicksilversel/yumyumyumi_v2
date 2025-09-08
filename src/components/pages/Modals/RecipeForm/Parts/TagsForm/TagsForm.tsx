@@ -49,7 +49,7 @@ export const TagsForm = () => {
       <input type="hidden" {...tagsRegistration} value={JSON.stringify(tags)} />
       <TagInputRow>
         <Input
-          title="Tags"
+          title="タグ"
           placeholder="タグの入力後、Enterキーを押してください"
           value={tagInput}
           onChange={(e) => setTagInput(e.target.value)}

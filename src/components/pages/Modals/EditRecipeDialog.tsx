@@ -61,7 +61,7 @@ export function EditRecipeDialog({
   const onSubmit: SubmitHandler<RecipeForm> = async (data: RecipeForm) => {
     if (!user) {
       setError('root', {
-        message: 'You must be logged in to update a recipe',
+        message: 'ログインが必要です',
       })
       return
     }
@@ -117,12 +117,14 @@ export function EditRecipeDialog({
         handleClose()
       } else {
         setError('root', {
-          message: 'Failed to update recipe. Please try again.',
+          message:
+            'ご迷惑をお掛けし申し訳ありません。\n時間をおいて再度お試しください。',
         })
       }
     } catch (err) {
       setError('root', {
-        message: 'An unexpected error occurred. Please try again.',
+        message:
+          'ご迷惑をお掛けし申し訳ありません。\n時間をおいて再度お試しください。',
       })
     } finally {
       setLoading(false)
@@ -144,7 +146,7 @@ export function EditRecipeDialog({
       open={open}
       onClose={handleClose}
       maxWidth="lg"
-      title="Edit Recipe"
+      title="レシピを編集"
       actions={
         <DialogActions>
           <Button
@@ -161,7 +163,7 @@ export function EditRecipeDialog({
             onClick={handleSubmit(onSubmit)}
             disabled={loading || uploadingImage}
           >
-            {loading ? 'Updating...' : 'Update Recipe'}
+            {loading ? '更新中...' : '更新する'}
           </Button>
         </DialogActions>
       }

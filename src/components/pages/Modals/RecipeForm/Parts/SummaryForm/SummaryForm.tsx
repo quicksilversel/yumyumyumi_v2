@@ -11,7 +11,7 @@ export const SummaryForm = () => {
     <Textarea
       {...register('summary')}
       id="summary"
-      title="Summary"
+      title="概要"
       placeholder="レシピの概要を入力してください"
       rows={1}
     />

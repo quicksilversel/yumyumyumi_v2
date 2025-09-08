@@ -45,7 +45,7 @@ export function DirectionsForm() {
         )}
       {fields.length === 0 ? (
         <Caption>
-          No directions added yet. Click &quot;Add Step&quot; to start.
+          まだ手順が追加されていません。「手順を追加」ボタンを押して追加してください。
         </Caption>
       ) : (
         <Stack gap={3}>
@@ -57,9 +57,9 @@ export function DirectionsForm() {
                   <div>
                     <Textarea
                       {...register(`directions.${index}.title`, {
-                        required: 'Direction Title is required',
+                        required: '見出しは必須です',
                       })}
-                      placeholder="手順のタイトル（例：食材を切る）"
+                      placeholder="見出し（例：下ごしらえ）"
                       rows={3}
                     />
                     {errors.directions?.[index]?.title && (
@@ -70,7 +70,7 @@ export function DirectionsForm() {
                   </div>
                   <Textarea
                     {...register(`directions.${index}.description`)}
-                    placeholder="手順の詳細（例：ナス、ピーマン、ジャガイモは乱切りにする。）"
+                    placeholder="詳細（例：ナス、ピーマン、ジャガイモは乱切りにする。）"
                     error={!!errors.directions?.[index]?.description}
                     rows={2}
                   />
@@ -91,7 +91,7 @@ export function DirectionsForm() {
       )}
       <Button variant="primary" size="sm" onClick={addDirection} type="button">
         <AddIcon fontSize="inherit" />
-        Add Step
+        手順を追加
       </Button>
     </Stack>
   )
