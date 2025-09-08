@@ -40,14 +40,13 @@ const Section = styled.section`
 const IngredientList = styled.ul`
   display: flex;
   flex-direction: column;
-  gap: ${({ theme }) => theme.spacing[2]};
   width: 100%;
 `
 
 const IngredientItem = styled.li<{ isSpice: boolean }>`
   position: relative;
   width: 100%;
-  padding: ${({ theme }) => theme.spacing[3]} ${({ theme }) => theme.spacing[4]};
+  padding: ${({ theme }) => theme.spacing[3]} ${({ theme }) => theme.spacing[2]};
   border-top: 1px solid ${({ theme }) => theme.colors.gray[200]};
   font-size: ${({ theme }) => theme.typography.fontSize.sm};
 

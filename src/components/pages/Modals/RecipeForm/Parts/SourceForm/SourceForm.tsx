@@ -12,7 +12,7 @@ export const SourceForm = () => {
       {...register('source')}
       id="source"
       title="Source"
-      placeholder="Recipe source or URL"
+      placeholder="参考サイトや書籍名を入力してください"
     />
   )
 }

@@ -146,16 +146,11 @@ const StyledTextarea = styled.textarea<{
     color: ${({ theme }) => theme.colors.gray[400]};
   }
 
-  &:hover:not(:disabled) {
-    border-color: ${({ error, theme }) =>
-      error ? theme.colors.error : theme.colors.gray[400]};
-  }
-
+  &:hover:not(:disabled),
   &:focus {
-    border-color: ${({ error, theme }) =>
-      error ? theme.colors.error : theme.colors.black};
-    box-shadow: 0 0 0 1px
-      ${({ error, theme }) => (error ? theme.colors.error : theme.colors.black)};
+    border: 1px solid
+      ${({ theme, error }) =>
+        error ? theme.colors.error : theme.colors.primary};
   }
 
   &:disabled {

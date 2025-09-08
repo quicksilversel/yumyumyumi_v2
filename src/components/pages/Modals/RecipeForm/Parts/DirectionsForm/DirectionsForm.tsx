@@ -13,7 +13,6 @@ import {
   Textarea,
   Button,
   IconButton,
-  Input,
 } from '@/components/ui'
 
 export function DirectionsForm() {
@@ -55,37 +54,26 @@ export function DirectionsForm() {
               <StepNumber>{index + 1}</StepNumber>
               <DirectionContent>
                 <FieldContainer>
+                  <div>
+                    <Textarea
+                      {...register(`directions.${index}.title`, {
+                        required: 'Direction Title is required',
+                      })}
+                      placeholder="手順のタイトル（例：食材を切る）"
+                      rows={3}
+                    />
+                    {errors.directions?.[index]?.title && (
+                      <ErrorText>
+                        {errors.directions[index].title?.message}
+                      </ErrorText>
+                    )}
+                  </div>
                   <Textarea
-                    {...register(`directions.${index}.title`, {
-                      validate: (value, formValues) => {
-                        const title = formValues.directions?.[index]?.title
-                        if (!value && !title) {
-                          return 'Either title or description is required'
-                        }
-                        return true
-                      },
-                    })}
-                    placeholder="Step title (e.g., 'Prepare ingredients')"
-                    rows={4}
-                  />
-                  <Input
-                    {...register(`directions.${index}.description`, {
-                      validate: (value, formValues) => {
-                        const title = formValues.directions?.[index]?.title
-                        if (!value && !title) {
-                          return 'Either title or description is required'
-                        }
-                        return true
-                      },
-                    })}
-                    placeholder="Step description"
+                    {...register(`directions.${index}.description`)}
+                    placeholder="手順の詳細（例：ナス、ピーマン、ジャガイモは乱切りにする。）"
                     error={!!errors.directions?.[index]?.description}
+                    rows={2}
                   />
-                  {errors.directions?.[index]?.description && (
-                    <ErrorText>
-                      {errors.directions[index].description?.message}
-                    </ErrorText>
-                  )}
                 </FieldContainer>
                 {fields.length > 1 && (
                   <IconButton

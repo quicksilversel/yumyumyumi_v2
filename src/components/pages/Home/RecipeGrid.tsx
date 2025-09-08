@@ -36,5 +36,5 @@ const EmptyState = styled(Stack)`
 `
 
 const RecipeGridContainer = styled(Grid)`
-  margin-top: ${({ theme }) => theme.spacing[6]};
+  padding-block: ${({ theme }) => theme.spacing[6]};
 `

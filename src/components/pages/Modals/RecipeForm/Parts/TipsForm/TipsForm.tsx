@@ -11,9 +11,9 @@ export const TipsForm = () => {
     <Textarea
       {...register('tips')}
       id="tips"
-      title="Tips"
-      placeholder="Any helpful tips or notes for this recipe"
-      rows={3}
+      title="Point"
+      placeholder="ポイントやコツを入力してください"
+      rows={5}
     />
   )
 }

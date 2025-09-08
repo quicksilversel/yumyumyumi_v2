@@ -1,3 +1,5 @@
+import styled from '@emotion/styled'
+
 import type { Recipe } from '@/types/recipe'
 
 import { Caption } from '@/components/ui'
@@ -10,8 +12,12 @@ export const Source = ({ recipe }: RecipeDetailProps) => {
   if (!recipe.source) return null
 
   return (
-    <section>
+    <Section>
       {recipe.source && <Caption>Source: {recipe.source}</Caption>}
-    </section>
+    </Section>
   )
 }
+
+const Section = styled.section`
+  margin-top: ${({ theme }) => theme.spacing[6]};
+`

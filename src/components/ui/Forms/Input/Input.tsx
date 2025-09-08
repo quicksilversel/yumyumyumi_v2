@@ -27,10 +27,9 @@ export const Input = ({
   return (
     <Container>
       {title && (
-        <Label htmlFor={inputProps.id}>
+        <Label htmlFor={inputProps.id} isRequired={inputProps.required}>
           {icon}
           {title}
-          {inputProps.required && '*'}
         </Label>
       )}
       <StyledInput
@@ -70,11 +69,21 @@ const Container = styled.div`
   width: 100%;
 `
 
-const Label = styled.label`
+const Label = styled.label<{ isRequired?: boolean }>`
   display: block;
   margin-bottom: ${({ theme }) => theme.spacing['1']};
   font-size: ${({ theme }) => theme.typography.fontSize['sm']};
   color: ${({ theme }) => theme.colors.gray[800]};
+
+  ${({ theme, isRequired }) =>
+    isRequired &&
+    css`
+      font-weight: ${theme.typography.fontWeight.bold};
+
+      &:after {
+        content: '*';
+      }
+    `}
 `
 
 const StyledInput = styled.input<{
@@ -88,7 +97,7 @@ const StyledInput = styled.input<{
   border-radius: ${({ theme }) => theme.borderRadius.default};
   background-color: ${({ theme }) => theme.colors.white};
   color: ${({ theme }) => theme.colors.black};
-  transition: border-color ${({ theme }) => theme.transition.default};
+  transition: border ${({ theme }) => theme.transition.default};
   outline: none;
 
   ${({ theme, height }) => sizeStyles({ theme, size: height || 'medium' })}
@@ -97,16 +106,11 @@ const StyledInput = styled.input<{
     color: ${({ theme }) => theme.colors.gray['400']};
   }
 
-  &:hover:not(:disabled) {
-    border-color: ${({ theme, error }) =>
-      error ? theme.colors.error : theme.colors.gray[400]};
-  }
-
+  &:hover:not(:disabled),
   &:focus {
-    border-color: ${({ theme, error }) =>
-      error ? theme.colors.error : theme.colors.black};
-    box-shadow: 0 0 0 1px
-      ${({ theme, error }) => (error ? theme.colors.error : theme.colors.black)};
+    border: 1px solid
+      ${({ theme, error }) =>
+        error ? theme.colors.error : theme.colors.primary};
   }
 
   &:disabled {

@@ -123,7 +123,7 @@ const MenuHeader = styled.div`
   border-bottom: 1px solid ${({ theme }) => theme.colors.gray[200]};
 `
 
-const MenuTitle = styled.h2`
+const MenuTitle = styled.span`
   margin: 0;
   color: ${({ theme }) => theme.colors.black};
   font-size: ${({ theme }) => theme.typography.fontSize.lg};

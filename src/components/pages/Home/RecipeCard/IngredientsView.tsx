@@ -34,7 +34,7 @@ const Container = styled.div`
   animation: ${fadeInAnimation} 0.3s ease;
   inset: 0;
   width: 100%;
-  max-height: 360px;
+  max-height: 310px;
   overflow-y: auto;
 `
 

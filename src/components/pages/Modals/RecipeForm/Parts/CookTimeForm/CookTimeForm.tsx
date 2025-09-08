@@ -34,7 +34,7 @@ export const CookTimeForm = () => {
         id="cookTime"
         title="Cook Time (minutes)"
         type="number"
-        placeholder="Enter cook time in minutes"
+        placeholder="調理時間を分単位で入力してください"
         min={1}
         error={!!errors.cookTime}
         required

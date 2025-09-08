@@ -36,6 +36,7 @@ export const Body = styled('p', {
   font-size: ${({ theme, size }) => theme.typography.fontSize[size || 'base']};
   font-weight: ${({ theme }) => theme.typography.fontWeight.normal};
   line-height: ${({ theme }) => theme.typography.lineHeight.relaxed};
+  white-space: pre-wrap;
 `
 
 export const Caption = styled.span`

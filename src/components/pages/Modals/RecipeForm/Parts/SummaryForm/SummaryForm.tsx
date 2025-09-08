@@ -12,7 +12,8 @@ export const SummaryForm = () => {
       {...register('summary')}
       id="summary"
       title="Summary"
-      placeholder="Brief description of the recipe"
+      placeholder="レシピの概要を入力してください"
+      rows={1}
     />
   )
 }

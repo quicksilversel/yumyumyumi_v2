@@ -41,7 +41,7 @@ export function AddRecipeDialog({
       ingredients: [],
       directions: [],
       cookTime: 30,
-      servings: 4,
+      servings: 2,
       tags: [],
       tips: '',
       source: '',

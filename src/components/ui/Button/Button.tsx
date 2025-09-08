@@ -120,6 +120,7 @@ export const Button = styled.button<{
 
 export const IconButton = styled.button<{
   size?: ButtonSize
+  variant?: ButtonVariant
 }>`
   ${({ theme }) => {
     return baseStyles({ theme })
@@ -134,6 +135,10 @@ export const IconButton = styled.button<{
   &:active:not(:disabled) {
     opacity: 0.7;
   }
+
+  ${({ variant, theme }) => {
+    return variantStyles({ variant: variant ?? 'ghost', theme })
+  }}
 
   ${({ size }) => {
     switch (size) {

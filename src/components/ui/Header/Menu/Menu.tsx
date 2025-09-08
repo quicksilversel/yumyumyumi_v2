@@ -1,5 +1,3 @@
-'use client'
-
 import { useState, Suspense } from 'react'
 
 import styled from '@emotion/styled'
@@ -7,6 +5,7 @@ import { useSearchParams } from 'next/navigation'
 
 import { BookmarkFilter } from './BookmarkFilter'
 import { CookingTimeFilter } from './CookingTimeFilter'
+import { TagFilter } from './TagFilter'
 
 export const MenuInner = () => {
   const searchParams = useSearchParams()
@@ -21,8 +20,15 @@ export const MenuInner = () => {
     searchParams.get('bookmarked') === 'true',
   )
 
+  const [selectedTag, setSelectedTag] = useState<string | null>(
+    searchParams.get('tag')
+      ? decodeURIComponent(searchParams.get('tag')!)
+      : null,
+  )
+
   return (
-    <Container>
+    <>
+      <TagFilter selectedTag={selectedTag} setSelectedTag={setSelectedTag} />
       <CookingTimeFilter
         selectedCookingTime={selectedCookingTime}
         setSelectedCookingTime={setSelectedCookingTime}
@@ -31,11 +37,9 @@ export const MenuInner = () => {
         showBookmarked={showBookmarked}
         setShowBookmarked={setShowBookmarked}
       />
-    </Container>
+    </>
   )
 }
-
-const Container = styled.div``
 
 const SearchAndFiltersFallback = styled.div`
   display: flex;

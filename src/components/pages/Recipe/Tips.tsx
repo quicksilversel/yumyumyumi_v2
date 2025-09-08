@@ -16,14 +16,14 @@ export const Tips = ({ recipe }: RecipeDetailProps) => {
     <TipsBox>
       <TitleContainer>
         <StyledInfoIcon />
-        <H2>Tips</H2>
+        <H2>Point</H2>
       </TitleContainer>
       <Body size="sm">{recipe.tips}</Body>
     </TipsBox>
   )
 }
 
-const TipsBox = styled.div`
+const TipsBox = styled.section`
   margin-top: ${({ theme }) => theme.spacing[6]};
   padding: ${({ theme }) => theme.spacing[4]};
   border: 1px solid ${({ theme }) => theme.colors.primary};

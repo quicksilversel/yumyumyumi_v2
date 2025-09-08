@@ -37,7 +37,7 @@ export const ServingsForm = () => {
         id="servings"
         title="Servings"
         type="number"
-        placeholder="Number of servings"
+        placeholder="人数を入力してください"
         min={1}
         max={100}
         step={1}

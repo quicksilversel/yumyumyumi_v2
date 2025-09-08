@@ -105,30 +105,30 @@ export function ImageForm({ onImageChange, uploading = false }: Props) {
                     src={imagePreview || field.value || ''}
                     alt="Recipe"
                     fill
+                    objectFit="cover"
                   />
                 </>
               ) : (
-                <PlaceholderContent>
+                <PlaceholderContent onClick={handleUploadClick} type="button">
                   <ImageIcon />
-                  <Caption>No image uploaded</Caption>
+                  <Caption>画像をアップロード</Caption>
                 </PlaceholderContent>
               )}
             </ImagePreview>
-            <ButtonContainer>
-              <IconButton
-                size="sm"
-                onClick={handleUploadClick}
-                disabled={uploading}
-              >
-                <EditIcon fontSize="inherit" />
-              </IconButton>
-              {imagePreview ||
-                (field.value && (
-                  <IconButton size="sm" onClick={handleRemoveImage}>
-                    <DeleteIcon fontSize="inherit" />
-                  </IconButton>
-                ))}
-            </ButtonContainer>
+            {(imagePreview || field.value) && (
+              <ButtonContainer>
+                <IconButton
+                  size="sm"
+                  onClick={handleUploadClick}
+                  disabled={uploading}
+                >
+                  <EditIcon fontSize="inherit" />
+                </IconButton>
+                <IconButton size="sm" onClick={handleRemoveImage}>
+                  <DeleteIcon fontSize="inherit" />
+                </IconButton>
+              </ButtonContainer>
+            )}
           </ImageContainer>
         )}
       />
@@ -140,7 +140,7 @@ export function ImageForm({ onImageChange, uploading = false }: Props) {
       />
       {error && <ErrorText>{error}</ErrorText>}
       <Caption style={{ textAlign: 'center' }}>
-        Max file size: 2MB. Supported formats: JPG, PNG, WebP
+        最大ファイルサイズ: 2MB。サポートされているフォーマット: JPG, PNG, WebP
       </Caption>
     </Stack>
   )
@@ -177,10 +177,12 @@ const ImagePreview = styled.div`
   aspect-ratio: 16/9;
 `
 
-const PlaceholderContent = styled.div`
+const PlaceholderContent = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100%;
+  height: 100%;
   gap: ${({ theme }) => theme.spacing[2]};
   color: ${({ theme }) => theme.colors.gray[500]};
   text-align: center;
