@@ -18,10 +18,6 @@ export async function searchRecipesInSupabase(
       )
     }
 
-    if (filters.category) {
-      query = query.eq('category', filters.category)
-    }
-
     if (filters.tag) {
       query = query.contains('tags', [decodeURI(filters.tag)])
     }

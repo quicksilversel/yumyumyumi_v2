@@ -29,7 +29,6 @@ export type Database = {
           cook_time: number
           total_time: number
           servings: number
-          category: string | null
           image_url: string | null
           source: string | null
           is_public: boolean
@@ -48,7 +47,6 @@ export type Database = {
           cook_time?: number
           total_time?: number
           servings?: number
-          category?: string | null
           image_url?: string | null
           source?: string | null
           is_public?: boolean
@@ -67,7 +65,6 @@ export type Database = {
           cook_time?: number
           total_time?: number
           servings?: number
-          category?: string | null
           image_url?: string | null
           source?: string | null
           is_public?: boolean

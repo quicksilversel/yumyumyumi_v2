@@ -279,7 +279,6 @@ describe('CookTimeForm', () => {
           title: 'Test Recipe',
           ingredients: [{ name: 'Test', amount: '1 cup' }],
           directions: [{ title: 'Step 1' }],
-          category: 'Main Course',
           cookTime: 30,
           servings: 4,
           isPublic: false,

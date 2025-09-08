@@ -35,15 +35,6 @@ jest.mock('./Parts/SummaryForm', () => ({
   ),
 }))
 
-jest.mock('./Parts/CategoryForm', () => ({
-  CategoryForm: () => (
-    <select data-testid="category-select" defaultValue="Main Course">
-      <option>Main Course</option>
-      <option>Dessert</option>
-    </select>
-  ),
-}))
-
 jest.mock('./Parts/CookTimeForm', () => ({
   CookTimeForm: () => (
     <input data-testid="cooktime-input" type="number" defaultValue="30" />
@@ -105,7 +96,6 @@ describe('RecipeForm Integration', () => {
     expect(screen.getByTestId('image-form')).toBeInTheDocument()
     expect(screen.getByTestId('title-input')).toBeInTheDocument()
     expect(screen.getByTestId('summary-input')).toBeInTheDocument()
-    expect(screen.getByTestId('category-select')).toBeInTheDocument()
     expect(screen.getByTestId('cooktime-input')).toBeInTheDocument()
     expect(screen.getByTestId('servings-input')).toBeInTheDocument()
     expect(screen.getByTestId('ingredients-form')).toBeInTheDocument()
@@ -158,11 +148,9 @@ describe('RecipeForm Integration', () => {
   it('groups related fields in grid layout', () => {
     render(<RecipeForm {...defaultProps} />)
 
-    const categorySelect = screen.getByTestId('category-select')
     const cookTimeInput = screen.getByTestId('cooktime-input')
     const servingsInput = screen.getByTestId('servings-input')
 
-    expect(categorySelect).toBeInTheDocument()
     expect(cookTimeInput).toBeInTheDocument()
     expect(servingsInput).toBeInTheDocument()
   })
@@ -177,7 +165,6 @@ describe('RecipeForm with FormProvider Integration', () => {
         summary: '',
         ingredients: [],
         directions: [],
-        category: 'Main Course',
         cookTime: 30,
         servings: 4,
         tags: [],
@@ -210,7 +197,6 @@ describe('RecipeForm with FormProvider Integration', () => {
           summary: 'A test recipe',
           ingredients: [{ name: 'Flour', amount: '2 cups' }],
           directions: [{ title: 'Mix ingredients' }],
-          category: 'Main Course',
           cookTime: 30,
           servings: 4,
           tags: ['test'],
@@ -240,7 +226,6 @@ describe('RecipeForm with FormProvider Integration', () => {
       expect(onSubmit).toHaveBeenCalledWith(
         expect.objectContaining({
           title: 'Test Recipe',
-          category: 'Main Course',
           cookTime: 30,
           servings: 4,
         }),
@@ -260,7 +245,6 @@ describe('RecipeForm with FormProvider Integration', () => {
           title: '',
           ingredients: [],
           directions: [],
-          category: 'Main Course',
           cookTime: 30,
           servings: 4,
         },
@@ -334,7 +318,6 @@ describe('RecipeForm with FormProvider Integration', () => {
           description: 'Torch sugar on top before serving',
         },
       ],
-      category: 'Dessert',
       cookTime: 45,
       servings: 6,
       tags: ['French', 'dessert', 'elegant', 'make-ahead'],

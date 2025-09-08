@@ -6,15 +6,11 @@ import styled from '@emotion/styled'
 import { useSearchParams } from 'next/navigation'
 
 import { BookmarkFilter } from './BookmarkFilter'
-import { CategoryFilter } from './CategoryFilter'
 import { CookingTimeFilter } from './CookingTimeFilter'
 
 export const MenuInner = () => {
   const searchParams = useSearchParams()
 
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(
-    searchParams.get('category'),
-  )
   const [selectedCookingTime, setSelectedCookingTime] = useState<number | null>(
     searchParams.get('maxCookingTime')
       ? Number(searchParams.get('maxCookingTime'))
@@ -27,10 +23,6 @@ export const MenuInner = () => {
 
   return (
     <Container>
-      <CategoryFilter
-        selectedCategory={selectedCategory}
-        setSelectedCategory={setSelectedCategory}
-      />
       <CookingTimeFilter
         selectedCookingTime={selectedCookingTime}
         setSelectedCookingTime={setSelectedCookingTime}

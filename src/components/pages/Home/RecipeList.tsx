@@ -43,9 +43,6 @@ function RecipeListInner({ initialRecipes }: RecipeListProps) {
   const getFiltersFromParams = useCallback((): RecipeFilters => {
     const filters: RecipeFilters = {}
 
-    const category = searchParams.get('category')
-    if (category) filters.category = category
-
     const maxCookingTime = searchParams.get('maxCookingTime')
     if (maxCookingTime) filters.maxCookingTime = Number(maxCookingTime)
 
@@ -109,8 +106,7 @@ function RecipeListInner({ initialRecipes }: RecipeListProps) {
         recipe.summary?.toLowerCase().includes(searchLower) ||
         recipe.ingredients.some((ing) =>
           ing.name.toLowerCase().includes(searchLower),
-        ) ||
-        recipe.category?.toLowerCase().includes(searchLower)
+        )
       )
     })
     setFilteredRecipes(filtered)

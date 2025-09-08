@@ -1,5 +1,4 @@
 import {
-  CategoryForm,
   CookTimeForm,
   DirectionsForm,
   ImageForm,
@@ -37,8 +36,7 @@ export const RecipeForm = ({
       <H2>General</H2>
       <TitleForm />
       <SummaryForm />
-      <Grid cols={3} gap={4} responsive>
-        <CategoryForm />
+      <Grid cols={2} gap={4} responsive>
         <CookTimeForm />
         <ServingsForm />
       </Grid>

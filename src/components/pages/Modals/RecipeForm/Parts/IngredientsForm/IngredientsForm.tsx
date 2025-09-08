@@ -125,7 +125,7 @@ const IngredientRow = styled.div`
 const FieldContainer = styled.div`
   width: 100%;
   display: grid;
-  grid-template-columns: 4fr 2fr 1fr;
+  grid-template-columns: 4fr 2fr auto;
   gap: 4px;
 `
 

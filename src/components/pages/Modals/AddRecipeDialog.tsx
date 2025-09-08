@@ -40,7 +40,6 @@ export function AddRecipeDialog({
       summary: '',
       ingredients: [],
       directions: [],
-      category: 'Dinner',
       cookTime: 30,
       servings: 4,
       tags: [],
