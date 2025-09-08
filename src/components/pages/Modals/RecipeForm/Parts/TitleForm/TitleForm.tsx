@@ -18,8 +18,8 @@ export const TitleForm = () => {
           required: 'Recipe title is required',
         })}
         id="title"
-        title="Title"
-        placeholder="Enter recipe title"
+        title="タイトル"
+        placeholder="タイトルを入力してください"
         required
         error={!!errors.title?.message}
       />

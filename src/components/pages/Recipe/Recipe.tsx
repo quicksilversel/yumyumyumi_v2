@@ -9,7 +9,6 @@ import { Header } from './Header'
 import { Hero } from './Hero'
 import { Ingredients } from './Ingredients'
 import { Source } from './Source'
-import { Tags } from './Tags'
 import { Tips } from './Tips'
 
 export const RecipeDetail = (props: { recipe: Recipe }) => {
@@ -19,9 +18,8 @@ export const RecipeDetail = (props: { recipe: Recipe }) => {
       <InnerContainer>
         <Header {...props} />
         <Ingredients {...props} />
-        <Tips {...props} />
         <Directions {...props} />
-        <Tags {...props} />
+        <Tips {...props} />
         <Source {...props} />
       </InnerContainer>
     </RecipeContainer>
@@ -35,6 +33,6 @@ const RecipeContainer = styled.div`
 
 const InnerContainer = styled.div`
   @media (width <= 35.1875rem) {
-    margin: ${({ theme }) => theme.spacing[4]};
+    margin-inline: ${({ theme }) => theme.spacing[4]};
   }
 `

@@ -109,14 +109,14 @@ export default function LoginPage() {
             onClick={() => handleTabChange(0)}
             type="button"
           >
-            Sign In
+            ログイン
           </Tab>
           <Tab
             active={tab === 1}
             onClick={() => handleTabChange(1)}
             type="button"
           >
-            Sign Up
+            新規会員登録
           </Tab>
         </TabContainer>
 
@@ -126,19 +126,19 @@ export default function LoginPage() {
           <Stack gap={4}>
             <Input
               id="email"
-              title="Email"
+              title="メールアドレス"
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              placeholder="Enter your email"
+              placeholder="メールアドレスを入力してください"
               autoComplete="email"
               height="medium"
             />
             <InputWrapper>
               <Input
                 id="password"
-                title="Password"
+                title="パスワード"
                 type={showPassword ? 'text' : 'password'}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -158,38 +158,37 @@ export default function LoginPage() {
             {tab === 1 && (
               <Input
                 id="confirmPassword"
-                title="Confirm Password"
+                title="確認用のパスワード"
                 type={showPassword ? 'text' : 'password'}
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 required
-                placeholder="Confirm your password"
+                placeholder="確認用のパスワードを入力してください"
                 autoComplete="new-password"
                 height="medium"
               />
             )}
-
             <Button
               type="submit"
               variant="primary"
               size="md"
               disabled={loading}
             >
-              {loading ? 'Please wait...' : tab === 0 ? 'Sign In' : 'Sign Up'}
+              {loading ? 'Loading' : tab === 0 ? 'ログインする' : '登録する'}
             </Button>
             <Caption>
               {tab === 0 ? (
                 <>
-                  Don&apos;t have an account?
+                  はじめてご利用の方
                   <LinkButton type="button" onClick={() => setTab(1)}>
-                    Sign Up
+                    新規会員登録
                   </LinkButton>
                 </>
               ) : (
                 <>
-                  Already have an account?
+                  すでに会員の方
                   <LinkButton type="button" onClick={() => setTab(0)}>
-                    Sign In
+                    ログイン
                   </LinkButton>
                 </>
               )}

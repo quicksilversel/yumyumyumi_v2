@@ -39,7 +39,6 @@ const Title = styled.span`
 
 const Summary = styled.span`
   display: -webkit-box;
-  margin-bottom: ${({ theme }) => theme.spacing[4]};
   color: ${({ theme }) => theme.colors.gray[600]};
   font-size: ${({ theme }) => theme.typography.fontSize.sm};
   flex-grow: 1;
@@ -49,6 +48,7 @@ const Summary = styled.span`
 `
 
 const RecipeInfo = styled(Flex)`
+  margin-top: ${({ theme }) => theme.spacing[4]};
   color: ${({ theme }) => theme.colors.gray[600]};
   font-size: ${({ theme }) => theme.typography.fontSize.sm};
 

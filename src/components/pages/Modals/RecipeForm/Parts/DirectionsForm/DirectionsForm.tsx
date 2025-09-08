@@ -13,7 +13,6 @@ import {
   Textarea,
   Button,
   IconButton,
-  Input,
 } from '@/components/ui'
 
 export function DirectionsForm() {
@@ -46,7 +45,7 @@ export function DirectionsForm() {
         )}
       {fields.length === 0 ? (
         <Caption>
-          No directions added yet. Click &quot;Add Step&quot; to start.
+          まだ手順が追加されていません。「手順を追加」ボタンを押して追加してください。
         </Caption>
       ) : (
         <Stack gap={3}>
@@ -55,37 +54,26 @@ export function DirectionsForm() {
               <StepNumber>{index + 1}</StepNumber>
               <DirectionContent>
                 <FieldContainer>
+                  <div>
+                    <Textarea
+                      {...register(`directions.${index}.title`, {
+                        required: '見出しは必須です',
+                      })}
+                      placeholder="見出し（例：下ごしらえ）"
+                      rows={3}
+                    />
+                    {errors.directions?.[index]?.title && (
+                      <ErrorText>
+                        {errors.directions[index].title?.message}
+                      </ErrorText>
+                    )}
+                  </div>
                   <Textarea
-                    {...register(`directions.${index}.title`, {
-                      validate: (value, formValues) => {
-                        const title = formValues.directions?.[index]?.title
-                        if (!value && !title) {
-                          return 'Either title or description is required'
-                        }
-                        return true
-                      },
-                    })}
-                    placeholder="Step title (e.g., 'Prepare ingredients')"
-                    rows={4}
-                  />
-                  <Input
-                    {...register(`directions.${index}.description`, {
-                      validate: (value, formValues) => {
-                        const title = formValues.directions?.[index]?.title
-                        if (!value && !title) {
-                          return 'Either title or description is required'
-                        }
-                        return true
-                      },
-                    })}
-                    placeholder="Step description"
+                    {...register(`directions.${index}.description`)}
+                    placeholder="詳細（例：ナス、ピーマン、ジャガイモは乱切りにする。）"
                     error={!!errors.directions?.[index]?.description}
+                    rows={2}
                   />
-                  {errors.directions?.[index]?.description && (
-                    <ErrorText>
-                      {errors.directions[index].description?.message}
-                    </ErrorText>
-                  )}
                 </FieldContainer>
                 {fields.length > 1 && (
                   <IconButton
@@ -103,7 +91,7 @@ export function DirectionsForm() {
       )}
       <Button variant="primary" size="sm" onClick={addDirection} type="button">
         <AddIcon fontSize="inherit" />
-        Add Step
+        手順を追加
       </Button>
     </Stack>
   )

@@ -1,10 +1,8 @@
 import { z } from 'zod'
 
-import { RECIPE_CATEGORY } from '@/utils/constants'
-
 const ingredientSchema = z.object({
-  name: z.string().min(1, 'Ingredient name is required'),
-  amount: z.string().min(1, 'Amount is required'),
+  name: z.string().min(1, '材料名を入力してください'),
+  amount: z.string().min(1, '分量を入力してください'),
   isSpice: z.boolean().optional(),
 })
 
@@ -14,25 +12,20 @@ const directionSchema = z
     description: z.string().optional(),
   })
   .refine((data) => data.title || data.description, {
-    message: 'Either title or description is required',
+    message: '手順の見出しか説明のどちらかを入力してください',
   })
 
-const recipeCategorySchema = z.enum([...Object.values(RECIPE_CATEGORY)])
-
 export const recipeFormSchema = z.object({
-  title: z.string().min(1, 'Title must be at least 1 characters'),
+  title: z.string().min(1, 'タイトルを入力してください'),
   summary: z.string().optional(),
   ingredients: z
     .array(ingredientSchema)
-    .min(1, 'At least one ingredient is required'),
-  directions: z
-    .array(directionSchema)
-    .min(1, 'At least one direction is required'),
+    .min(1, '材料を1つ以上入力してください'),
+  directions: z.array(directionSchema).min(1, '手順を1つ以上入力してください'),
   tags: z.array(z.string()).optional(),
   tips: z.string().optional(),
-  cookTime: z.number().min(1, 'Cook time must be at least 1 minute'),
-  servings: z.number().min(1, 'Servings must be at least 1'),
-  category: recipeCategorySchema,
+  cookTime: z.number().min(1, '調理時間は1分以上を入力してください'),
+  servings: z.number().min(1, '人数は1人分以上を入力してください'),
   imageUrl: z.string().optional(),
   source: z.string().optional(),
   isPublic: z.boolean(),
@@ -49,7 +42,6 @@ export const recipeListSchema = z.array(recipeSchema)
 
 const recipeFiltersSchema = z.object({
   searchTerm: z.string().optional(),
-  category: recipeCategorySchema.optional(),
   maxCookingTime: z.number().optional(),
   tag: z.string().optional(),
   showBookmarkedOnly: z.boolean().optional(),
@@ -62,7 +54,6 @@ const bookmarkedRecipeSchema = z.object({
 
 export type Ingredient = z.input<typeof ingredientSchema>
 export type Direction = z.infer<typeof directionSchema>
-export type RecipeCategory = z.infer<typeof recipeCategorySchema>
 export type RecipeForm = z.infer<typeof recipeFormSchema>
 export type RecipeFormInput = z.input<typeof recipeFormSchema>
 export type Recipe = z.infer<typeof recipeSchema>

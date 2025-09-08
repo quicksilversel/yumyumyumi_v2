@@ -11,8 +11,8 @@ export const SourceForm = () => {
     <Input
       {...register('source')}
       id="source"
-      title="Source"
-      placeholder="Recipe source or URL"
+      title="参考"
+      placeholder="参考サイトや書籍名など"
     />
   )
 }

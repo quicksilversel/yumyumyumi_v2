@@ -35,7 +35,6 @@ describe('searchRecipesInSupabase', () => {
       tips: 'Use fresh ingredients',
       cook_time: 30,
       servings: 4,
-      category: 'Main Course',
       image_url: 'https://example.com/pasta.jpg',
       source: 'https://example.com',
       is_public: true,
@@ -53,7 +52,6 @@ describe('searchRecipesInSupabase', () => {
       tips: 'Use fresh lettuce',
       cook_time: 15,
       servings: 2,
-      category: 'Appetizer',
       image_url: 'https://example.com/salad.jpg',
       source: 'https://example.com/salad',
       is_public: true,
@@ -74,7 +72,6 @@ describe('searchRecipesInSupabase', () => {
       tips: 'Use fresh ingredients',
       cookTime: 30,
       servings: 4,
-      category: 'Main Course',
       imageUrl: 'https://example.com/pasta.jpg',
       source: 'https://example.com',
       isPublic: true,
@@ -92,7 +89,6 @@ describe('searchRecipesInSupabase', () => {
       tips: 'Use fresh lettuce',
       cookTime: 15,
       servings: 2,
-      category: 'Appetizer',
       imageUrl: 'https://example.com/salad.jpg',
       source: 'https://example.com/salad',
       isPublic: true,
@@ -185,22 +181,6 @@ describe('searchRecipesInSupabase', () => {
       expect(result).toEqual([mockRecipes[0]])
     })
 
-    it('should search with category filter', async () => {
-      mockQueryBuilder.order.mockResolvedValue({
-        data: [mockDbRecipes[0]],
-        error: null,
-      })
-
-      const filters: RecipeFilters = { category: 'Main Course' }
-      const result = await searchRecipesInSupabase(filters)
-
-      expect(mockQueryBuilder.eq).toHaveBeenCalledWith(
-        'category',
-        'Main Course',
-      )
-      expect(result).toEqual([mockRecipes[0]])
-    })
-
     it('should search with maxCookingTime filter', async () => {
       mockQueryBuilder.order.mockResolvedValue({
         data: [mockDbRecipes[1]],
@@ -222,7 +202,6 @@ describe('searchRecipesInSupabase', () => {
 
       const filters: RecipeFilters = {
         searchTerm: 'salad',
-        category: 'Appetizer',
         maxCookingTime: 20,
       }
       const result = await searchRecipesInSupabase(filters)
@@ -230,7 +209,6 @@ describe('searchRecipesInSupabase', () => {
       expect(mockQueryBuilder.or).toHaveBeenCalledWith(
         'title.ilike.%salad%,summary.ilike.%salad%',
       )
-      expect(mockQueryBuilder.eq).toHaveBeenCalledWith('category', 'Appetizer')
       expect(mockQueryBuilder.lte).toHaveBeenCalledWith('cook_time', 20)
       expect(result).toEqual([mockRecipes[1]])
     })
@@ -376,7 +354,6 @@ describe('searchRecipesInSupabase', () => {
 
       const filters: RecipeFilters = {
         searchTerm: undefined,
-        category: undefined,
         maxCookingTime: undefined,
       }
       const result = await searchRecipesInSupabase(filters)

@@ -1,6 +1,7 @@
 export * from './Button'
 export * from './Chip'
 export * from './Dialog'
+export * from './Dropdown'
 export * from './Layout'
 export * from './Typography'
 export * from './Forms'

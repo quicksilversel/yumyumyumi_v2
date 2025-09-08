@@ -1,6 +1,8 @@
+import { useMemo } from 'react'
+
 import styled from '@emotion/styled'
-import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome'
 import CloseIcon from '@mui/icons-material/Close'
+import Image from 'next/image'
 
 import type { Recipe } from '@/types/recipe'
 
@@ -30,6 +32,19 @@ export const RecipeCardMenu = ({
     onDeleteSuccess: handleDeleteRecipe,
   })
 
+  const randomIconImage = useMemo(() => {
+    const IMAGE_OPTIONS = [
+      '/star-icon.png',
+      '/flower-icon.png',
+      '/heart-icon.png',
+    ]
+    let hash = 0
+    for (let i = 0; i < recipe.id.length; i++) {
+      hash = ((hash << 5) - hash + recipe.id.charCodeAt(i)) & 0xffffffff
+    }
+    return IMAGE_OPTIONS[Math.abs(hash) % 3]
+  }, [recipe.id])
+
   if (!recipe.title?.length) return null
 
   const isOwner = user && recipe.userId === user.id
@@ -45,12 +60,13 @@ export const RecipeCardMenu = ({
       <StyledIconButton
         onClick={handleToggleIngredientsClick}
         size="sm"
-        title="Show Ingredients"
+        title="材料を見る"
+        type="button"
       >
         {isInIngredientView ? (
           <CloseIcon fontSize="inherit" />
         ) : (
-          <AutoAwesomeIcon fontSize="inherit" />
+          <Image width={20} height={20} src={randomIconImage} alt="" />
         )}
       </StyledIconButton>
       <Flex gap={0}>

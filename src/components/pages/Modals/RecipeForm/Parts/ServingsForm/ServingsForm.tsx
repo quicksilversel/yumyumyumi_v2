@@ -35,9 +35,9 @@ export const ServingsForm = () => {
           },
         })}
         id="servings"
-        title="Servings"
+        title="◯人分"
         type="number"
-        placeholder="Number of servings"
+        placeholder="2"
         min={1}
         max={100}
         step={1}

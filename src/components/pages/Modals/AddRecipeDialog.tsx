@@ -40,9 +40,8 @@ export function AddRecipeDialog({
       summary: '',
       ingredients: [],
       directions: [],
-      category: 'Dinner',
       cookTime: 30,
-      servings: 4,
+      servings: 2,
       tags: [],
       tips: '',
       source: '',
@@ -67,7 +66,7 @@ export function AddRecipeDialog({
 
   const onSubmit = async (data: RecipeFormInput) => {
     if (!user) {
-      setError('root', { message: 'You must be logged in to create a recipe' })
+      setError('root', { message: 'ログインが必要です' })
       return
     }
 
@@ -138,16 +137,16 @@ export function AddRecipeDialog({
       open={open}
       onClose={handleClose}
       maxWidth="lg"
-      title="Add New Recipe"
+      title="新規作成"
       actions={
         <DialogActions>
           <Button
-            variant="ghost"
+            variant="text"
             onClick={handleClose}
             size="sm"
             disabled={loading}
           >
-            Cancel
+            キャンセル
           </Button>
           <Button
             variant="primary"
@@ -155,7 +154,7 @@ export function AddRecipeDialog({
             onClick={handleSubmit(onSubmit)}
             disabled={loading || uploadingImage}
           >
-            {loading ? 'Creating...' : 'Create Recipe'}
+            {loading ? '作成中' : 'レシピを作成する'}
           </Button>
         </DialogActions>
       }

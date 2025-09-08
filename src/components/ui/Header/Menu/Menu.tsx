@@ -1,20 +1,15 @@
-'use client'
-
 import { useState, Suspense } from 'react'
 
 import styled from '@emotion/styled'
 import { useSearchParams } from 'next/navigation'
 
 import { BookmarkFilter } from './BookmarkFilter'
-import { CategoryFilter } from './CategoryFilter'
 import { CookingTimeFilter } from './CookingTimeFilter'
+import { TagFilter } from './TagFilter'
 
 export const MenuInner = () => {
   const searchParams = useSearchParams()
 
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(
-    searchParams.get('category'),
-  )
   const [selectedCookingTime, setSelectedCookingTime] = useState<number | null>(
     searchParams.get('maxCookingTime')
       ? Number(searchParams.get('maxCookingTime'))
@@ -25,12 +20,15 @@ export const MenuInner = () => {
     searchParams.get('bookmarked') === 'true',
   )
 
+  const [selectedTag, setSelectedTag] = useState<string | null>(
+    searchParams.get('tag')
+      ? decodeURIComponent(searchParams.get('tag')!)
+      : null,
+  )
+
   return (
-    <Container>
-      <CategoryFilter
-        selectedCategory={selectedCategory}
-        setSelectedCategory={setSelectedCategory}
-      />
+    <>
+      <TagFilter selectedTag={selectedTag} setSelectedTag={setSelectedTag} />
       <CookingTimeFilter
         selectedCookingTime={selectedCookingTime}
         setSelectedCookingTime={setSelectedCookingTime}
@@ -39,11 +37,9 @@ export const MenuInner = () => {
         showBookmarked={showBookmarked}
         setShowBookmarked={setShowBookmarked}
       />
-    </Container>
+    </>
   )
 }
-
-const Container = styled.div``
 
 const SearchAndFiltersFallback = styled.div`
   display: flex;

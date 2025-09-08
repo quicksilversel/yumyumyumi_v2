@@ -9,9 +9,9 @@ export function IsPublicForm() {
 
   return (
     <ToggleSwitch
-      label="Make this recipe public"
+      label="レシピを公開する"
       {...register('isPublic')}
-      helperText="Public recipes can be viewed by anyone"
+      helperText="公開されたレシピは誰でも閲覧できます"
       height="small"
     />
   )

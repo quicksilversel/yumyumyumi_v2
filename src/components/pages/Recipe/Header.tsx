@@ -1,9 +1,12 @@
 import styled from '@emotion/styled'
 import AccessTimeIcon from '@mui/icons-material/AccessTime'
+import DateRangeIcon from '@mui/icons-material/DateRange'
+import LocalOfferIcon from '@mui/icons-material/LocalOffer'
+import Link from 'next/link'
 
 import type { Recipe } from '@/types/recipe'
 
-import { H1, Body, Flex, Chip, Label } from '@/components/ui'
+import { H1, Body, Flex, Chip, ChipGroup, Caption } from '@/components/ui'
 
 export const Header = ({ recipe }: { recipe: Recipe }) => {
   const formatDate = (dateString: string) => {
@@ -12,23 +15,51 @@ export const Header = ({ recipe }: { recipe: Recipe }) => {
 
   return (
     <StyledFlex direction="column" gap={2}>
-      <Chip size="sm" variant="outlined">
-        <AccessTimeIcon fontSize="small" />
-        {recipe.cookTime} min
-      </Chip>
+      {recipe.tags && recipe.tags.length > 0 && (
+        <ChipGroup gap={3}>
+          {recipe.tags.map((tag) => (
+            <Link key={tag} href={`/?tag=${encodeURI(tag)}`}>
+              <Chip clickable>
+                <LocalOfferIcon fontSize="inherit" />
+                {tag}
+              </Chip>
+            </Link>
+          ))}
+        </ChipGroup>
+      )}
       <H1>{recipe.title}</H1>
       {recipe.summary && (
         <Body size="sm" muted>
           {recipe.summary}
         </Body>
       )}
-      {recipe.createdAt && <Label>{formatDate(recipe.createdAt)}</Label>}
+      <RecipeInfo gap={3}>
+        <Flex align="center" gap={1}>
+          <AccessTimeIcon />
+          <Caption>{recipe.cookTime} min</Caption>
+        </Flex>
+        {recipe.createdAt && (
+          <Flex align="center" gap={1}>
+            <DateRangeIcon />
+            <Caption> {formatDate(recipe.createdAt)}</Caption>
+          </Flex>
+        )}
+      </RecipeInfo>
     </StyledFlex>
   )
 }
 
 const StyledFlex = styled(Flex)`
   position: relative;
-  padding-bottom: ${({ theme }) => theme.spacing[8]};
-  margin-block: ${({ theme }) => theme.spacing[6]};
+  padding-block: ${({ theme }) => theme.spacing[6]};
+`
+
+const RecipeInfo = styled(Flex)`
+  margin-top: ${({ theme }) => theme.spacing[2]};
+  color: ${({ theme }) => theme.colors.gray[600]};
+  font-size: ${({ theme }) => theme.typography.fontSize.sm};
+
+  svg {
+    font-size: 18px;
+  }
 `

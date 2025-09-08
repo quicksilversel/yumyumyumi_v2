@@ -33,7 +33,7 @@ export const BookmarkFilter = ({
   return (
     <FilterButton onClick={handleBookmarkToggle} active={showBookmarked}>
       {showBookmarked ? <FavoriteIcon /> : <FavoriteBorderOutlinedIcon />}
-      Bookmarks
+      お気に入りのレシピ
     </FilterButton>
   )
 }
@@ -43,12 +43,11 @@ const FilterButton = styled.button<{ active?: boolean }>`
   align-items: center;
   gap: ${({ theme }) => theme.spacing[1]};
   width: 100%;
-  height: 40px;
-  padding: ${({ theme }) => theme.spacing[2]} ${({ theme }) => theme.spacing[3]};
+  padding: ${({ theme }) => theme.spacing[4]} ${({ theme }) => theme.spacing[3]};
   color: ${({ active, theme }) =>
     active ? theme.colors.primary : theme.colors.gray[700]};
   font-size: ${({ theme }) => theme.typography.fontSize.sm};
-  cursor: pointer;
+  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
   transition: background-color ${({ theme }) => theme.transition.fast};
 
   &:hover {

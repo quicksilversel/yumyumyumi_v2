@@ -22,18 +22,16 @@ export const Header = () => {
   return (
     <>
       <Container>
-        <InnerContainer>
-          <Toolbar align="center" justify="between">
-            <Logo />
-            <Flex gap={4} align="center">
-              <User />
-              {user && <AddRecipeButton />}
-              <button onClick={() => setSlideMenuOpen(true)}>
-                <MenuIcon />
-              </button>
-            </Flex>
-          </Toolbar>
-        </InnerContainer>
+        <Toolbar align="center" justify="between">
+          <Logo />
+          <Flex gap={4} align="center">
+            <User />
+            {user && <AddRecipeButton />}
+            <button onClick={() => setSlideMenuOpen(true)}>
+              <MenuIcon />
+            </button>
+          </Flex>
+        </Toolbar>
       </Container>
       {slideMenuOpen && (
         <MenuOverlay
@@ -67,14 +65,11 @@ const Container = styled.header`
   padding-inline: 1rem;
 `
 
-const InnerContainer = styled.div`
+const Toolbar = styled(Flex)`
+  height: 56px;
   width: 100%;
   max-width: 1000px;
   margin: 0 auto;
-`
-
-const Toolbar = styled(Flex)`
-  height: 56px;
 `
 
 const fadeIn = keyframes`
@@ -123,7 +118,7 @@ const MenuHeader = styled.div`
   border-bottom: 1px solid ${({ theme }) => theme.colors.gray[200]};
 `
 
-const MenuTitle = styled.h2`
+const MenuTitle = styled.span`
   margin: 0;
   color: ${({ theme }) => theme.colors.black};
   font-size: ${({ theme }) => theme.typography.fontSize.lg};
@@ -140,6 +135,5 @@ const CloseButton = styled(IconButton)`
 
 const MenuContent = styled.div`
   flex: 1;
-  padding: ${({ theme }) => theme.spacing[4]};
   overflow-y: auto;
 `

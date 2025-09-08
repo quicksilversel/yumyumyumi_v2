@@ -11,8 +11,7 @@ export async function addBookmark(recipeId: string): Promise<boolean> {
     } = await supabase.auth.getUser()
 
     if (!user) {
-      // eslint-disable-next-line no-console
-      console.error('User must be logged in to bookmark recipes')
+      alert('ログインが必要です')
       return false
     }
 

@@ -49,8 +49,8 @@ export const TagsForm = () => {
       <input type="hidden" {...tagsRegistration} value={JSON.stringify(tags)} />
       <TagInputRow>
         <Input
-          title="Tags"
-          placeholder="Add a tag (e.g., 'vegetarian', 'quick')"
+          title="タグ"
+          placeholder="タグの入力後、Enterキーを押してください"
           value={tagInput}
           onChange={(e) => setTagInput(e.target.value)}
           onKeyDown={handleKeyPress}
@@ -63,11 +63,10 @@ export const TagsForm = () => {
           type="button"
         >
           <AddIcon fontSize="inherit" />
-          Add
         </Button>
       </TagInputRow>
       {tags.length === 0 ? (
-        <Caption>No tags added yet.</Caption>
+        <Caption>まだタグが追加されていません。</Caption>
       ) : (
         <ChipGroup gap={2}>
           {tags.map((tag) => (

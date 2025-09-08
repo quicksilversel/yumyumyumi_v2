@@ -19,6 +19,7 @@ import {
 export function IngredientsForm() {
   const {
     register,
+    watch,
     formState: { errors },
   } = useFormContext<RecipeForm>()
 
@@ -26,10 +27,19 @@ export function IngredientsForm() {
     name: 'ingredients',
   })
 
-  const addIngredient = () => {
-    append({ name: '', amount: '', isSpice: false })
-  }
+  const watchedIngredients = watch('ingredients') || []
 
+  const addIngredient = () => {
+    const previousIsSpice =
+      watchedIngredients.length > 0
+        ? watchedIngredients[watchedIngredients.length - 1]?.isSpice || false
+        : false
+    append({
+      name: '',
+      amount: '',
+      isSpice: previousIsSpice,
+    })
+  }
   const removeIngredient = (index: number) => {
     remove(index)
   }
@@ -46,45 +56,49 @@ export function IngredientsForm() {
         )}
       {fields.length === 0 ? (
         <Caption>
-          No ingredients added yet. Click &quot;Add&quot; to start.
+          まだ材料が追加されていません。「材料を追加」ボタンを押して追加してください。
         </Caption>
       ) : (
         <Stack gap={2}>
           {fields.map((field, index) => (
             <IngredientRow key={field.id}>
               <FieldContainer>
-                <Input
-                  {...register(`ingredients.${index}.name`, {
-                    required: 'Ingredient name is required',
-                    minLength: {
-                      value: 1,
-                      message: 'Name cannot be empty',
-                    },
-                  })}
-                  placeholder="材料名"
-                  error={!!errors.ingredients?.[index]?.name}
-                />
-                {errors.ingredients?.[index]?.name && (
-                  <ErrorText>
-                    {errors.ingredients[index].name?.message}
-                  </ErrorText>
-                )}
-                <Input
-                  {...register(`ingredients.${index}.amount`, {
-                    required: 'Amount is required',
-                    minLength: {
-                      value: 1,
-                      message: 'Amount cannot be empty',
-                    },
-                  })}
-                  placeholder="量"
-                  error={!!errors.ingredients?.[index]?.amount}
-                />
-                {errors.ingredients?.[index]?.amount && (
-                  <ErrorText>
-                    {errors.ingredients[index].amount?.message}
-                  </ErrorText>
-                )}
+                <div>
+                  <Input
+                    {...register(`ingredients.${index}.name`, {
+                      required: 'Ingredient name is required',
+                      minLength: {
+                        value: 1,
+                        message: 'Name cannot be empty',
+                      },
+                    })}
+                    placeholder="材料"
+                    error={!!errors.ingredients?.[index]?.name}
+                  />
+                  {errors.ingredients?.[index]?.name && (
+                    <ErrorText>
+                      {errors.ingredients[index].name?.message}
+                    </ErrorText>
+                  )}
+                </div>
+                <div>
+                  <Input
+                    {...register(`ingredients.${index}.amount`, {
+                      required: 'Amount is required',
+                      minLength: {
+                        value: 1,
+                        message: 'Amount cannot be empty',
+                      },
+                    })}
+                    placeholder="分量"
+                    error={!!errors.ingredients?.[index]?.amount}
+                  />
+                  {errors.ingredients?.[index]?.amount && (
+                    <ErrorText>
+                      {errors.ingredients[index].amount?.message}
+                    </ErrorText>
+                  )}
+                </div>
                 <IconButton
                   size="sm"
                   onClick={() => removeIngredient(index)}
@@ -95,7 +109,7 @@ export function IngredientsForm() {
                 </IconButton>
               </FieldContainer>
               <StyledToggleSwitch
-                label="Spice"
+                label="A"
                 {...register(`ingredients.${index}.isSpice`)}
                 height="small"
               />
@@ -105,7 +119,7 @@ export function IngredientsForm() {
       )}
       <Button variant="primary" size="sm" onClick={addIngredient} type="button">
         <AddIcon fontSize="inherit" />
-        Add Ingredients
+        材料を追加
       </Button>
     </Stack>
   )
@@ -125,7 +139,7 @@ const IngredientRow = styled.div`
 const FieldContainer = styled.div`
   width: 100%;
   display: grid;
-  grid-template-columns: 4fr 2fr 1fr;
+  grid-template-columns: 4fr 2fr auto;
   gap: 4px;
 `
 

@@ -18,8 +18,11 @@ export const Ingredients = ({ recipe }: { recipe: Recipe }) => {
     <Section>
       <H2>Ingredients</H2>
       <IngredientList>
-        {sortedIngredientList?.map((ingredient) => (
-          <IngredientItem key={ingredient.name} isSpice={!!ingredient.isSpice}>
+        {sortedIngredientList?.map((ingredient, index) => (
+          <IngredientItem
+            key={ingredient.name + index}
+            isSpice={!!ingredient.isSpice}
+          >
             <Flex justify="between" align="center">
               <span>
                 {!!ingredient.isSpice && '（A）'} {ingredient.name}
@@ -40,14 +43,13 @@ const Section = styled.section`
 const IngredientList = styled.ul`
   display: flex;
   flex-direction: column;
-  gap: ${({ theme }) => theme.spacing[2]};
   width: 100%;
 `
 
 const IngredientItem = styled.li<{ isSpice: boolean }>`
   position: relative;
   width: 100%;
-  padding: ${({ theme }) => theme.spacing[3]} ${({ theme }) => theme.spacing[4]};
+  padding: ${({ theme }) => theme.spacing[3]} ${({ theme }) => theme.spacing[2]};
   border-top: 1px solid ${({ theme }) => theme.colors.gray[200]};
   font-size: ${({ theme }) => theme.typography.fontSize.sm};
 

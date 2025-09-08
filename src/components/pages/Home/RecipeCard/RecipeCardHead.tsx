@@ -18,7 +18,7 @@ export const RecipeCardHead = ({ recipe }: { recipe: Recipe }) => {
       />
 
       <MediaGradient />
-      <Category>{recipe.category}</Category>
+      {recipe.tags?.[0] && <Label>{recipe.tags[0]}</Label>}
     </Container>
   )
 }
@@ -41,7 +41,7 @@ const MediaGradient = styled.div`
   pointer-events: none;
 `
 
-const Category = styled.div`
+const Label = styled.div`
   position: absolute;
   bottom: 0;
   left: 0;

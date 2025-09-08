@@ -51,6 +51,10 @@ const DirectionItem = styled.li`
 const DirectionTitle = styled(Body)`
   position: relative;
 
+  &:has(+ ${Body}) {
+    font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
+  }
+
   &::before {
     position: absolute;
     top: 0;

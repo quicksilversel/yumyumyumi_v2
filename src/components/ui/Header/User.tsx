@@ -65,7 +65,7 @@ export const User = () => {
         <MenuDivider />
         <MenuItem onClick={handleSignOut}>
           <LogoutIcon />
-          Sign Out
+          ログアウト
         </MenuItem>
       </DropdownMenu>
     </Container>
@@ -96,7 +96,7 @@ const UserLink = styled(Link)`
   align-items: center;
   gap: ${({ theme }) => theme.spacing[3]};
   width: 100%;
-  padding: ${({ theme }) => theme.spacing[3]} ${({ theme }) => theme.spacing[4]};
+  padding: ${({ theme }) => theme.spacing[3]};
   border: none;
   background: none;
   color: ${({ theme }) => theme.colors.black};

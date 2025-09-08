@@ -1,5 +1,4 @@
 import {
-  CategoryForm,
   CookTimeForm,
   DirectionsForm,
   ImageForm,
@@ -37,8 +36,8 @@ export const RecipeForm = ({
       <H2>General</H2>
       <TitleForm />
       <SummaryForm />
-      <Grid cols={3} gap={4} responsive>
-        <CategoryForm />
+      <TagsForm />
+      <Grid cols={2} gap={4} responsive>
         <CookTimeForm />
         <ServingsForm />
       </Grid>
@@ -49,7 +48,6 @@ export const RecipeForm = ({
       <Divider />
       <H2>Details</H2>
       <ImageForm onImageChange={handleImageChange} uploading={uploadingImage} />
-      <TagsForm />
       <SourceForm />
       <TipsForm />
       <IsPublicForm />
