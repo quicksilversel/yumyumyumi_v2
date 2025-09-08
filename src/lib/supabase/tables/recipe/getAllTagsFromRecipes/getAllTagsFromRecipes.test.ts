@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { objectToCamel } from 'ts-case-convert'
 
 import type { Recipe } from '@/types/recipe'
@@ -70,10 +71,12 @@ describe('getAllTagsFromRecipes', () => {
   beforeEach(() => {
     jest.clearAllMocks()
     ;(getSupabaseClient as jest.Mock).mockReturnValue(mockSupabaseClient)
-    ;(objectToCamel as jest.Mock).mockImplementation((data) => mockCamelCaseRecipes)
-    
+    ;(objectToCamel as jest.Mock).mockImplementation(
+      (data) => mockCamelCaseRecipes,
+    )
+
     mockSupabaseClient.from.mockReturnValue(mockQueryBuilder)
-    // eslint-disable-next-line no-console
+
     jest.spyOn(console, 'error').mockImplementation(() => {})
   })
 
@@ -95,7 +98,7 @@ describe('getAllTagsFromRecipes', () => {
       expect(mockQueryBuilder.select).toHaveBeenCalledWith('tags')
       expect(mockQueryBuilder.eq).toHaveBeenCalledWith('is_public', true)
       expect(objectToCamel).toHaveBeenCalledWith(mockDbRecipes)
-      
+
       // Should return unique tags in alphabetical order
       expect(result).toEqual([
         'breakfast',
@@ -122,7 +125,6 @@ describe('getAllTagsFromRecipes', () => {
         data: recipesWithNoTags,
         error: null,
       })
-
       ;(objectToCamel as jest.Mock).mockImplementation(() => [
         { tags: null },
         { tags: [] },
@@ -139,7 +141,6 @@ describe('getAllTagsFromRecipes', () => {
         data: [],
         error: null,
       })
-
       ;(objectToCamel as jest.Mock).mockImplementation(() => [])
 
       const result = await getAllTagsFromRecipes()
@@ -158,7 +159,6 @@ describe('getAllTagsFromRecipes', () => {
         data: recipesWithDuplicates,
         error: null,
       })
-
       ;(objectToCamel as jest.Mock).mockImplementation(() => [
         { tags: ['italian', 'pasta'] },
         { tags: ['italian', 'pasta'] },
@@ -181,7 +181,6 @@ describe('getAllTagsFromRecipes', () => {
         data: recipesWithEmptyTags,
         error: null,
       })
-
       ;(objectToCamel as jest.Mock).mockImplementation(() => [
         { tags: ['valid', '', 'another'] },
         { tags: ['', 'tag'] },
@@ -203,7 +202,6 @@ describe('getAllTagsFromRecipes', () => {
         data: recipesWithMixedCase,
         error: null,
       })
-
       ;(objectToCamel as jest.Mock).mockImplementation(() => [
         { tags: ['Italian', 'ITALIAN', 'italian'] },
         { tags: ['Pasta', 'pasta'] },
@@ -212,7 +210,13 @@ describe('getAllTagsFromRecipes', () => {
       const result = await getAllTagsFromRecipes()
 
       // Should treat different cases as distinct tags
-      expect(result).toEqual(['ITALIAN', 'Italian', 'Pasta', 'italian', 'pasta'])
+      expect(result).toEqual([
+        'ITALIAN',
+        'Italian',
+        'Pasta',
+        'italian',
+        'pasta',
+      ])
     })
 
     it('should handle tags with special characters', async () => {
@@ -225,7 +229,6 @@ describe('getAllTagsFromRecipes', () => {
         data: recipesWithSpecialChars,
         error: null,
       })
-
       ;(objectToCamel as jest.Mock).mockImplementation(() => [
         { tags: ['gluten-free', 'dairy_free', 'nut free'] },
         { tags: ['30-minute', '5-ingredient'] },
@@ -247,7 +250,6 @@ describe('getAllTagsFromRecipes', () => {
         data: null,
         error: null,
       })
-
       ;(objectToCamel as jest.Mock).mockImplementation(() => null)
 
       const result = await getAllTagsFromRecipes()
@@ -267,7 +269,10 @@ describe('getAllTagsFromRecipes', () => {
       const result = await getAllTagsFromRecipes()
 
       expect(result).toEqual([])
-      expect(console.error).toHaveBeenCalledWith('fetching all tags', queryError)
+      expect(console.error).toHaveBeenCalledWith(
+        'fetching all tags',
+        queryError,
+      )
     })
 
     it('should return empty array when an exception occurs', async () => {
@@ -302,7 +307,6 @@ describe('getAllTagsFromRecipes', () => {
         data: mockDbRecipes,
         error: null,
       })
-
       ;(objectToCamel as jest.Mock).mockImplementation(() => {
         throw new Error('Conversion failed')
       })
@@ -320,15 +324,12 @@ describe('getAllTagsFromRecipes', () => {
   describe('edge cases', () => {
     it('should handle very large tag lists', async () => {
       const largeTags = Array.from({ length: 1000 }, (_, i) => `tag${i}`)
-      const recipesWithLargeTags = [
-        { tags: largeTags },
-      ]
+      const recipesWithLargeTags = [{ tags: largeTags }]
 
       mockQueryBuilder.eq.mockResolvedValue({
         data: recipesWithLargeTags,
         error: null,
       })
-
       ;(objectToCamel as jest.Mock).mockImplementation(() => [
         { tags: largeTags },
       ])
@@ -349,7 +350,6 @@ describe('getAllTagsFromRecipes', () => {
         ],
         error: null,
       })
-
       ;(objectToCamel as jest.Mock).mockImplementation(() => [
         { tags: 'not-an-array' as any },
         { tags: 123 as any },
@@ -362,15 +362,12 @@ describe('getAllTagsFromRecipes', () => {
     })
 
     it('should handle tags with only whitespace', async () => {
-      const recipesWithWhitespaceTags = [
-        { tags: ['  ', '\t', '\n', 'valid'] },
-      ]
+      const recipesWithWhitespaceTags = [{ tags: ['  ', '\t', '\n', 'valid'] }]
 
       mockQueryBuilder.eq.mockResolvedValue({
         data: recipesWithWhitespaceTags,
         error: null,
       })
-
       ;(objectToCamel as jest.Mock).mockImplementation(() => [
         { tags: ['  ', '\t', '\n', 'valid'] },
       ])
@@ -391,7 +388,6 @@ describe('getAllTagsFromRecipes', () => {
         data: unsortedTags,
         error: null,
       })
-
       ;(objectToCamel as jest.Mock).mockImplementation(() => [
         { tags: ['zebra', 'apple', 'mango'] },
         { tags: ['banana', 'orange'] },

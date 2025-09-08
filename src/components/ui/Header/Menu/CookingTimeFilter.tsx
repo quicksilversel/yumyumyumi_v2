@@ -6,11 +6,11 @@ import TimerIcon from '@mui/icons-material/Timer'
 import { useRouter } from 'next/navigation'
 
 const cookingTimeOptions = [
-  { label: 'All', value: null },
-  { label: 'Under 15 minutes', value: 15 },
-  { label: 'Under 30 minutes', value: 30 },
-  { label: 'Under 45 minutes', value: 45 },
-  { label: 'Under 1 hour', value: 60 },
+  { label: 'すべて', value: null },
+  { label: '15分以内', value: 15 },
+  { label: '30分以内', value: 30 },
+  { label: '45分以内', value: 45 },
+  { label: '1時間以内', value: 60 },
 ]
 
 type Props = {
@@ -47,7 +47,7 @@ export const CookingTimeFilter = ({
             ? cookingTimeOptions.find(
                 (opt) => opt.value === selectedCookingTime,
               )?.label
-            : 'Cooking Time'}
+            : '調理時間から探す'}
           <StyledExpandMoreIcon />
         </StyledSummary>
         <DropdownContainer>

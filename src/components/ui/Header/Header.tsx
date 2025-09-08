@@ -140,6 +140,5 @@ const CloseButton = styled(IconButton)`
 
 const MenuContent = styled.div`
   flex: 1;
-  padding: ${({ theme }) => theme.spacing[4]};
   overflow-y: auto;
 `

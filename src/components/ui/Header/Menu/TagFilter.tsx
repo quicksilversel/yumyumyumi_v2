@@ -48,7 +48,7 @@ export const TagFilter = ({ selectedTag, setSelectedTag }: Props) => {
   }
 
   const tagOptions = [
-    { label: 'All Tags', value: null },
+    { label: 'すべて', value: null },
     ...availableTags.map((tag) => ({ label: tag, value: tag })),
   ]
 
@@ -57,7 +57,7 @@ export const TagFilter = ({ selectedTag, setSelectedTag }: Props) => {
       <StyledDetails ref={detailsRef}>
         <StyledSummary>
           <LocalOfferIcon />
-          {selectedTag || 'Tags'}
+          {selectedTag || 'タグから探す'}
           <StyledExpandMoreIcon />
         </StyledSummary>
         <DropdownContainer>

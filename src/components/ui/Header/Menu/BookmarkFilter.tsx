@@ -33,7 +33,7 @@ export const BookmarkFilter = ({
   return (
     <FilterButton onClick={handleBookmarkToggle} active={showBookmarked}>
       {showBookmarked ? <FavoriteIcon /> : <FavoriteBorderOutlinedIcon />}
-      Bookmarks
+      お気に入りのレシピ
     </FilterButton>
   )
 }

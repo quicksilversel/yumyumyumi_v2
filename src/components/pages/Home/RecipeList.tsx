@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback, useEffect, Suspense } from 'react'
+import { useCallback, useEffect, useState, Suspense } from 'react'
 
 import { keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
@@ -14,6 +14,7 @@ import { useBookmarks } from '@/hooks/useBookmarks'
 import { searchRecipesInSupabase } from '@/lib/supabase/tables/recipe/searchRecipesInSupabase'
 
 import { RecipeGrid } from './RecipeGrid'
+import { RecipeSortButton, type SortOption } from './RecipeSortButton'
 import { SearchBar } from './SearchBar'
 
 import { EditRecipeDialog } from '../Modals/EditRecipeDialog'
@@ -40,6 +41,8 @@ function RecipeListInner({ initialRecipes }: RecipeListProps) {
     handleRecipeUpdated,
   } = useRecipeContext()
 
+  const [selectedSort, setSelectedSort] = useState<SortOption>('date-desc')
+
   const getFiltersFromParams = useCallback((): RecipeFilters => {
     const filters: RecipeFilters = {}
 
@@ -54,6 +57,38 @@ function RecipeListInner({ initialRecipes }: RecipeListProps) {
 
     return filters
   }, [searchParams])
+
+  const sortRecipes = useCallback(
+    (recipesToSort: Recipe[], sortType: SortOption): Recipe[] => {
+      const sorted = [...recipesToSort]
+
+      switch (sortType) {
+        case 'date-asc':
+          return sorted.sort(
+            (a, b) =>
+              new Date(a.createdAt || 0).getTime() -
+              new Date(b.createdAt || 0).getTime(),
+          )
+        case 'date-desc':
+          return sorted.sort(
+            (a, b) =>
+              new Date(b.createdAt || 0).getTime() -
+              new Date(a.createdAt || 0).getTime(),
+          )
+        case 'alphabetical':
+          return sorted.sort((a, b) =>
+            a.title.toLowerCase().localeCompare(b.title.toLowerCase()),
+          )
+        case 'cooktime-asc':
+          return sorted.sort((a, b) => (a.cookTime || 0) - (b.cookTime || 0))
+        case 'cooktime-desc':
+          return sorted.sort((a, b) => (b.cookTime || 0) - (a.cookTime || 0))
+        default:
+          return sorted
+      }
+    },
+    [],
+  )
 
   useEffect(() => {
     const applyFilters = async () => {
@@ -94,13 +129,19 @@ function RecipeListInner({ initialRecipes }: RecipeListProps) {
   ])
 
   useEffect(() => {
+    const sortedRecipes = sortRecipes(recipes, selectedSort)
+    setFilteredRecipes(sortedRecipes)
+  }, [recipes, selectedSort, sortRecipes, setFilteredRecipes])
+
+  useEffect(() => {
     if (!clientSearchTerm) {
-      setFilteredRecipes(recipes)
+      const sortedRecipes = sortRecipes(recipes, selectedSort)
+      setFilteredRecipes(sortedRecipes)
       return
     }
 
     const searchLower = clientSearchTerm.toLowerCase()
-    const filtered = recipes.filter((recipe) => {
+    let filtered = recipes.filter((recipe) => {
       return (
         recipe.title.toLowerCase().includes(searchLower) ||
         recipe.summary?.toLowerCase().includes(searchLower) ||
@@ -109,13 +150,15 @@ function RecipeListInner({ initialRecipes }: RecipeListProps) {
         )
       )
     })
+
+    filtered = sortRecipes(filtered, selectedSort)
+
     setFilteredRecipes(filtered)
-  }, [clientSearchTerm, recipes, setFilteredRecipes])
+  }, [clientSearchTerm, recipes, selectedSort, sortRecipes, setFilteredRecipes])
 
   useEffect(() => {
     setRecipes(initialRecipes)
-    setFilteredRecipes(initialRecipes)
-  }, [initialRecipes, setRecipes, setFilteredRecipes])
+  }, [initialRecipes, setRecipes])
 
   return (
     <>
@@ -123,6 +166,10 @@ function RecipeListInner({ initialRecipes }: RecipeListProps) {
         <SearchBar
           searchTerm={clientSearchTerm}
           onSearchChange={setClientSearchTerm}
+        />
+        <RecipeSortButton
+          selectedSort={selectedSort}
+          onSortChange={setSelectedSort}
         />
         {error && <ErrorMessage>{error}</ErrorMessage>}
         {loading ? (
