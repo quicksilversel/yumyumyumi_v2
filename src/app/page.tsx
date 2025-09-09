@@ -3,6 +3,8 @@ import type { Metadata } from 'next'
 import { RecipeList } from '@/components/pages/Home/RecipeList'
 import { getRecipesFromSupabase } from '@/lib/supabase/tables/recipe/getRecipesFromSupabase'
 
+export const revalidate = 3600 // 1 hour
+
 export const metadata: Metadata = {
   title: 'YumYumYumi',
   description: 'Find, save, and share your favorite recipes with YumYumYumi',

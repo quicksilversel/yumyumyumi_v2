@@ -10,7 +10,6 @@ import type { Recipe, RecipeFilters } from '@/types/recipe'
 
 import { useRecipeContext } from '@/contexts/RecipeContext'
 import { useBookmarks } from '@/hooks/useBookmarks'
-import { searchRecipesInSupabase } from '@/lib/supabase/tables/recipe/searchRecipesInSupabase'
 
 import { RecipeGrid } from './RecipeGrid'
 import { RecipeSortButton, type SortOption } from './RecipeSortButton'
@@ -42,7 +41,6 @@ function RecipeListInner({ initialRecipes }: RecipeListProps) {
 
   const [selectedSort, setSelectedSort] = useState<SortOption>('date-desc')
   const hasInitialized = useRef(false)
-  const prevSearchParams = useRef(searchParams.toString())
 
   const getFiltersFromParams = useCallback((): RecipeFilters => {
     const filters: RecipeFilters = {}
@@ -91,113 +89,78 @@ function RecipeListInner({ initialRecipes }: RecipeListProps) {
     [],
   )
 
+  const filterRecipesClientSide = useCallback(
+    (recipesToFilter: Recipe[], filters: RecipeFilters): Recipe[] => {
+      let filtered = [...recipesToFilter]
+
+      if (filters.maxCookingTime) {
+        filtered = filtered.filter(
+          (recipe) => (recipe.cookTime || 0) <= filters.maxCookingTime!,
+        )
+      }
+
+      if (filters.tag) {
+        const decodedTag = decodeURI(filters.tag)
+        filtered = filtered.filter((recipe) =>
+          recipe.tags?.includes(decodedTag),
+        )
+      }
+
+      if (filters.showBookmarkedOnly) {
+        const bookmarkedIds = bookmarks.map((b) => b.recipeId)
+        filtered = filtered.filter((recipe) =>
+          bookmarkedIds.includes(recipe.id),
+        )
+      }
+
+      return filtered
+    },
+    [bookmarks],
+  )
+
   useEffect(() => {
     if (!hasInitialized.current && initialRecipes) {
-      const sortedRecipes = sortRecipes(initialRecipes, selectedSort)
       setRecipes(initialRecipes)
-      setFilteredRecipes(sortedRecipes)
       setLoading(false)
       hasInitialized.current = true
     }
-  }, [
-    initialRecipes,
-    selectedSort,
-    sortRecipes,
-    setRecipes,
-    setFilteredRecipes,
-    setLoading,
-  ])
-
-  useEffect(() => {
-    const currentParams = searchParams.toString()
-
-    if (!hasInitialized.current || prevSearchParams.current === currentParams) {
-      prevSearchParams.current = currentParams
-      return
-    }
-
-    prevSearchParams.current = currentParams
-
-    const applyFilters = async () => {
-      const filters = getFiltersFromParams()
-
-      const hasFilters =
-        filters.maxCookingTime || filters.tag || filters.showBookmarkedOnly
-      if (!hasFilters) {
-        const sortedResults = sortRecipes(initialRecipes, selectedSort)
-        setRecipes(initialRecipes)
-        setFilteredRecipes(sortedResults)
-        return
-      }
-
-      setLoading(true)
-      setError(null)
-
-      try {
-        let results = await searchRecipesInSupabase(filters)
-
-        if (filters.showBookmarkedOnly) {
-          const bookmarkedIds = bookmarks.map((b) => b.recipeId)
-          results = results.filter((recipe) =>
-            bookmarkedIds.includes(recipe.id),
-          )
-        }
-
-        setRecipes(results)
-        const sortedResults = sortRecipes(results, selectedSort)
-        setFilteredRecipes(sortedResults)
-      } catch (err) {
-        setError('Failed to filter recipes. Please try again.')
-        console.warn('Error filtering recipes:', err)
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    applyFilters()
-  }, [
-    searchParams,
-    bookmarks,
-    getFiltersFromParams,
-    selectedSort,
-    sortRecipes,
-    setLoading,
-    setError,
-    setRecipes,
-    setFilteredRecipes,
-    initialRecipes,
-  ])
-
-  useEffect(() => {
-    if (!hasInitialized.current) return
-    const sortedRecipes = sortRecipes(recipes, selectedSort)
-    setFilteredRecipes(sortedRecipes)
-  }, [selectedSort, recipes, sortRecipes, setFilteredRecipes])
+  }, [initialRecipes, setRecipes, setLoading])
 
   useEffect(() => {
     if (!hasInitialized.current) return
 
-    if (!clientSearchTerm) {
-      const sortedRecipes = sortRecipes(recipes, selectedSort)
-      setFilteredRecipes(sortedRecipes)
-      return
-    }
+    let filtered = recipes
 
-    const searchLower = clientSearchTerm.toLowerCase()
-    let filtered = recipes.filter((recipe) => {
-      return (
-        recipe.title.toLowerCase().includes(searchLower) ||
-        recipe.summary?.toLowerCase().includes(searchLower) ||
-        recipe.ingredients.some((ing) =>
-          ing.name.toLowerCase().includes(searchLower),
-        ) ||
-        recipe.tags?.some((tag) => tag.toLowerCase().includes(searchLower))
-      )
-    })
+    const filters = getFiltersFromParams()
+    filtered = filterRecipesClientSide(filtered, filters)
+
+    if (clientSearchTerm) {
+      const searchLower = clientSearchTerm.toLowerCase()
+      filtered = filtered.filter((recipe) => {
+        return (
+          recipe.title.toLowerCase().includes(searchLower) ||
+          recipe.summary?.toLowerCase().includes(searchLower) ||
+          recipe.ingredients.some((ing) =>
+            ing.name.toLowerCase().includes(searchLower),
+          ) ||
+          recipe.tags?.some((tag) => tag.toLowerCase().includes(searchLower))
+        )
+      })
+    }
 
     filtered = sortRecipes(filtered, selectedSort)
     setFilteredRecipes(filtered)
-  }, [clientSearchTerm, recipes, selectedSort, sortRecipes, setFilteredRecipes])
+  }, [
+    recipes,
+    searchParams,
+    clientSearchTerm,
+    selectedSort,
+    bookmarks,
+    getFiltersFromParams,
+    filterRecipesClientSide,
+    sortRecipes,
+    setFilteredRecipes,
+  ])
 
   return (
     <>

@@ -57,10 +57,7 @@ export const DeleteRecipeModal = ({ recipe, open, onClose }: Props) => {
       }
     >
       <DialogContent>
-        <Body>
-          「{recipe.title}」を削除してもよろしいですか？
-          この操作は元に戻すことができません。
-        </Body>
+        <Body>「{recipe.title}」を削除しますか？</Body>
       </DialogContent>
     </Dialog>
   )

@@ -29,7 +29,7 @@ export const useRecipeActions = (
   }
 
   const handleDelete = async () => {
-    if (window.confirm(`Are you sure you want to delete "${recipe.title}"?`)) {
+    if (window.confirm(`${recipe.title}」を削除しますか？`)) {
       setIsDeleting(true)
       const success = await deleteRecipe(recipe.id)
       if (success) {
