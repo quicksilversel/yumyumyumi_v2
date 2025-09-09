@@ -3,15 +3,18 @@ import { removeBookmark } from './removeBookmark'
 
 import { isBookmarked } from '../isBookmarked'
 
-export async function toggleBookmark(recipeId: string): Promise<boolean> {
+export async function toggleBookmark(
+  recipeId: string,
+  userId?: string,
+): Promise<boolean> {
   try {
-    const bookmarked = await isBookmarked(recipeId)
+    const bookmarked = await isBookmarked(recipeId, userId)
 
     if (bookmarked) {
-      await removeBookmark(recipeId)
+      await removeBookmark(recipeId, userId)
       return false
     } else {
-      await addBookmark(recipeId)
+      await addBookmark(recipeId, userId)
       return true
     }
   } catch (error) {

@@ -1,21 +1,27 @@
 import { getSupabaseClient } from '../../../getSupabaseClient'
 
-export async function isBookmarked(recipeId: string): Promise<boolean> {
+export async function isBookmarked(
+  recipeId: string,
+  userId?: string,
+): Promise<boolean> {
   try {
     const supabase = getSupabaseClient()
 
-    const {
-      data: { user },
-    } = await supabase.auth.getUser()
+    if (!userId) {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser()
+      userId = user?.id
+    }
 
-    if (!user) {
+    if (!userId) {
       return false
     }
 
     const { data, error } = await supabase
       .from('bookmarks')
       .select('id')
-      .eq('user_id', user.id)
+      .eq('user_id', userId)
       .eq('recipe_id', recipeId)
     if (error) throw error
 

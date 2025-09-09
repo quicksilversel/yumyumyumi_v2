@@ -6,22 +6,25 @@ import { BookmarkList } from '@/types/bookmarks'
 
 import { getSupabaseClient } from '../../../getSupabaseClient'
 
-export async function getBookmarks(): Promise<BookmarkList> {
+export async function getBookmarks(userId?: string): Promise<BookmarkList> {
   try {
     const supabase = getSupabaseClient()
 
-    const {
-      data: { user },
-    } = await supabase.auth.getUser()
+    if (!userId) {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser()
+      userId = user?.id
+    }
 
-    if (!user) {
+    if (!userId) {
       return []
     }
 
     const { data, error } = await supabase
       .from('bookmarks')
       .select('*')
-      .eq('user_id', user.id)
+      .eq('user_id', userId)
       .order('created_at', { ascending: false })
 
     if (error) throw error

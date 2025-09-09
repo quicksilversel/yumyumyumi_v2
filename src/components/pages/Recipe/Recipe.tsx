@@ -27,7 +27,7 @@ export const RecipeDetail = (props: { recipe: Recipe }) => {
 }
 
 const RecipeContainer = styled.div`
-  max-width: 1000px;
+  max-width: 1200px;
   margin: 0 auto 1rem;
 `
 

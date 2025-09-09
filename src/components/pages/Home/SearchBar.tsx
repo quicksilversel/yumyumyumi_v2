@@ -24,7 +24,6 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   width: 100%;
-  max-width: 1000px;
   margin: ${({ theme }) => theme.spacing[6]} auto;
 `
 

@@ -2,26 +2,32 @@ import { getSupabaseClient } from '@/lib/supabase/getSupabaseClient'
 
 import { isBookmarked } from '../isBookmarked'
 
-export async function addBookmark(recipeId: string): Promise<boolean> {
+export async function addBookmark(
+  recipeId: string,
+  userId?: string,
+): Promise<boolean> {
   try {
     const supabase = getSupabaseClient()
 
-    const {
-      data: { user },
-    } = await supabase.auth.getUser()
+    if (!userId) {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser()
+      userId = user?.id
+    }
 
-    if (!user) {
+    if (!userId) {
       alert('ログインが必要です')
       return false
     }
 
-    const alreadyBookmarked = await isBookmarked(recipeId)
+    const alreadyBookmarked = await isBookmarked(recipeId, userId)
     if (alreadyBookmarked) {
       return true
     }
 
     const insertData = {
-      user_id: user.id,
+      user_id: userId,
       recipe_id: recipeId,
     }
 

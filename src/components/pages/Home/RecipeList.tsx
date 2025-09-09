@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback, useEffect, useState, Suspense } from 'react'
+import { useCallback, useEffect, useState, Suspense, useRef } from 'react'
 
 import { keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
@@ -8,7 +8,6 @@ import { useSearchParams } from 'next/navigation'
 
 import type { Recipe, RecipeFilters } from '@/types/recipe'
 
-import { Flex } from '@/components/ui'
 import { useRecipeContext } from '@/contexts/RecipeContext'
 import { useBookmarks } from '@/hooks/useBookmarks'
 import { searchRecipesInSupabase } from '@/lib/supabase/tables/recipe/searchRecipesInSupabase'
@@ -42,6 +41,8 @@ function RecipeListInner({ initialRecipes }: RecipeListProps) {
   } = useRecipeContext()
 
   const [selectedSort, setSelectedSort] = useState<SortOption>('date-desc')
+  const hasInitialized = useRef(false)
+  const prevSearchParams = useRef(searchParams.toString())
 
   const getFiltersFromParams = useCallback((): RecipeFilters => {
     const filters: RecipeFilters = {}
@@ -91,11 +92,48 @@ function RecipeListInner({ initialRecipes }: RecipeListProps) {
   )
 
   useEffect(() => {
+    if (!hasInitialized.current && initialRecipes) {
+      const sortedRecipes = sortRecipes(initialRecipes, selectedSort)
+      setRecipes(initialRecipes)
+      setFilteredRecipes(sortedRecipes)
+      setLoading(false)
+      hasInitialized.current = true
+    }
+  }, [
+    initialRecipes,
+    selectedSort,
+    sortRecipes,
+    setRecipes,
+    setFilteredRecipes,
+    setLoading,
+  ])
+
+  useEffect(() => {
+    const currentParams = searchParams.toString()
+
+    // Skip if this is the initial mount or params haven't changed
+    if (!hasInitialized.current || prevSearchParams.current === currentParams) {
+      prevSearchParams.current = currentParams
+      return
+    }
+
+    prevSearchParams.current = currentParams
+
     const applyFilters = async () => {
+      const filters = getFiltersFromParams()
+
+      // If there are no filters, use the initial recipes instead of fetching
+      const hasFilters =
+        filters.maxCookingTime || filters.tag || filters.showBookmarkedOnly
+      if (!hasFilters) {
+        const sortedResults = sortRecipes(initialRecipes, selectedSort)
+        setRecipes(initialRecipes)
+        setFilteredRecipes(sortedResults)
+        return
+      }
+
       setLoading(true)
       setError(null)
-
-      const filters = getFiltersFromParams()
 
       try {
         let results = await searchRecipesInSupabase(filters)
@@ -108,7 +146,8 @@ function RecipeListInner({ initialRecipes }: RecipeListProps) {
         }
 
         setRecipes(results)
-        setFilteredRecipes(results)
+        const sortedResults = sortRecipes(results, selectedSort)
+        setFilteredRecipes(sortedResults)
       } catch (err) {
         setError('Failed to filter recipes. Please try again.')
         console.warn('Error filtering recipes:', err)
@@ -122,18 +161,24 @@ function RecipeListInner({ initialRecipes }: RecipeListProps) {
     searchParams,
     bookmarks,
     getFiltersFromParams,
+    selectedSort,
+    sortRecipes,
     setLoading,
     setError,
     setRecipes,
     setFilteredRecipes,
+    initialRecipes,
   ])
 
   useEffect(() => {
+    if (!hasInitialized.current) return
     const sortedRecipes = sortRecipes(recipes, selectedSort)
     setFilteredRecipes(sortedRecipes)
-  }, [recipes, selectedSort, sortRecipes, setFilteredRecipes])
+  }, [selectedSort, recipes, sortRecipes, setFilteredRecipes])
 
   useEffect(() => {
+    if (!hasInitialized.current) return
+
     if (!clientSearchTerm) {
       const sortedRecipes = sortRecipes(recipes, selectedSort)
       setFilteredRecipes(sortedRecipes)
@@ -147,22 +192,18 @@ function RecipeListInner({ initialRecipes }: RecipeListProps) {
         recipe.summary?.toLowerCase().includes(searchLower) ||
         recipe.ingredients.some((ing) =>
           ing.name.toLowerCase().includes(searchLower),
-        )
+        ) ||
+        recipe.tags?.some((tag) => tag.toLowerCase().includes(searchLower))
       )
     })
 
     filtered = sortRecipes(filtered, selectedSort)
-
     setFilteredRecipes(filtered)
   }, [clientSearchTerm, recipes, selectedSort, sortRecipes, setFilteredRecipes])
 
-  useEffect(() => {
-    setRecipes(initialRecipes)
-  }, [initialRecipes, setRecipes])
-
   return (
     <>
-      <Container>
+      <StyledList>
         <SearchBar
           searchTerm={clientSearchTerm}
           onSearchChange={setClientSearchTerm}
@@ -171,18 +212,21 @@ function RecipeListInner({ initialRecipes }: RecipeListProps) {
           selectedSort={selectedSort}
           onSortChange={setSelectedSort}
         />
-        {error && <ErrorMessage>{error}</ErrorMessage>}
+
         {loading ? (
-          <LoadingContainer justify="center">
-            <LoadingSpinner />
-          </LoadingContainer>
+          <LoadingOverlay>
+            <Spinner />
+          </LoadingOverlay>
+        ) : error ? (
+          <div>{error}</div>
         ) : (
           <RecipeGrid />
         )}
-      </Container>
+      </StyledList>
+
       {editingRecipe && (
         <EditRecipeDialog
-          open={Boolean(editingRecipe)}
+          open={!!editingRecipe}
           onClose={() => setEditingRecipe(null)}
           recipe={editingRecipe}
           onRecipeUpdated={handleRecipeUpdated}
@@ -192,21 +236,17 @@ function RecipeListInner({ initialRecipes }: RecipeListProps) {
   )
 }
 
-const Container = styled.main`
-  max-width: 1000px;
+const StyledList = styled.div`
+  padding: 20px;
+  max-width: 1200px;
   margin: 0 auto;
-
-  @media (width <= 35.1875rem) {
-    margin: ${({ theme }) => theme.spacing[6]};
-  }
 `
 
-const ErrorMessage = styled.div`
-  margin-bottom: ${({ theme }) => theme.spacing[6]};
-  padding: ${({ theme }) => theme.spacing[4]};
-  border-radius: ${({ theme }) => theme.borderRadius.lg};
-  background-color: ${({ theme }) => theme.colors.error};
-  color: ${({ theme }) => theme.colors.white};
+const LoadingOverlay = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
 `
 
 const spin = keyframes`
@@ -218,33 +258,25 @@ const spin = keyframes`
   }
 `
 
-const LoadingSpinner = styled.div`
-  width: 48px;
-  height: 48px;
-  border: 3px solid ${({ theme }) => theme.colors.gray[200]};
+const Spinner = styled.div`
+  border: 3px solid rgba(0, 0, 0, 0.1);
+  border-left-color: #333;
   border-radius: 50%;
+  width: 40px;
+  height: 40px;
   animation: ${spin} 1s linear infinite;
-  border-top-color: ${({ theme }) => theme.colors.black};
 `
 
-const LoadingContainer = styled(Flex)`
-  padding: ${({ theme }) => theme.spacing[16]} 0;
-`
-
-const RecipeListFallback = () => {
+export function RecipeList({ initialRecipes }: RecipeListProps) {
   return (
-    <Container>
-      <LoadingContainer justify="center">
-        <LoadingSpinner />
-      </LoadingContainer>
-    </Container>
-  )
-}
-
-export function RecipeList(props: RecipeListProps) {
-  return (
-    <Suspense fallback={<RecipeListFallback />}>
-      <RecipeListInner {...props} />
+    <Suspense
+      fallback={
+        <LoadingOverlay>
+          <Spinner />
+        </LoadingOverlay>
+      }
+    >
+      <RecipeListInner initialRecipes={initialRecipes} />
     </Suspense>
   )
 }
