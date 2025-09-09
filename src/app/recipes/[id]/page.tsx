@@ -4,6 +4,10 @@ import { RecipeDetail } from '@/components/pages/Recipe/Recipe'
 import { getRecipeByIdFromSupabase } from '@/lib/supabase/tables/recipe/getRecipeByIdFromSupabase'
 import { getRecipesFromSupabase } from '@/lib/supabase/tables/recipe/getRecipesFromSupabase'
 
+export const revalidate = 3600 // 1 hour
+
+export const dynamicParams = true
+
 export async function generateStaticParams() {
   const recipes = await getRecipesFromSupabase()
 
