@@ -1,14 +1,17 @@
 import { getSupabaseClient } from '@/lib/supabase/getSupabaseClient'
 
-export async function clearAllBookmarks(): Promise<boolean> {
+export async function clearAllBookmarks(userId?: string): Promise<boolean> {
   try {
     const supabase = getSupabaseClient()
 
-    const {
-      data: { user },
-    } = await supabase.auth.getUser()
+    if (!userId) {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser()
+      userId = user?.id
+    }
 
-    if (!user) {
+    if (!userId) {
       // eslint-disable-next-line no-console
       console.error('User must be logged in to clear bookmarks')
       return false
@@ -17,7 +20,7 @@ export async function clearAllBookmarks(): Promise<boolean> {
     const { error } = await supabase
       .from('bookmarks')
       .delete()
-      .eq('user_id', user.id)
+      .eq('user_id', userId)
 
     if (error) throw error
 

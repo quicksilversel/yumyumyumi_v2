@@ -68,7 +68,7 @@ const Container = styled.header`
 const Toolbar = styled(Flex)`
   height: 56px;
   width: 100%;
-  max-width: 1000px;
+  max-width: 1200px;
   margin: 0 auto;
 `
 
