@@ -138,7 +138,5 @@ describe('uploadImage', () => {
     await uploadImage(mockFile, mockUserId, mockRecipeId)
 
     expect(capturedFormData).toBeInstanceOf(FormData)
-    // Note: FormData entries can't be easily tested in jsdom environment
-    // but we've verified the fetch was called with FormData
   })
 })

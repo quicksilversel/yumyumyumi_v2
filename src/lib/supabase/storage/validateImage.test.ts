@@ -32,7 +32,6 @@ describe('validateImage', () => {
     const largeFile = new File(['content'], 'large.jpg', {
       type: 'image/jpeg',
     })
-    // Set size to 5MB (exceeds 4MB limit)
     Object.defineProperty(largeFile, 'size', { value: 5 * 1024 * 1024 })
 
     const result = validateImage(largeFile)
@@ -44,7 +43,6 @@ describe('validateImage', () => {
     const maxSizeFile = new File(['content'], 'max.jpg', {
       type: 'image/jpeg',
     })
-    // Set size to exactly 4MB
     Object.defineProperty(maxSizeFile, 'size', { value: 4 * 1024 * 1024 })
 
     const result = validateImage(maxSizeFile)
@@ -91,11 +89,14 @@ describe('validateImage', () => {
 
   it('should handle edge case file sizes', () => {
     const testCases = [
-      { size: 0, expected: null }, // Empty file
-      { size: 1, expected: null }, // 1 byte
-      { size: 4 * 1024 * 1024 - 1, expected: null }, // Just under limit
-      { size: 4 * 1024 * 1024, expected: null }, // Exactly at limit
-      { size: 4 * 1024 * 1024 + 1, expected: 'Image size must be less than 4.00MB' }, // Just over limit
+      { size: 0, expected: null },
+      { size: 1, expected: null },
+      { size: 4 * 1024 * 1024 - 1, expected: null },
+      { size: 4 * 1024 * 1024, expected: null },
+      {
+        size: 4 * 1024 * 1024 + 1,
+        expected: 'Image size must be less than 4.00MB',
+      },
     ]
 
     testCases.forEach(({ size, expected }) => {
@@ -108,7 +109,6 @@ describe('validateImage', () => {
   })
 
   it('should format file sizes correctly', () => {
-    // All these sizes exceed the 4MB limit, so they should all return the same error
     const testSizes = [
       { size: 5.5 * 1024 * 1024 },
       { size: 10 * 1024 * 1024 },
@@ -120,7 +120,6 @@ describe('validateImage', () => {
       Object.defineProperty(file, 'size', { value: Math.floor(size) })
 
       const result = validateImage(file)
-      // The function always returns 4.00MB as the limit since MAX_UPLOAD_SIZE is fixed
       expect(result).toBe('Image size must be less than 4.00MB')
     })
   })

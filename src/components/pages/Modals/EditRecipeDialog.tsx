@@ -155,7 +155,7 @@ export function EditRecipeDialog({
             onClick={handleClose}
             disabled={loading}
           >
-            Cancel
+            キャンセル
           </Button>
           <Button
             variant="primary"

@@ -42,10 +42,10 @@ export const Header = () => {
       )}
       <SlideMenu open={slideMenuOpen}>
         <MenuHeader>
-          <MenuTitle>Filters</MenuTitle>
-          <CloseButton size="sm" onClick={() => setSlideMenuOpen(false)}>
-            <CloseIcon />
-          </CloseButton>
+          <MenuTitle>絞り込み</MenuTitle>
+          <IconButton size="sm" onClick={() => setSlideMenuOpen(false)}>
+            <CloseIcon fontSize="inherit" />
+          </IconButton>
         </MenuHeader>
         <MenuContent>
           <Menu />
@@ -114,23 +114,15 @@ const MenuHeader = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: ${({ theme }) => theme.spacing[4]};
+  padding: ${({ theme }) => theme.spacing[4]} ${({ theme }) => theme.spacing[3]};
   border-bottom: 1px solid ${({ theme }) => theme.colors.gray[200]};
 `
 
 const MenuTitle = styled.span`
   margin: 0;
   color: ${({ theme }) => theme.colors.black};
-  font-size: ${({ theme }) => theme.typography.fontSize.lg};
+  font-size: ${({ theme }) => theme.typography.fontSize.base};
   font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
-`
-
-const CloseButton = styled(IconButton)`
-  color: ${({ theme }) => theme.colors.gray[600]};
-
-  &:hover {
-    background-color: ${({ theme }) => theme.colors.gray[100]};
-  }
 `
 
 const MenuContent = styled.div`

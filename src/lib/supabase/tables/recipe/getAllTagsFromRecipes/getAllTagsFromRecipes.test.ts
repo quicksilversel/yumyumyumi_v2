@@ -99,7 +99,6 @@ describe('getAllTagsFromRecipes', () => {
       expect(mockQueryBuilder.eq).toHaveBeenCalledWith('is_public', true)
       expect(objectToCamel).toHaveBeenCalledWith(mockDbRecipes)
 
-      // Should return unique tags in alphabetical order
       expect(result).toEqual([
         'breakfast',
         'chocolate',
@@ -167,7 +166,6 @@ describe('getAllTagsFromRecipes', () => {
 
       const result = await getAllTagsFromRecipes()
 
-      // Should only return unique tags
       expect(result).toEqual(['italian', 'pasta'])
     })
 
@@ -188,7 +186,6 @@ describe('getAllTagsFromRecipes', () => {
 
       const result = await getAllTagsFromRecipes()
 
-      // Should filter out empty strings
       expect(result).toEqual(['another', 'tag', 'valid'])
     })
 
@@ -209,7 +206,6 @@ describe('getAllTagsFromRecipes', () => {
 
       const result = await getAllTagsFromRecipes()
 
-      // Should treat different cases as distinct tags
       expect(result).toEqual([
         'ITALIAN',
         'Italian',
@@ -374,7 +370,6 @@ describe('getAllTagsFromRecipes', () => {
 
       const result = await getAllTagsFromRecipes()
 
-      // Whitespace-only tags are not filtered out (they have truthy value)
       expect(result).toEqual(['\t', '\n', '  ', 'valid'])
     })
 

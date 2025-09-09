@@ -111,7 +111,6 @@ function RecipeListInner({ initialRecipes }: RecipeListProps) {
   useEffect(() => {
     const currentParams = searchParams.toString()
 
-    // Skip if this is the initial mount or params haven't changed
     if (!hasInitialized.current || prevSearchParams.current === currentParams) {
       prevSearchParams.current = currentParams
       return
@@ -122,7 +121,6 @@ function RecipeListInner({ initialRecipes }: RecipeListProps) {
     const applyFilters = async () => {
       const filters = getFiltersFromParams()
 
-      // If there are no filters, use the initial recipes instead of fetching
       const hasFilters =
         filters.maxCookingTime || filters.tag || filters.showBookmarkedOnly
       if (!hasFilters) {

@@ -1,3 +1,5 @@
+import SortIcon from '@mui/icons-material/Sort'
+
 import { Dropdown, type DropdownOption } from '@/components/ui/Dropdown'
 
 export type SortOption =
@@ -26,8 +28,9 @@ export const RecipeSortButton = ({ selectedSort, onSortChange }: Props) => {
       options={SORT_OPTIONS}
       selectedValue={selectedSort}
       onSelect={onSortChange}
-      title="並び替え"
+      placeholder={selectedSort}
       hasPadding={false}
+      icon={<SortIcon />}
     />
   )
 }

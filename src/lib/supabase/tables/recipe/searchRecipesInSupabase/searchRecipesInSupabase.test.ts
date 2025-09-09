@@ -312,7 +312,6 @@ describe('searchRecipesInSupabase', () => {
       const filters: RecipeFilters = { maxCookingTime: 0 }
       const result = await searchRecipesInSupabase(filters)
 
-      // Note: Due to the truthy check in implementation, 0 is treated as falsy and filter is not applied
       expect(mockQueryBuilder.lte).not.toHaveBeenCalled()
       expect(result).toEqual(mockRecipes)
     })

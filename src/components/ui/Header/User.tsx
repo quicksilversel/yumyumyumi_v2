@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react'
 
 import styled from '@emotion/styled'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
+import LoginIcon from '@mui/icons-material/Login'
 import LogoutIcon from '@mui/icons-material/Logout'
 import PersonIcon from '@mui/icons-material/Person'
 import Link from 'next/link'
@@ -47,7 +48,7 @@ export const User = () => {
   if (!user) {
     return (
       <Link href="/login">
-        <PersonIcon />
+        <LoginIcon />
       </Link>
     )
   }

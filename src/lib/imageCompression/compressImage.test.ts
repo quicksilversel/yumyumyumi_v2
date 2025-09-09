@@ -39,14 +39,13 @@ describe('compressImage', () => {
     const smallMockBlob = new Blob(['small compressed'], { type: 'image/webp' })
     Object.defineProperty(smallMockBlob, 'size', { value: 1 * 1024 * 1024 }) // 1MB
     ;(imageCompression as unknown as jest.Mock)
-      .mockResolvedValueOnce(largeMockBlob) // First compression returns large file
-      .mockResolvedValueOnce(smallMockBlob) // Second compression returns small file
+      .mockResolvedValueOnce(largeMockBlob)
+      .mockResolvedValueOnce(smallMockBlob)
 
     const result = await compressImage(mockFile)
 
     expect(imageCompression).toHaveBeenCalledTimes(2)
 
-    // First call with default config
     expect(imageCompression).toHaveBeenNthCalledWith(1, mockFile, {
       maxSizeMB: 2,
       maxWidthOrHeight: 1920,
@@ -54,7 +53,6 @@ describe('compressImage', () => {
       fileType: 'image/webp',
     })
 
-    // Second call with aggressive config
     expect(imageCompression).toHaveBeenNthCalledWith(2, mockFile, {
       maxSizeMB: 1.5,
       maxWidthOrHeight: 1280,
@@ -68,7 +66,7 @@ describe('compressImage', () => {
 
   it('should return file at exactly 2MB without aggressive compression', async () => {
     const exactSizeBlob = new Blob(['exact size'], { type: 'image/webp' })
-    Object.defineProperty(exactSizeBlob, 'size', { value: 2 * 1024 * 1024 }) // Exactly 2MB
+    Object.defineProperty(exactSizeBlob, 'size', { value: 2 * 1024 * 1024 }) // 2MB
     ;(imageCompression as unknown as jest.Mock).mockResolvedValue(exactSizeBlob)
 
     const result = await compressImage(mockFile)
@@ -92,8 +90,8 @@ describe('compressImage', () => {
     const largeMockBlob = new Blob(['large compressed'], { type: 'image/webp' })
     Object.defineProperty(largeMockBlob, 'size', { value: 3 * 1024 * 1024 }) // 3MB
     ;(imageCompression as unknown as jest.Mock)
-      .mockResolvedValueOnce(largeMockBlob) // First compression returns large file
-      .mockRejectedValueOnce(new Error('Aggressive compression failed')) // Second compression fails
+      .mockResolvedValueOnce(largeMockBlob)
+      .mockRejectedValueOnce(new Error('Aggressive compression failed'))
 
     await expect(compressImage(mockFile)).rejects.toThrow(
       'Failed to compress image',
@@ -203,6 +201,6 @@ describe('compressImage', () => {
     const result = await compressImage(mockFile)
 
     expect(imageCompression).toHaveBeenCalledTimes(2)
-    expect(result).toBe(largeMockBlob2) // Returns the result even if still large
+    expect(result).toBe(largeMockBlob2)
   })
 })
