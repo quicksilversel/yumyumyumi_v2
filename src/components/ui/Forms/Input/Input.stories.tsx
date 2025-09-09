@@ -1,3 +1,9 @@
+import EmailIcon from '@mui/icons-material/Email'
+import LockIcon from '@mui/icons-material/Lock'
+import PersonIcon from '@mui/icons-material/Person'
+import SearchIcon from '@mui/icons-material/Search'
+import { fn } from 'storybook/test'
+
 import type { Meta, StoryObj } from '@storybook/react'
 
 import { Input } from './Input'
@@ -36,7 +42,7 @@ const meta: Meta<typeof Input> = {
   },
   decorators: [
     (Story) => (
-      <div style={{ width: '320px' }}>
+      <div style={{ width: '320px', padding: '20px' }}>
         <Story />
       </div>
     ),
@@ -48,114 +54,85 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
-    placeholder: 'Enter text...',
+    title: 'Email Address',
+    placeholder: 'Enter your email',
+    type: 'email',
+    height: 'medium',
+    onChange: fn(),
+  },
+}
+
+export const WithFloatingLabel: Story = {
+  args: {
+    title: 'Username',
+    placeholder: 'Enter username',
     type: 'text',
     height: 'medium',
+    onChange: fn(),
   },
 }
 
 export const WithValue: Story = {
   args: {
-    placeholder: 'Enter text...',
-    value: 'Sample text',
-    type: 'text',
-    height: 'medium',
-  },
-}
-
-export const Small: Story = {
-  args: {
-    placeholder: 'Small input',
-    height: 'small',
-  },
-}
-
-export const Medium: Story = {
-  args: {
-    placeholder: 'Medium input',
-    height: 'medium',
-  },
-}
-
-export const Large: Story = {
-  args: {
-    placeholder: 'Large input',
-    height: 'large',
-  },
-}
-
-export const TextInput: Story = {
-  args: {
-    type: 'text',
-    placeholder: 'Enter text...',
-  },
-}
-
-export const NumberInput: Story = {
-  args: {
-    type: 'number',
-    placeholder: 'Enter number...',
-    min: 0,
-    max: 100,
-    step: 1,
-  },
-}
-
-export const EmailInput: Story = {
-  args: {
+    title: 'Email',
+    placeholder: 'Enter email',
+    value: 'user@example.com',
     type: 'email',
-    placeholder: 'Enter email...',
+    height: 'medium',
+    onChange: fn(),
   },
 }
 
-export const PasswordInput: Story = {
+export const WithIcon: Story = {
   args: {
+    title: 'Email',
+    icon: <EmailIcon fontSize="small" />,
+    placeholder: 'Enter your email',
+    type: 'email',
+    height: 'medium',
+    onChange: fn(),
+  },
+}
+
+export const WithHelperText: Story = {
+  args: {
+    title: 'Password',
+    placeholder: 'Enter password',
     type: 'password',
-    placeholder: 'Enter password...',
-  },
-}
-
-export const SearchInput: Story = {
-  args: {
-    type: 'search',
-    placeholder: 'Search...',
-  },
-}
-
-export const TelInput: Story = {
-  args: {
-    type: 'tel',
-    placeholder: 'Enter phone number...',
-  },
-}
-
-export const UrlInput: Story = {
-  args: {
-    type: 'url',
-    placeholder: 'Enter URL...',
-  },
-}
-
-export const Disabled: Story = {
-  args: {
-    placeholder: 'Disabled input',
-    disabled: true,
-    value: 'Cannot edit this',
-  },
-}
-
-export const Error: Story = {
-  args: {
-    placeholder: 'Enter email...',
-    error: true,
-    value: 'invalid-email',
+    height: 'medium',
+    onChange: fn(),
   },
 }
 
 export const Required: Story = {
   args: {
-    placeholder: 'Required field',
+    title: 'Required Field',
+    placeholder: 'This field is required',
     required: true,
+    height: 'medium',
+    onChange: fn(),
+  },
+}
+
+export const Error: Story = {
+  args: {
+    title: 'Email',
+    placeholder: 'Enter email',
+    value: 'invalid-email',
+    error: true,
+    height: 'medium',
+    onChange: fn(),
+  },
+}
+
+export const Disabled: Story = {
+  args: {
+    title: 'Disabled Input',
+    placeholder: 'Cannot edit',
+    disabled: true,
+    value: 'Disabled value',
+    height: 'medium',
+    onChange: fn(),
   },
 }
 
@@ -165,118 +142,190 @@ export const AllSizes: Story = {
       style={{
         display: 'flex',
         flexDirection: 'column',
-        gap: '16px',
+        gap: '24px',
         width: '320px',
       }}
     >
-      <Input height="small" placeholder="Small input" />
-      <Input height="medium" placeholder="Medium input" />
-      <Input height="large" placeholder="Large input" />
+      <Input
+        height="small"
+        title="Small Input"
+        placeholder="Enter text"
+        onChange={fn()}
+      />
+      <Input
+        height="medium"
+        title="Medium Input"
+        placeholder="Enter text"
+        onChange={fn()}
+      />
+      <Input
+        height="large"
+        title="Large Input"
+        placeholder="Enter text"
+        onChange={fn()}
+      />
     </div>
   ),
 }
 
-export const AllTypes: Story = {
+export const InteractiveExample: Story = {
   render: () => (
     <div
       style={{
         display: 'flex',
         flexDirection: 'column',
-        gap: '16px',
+        gap: '24px',
         width: '320px',
       }}
     >
-      <Input type="text" placeholder="Text input" />
-      <Input type="number" placeholder="Number input" />
-      <Input type="email" placeholder="Email input" />
-      <Input type="password" placeholder="Password input" />
-      <Input type="search" placeholder="Search input" />
-      <Input type="tel" placeholder="Phone input" />
-      <Input type="url" placeholder="URL input" />
+      <Input
+        title="Full Name"
+        icon={<PersonIcon fontSize="small" />}
+        placeholder="John Doe"
+        onChange={fn()}
+        required
+      />
+      <Input
+        title="Email Address"
+        icon={<EmailIcon fontSize="small" />}
+        type="email"
+        placeholder="john@example.com"
+        onChange={fn()}
+        required
+      />
+      <Input
+        title="Password"
+        icon={<LockIcon fontSize="small" />}
+        type="password"
+        placeholder="Enter password"
+        onChange={fn()}
+        required
+      />
+      <Input
+        title="Age"
+        type="number"
+        placeholder="18"
+        onChange={fn()}
+        min={1}
+        max={120}
+      />
     </div>
   ),
 }
 
-export const StateVariations: Story = {
+export const FormVariations: Story = {
   render: () => (
     <div
       style={{
         display: 'flex',
         flexDirection: 'column',
-        gap: '16px',
+        gap: '24px',
         width: '320px',
       }}
     >
-      <Input placeholder="Normal input" />
-      <Input placeholder="Disabled input" disabled value="Disabled" />
-      <Input placeholder="Error input" value="Error state" />
-      <Input placeholder="Required input" required />
+      <Input
+        title="Search"
+        icon={<SearchIcon fontSize="small" />}
+        type="search"
+        placeholder="Search recipes..."
+        onChange={fn()}
+      />
+      <Input
+        title="Phone Number"
+        type="tel"
+        placeholder="+1 (555) 000-0000"
+        onChange={fn()}
+      />
+      <Input
+        title="Website URL"
+        type="url"
+        placeholder="https://example.com"
+        onChange={fn()}
+      />
+      <Input
+        title="Quantity"
+        type="number"
+        placeholder="0"
+        min={0}
+        max={100}
+        step={5}
+        onChange={fn()}
+      />
     </div>
   ),
 }
 
-export const FormExample: Story = {
+export const StateShowcase: Story = {
   render: () => (
-    <form
+    <div
       style={{
         display: 'flex',
         flexDirection: 'column',
-        gap: '16px',
+        gap: '24px',
         width: '320px',
       }}
     >
       <div>
-        <label
-          htmlFor="name"
-          style={{ display: 'block', marginBottom: '8px', fontSize: '14px' }}
-        >
-          Name *
-        </label>
-        <Input id="name" type="text" placeholder="Enter your name" required />
-      </div>
-      <div>
-        <label
-          htmlFor="email"
-          style={{ display: 'block', marginBottom: '8px', fontSize: '14px' }}
-        >
-          Email *
-        </label>
+        <p style={{ margin: '0 0 8px 0', fontSize: '12px', color: '#666' }}>
+          Empty State
+        </p>
         <Input
-          id="email"
-          type="email"
-          placeholder="Enter your email"
-          required
+          title="Empty Field"
+          placeholder="Click to focus"
+          onFocus={fn()}
+          onBlur={fn()}
+          onChange={fn()}
         />
       </div>
+
       <div>
-        <label
-          htmlFor="age"
-          style={{ display: 'block', marginBottom: '8px', fontSize: '14px' }}
-        >
-          Age
-        </label>
+        <p style={{ margin: '0 0 8px 0', fontSize: '12px', color: '#666' }}>
+          Filled State
+        </p>
         <Input
-          id="age"
-          type="number"
-          placeholder="Enter your age"
-          min={1}
-          max={120}
+          title="Filled Field"
+          value="This field has content"
+          placeholder="Placeholder"
+          onChange={fn()}
         />
       </div>
+
       <div>
-        <label
-          htmlFor="password"
-          style={{ display: 'block', marginBottom: '8px', fontSize: '14px' }}
-        >
-          Password *
-        </label>
+        <p style={{ margin: '0 0 8px 0', fontSize: '12px', color: '#666' }}>
+          Focus State
+        </p>
         <Input
-          id="password"
-          type="password"
-          placeholder="Enter password"
-          required
+          title="Focus Me"
+          placeholder="Click to see focus state"
+          onFocus={fn()}
+          onBlur={fn()}
+          onChange={fn()}
         />
       </div>
-    </form>
+
+      <div>
+        <p style={{ margin: '0 0 8px 0', fontSize: '12px', color: '#666' }}>
+          Error State
+        </p>
+        <Input
+          title="Error Field"
+          value="Invalid input"
+          error
+          onChange={fn()}
+        />
+      </div>
+
+      <div>
+        <p style={{ margin: '0 0 8px 0', fontSize: '12px', color: '#666' }}>
+          Disabled State
+        </p>
+        <Input
+          title="Disabled Field"
+          value="Cannot edit"
+          disabled
+          onChange={fn()}
+        />
+      </div>
+    </div>
   ),
 }

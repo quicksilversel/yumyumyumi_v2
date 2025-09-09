@@ -141,7 +141,7 @@ export function AddRecipeDialog({
       actions={
         <DialogActions>
           <Button
-            variant="text"
+            variant="ghost"
             onClick={handleClose}
             size="sm"
             disabled={loading}
@@ -154,7 +154,7 @@ export function AddRecipeDialog({
             onClick={handleSubmit(onSubmit)}
             disabled={loading || uploadingImage}
           >
-            {loading ? '作成中' : 'レシピを作成する'}
+            {loading ? '作成中...' : 'レシピを作成する'}
           </Button>
         </DialogActions>
       }

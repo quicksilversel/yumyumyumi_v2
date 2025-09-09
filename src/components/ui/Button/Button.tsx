@@ -13,7 +13,7 @@ const baseStyles = ({ theme }: { theme: Theme }) => {
     justify-content: center;
     align-items: center;
     gap: ${theme.spacing[2]};
-    font-weight: ${theme.typography.fontWeight.medium};
+    font-weight: ${theme.typography.fontWeight.semibold};
     text-decoration: none;
     transition: opacity ${theme.transition.default};
     white-space: nowrap;
@@ -84,7 +84,7 @@ const variantStyles = ({
       return css`
         border: 1px solid transparent;
         background-color: transparent;
-        color: ${theme.colors.black};
+        color: ${theme.colors.gray[600]};
       `
     case 'text':
       return css`

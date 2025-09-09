@@ -53,6 +53,14 @@ export const Outlined: Story = {
   },
 }
 
+export const Accent: Story = {
+  args: {
+    children: 'Accent Chip',
+    variant: 'accent',
+    size: 'md',
+  },
+}
+
 export const Small: Story = {
   args: {
     children: 'Small Chip',

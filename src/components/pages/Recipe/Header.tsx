@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import AccessTimeIcon from '@mui/icons-material/AccessTime'
 import DateRangeIcon from '@mui/icons-material/DateRange'
-import LocalOfferIcon from '@mui/icons-material/LocalOffer'
+import LoyaltyIcon from '@mui/icons-material/Loyalty'
 import Link from 'next/link'
 
 import type { Recipe } from '@/types/recipe'
@@ -16,11 +16,11 @@ export const Header = ({ recipe }: { recipe: Recipe }) => {
   return (
     <StyledFlex direction="column" gap={2}>
       {recipe.tags && recipe.tags.length > 0 && (
-        <ChipGroup gap={3}>
+        <ChipGroup gap={2}>
           {recipe.tags.map((tag) => (
             <Link key={tag} href={`/?tag=${encodeURI(tag)}`}>
-              <Chip clickable>
-                <LocalOfferIcon fontSize="inherit" />
+              <Chip clickable variant="outlined" size="sm">
+                <LoyaltyIcon fontSize="inherit" />
                 {tag}
               </Chip>
             </Link>

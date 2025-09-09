@@ -1,6 +1,12 @@
-import { TextareaHTMLAttributes, DetailedHTMLProps } from 'react'
+import {
+  TextareaHTMLAttributes,
+  DetailedHTMLProps,
+  ReactNode,
+  useState,
+} from 'react'
 
 import { css } from '@emotion/react'
+import { Theme } from '@emotion/react'
 import styled from '@emotion/styled'
 
 type TextareaSize = 'small' | 'medium' | 'large'
@@ -15,6 +21,7 @@ export interface TextareaProps
     'size'
   > {
   title?: string
+  icon?: ReactNode
   height?: TextareaSize
   error?: boolean
   helperText?: string
@@ -25,56 +32,146 @@ export interface TextareaProps
 
 export const Textarea = ({
   title,
+  icon,
   height = 'small',
   error,
   helperText,
   resize = 'vertical',
   minRows = 3,
   maxRows,
+  value,
   ...textareaProps
 }: TextareaProps) => {
-  const isEmpty =
-    textareaProps.value === '' ||
-    textareaProps.value === null ||
-    textareaProps.value === undefined
-  const hasError = !!error || (textareaProps.required && isEmpty)
+  const [isFocused, setIsFocused] = useState(false)
+
+  const hasValue = value !== undefined && value !== '' && value !== null
+  const shouldFloatLabel = isFocused || hasValue
+
+  const handleFocus = (e: React.FocusEvent<HTMLTextAreaElement>) => {
+    setIsFocused(true)
+    textareaProps.onFocus?.(e)
+  }
+
+  const handleBlur = (e: React.FocusEvent<HTMLTextAreaElement>) => {
+    setIsFocused(false)
+    textareaProps.onBlur?.(e)
+  }
 
   return (
     <Container>
-      {title && (
-        <Label htmlFor={textareaProps.id}>
-          {title}
-          {textareaProps.required && <RequiredMark>*</RequiredMark>}
-        </Label>
-      )}
-      <StyledTextarea
-        height={height}
-        error={hasError}
-        resize={resize}
-        minRows={minRows}
-        maxRows={maxRows}
-        {...textareaProps}
-      />
-      {helperText && <HelperText error={hasError}>{helperText}</HelperText>}
+      <TextareaWrapper>
+        <StyledTextarea
+          height={height}
+          error={error}
+          resize={resize}
+          minRows={minRows}
+          maxRows={maxRows}
+          value={value}
+          {...textareaProps}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+          hasFloatingLabel={!!title}
+        />
+        {title && (
+          <FloatingLabel
+            htmlFor={textareaProps.id}
+            isRequired={textareaProps.required}
+            isFloating={shouldFloatLabel}
+            isFocused={isFocused}
+            hasError={error}
+          >
+            {icon && <IconWrapper>{icon}</IconWrapper>}
+            {title}
+          </FloatingLabel>
+        )}
+      </TextareaWrapper>
+      {helperText && <HelperText error={error}>{helperText}</HelperText>}
     </Container>
   )
+}
+
+const sizeStyles = ({ theme, size }: { theme: Theme; size: TextareaSize }) => {
+  switch (size) {
+    case 'small':
+      return css`
+        padding: 16px 12px 8px 12px;
+        font-size: ${theme.typography.fontSize.sm};
+        line-height: 1.4;
+      `
+    case 'medium':
+      return css`
+        padding: 20px 16px 8px 16px;
+        font-size: ${theme.typography.fontSize.base};
+        line-height: 1.5;
+      `
+    case 'large':
+      return css`
+        padding: 24px 20px 8px 20px;
+        font-size: ${theme.typography.fontSize.lg};
+        line-height: 1.6;
+      `
+  }
 }
 
 const Container = styled.div`
   width: 100%;
 `
 
-const Label = styled.label`
-  display: block;
-  margin-bottom: ${({ theme }) => theme.spacing[2]};
-  color: ${({ theme }) => theme.colors.gray[700]};
-  font-size: ${({ theme }) => theme.typography.fontSize.sm};
-  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
+const TextareaWrapper = styled.div`
+  position: relative;
+  width: 100%;
 `
 
-const RequiredMark = styled.span`
-  margin-left: ${({ theme }) => theme.spacing[1]};
-  color: ${({ theme }) => theme.colors.error};
+const IconWrapper = styled.span`
+  display: inline-flex;
+  align-items: center;
+  margin-right: ${({ theme }) => theme.spacing[1]};
+`
+
+const FloatingLabel = styled.label<{
+  isRequired?: boolean
+  isFloating: boolean
+  isFocused: boolean
+  hasError?: boolean
+}>`
+  position: absolute;
+  left: 12px;
+  color: ${({ theme, hasError, isFocused }) => {
+    if (hasError) return theme.colors.error
+    if (isFocused) return theme.colors.primary
+    return theme.colors.gray[600]
+  }};
+  pointer-events: none;
+  transition: all 0.2s ease-in-out;
+  transform-origin: left top;
+  background-color: ${({ theme }) => theme.colors.white};
+  padding: 0 4px;
+  margin-left: -4px;
+  display: flex;
+  align-items: center;
+
+  ${({ isFloating, theme }) =>
+    isFloating
+      ? css`
+          top: -8px;
+          font-size: 12px;
+          transform: scale(0.85);
+          font-weight: ${theme.typography.fontWeight.medium};
+        `
+      : css`
+          top: 50%;
+          transform: translateY(-50%);
+          font-size: ${theme.typography.fontSize.sm};
+        `}
+
+  ${({ theme, isRequired }) =>
+    isRequired &&
+    css`
+      &:after {
+        content: ' *';
+        color: ${theme.colors.error};
+      }
+    `}
 `
 
 const HelperText = styled.span<{ error?: boolean }>`
@@ -85,35 +182,18 @@ const HelperText = styled.span<{ error?: boolean }>`
   font-size: ${({ theme }) => theme.typography.fontSize.xs};
 `
 
-const sizeStyles = {
-  small: css`
-    padding: 8px 12px;
-    font-size: 14px;
-    line-height: 1.4;
-  `,
-  medium: css`
-    padding: 10px 16px;
-    font-size: 16px;
-    line-height: 1.5;
-  `,
-  large: css`
-    padding: 12px 20px;
-    font-size: 18px;
-    line-height: 1.6;
-  `,
-}
-
 const StyledTextarea = styled.textarea<{
   height?: TextareaSize
   error?: boolean
   resize?: ResizeOption
   minRows?: number
   maxRows?: number
+  hasFloatingLabel?: boolean
 }>`
   width: 100%;
   min-height: ${({ height, minRows }) => {
     const lineHeights = { small: 20, medium: 24, large: 29 }
-    const paddings = { small: 16, medium: 20, large: 24 }
+    const paddings = { small: 32, medium: 36, large: 40 }
     const lineHeight = lineHeights[height || 'medium']
     const padding = paddings[height || 'medium']
     return `${(minRows || 3) * lineHeight + padding}px`
@@ -123,7 +203,7 @@ const StyledTextarea = styled.textarea<{
     css`
       max-height: ${(() => {
         const lineHeights = { small: 20, medium: 24, large: 29 }
-        const paddings = { small: 16, medium: 20, large: 24 }
+        const paddings = { small: 32, medium: 36, large: 40 }
         const lineHeight = lineHeights[height || 'medium']
         const padding = paddings[height || 'medium']
         return `${maxRows * lineHeight + padding}px`
@@ -132,25 +212,18 @@ const StyledTextarea = styled.textarea<{
   border: 1px solid
     ${({ error, theme }) =>
     error ? theme.colors.error : theme.colors.gray[300]};
-  border-radius: ${({ theme }) => theme.borderRadius.default};
+  border-radius: ${({ theme }) => theme.borderRadius.md};
   background-color: ${({ theme }) => theme.colors.white};
   color: ${({ theme }) => theme.colors.black};
   resize: ${({ resize }) => resize || 'vertical'};
   transition: border-color ${({ theme }) => theme.transition.default};
-  transition-property: border-color, box-shadow;
   outline: none;
 
-  ${({ height }) => sizeStyles[height || 'medium']}
+  ${({ theme, height }) => sizeStyles({ theme, size: height || 'medium' })}
 
-  &::placeholder {
-    color: ${({ theme }) => theme.colors.gray[400]};
-  }
-
-  &:hover:not(:disabled),
-  &:focus {
-    border: 1px solid
-      ${({ theme, error }) =>
-        error ? theme.colors.error : theme.colors.primary};
+  &:hover:not(:disabled), &:focus {
+    border-color: ${({ error, theme }) =>
+      error ? theme.colors.error : theme.colors.primary};
   }
 
   &:disabled {
@@ -177,4 +250,19 @@ const StyledTextarea = styled.textarea<{
       background: ${({ theme }) => theme.colors.gray[500]};
     }
   }
+
+  ${({ hasFloatingLabel }) =>
+    hasFloatingLabel &&
+    css`
+      &::placeholder {
+        opacity: 0;
+      }
+
+      &:focus::placeholder {
+        opacity: 0.6;
+        transition: opacity 0.2s ease-in-out;
+      }
+    `}
 `
+
+Textarea.Label = FloatingLabel
