@@ -55,22 +55,26 @@ export const TagsForm = () => {
           onChange={(e) => setTagInput(e.target.value)}
           onKeyDown={handleKeyPress}
         />
-        <Button
+        <StyledButton
           variant="primary"
-          size="sm"
           onClick={handleAddTag}
           disabled={!tagInput.trim()}
           type="button"
         >
           <AddIcon fontSize="inherit" />
-        </Button>
+        </StyledButton>
       </TagInputRow>
       {tags.length === 0 ? (
         <Caption>まだタグが追加されていません。</Caption>
       ) : (
         <ChipGroup gap={2}>
           {tags.map((tag) => (
-            <Chip key={tag} size="sm" clickable onClick={() => removeTag(tag)}>
+            <Chip
+              key={tag}
+              variant="outlined"
+              clickable
+              onClick={() => removeTag(tag)}
+            >
               {tag} ×
             </Chip>
           ))}
@@ -84,4 +88,8 @@ const TagInputRow = styled(Flex)`
   width: 100%;
   gap: ${({ theme }) => theme.spacing[2]};
   align-items: flex-end;
+`
+
+const StyledButton = styled(Button)`
+  height: 48px;
 `

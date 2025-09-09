@@ -7,6 +7,7 @@ import { Input, ErrorText } from '@/components/ui'
 export const ServingsForm = () => {
   const {
     register,
+    watch,
     formState: { errors },
   } = useFormContext<RecipeForm>()
 
@@ -37,6 +38,7 @@ export const ServingsForm = () => {
         id="servings"
         title="◯人分"
         type="number"
+        value={watch('servings')}
         placeholder="2"
         min={1}
         max={100}

@@ -60,6 +60,6 @@ const IngredientItem = styled.li<{ isSpice: boolean }>`
   ${({ isSpice, theme }) =>
     isSpice &&
     css`
-      background-color: ${theme.colors.gray[100]};
+      background-color: ${theme.colors.primary}20;
     `}
 `

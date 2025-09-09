@@ -8,6 +8,7 @@ import { Input, ErrorText } from '@/components/ui'
 export const CookTimeForm = () => {
   const {
     register,
+    watch,
     formState: { errors },
   } = useFormContext<RecipeForm>()
 
@@ -36,6 +37,7 @@ export const CookTimeForm = () => {
         type="number"
         placeholder="調理時間を分単位で入力してください"
         min={1}
+        value={watch('cookTime')}
         error={!!errors.cookTime}
         required
       />

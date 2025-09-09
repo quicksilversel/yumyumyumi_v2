@@ -18,6 +18,7 @@ import {
 export function DirectionsForm() {
   const {
     register,
+    watch,
     formState: { errors },
   } = useFormContext<RecipeForm>()
 
@@ -35,9 +36,7 @@ export function DirectionsForm() {
 
   return (
     <Stack gap={3}>
-      <Title>
-        <H2>Directions</H2>
-      </Title>
+      <H2>作り方</H2>
       {errors.directions &&
         typeof errors.directions === 'object' &&
         'message' in errors.directions && (
@@ -52,78 +51,59 @@ export function DirectionsForm() {
           {fields.map((field, index) => (
             <DirectionRow key={field.id}>
               <StepNumber>{index + 1}</StepNumber>
-              <DirectionContent>
-                <FieldContainer>
-                  <div>
-                    <Textarea
-                      {...register(`directions.${index}.title`, {
-                        required: '見出しは必須です',
-                      })}
-                      placeholder="見出し（例：下ごしらえ）"
-                      rows={3}
-                    />
-                    {errors.directions?.[index]?.title && (
-                      <ErrorText>
-                        {errors.directions[index].title?.message}
-                      </ErrorText>
-                    )}
-                  </div>
-                  <Textarea
-                    {...register(`directions.${index}.description`)}
-                    placeholder="詳細（例：ナス、ピーマン、ジャガイモは乱切りにする。）"
-                    error={!!errors.directions?.[index]?.description}
-                    rows={2}
-                  />
-                </FieldContainer>
-                {fields.length > 1 && (
-                  <IconButton
-                    size="sm"
-                    onClick={() => removeDirection(index)}
-                    type="button"
-                  >
-                    <DeleteIcon />
-                  </IconButton>
+              <FieldContainer>
+                <Textarea
+                  {...register(`directions.${index}.title`, {
+                    required: '見出しは必須です',
+                  })}
+                  title="見出し"
+                  value={watch(`directions.${index}.title`)}
+                  rows={3}
+                />
+                {errors.directions?.[index]?.title && (
+                  <ErrorText>
+                    {errors.directions[index].title?.message}
+                  </ErrorText>
                 )}
-              </DirectionContent>
+                <Textarea
+                  {...register(`directions.${index}.description`)}
+                  title="詳細"
+                  value={watch(`directions.${index}.description`)}
+                  error={!!errors.directions?.[index]?.description}
+                  rows={2}
+                />
+              </FieldContainer>
+              {fields.length > 1 && (
+                <DeleteButton
+                  size="sm"
+                  onClick={() => removeDirection(index)}
+                  type="button"
+                >
+                  <DeleteIcon />
+                </DeleteButton>
+              )}
             </DirectionRow>
           ))}
         </Stack>
       )}
-      <Button variant="primary" size="sm" onClick={addDirection} type="button">
+      <StyledButton size="sm" onClick={addDirection} type="button">
         <AddIcon fontSize="inherit" />
         手順を追加
-      </Button>
+      </StyledButton>
     </Stack>
   )
 }
 
-const Title = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-`
-
 const DirectionRow = styled.div`
-  width: 100%;
-`
-
-const DirectionContent = styled.div`
-  position: relative;
-  width: 100%;
   display: flex;
-  justify-content: space-between;
-  align-items: start;
-  gap: ${({ theme }) => theme.spacing[2]};
-  margin-top: ${({ theme }) => theme.spacing[2]};
+  align-items: flex-start;
+  gap: ${({ theme }) => theme.spacing[3]};
   width: 100%;
-  border-radius: ${({ theme }) => theme.borderRadius.md};
-  font-size: ${({ theme }) => theme.typography.fontSize.sm};
 `
 
 const StepNumber = styled.div`
-  width: 24px;
-  height: 24px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   background-color: ${({ theme }) => theme.colors.primary};
   color: ${({ theme }) => theme.colors.white};
@@ -133,12 +113,21 @@ const StepNumber = styled.div`
   font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
   font-size: 14px;
   flex-shrink: 0;
+  margin-top: ${({ theme }) => theme.spacing[2]};
 `
 
 const FieldContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: ${({ theme }) => theme.spacing[2]};
-  min-width: 0;
-  flex-grow: 1;
+  gap: ${({ theme }) => theme.spacing[3]};
+  flex: 1;
+`
+
+const DeleteButton = styled(IconButton)`
+  margin-top: ${({ theme }) => theme.spacing[2]};
+  flex-shrink: 0;
+`
+
+const StyledButton = styled(Button)`
+  margin-left: auto;
 `

@@ -25,7 +25,7 @@ export const RecipeForm = ({
   uploadingImage = false,
 }: Props) => {
   return (
-    <Stack gap={6}>
+    <Stack gap={4}>
       {errors.length > 0 && (
         <Stack gap={2}>
           {errors.map((error, index) => (
@@ -33,7 +33,7 @@ export const RecipeForm = ({
           ))}
         </Stack>
       )}
-      <H2>General</H2>
+      <H2>基本情報</H2>
       <TitleForm />
       <SummaryForm />
       <TagsForm />
@@ -46,7 +46,7 @@ export const RecipeForm = ({
       <Divider />
       <DirectionsForm />
       <Divider />
-      <H2>Details</H2>
+      <H2>その他</H2>
       <ImageForm onImageChange={handleImageChange} uploading={uploadingImage} />
       <SourceForm />
       <TipsForm />

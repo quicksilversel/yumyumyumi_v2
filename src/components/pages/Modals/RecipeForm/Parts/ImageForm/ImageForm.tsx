@@ -92,7 +92,6 @@ export function ImageForm({ onImageChange, uploading = false }: Props) {
 
   return (
     <Stack gap={1}>
-      <Title>レシピ画像</Title>
       <Controller
         name="imageUrl"
         control={control}
@@ -119,12 +118,19 @@ export function ImageForm({ onImageChange, uploading = false }: Props) {
               <ButtonContainer>
                 <IconButton
                   size="sm"
+                  variant="primary"
                   onClick={handleUploadClick}
                   disabled={uploading}
+                  type="button"
                 >
                   <EditIcon fontSize="inherit" />
                 </IconButton>
-                <IconButton size="sm" onClick={handleRemoveImage}>
+                <IconButton
+                  size="sm"
+                  variant="primary"
+                  onClick={handleRemoveImage}
+                  type="button"
+                >
                   <DeleteIcon fontSize="inherit" />
                 </IconButton>
               </ButtonContainer>
@@ -139,19 +145,14 @@ export function ImageForm({ onImageChange, uploading = false }: Props) {
         onChange={handleFileSelect}
       />
       {error && <ErrorText>{error}</ErrorText>}
-      <Caption style={{ textAlign: 'center' }}>
-        最大ファイルサイズ: 2MB。サポートされているフォーマット: JPG, PNG, WebP
+      <Caption>
+        最大ファイルサイズ: 2MB。
+        <br />
+        サポートされているフォーマット: JPG, PNG, WebP
       </Caption>
     </Stack>
   )
 }
-
-const Title = styled.span`
-  display: block;
-  margin-bottom: ${({ theme }) => theme.spacing['1']};
-  font-size: ${({ theme }) => theme.typography.fontSize['sm']};
-  color: ${({ theme }) => theme.colors.gray[800]};
-`
 
 const ImageContainer = styled.div`
   position: relative;
@@ -163,6 +164,8 @@ const ButtonContainer = styled.div`
   position: absolute;
   top: ${({ theme }) => theme.spacing[1]};
   right: ${({ theme }) => theme.spacing[1]};
+  display: flex;
+  gap: ${({ theme }) => theme.spacing[1]};
 `
 
 const ImagePreview = styled.div`

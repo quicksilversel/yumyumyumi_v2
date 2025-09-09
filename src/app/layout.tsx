@@ -1,3 +1,5 @@
+import { Analytics } from '@vercel/analytics/next'
+import { SpeedInsights } from '@vercel/speed-insights/next'
 import { Inter } from 'next/font/google'
 
 import type { Metadata } from 'next'
@@ -9,7 +11,7 @@ const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'YumYumYumi',
-  description: 'Discover and save your favorite recipes',
+  description: 'Cooking in Style',
 }
 
 export default function RootLayout({
@@ -23,6 +25,8 @@ export default function RootLayout({
         <Providers>
           <Header />
           {children}
+          <Analytics />
+          <SpeedInsights />
         </Providers>
       </body>
     </html>

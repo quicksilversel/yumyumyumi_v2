@@ -10,13 +10,15 @@ type RecipeDetailProps = {
 
 export const Directions = ({ recipe }: RecipeDetailProps) => {
   return (
-    <DirectionContainer>
+    <Container>
       <H2>Directions</H2>
       <DirectionList>
         {recipe.directions?.map((direction, index) => (
           <DirectionItem key={index}>
             {direction.title && (
-              <DirectionTitle size="sm">{direction.title}</DirectionTitle>
+              <DirectionTitle stepIndex={index + 1}>
+                {direction.title}
+              </DirectionTitle>
             )}
             {direction.description && (
               <Body size="sm">{direction.description}</Body>
@@ -24,11 +26,11 @@ export const Directions = ({ recipe }: RecipeDetailProps) => {
           </DirectionItem>
         ))}
       </DirectionList>
-    </DirectionContainer>
+    </Container>
   )
 }
 
-const DirectionContainer = styled.section`
+const Container = styled.section`
   margin-top: 2rem;
 `
 
@@ -48,8 +50,9 @@ const DirectionItem = styled.li`
   }
 `
 
-const DirectionTitle = styled(Body)`
+const DirectionTitle = styled.h3<{ stepIndex: number }>`
   position: relative;
+  font-size: ${({ theme }) => theme.typography.fontSize.sm};
 
   &:has(+ ${Body}) {
     font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
@@ -68,6 +71,6 @@ const DirectionTitle = styled(Body)`
     background-color: ${({ theme }) => theme.colors.primary};
     color: ${({ theme }) => theme.colors.white};
     font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
-    content: counter(list-item);
+    content: '${({ stepIndex }) => stepIndex}';
   }
 `

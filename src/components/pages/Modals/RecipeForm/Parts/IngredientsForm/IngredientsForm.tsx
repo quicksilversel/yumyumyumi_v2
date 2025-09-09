@@ -40,15 +40,14 @@ export function IngredientsForm() {
       isSpice: previousIsSpice,
     })
   }
+
   const removeIngredient = (index: number) => {
     remove(index)
   }
 
   return (
     <Stack gap={3}>
-      <Title>
-        <H2>Ingredients</H2>
-      </Title>
+      <H2>材料</H2>
       {errors.ingredients &&
         typeof errors.ingredients === 'object' &&
         'message' in errors.ingredients && (
@@ -62,53 +61,47 @@ export function IngredientsForm() {
         <Stack gap={2}>
           {fields.map((field, index) => (
             <IngredientRow key={field.id}>
-              <FieldContainer>
-                <div>
-                  <Input
-                    {...register(`ingredients.${index}.name`, {
-                      required: 'Ingredient name is required',
-                      minLength: {
-                        value: 1,
-                        message: 'Name cannot be empty',
-                      },
-                    })}
-                    placeholder="材料"
-                    error={!!errors.ingredients?.[index]?.name}
-                  />
-                  {errors.ingredients?.[index]?.name && (
-                    <ErrorText>
-                      {errors.ingredients[index].name?.message}
-                    </ErrorText>
-                  )}
-                </div>
-                <div>
-                  <Input
-                    {...register(`ingredients.${index}.amount`, {
-                      required: 'Amount is required',
-                      minLength: {
-                        value: 1,
-                        message: 'Amount cannot be empty',
-                      },
-                    })}
-                    placeholder="分量"
-                    error={!!errors.ingredients?.[index]?.amount}
-                  />
-                  {errors.ingredients?.[index]?.amount && (
-                    <ErrorText>
-                      {errors.ingredients[index].amount?.message}
-                    </ErrorText>
-                  )}
-                </div>
-                <IconButton
-                  size="sm"
-                  onClick={() => removeIngredient(index)}
-                  disabled={fields.length === 1}
-                  type="button"
-                >
-                  <DeleteIcon />
-                </IconButton>
-              </FieldContainer>
-              <StyledToggleSwitch
+              <IngredientInput
+                {...register(`ingredients.${index}.name`, {
+                  required: 'Ingredient name is required',
+                  minLength: {
+                    value: 1,
+                    message: 'Name cannot be empty',
+                  },
+                })}
+                title="材料"
+                value={watch(`ingredients.${index}.name`)}
+                error={!!errors.ingredients?.[index]?.name}
+              />
+              {errors.ingredients?.[index]?.name && (
+                <ErrorText>{errors.ingredients[index].name?.message}</ErrorText>
+              )}
+              <AmountInput
+                {...register(`ingredients.${index}.amount`, {
+                  required: 'Amount is required',
+                  minLength: {
+                    value: 1,
+                    message: 'Amount cannot be empty',
+                  },
+                })}
+                title="分量"
+                value={watch(`ingredients.${index}.amount`)}
+                error={!!errors.ingredients?.[index]?.amount}
+              />
+              {errors.ingredients?.[index]?.amount && (
+                <ErrorText>
+                  {errors.ingredients[index].amount?.message}
+                </ErrorText>
+              )}
+              <DeleteButton
+                size="sm"
+                onClick={() => removeIngredient(index)}
+                disabled={fields.length === 1}
+                type="button"
+              >
+                <DeleteIcon />
+              </DeleteButton>
+              <SpiceToggle
                 label="A"
                 {...register(`ingredients.${index}.isSpice`)}
                 height="small"
@@ -117,32 +110,46 @@ export function IngredientsForm() {
           ))}
         </Stack>
       )}
-      <Button variant="primary" size="sm" onClick={addIngredient} type="button">
+      <StyledButton size="sm" onClick={addIngredient} type="button">
         <AddIcon fontSize="inherit" />
         材料を追加
-      </Button>
+      </StyledButton>
     </Stack>
   )
 }
 
-const Title = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-`
-
 const IngredientRow = styled.div`
-  width: 100%;
-`
-
-const FieldContainer = styled.div`
   width: 100%;
   display: grid;
   grid-template-columns: 4fr 2fr auto;
-  gap: 4px;
+  grid-template-rows: auto auto auto;
+  align-items: start;
+  gap: 0 ${({ theme }) => theme.spacing[2]};
+  margin-top: ${({ theme }) => theme.spacing[2]};
 `
 
-const StyledToggleSwitch = styled(ToggleSwitch)`
+const IngredientInput = styled(Input)`
+  grid-column: 1;
+  grid-row: 1;
+`
+
+const AmountInput = styled(Input)`
+  grid-column: 2;
+  grid-row: 1;
+`
+
+const DeleteButton = styled(IconButton)`
+  grid-column: 3;
+  grid-row: 1;
+  align-self: center;
+`
+
+const SpiceToggle = styled(ToggleSwitch)`
+  grid-column: 1 / -1;
+  grid-row: 3;
   margin-top: ${({ theme }) => theme.spacing[2]};
+`
+
+const StyledButton = styled(Button)`
+  margin-left: auto;
 `

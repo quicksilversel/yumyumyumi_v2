@@ -3,8 +3,41 @@ import styled from '@emotion/styled'
 
 import type { Theme } from '@emotion/react'
 
+const chipStyles = ({
+  variant,
+  selected,
+  theme,
+}: {
+  variant: 'filled' | 'outlined' | 'accent'
+  selected: boolean
+  theme: Theme
+}) => {
+  switch (variant) {
+    case 'outlined':
+      return css`
+        border: 1px solid
+          ${selected ? theme.colors.black : theme.colors.gray[300]};
+        background-color: transparent;
+        color: ${selected ? theme.colors.black : theme.colors.gray[700]};
+      `
+    case 'accent':
+      return css`
+        background-color: ${theme.colors.primary};
+        color: ${theme.colors.white};
+      `
+    default:
+      return css`
+        border: 1px solid transparent;
+        background-color: ${selected
+          ? theme.colors.black
+          : theme.colors.gray[100]};
+        color: ${selected ? theme.colors.white : theme.colors.gray[700]};
+      `
+  }
+}
+
 export const Chip = styled.span<{
-  variant?: 'filled' | 'outlined'
+  variant?: 'filled' | 'outlined' | 'accent'
   size?: 'sm' | 'md'
   clickable?: boolean
   selected?: boolean
@@ -16,6 +49,10 @@ export const Chip = styled.span<{
   transition: opacity ${({ theme }) => theme.transition.default};
   white-space: nowrap;
   user-select: none;
+  font-weight: ${(props) => props.theme.typography.fontWeight.semibold};
+
+  ${({ variant, selected, theme }) =>
+    chipStyles({ variant: variant ?? 'filled', selected: !!selected, theme })}
 
   ${({ size, theme }) =>
     size === 'sm'
@@ -28,22 +65,6 @@ export const Chip = styled.span<{
           font-size: ${theme.typography.fontSize.sm};
         `}
 
-  ${({ variant, selected, theme }) =>
-    variant === 'outlined'
-      ? css`
-          border: 1px solid
-            ${selected ? theme.colors.black : theme.colors.gray[300]};
-          background-color: transparent;
-          color: ${selected ? theme.colors.black : theme.colors.gray[700]};
-        `
-      : css`
-          border: 1px solid transparent;
-          background-color: ${selected
-            ? theme.colors.black
-            : theme.colors.gray[100]};
-          color: ${selected ? theme.colors.white : theme.colors.gray[700]};
-        `}
-  
   ${({ clickable }) =>
     clickable &&
     css`

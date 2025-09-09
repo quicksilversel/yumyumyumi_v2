@@ -140,7 +140,6 @@ export default function LoginPage() {
                 id="password"
                 title="パスワード"
                 type={showPassword ? 'text' : 'password'}
-                value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
                 height="medium"
@@ -160,7 +159,6 @@ export default function LoginPage() {
                 id="confirmPassword"
                 title="確認用のパスワード"
                 type={showPassword ? 'text' : 'password'}
-                value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 required
                 placeholder="確認用のパスワードを入力してください"
@@ -266,7 +264,6 @@ const Alert = styled.div<{ variant: 'error' | 'success' }>`
           color: ${theme.colors.white};
         `
       : css`
-          background-color: ${theme.colors.success};
           color: ${theme.colors.white};
         `}
 `
@@ -278,7 +275,7 @@ const InputWrapper = styled.div`
 
 const PasswordToggle = styled(IconButton)`
   position: absolute;
-  top: calc(50% + 10px);
+  top: 50%;
   right: ${({ theme }) => theme.spacing[2]};
   transform: translateY(-50%);
 `
