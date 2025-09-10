@@ -127,8 +127,8 @@ export const IconButton = styled.button<{
   }}
 
   padding: 0;
-  background-color: transparent;
   border-radius: ${({ theme }) => theme.borderRadius.full};
+  background-color: transparent;
   color: ${({ theme }) => theme.colors.gray[600]};
 
   &:hover:not(:disabled),

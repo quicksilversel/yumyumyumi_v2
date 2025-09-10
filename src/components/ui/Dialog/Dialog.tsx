@@ -146,9 +146,9 @@ export const DialogBody = styled.div`
 
 export const DialogActions = styled.div`
   display: flex;
-  gap: ${({ theme }) => theme.spacing[3]};
   justify-content: flex-end;
   align-items: center;
+  gap: ${({ theme }) => theme.spacing[3]};
   padding: ${({ theme }) => theme.spacing[6]};
   padding-top: 0;
 `

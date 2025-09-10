@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { objectToCamel, objectToSnake } from 'ts-case-convert'
 
 import type { Recipe, RecipeForm } from '@/types/recipe'

@@ -46,10 +46,10 @@ export const Chip = styled.span<{
   align-items: center;
   gap: ${({ theme }) => theme.spacing[1]};
   border-radius: ${({ theme }) => theme.borderRadius.full};
+  font-weight: ${(props) => props.theme.typography.fontWeight.semibold};
   transition: opacity ${({ theme }) => theme.transition.default};
   white-space: nowrap;
   user-select: none;
-  font-weight: ${(props) => props.theme.typography.fontWeight.semibold};
 
   ${({ variant, selected, theme }) =>
     chipStyles({ variant: variant ?? 'filled', selected: !!selected, theme })}

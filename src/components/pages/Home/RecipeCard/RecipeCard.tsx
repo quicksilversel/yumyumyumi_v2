@@ -45,6 +45,6 @@ const StyledCard = styled.article`
 const StyledLink = styled(Link)`
   display: flex;
   flex-direction: column;
-  flex-grow: 1;
   height: 100%;
+  flex-grow: 1;
 `

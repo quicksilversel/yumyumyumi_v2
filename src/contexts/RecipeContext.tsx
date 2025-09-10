@@ -8,6 +8,8 @@ import {
   ReactNode,
 } from 'react'
 
+import { useRouter, useSearchParams } from 'next/navigation'
+
 import type { Recipe } from '@/types/recipe'
 
 type RecipeContextType = {
@@ -15,12 +17,9 @@ type RecipeContextType = {
   filteredRecipes: Recipe[]
   editingRecipe: Recipe | null
   expandedRecipeId: string | null
-
   clientSearchTerm: string
-
   loading: boolean
   error: string | null
-
   setRecipes: (recipes: Recipe[]) => void
   setFilteredRecipes: (recipes: Recipe[]) => void
   setEditingRecipe: (recipe: Recipe | null) => void
@@ -28,7 +27,6 @@ type RecipeContextType = {
   setClientSearchTerm: (term: string) => void
   setLoading: (loading: boolean) => void
   setError: (error: string | null) => void
-
   handleBookmarkChange: () => void
   handleEditRecipe: (recipe: Recipe) => void
   handleDeleteRecipe: () => void
@@ -47,30 +45,35 @@ export function RecipeProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
+  const router = useRouter()
+  const searchParams = useSearchParams()
+
   const handleBookmarkChange = useCallback(() => {
-    const params = new URLSearchParams(window.location.search)
-    if (params.get('bookmarked') === 'true') {
-      window.location.reload()
+    if (searchParams.get('bookmarked') === 'true') {
+      router.refresh()
     }
-  }, [])
+  }, [searchParams, router])
 
   const handleEditRecipe = useCallback((recipe: Recipe) => {
     setEditingRecipe(recipe)
   }, [])
 
   const handleDeleteRecipe = useCallback(() => {
-    window.location.reload()
-  }, [])
+    router.refresh()
+  }, [router])
 
-  const handleRecipeUpdated = useCallback((updatedRecipe: Recipe) => {
-    setRecipes((prev) =>
-      prev.map((r) => (r.id === updatedRecipe.id ? updatedRecipe : r)),
-    )
-    setFilteredRecipes((prev) =>
-      prev.map((r) => (r.id === updatedRecipe.id ? updatedRecipe : r)),
-    )
-    window.location.reload()
-  }, [])
+  const handleRecipeUpdated = useCallback(
+    (updatedRecipe: Recipe) => {
+      setRecipes((prev) =>
+        prev.map((r) => (r.id === updatedRecipe.id ? updatedRecipe : r)),
+      )
+      setFilteredRecipes((prev) =>
+        prev.map((r) => (r.id === updatedRecipe.id ? updatedRecipe : r)),
+      )
+      router.refresh()
+    },
+    [router],
+  )
 
   const handleToggleIngredients = useCallback(
     (recipeId: string) => {

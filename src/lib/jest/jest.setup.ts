@@ -23,6 +23,17 @@ jest.mock('next/cache', () => ({
   revalidateTag: jest.fn(),
 }))
 
+// Mock NextResponse for API route tests
+jest.mock('next/server', () => ({
+  NextRequest: jest.fn(),
+  NextResponse: {
+    json: (data: any, init?: ResponseInit) => ({
+      json: async () => data,
+      status: init?.status || 200,
+    }),
+  },
+}))
+
 // Mock environment variables
 process.env.NEXT_PUBLIC_SUPABASE_URL = 'https://test.supabase.co'
 process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY = 'test-anon-key'

@@ -227,17 +227,16 @@ const TabContainer = styled.div`
 `
 
 const Tab = styled.button<{ active: boolean }>`
-  text-align: center;
   flex: 1;
   padding: ${({ theme }) => theme.spacing[3]} ${({ theme }) => theme.spacing[4]};
   background: none;
-  border: none;
-  border-bottom: 2px solid transparent;
-  cursor: pointer;
-  font-size: ${({ theme }) => theme.typography.fontSize.base};
-  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
   color: ${({ theme, active }) =>
     active ? theme.colors.black : theme.colors.gray[500]};
+  font-size: ${({ theme }) => theme.typography.fontSize.base};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
+  text-align: center;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
   transition: color ${({ theme }) => theme.transition.default};
 
   ${({ theme, active }) =>
@@ -252,9 +251,9 @@ const Tab = styled.button<{ active: boolean }>`
 `
 
 const Alert = styled.div<{ variant: 'error' | 'success' }>`
+  margin-bottom: ${({ theme }) => theme.spacing[4]};
   padding: ${({ theme }) => theme.spacing[3]} ${({ theme }) => theme.spacing[4]};
   border-radius: ${({ theme }) => theme.borderRadius.lg};
-  margin-bottom: ${({ theme }) => theme.spacing[4]};
   font-size: ${({ theme }) => theme.typography.fontSize.sm};
 
   ${({ theme, variant }) =>

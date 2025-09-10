@@ -1,7 +1,7 @@
 /** @type {import('stylelint').Config} */
 module.exports = {
-  extends: 'stylelint-config-standard',
-  plugins: ['stylelint-order'],
+  extends: ['stylelint-config-standard'],
+  plugins: ['stylelint-order', 'stylelint-no-unsupported-browser-features'],
   customSyntax: 'postcss-styled-syntax',
   rules: {
     'value-keyword-case': null,
@@ -23,6 +23,41 @@ module.exports = {
     'rule-empty-line-before': null,
     'at-rule-empty-line-before': null,
     'nesting-selector-no-missing-scoping-root': null,
+
+    /* --- Perf / robustness --- */
+    // 1) Block render-blocking @import in CSS
+    'at-rule-disallowed-list': ['import'],
+
+    // 2) Keep CSS small & selector matching cheap
+    'selector-max-compound-selectors': 4, // e.g. .a .b .c .d is OK; deeper gets warned
+    'selector-max-combinators': 3, // limit descendant/child/sibling chains
+    'selector-max-specificity': '0,4,0', // avoid overly specific selectors
+    'selector-max-class': 4,
+    'selector-max-id': 0,
+    'selector-max-universal': 0,
+    'selector-no-qualifying-type': [true, { ignore: ['attribute', 'class'] }],
+
+    // 3) Avoid bloat/mistakes that inflate bundles
+    'declaration-block-no-duplicate-properties': [
+      true,
+      { ignore: ['consecutive-duplicates-with-different-values'] },
+    ],
+    'declaration-block-no-shorthand-property-overrides': true,
+    'declaration-no-important': true,
+
+    // 4) Tame nesting (important for CSS-in-JS too)
+    'max-nesting-depth': 3,
+
+    // 6) Warn on features that require heavy fallbacks (keeps CSS lean)
+    'plugin/no-unsupported-browser-features': [
+      true,
+      {
+        severity: 'warning',
+        ignorePartialSupport: true,
+        // browsers: set via .browserslistrc or package.json "browserslist"
+      },
+    ],
+
     'order/properties-order': [
       [
         'position',
@@ -86,10 +121,7 @@ module.exports = {
         'opacity',
         'visibility',
       ],
-      {
-        severity: 'warning',
-        unspecified: 'bottom',
-      },
+      { severity: 'warning', unspecified: 'bottom' },
     ],
   },
 }

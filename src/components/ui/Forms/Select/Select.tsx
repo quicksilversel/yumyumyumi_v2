@@ -111,8 +111,8 @@ const Container = styled.div`
 const Label = styled.label`
   display: block;
   margin-bottom: ${({ theme }) => theme.spacing[1]};
-  font-size: ${({ theme }) => theme.typography.fontSize.sm};
   color: ${({ theme }) => theme.colors.gray[800]};
+  font-size: ${({ theme }) => theme.typography.fontSize.sm};
 `
 
 const StyledSelect = styled.select<Partial<SelectProps>>`
@@ -123,8 +123,8 @@ const StyledSelect = styled.select<Partial<SelectProps>>`
   border-radius: ${({ theme }) => theme.borderRadius.default};
   background-color: ${({ theme }) => theme.colors.white};
   background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23333' d='M10.293 3.293L6 7.586 1.707 3.293A1 1 0 00.293 4.707l5 5a1 1 0 001.414 0l5-5a1 1 0 10-1.414-1.414z'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
   background-position: right ${({ theme }) => theme.spacing['3']} center;
+  background-repeat: no-repeat;
   color: ${({ theme }) => theme.colors.black};
   cursor: pointer;
   transition: border-color ${({ theme }) => theme.transition.default};
@@ -158,8 +158,8 @@ const StyledSelect = styled.select<Partial<SelectProps>>`
   }
 
   option {
-    color: ${({ theme }) => theme.colors.black};
     background-color: ${({ theme }) => theme.colors.white};
+    color: ${({ theme }) => theme.colors.black};
 
     &:disabled {
       color: ${({ theme }) => theme.colors.gray[400]};

@@ -29,12 +29,12 @@ const fadeInAnimation = keyframes`
 `
 
 const Container = styled.div`
+  width: 100%;
+  max-height: 310px;
   padding: ${({ theme }) => theme.spacing[4]};
   background: rgb(255, 255, 255, 98%);
   animation: ${fadeInAnimation} 0.3s ease;
   inset: 0;
-  width: 100%;
-  max-height: 310px;
   overflow-y: auto;
 `
 

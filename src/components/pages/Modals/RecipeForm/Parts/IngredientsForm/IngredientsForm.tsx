@@ -119,12 +119,12 @@ export function IngredientsForm() {
 }
 
 const IngredientRow = styled.div`
-  width: 100%;
   display: grid;
+  align-items: start;
   grid-template-columns: 4fr 2fr auto;
   grid-template-rows: auto auto auto;
-  align-items: start;
   gap: 0 ${({ theme }) => theme.spacing[2]};
+  width: 100%;
   margin-top: ${({ theme }) => theme.spacing[2]};
 `
 
@@ -145,9 +145,9 @@ const DeleteButton = styled(IconButton)`
 `
 
 const SpiceToggle = styled(ToggleSwitch)`
+  margin-top: ${({ theme }) => theme.spacing[2]};
   grid-column: 1 / -1;
   grid-row: 3;
-  margin-top: ${({ theme }) => theme.spacing[2]};
 `
 
 const StyledButton = styled(Button)`

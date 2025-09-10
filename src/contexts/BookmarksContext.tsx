@@ -6,6 +6,8 @@ import {
   useCallback,
 } from 'react'
 
+import { useRouter } from 'next/navigation'
+
 import type { Bookmark } from '@/types/bookmarks'
 
 import { useAuth } from '@/contexts/AuthContext'
@@ -33,6 +35,7 @@ export function BookmarksProvider({ children }: { children: React.ReactNode }) {
   const [isLoading, setIsLoading] = useState(true)
   const [hasFetched, setHasFetched] = useState(false)
   const { user } = useAuth()
+  const router = useRouter()
 
   const fetchBookmarks = useCallback(
     async (force = false) => {
@@ -74,7 +77,7 @@ export function BookmarksProvider({ children }: { children: React.ReactNode }) {
   const toggleBookmark = useCallback(
     async (recipeId: string): Promise<boolean> => {
       if (!user) {
-        window.location.href = '/login'
+        router.push('/login')
         return false
       }
 
@@ -109,7 +112,7 @@ export function BookmarksProvider({ children }: { children: React.ReactNode }) {
         return false
       }
     },
-    [user, bookmarkedIds],
+    [user, router, bookmarkedIds],
   )
 
   return (

@@ -177,35 +177,35 @@ const FloatingLabel = styled.label<{
     if (isFocused) return theme.colors.primary
     return theme.colors.gray[600]
   }};
-  pointer-events: none;
-  transition: all 0.2s ease-in-out;
-  transform-origin: left top;
-  background-color: ${({ theme }) => theme.colors.white};
-  padding: 0 4px;
-  margin-left: -4px;
   display: flex;
   align-items: center;
+  padding: 0 4px;
+  margin-left: -4px;
+  background-color: ${({ theme }) => theme.colors.white};
+  transition: all 0.2s ease-in-out;
+  pointer-events: none;
+  transform-origin: left top;
 
   ${({ isFloating, theme }) =>
     isFloating
       ? css`
           top: -8px;
           font-size: 12px;
-          transform: scale(0.85);
           font-weight: ${theme.typography.fontWeight.medium};
+          transform: scale(0.85);
         `
       : css`
           top: 50%;
-          transform: translateY(-50%);
           font-size: ${theme.typography.fontSize.sm};
+          transform: translateY(-50%);
         `}
 
   ${({ theme, isRequired }) =>
     isRequired &&
     css`
-      &:after {
-        content: ' *';
+      &::after {
         color: ${theme.colors.error};
+        content: ' *';
       }
     `}
 `
@@ -240,45 +240,26 @@ const StyledInput = styled.input<{
 
   &[type='number']::-webkit-inner-spin-button,
   &[type='number']::-webkit-outer-spin-button {
-    -webkit-appearance: none;
     margin: 0;
+    -webkit-appearance: none;
   }
 
   &[type='number'] {
     appearance: textfield;
   }
 
-  /* Autofill detection animations */
-  @keyframes onAutoFillStart {
-    from {
-      /* */
-    }
-    to {
-      /* */
-    }
-  }
-  @keyframes onAutoFillCancel {
-    from {
-      /* */
-    }
-    to {
-      /* */
-    }
-  }
-
   &:-webkit-autofill,
   &:-webkit-autofill:hover,
   &:-webkit-autofill:focus,
   &:-webkit-autofill:active {
+    border-color: ${({ theme, error }) =>
+      error ? theme.colors.error : theme.colors.gray[300]} !important;
     -webkit-animation-delay: 1s;
     -webkit-animation-name: onAutoFillStart;
     -webkit-animation-fill-mode: both;
 
     -webkit-box-shadow: 0 0 0 30px ${({ theme }) => theme.colors.white} inset !important;
     -webkit-text-fill-color: ${({ theme }) => theme.colors.black} !important;
-
-    border-color: ${({ theme, error }) =>
-      error ? theme.colors.error : theme.colors.gray[300]} !important;
   }
 
   &:not(:-webkit-autofill) {
@@ -293,8 +274,8 @@ const StyledInput = styled.input<{
       }
 
       &:focus::placeholder {
-        opacity: 0.6;
         transition: opacity 0.2s ease-in-out;
+        opacity: 0.6;
       }
 
       &:-webkit-autofill::placeholder {

@@ -98,29 +98,29 @@ const DirectionRow = styled.div`
   display: flex;
   align-items: flex-start;
   gap: ${({ theme }) => theme.spacing[3]};
-  margin-top: ${({ theme }) => theme.spacing[2]};
   width: 100%;
+  margin-top: ${({ theme }) => theme.spacing[2]};
 `
 
 const StepNumber = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 32px;
   height: 32px;
   border-radius: 50%;
   background-color: ${({ theme }) => theme.colors.primary};
   color: ${({ theme }) => theme.colors.white};
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
   font-size: 14px;
+  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
   flex-shrink: 0;
 `
 
 const FieldContainer = styled.div`
   display: flex;
+  flex: 1;
   flex-direction: column;
   gap: ${({ theme }) => theme.spacing[3]};
-  flex: 1;
 `
 
 const DeleteButton = styled(IconButton)`

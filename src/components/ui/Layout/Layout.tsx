@@ -104,8 +104,7 @@ export const Flex = styled.div<{
     return alignMap[align || 'start']
   }};
   gap: ${({ theme, gap }) => theme.spacing[gap || 0]};
-  flex-direction: ${({ direction }) => direction || 'row'};
-  flex-wrap: ${({ wrap }) => (wrap ? 'wrap' : 'nowrap')};
+  flex-flow: ${({ direction }) => direction || 'row'} ${({ wrap }) => (wrap ? 'wrap' : 'nowrap')};
 `
 
 export const Stack = styled(Flex)`

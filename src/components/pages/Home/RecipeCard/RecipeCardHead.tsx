@@ -26,8 +26,8 @@ export const RecipeCardHead = ({ recipe }: { recipe: Recipe }) => {
 const Container = styled.div`
   position: relative;
   width: 100%;
-  aspect-ratio: 16 / 9;
   background-color: ${({ theme }) => theme.colors.gray[100]};
+  aspect-ratio: 16 / 9;
   overflow: hidden;
 `
 
@@ -46,9 +46,9 @@ const Label = styled.div`
   bottom: 0;
   left: 0;
   padding: ${({ theme }) => theme.spacing[2]};
+  background-color: ${({ theme }) => theme.colors.primary};
+  color: ${({ theme }) => theme.colors.white};
   font-size: ${({ theme }) => theme.typography.fontSize.xs};
   font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
   line-height: 1;
-  background-color: ${({ theme }) => theme.colors.primary};
-  color: ${({ theme }) => theme.colors.white};
 `

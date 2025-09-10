@@ -198,9 +198,9 @@ function RecipeListInner({ initialRecipes }: RecipeListProps) {
 }
 
 const StyledList = styled.div`
-  padding: 20px;
   max-width: 1200px;
   margin: 0 auto;
+  padding: 20px;
 `
 
 const LoadingOverlay = styled.div`

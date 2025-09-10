@@ -184,9 +184,9 @@ const PlaceholderContent = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: ${({ theme }) => theme.spacing[2]};
   width: 100%;
   height: 100%;
-  gap: ${({ theme }) => theme.spacing[2]};
   color: ${({ theme }) => theme.colors.gray[500]};
   text-align: center;
 `

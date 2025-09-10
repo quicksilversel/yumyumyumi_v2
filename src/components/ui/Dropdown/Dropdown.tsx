@@ -183,8 +183,8 @@ const DropdownContainer = styled.div<{ absolute?: boolean }>`
     css`
       position: absolute;
       top: calc(100% + 4px);
-      left: 0;
       right: 0;
+      left: 0;
     `}
   z-index: 1000;
   min-width: 200px;
@@ -206,10 +206,10 @@ const DropdownContainer = styled.div<{ absolute?: boolean }>`
     ${({ absolute, theme }) =>
       absolute
         ? css`
-            opacity: 1;
-            transform: translateY(0);
-            pointer-events: auto;
             border-radius: ${theme.borderRadius.md};
+            transform: translateY(0);
+            opacity: 1;
+            pointer-events: auto;
           `
         : css`
             max-height: 300px;
@@ -220,8 +220,8 @@ const DropdownContainer = styled.div<{ absolute?: boolean }>`
 
 const DropdownItem = styled.button<{ selected?: boolean }>`
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
   width: 100%;
   padding: ${({ theme }) => theme.spacing[3]} ${({ theme }) => theme.spacing[4]};
   background: ${({ selected, theme }) =>

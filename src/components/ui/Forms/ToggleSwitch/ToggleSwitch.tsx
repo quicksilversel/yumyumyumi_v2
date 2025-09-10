@@ -65,13 +65,13 @@ const SwitchLabel = styled.label<{
   labelPosition?: 'left' | 'right'
 }>`
   display: inline-flex;
+  flex-direction: ${({ labelPosition }) =>
+    labelPosition === 'left' ? 'row-reverse' : 'row'};
   align-items: center;
   gap: ${({ theme }) => theme.spacing[3]};
   cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
-  user-select: none;
   opacity: ${({ disabled }) => (disabled ? 0.6 : 1)};
-  flex-direction: ${({ labelPosition }) =>
-    labelPosition === 'left' ? 'row-reverse' : 'row'};
+  user-select: none;
 `
 
 const LabelText = styled.span<{ height?: ToggleSwitchSize }>`
@@ -88,10 +88,10 @@ const LabelText = styled.span<{ height?: ToggleSwitchSize }>`
 `
 
 const HelperText = styled.span<{ error?: boolean }>`
+  margin-top: ${({ theme }) => theme.spacing[1]};
   color: ${({ error, theme }) =>
     error ? theme.colors.error : theme.colors.gray[500]};
   font-size: ${({ theme }) => theme.typography.fontSize.xs};
-  margin-top: ${({ theme }) => theme.spacing[1]};
 `
 
 const SwitchInput = styled.input<{ height?: ToggleSwitchSize }>`
@@ -104,12 +104,12 @@ const SwitchInput = styled.input<{ height?: ToggleSwitchSize }>`
     const heights = { small: '20px', medium: '24px', large: '28px' }
     return heights[height || 'medium']
   }};
-  background-color: ${({ theme }) => theme.colors.gray[300]};
   border: 2px solid transparent;
   border-radius: ${({ height }) => {
     const heights = { small: '10px', medium: '12px', large: '14px' }
     return heights[height || 'medium']
   }};
+  background-color: ${({ theme }) => theme.colors.gray[300]};
   cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
   transition: opacity ${({ theme }) => theme.transition.default};
   outline: none;
@@ -156,10 +156,10 @@ const SwitchInput = styled.input<{ height?: ToggleSwitchSize }>`
       const heights = { small: '14px', medium: '16px', large: '18px' }
       return heights[height || 'medium']
     }};
-    background-color: ${({ theme }) => theme.colors.white};
     border-radius: 50%;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    background-color: ${({ theme }) => theme.colors.white};
     transition: transform ${({ theme }) => theme.transition.default};
+    box-shadow: 0 2px 4px rgb(0, 0, 0, 0.2);
     content: '';
   }
 

@@ -76,10 +76,10 @@ const PageContainer = styled.div`
 const AccountCard = styled.div`
   width: 100%;
   max-width: 420px;
-  margin-inline: auto;
   padding: ${({ theme }) => theme.spacing[8]};
   border-radius: ${({ theme }) => theme.borderRadius.xl};
   background: ${({ theme }) => theme.colors.white};
+  margin-inline: auto;
   box-shadow: 0 10px 25px rgb(0, 0, 0, 10%);
 `
 
