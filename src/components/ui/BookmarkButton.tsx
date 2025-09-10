@@ -1,8 +1,11 @@
+import { useEffect, useState } from 'react'
+
 import styled from '@emotion/styled'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined'
 
 import { IconButton } from '@/components/ui/Button'
+import { useAuth } from '@/contexts/AuthContext'
 import { useBookmarks } from '@/hooks/useBookmarks'
 
 interface BookmarkButtonProps {
@@ -18,10 +21,22 @@ export const BookmarkButton = ({
   onToggle,
   className,
 }: BookmarkButtonProps) => {
+  const { user, loading } = useAuth()
+  const [mounted, setMounted] = useState(false)
+
   const { isBookmarked, toggleBookmark, isLoading, isToggling } = useBookmarks({
     recipeId,
     onToggle,
   })
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  // Don't render if user is not authenticated
+  if (!mounted || loading || !user) {
+    return null
+  }
 
   return (
     <StyledIconButton

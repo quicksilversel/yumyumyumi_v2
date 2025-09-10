@@ -21,8 +21,13 @@ export const MoreActions = ({
   className,
 }: MoreActionsProps) => {
   const [menuOpen, setMenuOpen] = useState(false)
+  const [mounted, setMounted] = useState(false)
 
   const menuRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -60,6 +65,7 @@ export const MoreActions = ({
     onDelete()
   }
 
+  if (!mounted) return null
   return (
     <Container className={className}>
       <StyledIconButton
@@ -67,6 +73,7 @@ export const MoreActions = ({
         size="sm"
         disabled={isDeleting}
         type="button"
+        aria-label="アクションメニューを開く"
       >
         <MoreVertIcon fontSize="inherit" />
       </StyledIconButton>

@@ -33,7 +33,7 @@ export const Hero = ({ recipe }: { recipe: Recipe }) => {
   }
 
   return (
-    <>
+    <ImageContent>
       <ImageContainer>
         <Image
           src={
@@ -66,24 +66,40 @@ export const Hero = ({ recipe }: { recipe: Recipe }) => {
         onClose={() => setDeleteDialogOpen(false)}
         recipe={currentRecipe}
       />
-    </>
+    </ImageContent>
   )
 }
+
+const ImageContent = styled.div`
+  @media (max-width: 768px) {
+    order: 1;
+  }
+`
 
 const ImageContainer = styled.div`
   position: relative;
   width: 100%;
   aspect-ratio: 16 / 9;
+
+  @media (width > 35.1875rem) {
+    overflow: hidden;
+    border-radius: ${({ theme }) => theme.borderRadius.xl};
+    box-shadow:
+      0 10px 25px rgb(0, 0, 0, 0.1),
+      0 4px 6px rgb(0, 0, 0, 0.05);
+  }
 `
 
 const StyledBookmarkButton = styled(BookmarkButton)`
   position: absolute;
-  top: 12px;
-  right: 50px;
+  top: ${({ theme }) => theme.spacing[3]};
+  right: ${({ theme }) => theme.spacing[12]};
+  z-index: 2;
 `
 
 const StyledMoreActions = styled(MoreActions)`
   position: absolute;
-  top: 12px;
-  right: 12px;
+  top: ${({ theme }) => theme.spacing[3]};
+  right: ${({ theme }) => theme.spacing[3]};
+  z-index: 2;
 `

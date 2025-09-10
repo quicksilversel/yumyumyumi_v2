@@ -8,7 +8,6 @@ import type { RecipeForm } from '@/types/recipe'
 import {
   H2,
   Caption,
-  Stack,
   ErrorText,
   Input,
   Button,
@@ -46,110 +45,189 @@ export function IngredientsForm() {
   }
 
   return (
-    <Stack gap={3}>
-      <H2>材料</H2>
+    <Section>
+      <SectionHeader>
+        <H2 id="ingredients-heading">材料</H2>
+        <AddButton
+          variant="primary"
+          size="sm"
+          onClick={addIngredient}
+          type="button"
+          aria-describedby="ingredients-help"
+        >
+          <AddIcon fontSize="inherit" />
+          材料を追加
+        </AddButton>
+      </SectionHeader>
       {errors.ingredients &&
         typeof errors.ingredients === 'object' &&
         'message' in errors.ingredients && (
-          <ErrorText>{errors.ingredients.message}</ErrorText>
+          <ErrorText role="alert">{errors.ingredients.message}</ErrorText>
         )}
       {fields.length === 0 ? (
-        <Caption>
-          まだ材料が追加されていません。「材料を追加」ボタンを押して追加してください。
-        </Caption>
+        <EmptyState>
+          <Caption id="ingredients-help">
+            まだ材料が追加されていません。「材料を追加」ボタンを押して追加してください。
+          </Caption>
+        </EmptyState>
       ) : (
-        <Stack gap={2}>
+        <IngredientsList
+          role="list"
+          aria-labelledby="ingredients-heading"
+          aria-describedby="ingredients-help"
+        >
           {fields.map((field, index) => (
-            <IngredientRow key={field.id}>
-              <IngredientInput
-                {...register(`ingredients.${index}.name`, {
-                  required: 'Ingredient name is required',
-                  minLength: {
-                    value: 1,
-                    message: 'Name cannot be empty',
-                  },
-                })}
-                title="材料"
-                value={watch(`ingredients.${index}.name`)}
-                error={!!errors.ingredients?.[index]?.name}
-              />
-              {errors.ingredients?.[index]?.name && (
-                <ErrorText>{errors.ingredients[index].name?.message}</ErrorText>
-              )}
-              <AmountInput
-                {...register(`ingredients.${index}.amount`, {
-                  required: 'Amount is required',
-                  minLength: {
-                    value: 1,
-                    message: 'Amount cannot be empty',
-                  },
-                })}
-                title="分量"
-                value={watch(`ingredients.${index}.amount`)}
-                error={!!errors.ingredients?.[index]?.amount}
-              />
-              {errors.ingredients?.[index]?.amount && (
-                <ErrorText>
-                  {errors.ingredients[index].amount?.message}
-                </ErrorText>
-              )}
+            <IngredientItem key={field.id} role="listitem">
+              <FieldGroup>
+                <Input
+                  {...register(`ingredients.${index}.name`, {
+                    required: '材料名は必須です',
+                    minLength: {
+                      value: 1,
+                      message: '材料名を入力してください',
+                    },
+                  })}
+                  title="材料名"
+                  value={watch(`ingredients.${index}.name`)}
+                  error={!!errors.ingredients?.[index]?.name}
+                  aria-describedby={
+                    errors.ingredients?.[index]?.name
+                      ? `ingredient-name-error-${index}`
+                      : undefined
+                  }
+                />
+                {errors.ingredients?.[index]?.name && (
+                  <ErrorText id={`ingredient-name-error-${index}`} role="alert">
+                    {errors.ingredients[index].name?.message}
+                  </ErrorText>
+                )}
+              </FieldGroup>
+
+              <FieldGroup>
+                <Input
+                  {...register(`ingredients.${index}.amount`, {
+                    required: '分量は必須です',
+                    minLength: {
+                      value: 1,
+                      message: '分量を入力してください',
+                    },
+                  })}
+                  title="分量"
+                  value={watch(`ingredients.${index}.amount`)}
+                  error={!!errors.ingredients?.[index]?.amount}
+                  aria-describedby={
+                    errors.ingredients?.[index]?.amount
+                      ? `ingredient-amount-error-${index}`
+                      : undefined
+                  }
+                />
+                {errors.ingredients?.[index]?.amount && (
+                  <ErrorText
+                    id={`ingredient-amount-error-${index}`}
+                    role="alert"
+                  >
+                    {errors.ingredients[index].amount?.message}
+                  </ErrorText>
+                )}
+              </FieldGroup>
+
               <DeleteButton
                 size="sm"
                 onClick={() => removeIngredient(index)}
                 disabled={fields.length === 1}
                 type="button"
+                aria-label={`${index + 1}番目の材料を削除`}
               >
                 <DeleteIcon />
               </DeleteButton>
-              <SpiceToggle
-                label="A"
-                {...register(`ingredients.${index}.isSpice`)}
-                height="small"
-              />
-            </IngredientRow>
+
+              <SpiceToggleWrapper>
+                <ToggleSwitch
+                  label="調味料・スパイス"
+                  {...register(`ingredients.${index}.isSpice`)}
+                  height="small"
+                />
+              </SpiceToggleWrapper>
+            </IngredientItem>
           ))}
-        </Stack>
+          <HelperText id="ingredients-help">
+            調味料・スパイスにチェックを入れると、レシピで区別して表示されます。
+          </HelperText>
+        </IngredientsList>
       )}
-      <StyledButton size="sm" onClick={addIngredient} type="button">
-        <AddIcon fontSize="inherit" />
-        材料を追加する
-      </StyledButton>
-    </Stack>
+    </Section>
   )
 }
 
-const IngredientRow = styled.div`
-  display: grid;
-  grid-template-rows: auto auto auto;
-  grid-template-columns: 4fr 2fr auto;
-  gap: 0 ${({ theme }) => theme.spacing[2]};
-  align-items: start;
+const Section = styled.section`
+  display: flex;
+  flex-direction: column;
+  gap: ${({ theme }) => theme.spacing[3]};
   width: 100%;
-  margin-top: ${({ theme }) => theme.spacing[2]};
 `
 
-const IngredientInput = styled(Input)`
-  grid-row: 1;
-  grid-column: 1;
+const SectionHeader = styled.div`
+  display: flex;
+  gap: ${({ theme }) => theme.spacing[3]};
+  align-items: center;
+  justify-content: space-between;
 `
 
-const AmountInput = styled(Input)`
-  grid-row: 1;
-  grid-column: 2;
+const AddButton = styled(Button)`
+  flex-shrink: 0;
+`
+
+const EmptyState = styled.div`
+  padding: ${({ theme }) => theme.spacing[4]};
+  text-align: center;
+  background-color: ${({ theme }) => theme.colors.gray[50]};
+  border: 1px dashed ${({ theme }) => theme.colors.gray[300]};
+  border-radius: ${({ theme }) => theme.borderRadius.md};
+`
+
+const IngredientsList = styled.ul`
+  display: flex;
+  flex-direction: column;
+  gap: ${({ theme }) => theme.spacing[3]};
+  padding: 0;
+  margin: 0;
+  list-style: none;
+`
+
+const IngredientItem = styled.li`
+  display: grid;
+  grid-template-rows: auto auto;
+  grid-template-columns: 2fr 1fr auto;
+  gap: ${({ theme }) => theme.spacing[2]};
+  align-items: start;
+  padding: ${({ theme }) => theme.spacing[4]};
+  background-color: ${({ theme }) => theme.colors.white};
+  border: 1px solid ${({ theme }) => theme.colors.gray[200]};
+  border-radius: ${({ theme }) => theme.borderRadius.md};
+`
+
+const FieldGroup = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: ${({ theme }) => theme.spacing[1]};
 `
 
 const DeleteButton = styled(IconButton)`
   grid-row: 1;
   grid-column: 3;
-  align-self: center;
+  align-self: start;
+  margin-top: 8px; /* Align with input top */
 `
 
-const SpiceToggle = styled(ToggleSwitch)`
-  grid-row: 3;
+const SpiceToggleWrapper = styled.div`
+  grid-row: 2;
   grid-column: 1 / -1;
   margin-top: ${({ theme }) => theme.spacing[2]};
 `
 
-const StyledButton = styled(Button)`
-  margin-left: auto;
+const HelperText = styled.p`
+  margin: ${({ theme }) => theme.spacing[2]} 0 0 0;
+  font-size: ${({ theme }) => theme.typography.fontSize.xs};
+  color: ${({ theme }) => theme.colors.gray[600]};
+  text-align: center;
 `

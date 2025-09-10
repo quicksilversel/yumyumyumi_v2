@@ -57,11 +57,9 @@ export const Input = ({
       }
     }
 
-    // Check immediately
     checkAutofill()
 
-    // Check periodically for autofill changes
-    const interval = setInterval(checkAutofill, 100)
+    const interval = setInterval(checkAutofill, 300)
 
     return () => {
       clearInterval(interval)

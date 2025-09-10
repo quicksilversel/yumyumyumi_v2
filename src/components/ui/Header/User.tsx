@@ -11,10 +11,15 @@ import { Divider } from '@/components/ui/Layout'
 import { useAuth } from '@/contexts/AuthContext'
 
 export const User = () => {
-  const { user, signOut } = useAuth()
+  const { user, signOut, loading } = useAuth()
   const [menuOpen, setMenuOpen] = useState(false)
+  const [mounted, setMounted] = useState(false)
 
   const menuRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -45,17 +50,27 @@ export const User = () => {
     handleMenuClose()
   }
 
+  if (!mounted || loading) {
+    return (
+      <Container>
+        <PersonIcon />
+      </Container>
+    )
+  }
+
   if (!user) {
     return (
-      <Link href="/login">
-        <LoginIcon />
-      </Link>
+      <Container>
+        <Link href="/login" title="ログイン">
+          <LoginIcon />
+        </Link>
+      </Container>
     )
   }
 
   return (
     <Container ref={menuRef}>
-      <button onClick={handleMenuToggle}>
+      <button onClick={handleMenuToggle} type="button">
         <PersonIcon />
       </button>
       <DropdownMenu open={menuOpen}>

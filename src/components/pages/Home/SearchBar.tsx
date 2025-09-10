@@ -7,7 +7,7 @@ type Props = {
 
 export const SearchBar = ({ searchTerm, onSearchChange }: Props) => {
   return (
-    <Container>
+    <Container role="search">
       <SearchInput
         id="search-input"
         type="text"
@@ -20,7 +20,7 @@ export const SearchBar = ({ searchTerm, onSearchChange }: Props) => {
   )
 }
 
-const Container = styled.div`
+const Container = styled.form`
   display: flex;
   justify-content: center;
   width: 100%;

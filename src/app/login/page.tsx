@@ -8,14 +8,7 @@ import Visibility from '@mui/icons-material/Visibility'
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
 import { useRouter } from 'next/navigation'
 
-import {
-  Spinner,
-  Caption,
-  Stack,
-  Input,
-  Button,
-  IconButton,
-} from '@/components/ui'
+import { Spinner, Input, Button, IconButton } from '@/components/ui'
 import { useAuth } from '@/contexts/AuthContext'
 
 export default function LoginPage() {
@@ -103,27 +96,49 @@ export default function LoginPage() {
   return (
     <PageContainer>
       <AuthCard>
-        <TabContainer>
-          <Tab
-            active={tab === 0}
-            onClick={() => handleTabChange(0)}
-            type="button"
-          >
-            ログイン
-          </Tab>
-          <Tab
-            active={tab === 1}
-            onClick={() => handleTabChange(1)}
-            type="button"
-          >
-            新規会員登録
-          </Tab>
-        </TabContainer>
-
-        <Form onSubmit={handleSubmit}>
-          {error && <Alert variant="error">{error}</Alert>}
-          {success && <Alert variant="success">{success}</Alert>}
-          <Stack gap={4}>
+        <AuthHeader>
+          <TabList role="tablist" aria-label="認証方法を選択">
+            <TabButton
+              role="tab"
+              aria-selected={tab === 0}
+              aria-controls="login-panel"
+              id="login-tab"
+              active={tab === 0}
+              onClick={() => handleTabChange(0)}
+              type="button"
+            >
+              ログイン
+            </TabButton>
+            <TabButton
+              role="tab"
+              aria-selected={tab === 1}
+              aria-controls="signup-panel"
+              id="signup-tab"
+              active={tab === 1}
+              onClick={() => handleTabChange(1)}
+              type="button"
+            >
+              新規会員登録
+            </TabButton>
+          </TabList>
+        </AuthHeader>
+        <AuthForm
+          id={tab === 0 ? 'login-panel' : 'signup-panel'}
+          role="tabpanel"
+          aria-labelledby={tab === 0 ? 'login-tab' : 'signup-tab'}
+          onSubmit={handleSubmit}
+        >
+          {error && (
+            <Alert variant="error" role="alert" aria-live="polite">
+              {error}
+            </Alert>
+          )}
+          {success && (
+            <Alert variant="success" role="alert" aria-live="polite">
+              {success}
+            </Alert>
+          )}
+          <FieldGroup>
             <Input
               id="email"
               title="メールアドレス"
@@ -131,68 +146,97 @@ export default function LoginPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              placeholder="メールアドレスを入力してください"
               autoComplete="email"
               height="medium"
+              aria-describedby="email-help"
             />
-            <InputWrapper>
+            <PasswordField>
               <Input
                 id="password"
                 title="パスワード"
                 type={showPassword ? 'text' : 'password'}
+                value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
                 height="medium"
-                placeholder="Enter your password"
                 autoComplete={tab === 0 ? 'current-password' : 'new-password'}
+                aria-describedby={tab === 1 ? 'password-help' : undefined}
               />
               <PasswordToggle
                 onClick={() => setShowPassword(!showPassword)}
                 size="sm"
                 type="button"
+                aria-label={
+                  showPassword ? 'パスワードを隠す' : 'パスワードを表示'
+                }
+                aria-pressed={showPassword}
               >
                 {showPassword ? <VisibilityOff /> : <Visibility />}
               </PasswordToggle>
-            </InputWrapper>
+            </PasswordField>
             {tab === 1 && (
-              <Input
-                id="confirmPassword"
-                title="確認用のパスワード"
-                type={showPassword ? 'text' : 'password'}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                required
-                placeholder="確認用のパスワードを入力してください"
-                autoComplete="new-password"
-                height="medium"
-              />
+              <>
+                <HelpText id="password-help">
+                  パスワードは6文字以上で設定してください
+                </HelpText>
+                <Input
+                  id="confirmPassword"
+                  title="確認用のパスワード"
+                  type={showPassword ? 'text' : 'password'}
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  required
+                  autoComplete="new-password"
+                  height="medium"
+                  aria-describedby="confirm-password-help"
+                />
+                <HelpText id="confirm-password-help">
+                  上記と同じパスワードを入力してください
+                </HelpText>
+              </>
             )}
-            <Button
-              type="submit"
-              variant="primary"
-              size="md"
-              disabled={loading}
-            >
-              {loading ? 'Loading' : tab === 0 ? 'ログインする' : '登録する'}
-            </Button>
-            <Caption>
+          </FieldGroup>
+          <SubmitButton
+            type="submit"
+            variant="primary"
+            size="md"
+            disabled={loading}
+            aria-describedby="submit-help"
+          >
+            {loading
+              ? '読み込み中...'
+              : tab === 0
+                ? 'ログインする'
+                : '登録する'}
+          </SubmitButton>
+          <AuthFooter>
+            <FooterText>
               {tab === 0 ? (
                 <>
-                  はじめてご利用の方
-                  <LinkButton type="button" onClick={() => setTab(1)}>
+                  はじめてご利用の方は
+                  <SwitchAuthButton
+                    type="button"
+                    onClick={() => setTab(1)}
+                    aria-label="新規会員登録に切り替え"
+                  >
                     新規会員登録
-                  </LinkButton>
+                  </SwitchAuthButton>
                 </>
               ) : (
                 <>
-                  すでに会員の方
-                  <LinkButton type="button" onClick={() => setTab(0)}>
+                  すでに会員の方は
+                  <SwitchAuthButton
+                    type="button"
+                    onClick={() => setTab(0)}
+                    aria-label="ログインに切り替え"
+                  >
                     ログイン
-                  </LinkButton>
+                  </SwitchAuthButton>
                 </>
               )}
-            </Caption>
-          </Stack>
-        </Form>
+            </FooterText>
+          </AuthFooter>
+        </AuthForm>
       </AuthCard>
     </PageContainer>
   )
@@ -211,63 +255,70 @@ const PageContainer = styled.div`
   );
 `
 
-const AuthCard = styled.div`
+const AuthCard = styled.main`
   width: 100%;
   max-width: 420px;
   padding: ${({ theme }) => theme.spacing[8]};
   background: ${({ theme }) => theme.colors.white};
   border-radius: ${({ theme }) => theme.borderRadius.xl};
-  box-shadow: 0 10px 25px rgb(0, 0, 0, 10%);
+  box-shadow: 0 10px 25px rgb(0, 0, 0, 0.1);
 `
 
-const TabContainer = styled.div`
-  display: flex;
+const AuthHeader = styled.header`
   margin-bottom: ${({ theme }) => theme.spacing[6]};
-  border-bottom: 1px solid ${({ theme }) => theme.colors.gray[200]};
 `
 
-const Tab = styled.button<{ active: boolean }>`
+const TabList = styled.div`
+  display: flex;
+  text-align: center;
+  border-bottom: 1px solid ${({ theme }) => theme.colors.gray[200]};
+  border-radius: ${({ theme }) => theme.borderRadius.md}
+    ${({ theme }) => theme.borderRadius.md} 0 0;
+`
+
+const TabButton = styled.button<{ active: boolean }>`
   flex: 1;
   padding: ${({ theme }) => theme.spacing[3]} ${({ theme }) => theme.spacing[4]};
   font-size: ${({ theme }) => theme.typography.fontSize.base};
   font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
   color: ${({ theme, active }) =>
     active ? theme.colors.black : theme.colors.gray[500]};
-  text-align: center;
   cursor: pointer;
   background: none;
+  border: none;
   border-bottom: 2px solid transparent;
-  transition: color ${({ theme }) => theme.transition.default};
+  transition: all ${({ theme }) => theme.transition.default};
 
   ${({ theme, active }) =>
     active &&
     css`
-      border-bottom-color: ${theme.colors.black};
+      color: ${theme.colors.black};
+      border-bottom-color: ${theme.colors.primary};
     `}
 
   &:hover:not(:disabled) {
     color: ${({ theme }) => theme.colors.black};
+    background-color: ${({ theme }) => theme.colors.gray[50]};
   }
 `
 
-const Alert = styled.div<{ variant: 'error' | 'success' }>`
-  padding: ${({ theme }) => theme.spacing[3]} ${({ theme }) => theme.spacing[4]};
-  margin-bottom: ${({ theme }) => theme.spacing[4]};
-  font-size: ${({ theme }) => theme.typography.fontSize.sm};
-  border-radius: ${({ theme }) => theme.borderRadius.lg};
-
-  ${({ theme, variant }) =>
-    variant === 'error'
-      ? css`
-          color: ${theme.colors.white};
-          background-color: ${theme.colors.error};
-        `
-      : css`
-          color: ${theme.colors.white};
-        `}
+const AuthForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  gap: ${({ theme }) => theme.spacing[4]};
+  width: 100%;
 `
 
-const InputWrapper = styled.div`
+const FieldGroup = styled.fieldset`
+  display: flex;
+  flex-direction: column;
+  gap: ${({ theme }) => theme.spacing[4]};
+  padding: 0;
+  margin: 0;
+  border: none;
+`
+
+const PasswordField = styled.div`
   position: relative;
   width: 100%;
 `
@@ -276,26 +327,77 @@ const PasswordToggle = styled(IconButton)`
   position: absolute;
   top: 50%;
   right: ${({ theme }) => theme.spacing[2]};
+  z-index: 1;
   transform: translateY(-50%);
 `
 
-const Form = styled.form`
-  width: 100%;
+const HelpText = styled.p`
+  margin: ${({ theme }) => theme.spacing[1]} 0 0 0;
+  font-size: ${({ theme }) => theme.typography.fontSize.xs};
+  line-height: 1.4;
+  color: ${({ theme }) => theme.colors.gray[600]};
 `
 
-const LinkButton = styled.button`
-  padding: 0;
+const SubmitButton = styled(Button)`
+  margin-top: ${({ theme }) => theme.spacing[2]};
+`
+
+const AuthFooter = styled.footer`
+  padding-top: ${({ theme }) => theme.spacing[4]};
+  margin-top: ${({ theme }) => theme.spacing[4]};
+  border-top: 1px solid ${({ theme }) => theme.colors.gray[200]};
+`
+
+const FooterText = styled.p`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  font-size: ${({ theme }) => theme.typography.fontSize.sm};
+  line-height: 1.5;
+  color: ${({ theme }) => theme.colors.gray[600]};
+  text-align: center;
+`
+
+const SwitchAuthButton = styled.button`
   margin-left: ${({ theme }) => theme.spacing[1]};
   font-size: inherit;
-  color: ${({ theme }) => theme.colors.black};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
+  color: ${({ theme }) => theme.colors.primary};
   text-decoration: underline;
   cursor: pointer;
   background: none;
   border: none;
+  transition: opacity ${({ theme }) => theme.transition.default};
 
   &:hover {
-    opacity: 0.7;
+    opacity: 0.8;
   }
+
+  &:focus {
+    outline: 2px solid ${({ theme }) => theme.colors.primary};
+    outline-offset: 2px;
+  }
+`
+
+const Alert = styled.div<{ variant: 'error' | 'success' }>`
+  padding: ${({ theme }) => theme.spacing[3]} ${({ theme }) => theme.spacing[4]};
+  font-size: ${({ theme }) => theme.typography.fontSize.sm};
+  border: 1px solid;
+  border-radius: ${({ theme }) => theme.borderRadius.md};
+
+  ${({ theme, variant }) =>
+    variant === 'error'
+      ? css`
+          color: ${theme.colors.error};
+          background-color: ${theme.colors.error}10;
+          border-color: ${theme.colors.error}20;
+        `
+      : css`
+          color: ${theme.colors.success || theme.colors.primary};
+          background-color: ${theme.colors.success || theme.colors.primary}10;
+          border-color: ${theme.colors.success || theme.colors.primary}20;
+        `}
 `
 
 const LoadingOverlay = styled.div`

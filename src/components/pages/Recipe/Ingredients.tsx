@@ -5,33 +5,55 @@ import styled from '@emotion/styled'
 
 import type { Recipe } from '@/types/recipe'
 
-import { Flex, H2, Label } from '@/components/ui'
+import { H2 } from '@/components/ui'
 
 export const Ingredients = ({ recipe }: { recipe: Recipe }) => {
-  const sortedIngredientList = useMemo(() => {
-    return (recipe.ingredients || []).sort(
-      (a, b) => Number(a.isSpice) - Number(b.isSpice),
+  const { regularIngredients, spiceIngredients } = useMemo(() => {
+    const regular = (recipe.ingredients || []).filter(
+      (ingredient) => !ingredient.isSpice,
     )
+    const spices = (recipe.ingredients || []).filter(
+      (ingredient) => !!ingredient.isSpice,
+    )
+
+    return {
+      regularIngredients: regular,
+      spiceIngredients: spices,
+    }
   }, [recipe.ingredients])
 
   return (
-    <Section>
-      <H2>Ingredients</H2>
-      <IngredientList>
-        {sortedIngredientList?.map((ingredient, index) => (
-          <IngredientItem
-            key={ingredient.name + index}
-            isSpice={!!ingredient.isSpice}
-          >
-            <Flex justify="between" align="center">
-              <span>
-                {!!ingredient.isSpice && '（A）'} {ingredient.name}
-              </span>
-              <Label>{ingredient.amount}</Label>
-            </Flex>
-          </IngredientItem>
-        ))}
-      </IngredientList>
+    <Section aria-labelledby="ingredients-heading">
+      <H2 id="ingredients-heading">材料</H2>
+      {regularIngredients.length > 0 && (
+        <IngredientList>
+          {regularIngredients.map((ingredient, index) => (
+            <IngredientItem
+              key={`regular-${ingredient.name}-${index}`}
+              isSpice={false}
+            >
+              <IngredientName>{ingredient.name}</IngredientName>
+              <IngredientAmount>{ingredient.amount}</IngredientAmount>
+            </IngredientItem>
+          ))}
+        </IngredientList>
+      )}
+      {spiceIngredients.length > 0 && (
+        <>
+          <SpiceHeading>A</SpiceHeading>
+          <IngredientList>
+            {spiceIngredients.map((ingredient, index) => (
+              <IngredientItem
+                key={`spice-${ingredient.name}-${index}`}
+                isSpice={true}
+              >
+                <IngredientName>{ingredient.name}</IngredientName>
+                <IngredientAmount>{ingredient.amount}</IngredientAmount>
+              </IngredientItem>
+            ))}
+          </IngredientList>
+        </>
+      )}
     </Section>
   )
 }
@@ -40,26 +62,47 @@ const Section = styled.section`
   margin-block: ${({ theme }) => theme.spacing[6]};
 `
 
+const SpiceHeading = styled.h3`
+  margin: ${({ theme }) => theme.spacing[4]} 0
+    ${({ theme }) => theme.spacing[2]} 0;
+  font-size: ${({ theme }) => theme.typography.fontSize.base};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
+  color: ${({ theme }) => theme.colors.gray[700]};
+`
+
 const IngredientList = styled.ul`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
+  margin-top: ${({ theme }) => theme.spacing[4]};
+  overflow: hidden;
+  border: 1px solid ${({ theme }) => theme.colors.gray[200]};
+  border-radius: ${({ theme }) => theme.borderRadius.md};
 `
 
 const IngredientItem = styled.li<{ isSpice: boolean }>`
-  position: relative;
-  width: 100%;
-  padding: ${({ theme }) => theme.spacing[3]} ${({ theme }) => theme.spacing[2]};
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: ${({ theme }) => theme.spacing[3]} ${({ theme }) => theme.spacing[4]};
   font-size: ${({ theme }) => theme.typography.fontSize.sm};
-  border-top: 1px solid ${({ theme }) => theme.colors.gray[200]};
+  border-bottom: 1px solid ${({ theme }) => theme.colors.gray[200]};
 
-  &:first-child {
-    margin-top: ${({ theme }) => theme.spacing[4]};
+  &:last-child {
+    border-bottom: none;
   }
 
   ${({ isSpice, theme }) =>
     isSpice &&
     css`
-      background-color: ${theme.colors.primary}20;
+      background-color: ${theme.colors.primary}15;
     `}
+`
+
+const IngredientName = styled.span`
+  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
+  color: ${({ theme }) => theme.colors.gray[800]};
+`
+
+const IngredientAmount = styled.span`
+  font-weight: ${({ theme }) => theme.typography.fontWeight.normal};
+  color: ${({ theme }) => theme.colors.gray[600]};
+  white-space: nowrap;
 `

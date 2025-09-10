@@ -173,7 +173,6 @@ function RecipeListInner({ initialRecipes }: RecipeListProps) {
           selectedSort={selectedSort}
           onSortChange={setSelectedSort}
         />
-
         {loading ? (
           <LoadingOverlay>
             <Spinner />
@@ -197,7 +196,7 @@ function RecipeListInner({ initialRecipes }: RecipeListProps) {
   )
 }
 
-const StyledList = styled.div`
+const StyledList = styled.main`
   max-width: 1200px;
   padding: 20px;
   margin: 0 auto;

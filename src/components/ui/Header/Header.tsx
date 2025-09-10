@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 import { keyframes } from '@emotion/css'
 import styled from '@emotion/styled'
@@ -16,8 +16,13 @@ import { Menu } from './Menu'
 import { User } from './User'
 
 export const Header = () => {
-  const { user } = useAuth()
+  const { user, loading } = useAuth()
   const [slideMenuOpen, setSlideMenuOpen] = useState(false)
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   return (
     <>
@@ -26,8 +31,8 @@ export const Header = () => {
           <Logo />
           <Flex gap={4} align="center">
             <User />
-            {user && <AddRecipeButton />}
-            <button onClick={() => setSlideMenuOpen(true)}>
+            {mounted && !loading && user && <AddRecipeButton />}
+            <button onClick={() => setSlideMenuOpen(true)} type="button">
               <MenuIcon />
             </button>
           </Flex>
@@ -43,8 +48,12 @@ export const Header = () => {
       <SlideMenu open={slideMenuOpen}>
         <MenuHeader>
           <MenuTitle>絞り込み</MenuTitle>
-          <IconButton size="sm" onClick={() => setSlideMenuOpen(false)}>
-            <CloseIcon fontSize="inherit" />
+          <IconButton
+            size="sm"
+            onClick={() => setSlideMenuOpen(false)}
+            type="button"
+          >
+            <CloseIcon fontSize="inherit" type="button" />
           </IconButton>
         </MenuHeader>
         <MenuContent>
@@ -90,7 +99,7 @@ const MenuOverlay = styled.div<{ open: boolean }>`
   animation: ${({ open }) => (open ? `${fadeIn} 0.3s ease` : 'none')};
 `
 
-const SlideMenu = styled.div<{ open: boolean }>`
+const SlideMenu = styled.aside<{ open: boolean }>`
   position: fixed;
   top: 0;
   right: 0;

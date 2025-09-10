@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react'
+
 import styled from '@emotion/styled'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined'
@@ -18,8 +20,12 @@ export const BookmarkFilter = ({
 }: Props) => {
   const router = useRouter()
   const searchParams = useSearchParams()
+  const { user, loading } = useAuth()
+  const [mounted, setMounted] = useState(false)
 
-  const { user } = useAuth()
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   const handleBookmarkToggle = () => {
     const newValue = !showBookmarked
@@ -38,7 +44,7 @@ export const BookmarkFilter = ({
     router.push(queryString ? `/?${queryString}` : '/')
   }
 
-  if (!user) return null
+  if (!mounted || loading || !user) return null
 
   return (
     <FilterButton onClick={handleBookmarkToggle} active={showBookmarked}>
