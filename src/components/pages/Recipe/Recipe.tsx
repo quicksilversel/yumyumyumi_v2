@@ -14,7 +14,6 @@ export const RecipeDetail = (props: { recipe: Recipe }) => {
   return (
     <RecipeContainer>
       <Header {...props} />
-
       <InnerContainer>
         <Ingredients {...props} />
         <Directions {...props} />
