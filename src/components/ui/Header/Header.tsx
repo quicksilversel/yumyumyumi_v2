@@ -48,7 +48,7 @@ export const Header = () => {
           </IconButton>
         </MenuHeader>
         <MenuContent>
-          <Menu />
+          <Menu setSlideMenuOpen={setSlideMenuOpen} />
         </MenuContent>
       </SlideMenu>
     </>

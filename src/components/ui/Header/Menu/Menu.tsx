@@ -7,7 +7,9 @@ import { BookmarkFilter } from './BookmarkFilter'
 import { CookingTimeFilter } from './CookingTimeFilter'
 import { TagFilter } from './TagFilter'
 
-export const MenuInner = () => {
+export const MenuInner = (props: {
+  setSlideMenuOpen: (open: boolean) => void
+}) => {
   const searchParams = useSearchParams()
 
   const [selectedCookingTime, setSelectedCookingTime] = useState<number | null>(
@@ -28,14 +30,20 @@ export const MenuInner = () => {
 
   return (
     <>
-      <TagFilter selectedTag={selectedTag} setSelectedTag={setSelectedTag} />
+      <TagFilter
+        selectedTag={selectedTag}
+        setSelectedTag={setSelectedTag}
+        {...props}
+      />
       <CookingTimeFilter
         selectedCookingTime={selectedCookingTime}
         setSelectedCookingTime={setSelectedCookingTime}
+        {...props}
       />
       <BookmarkFilter
         showBookmarked={showBookmarked}
         setShowBookmarked={setShowBookmarked}
+        {...props}
       />
     </>
   )
@@ -49,10 +57,10 @@ const SearchAndFiltersFallback = styled.div`
   height: 40px;
 `
 
-export function Menu() {
+export function Menu(props: { setSlideMenuOpen: (open: boolean) => void }) {
   return (
     <Suspense fallback={<SearchAndFiltersFallback />}>
-      <MenuInner />
+      <MenuInner {...props} />
     </Suspense>
   )
 }

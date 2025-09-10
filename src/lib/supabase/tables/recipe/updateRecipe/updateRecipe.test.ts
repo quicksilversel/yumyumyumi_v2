@@ -212,9 +212,7 @@ describe('updateRecipe', () => {
 
       expect(mockSupabaseClient.auth.getUser).toHaveBeenCalled()
       expect(mockSupabaseClient.from).not.toHaveBeenCalled()
-      expect(console.error).toHaveBeenCalledWith(
-        'User must be logged in to update recipes',
-      )
+      expect(global.alert).toHaveBeenCalledWith('ログインが必要です')
       expect(result).toBeNull()
     })
 
@@ -228,9 +226,7 @@ describe('updateRecipe', () => {
       const result = await updateRecipe('123', mockRecipeUpdates)
 
       expect(result).toBeNull()
-      expect(console.error).toHaveBeenCalledWith(
-        'User must be logged in to update recipes',
-      )
+      expect(global.alert).toHaveBeenCalledWith('ログインが必要です')
     })
   })
 
@@ -249,7 +245,9 @@ describe('updateRecipe', () => {
       const result = await updateRecipe('123', mockRecipeUpdates)
 
       expect(result).toBeNull()
-      expect(console.error).toHaveBeenCalledWith('updating recipe', updateError)
+      expect(global.alert).toHaveBeenCalledWith(
+        'ご迷惑をお掛けし申し訳ありません。\n時間をおいて再度お試しください。',
+      )
     })
 
     it('should return null when an exception occurs', async () => {
@@ -259,9 +257,8 @@ describe('updateRecipe', () => {
       const result = await updateRecipe('123', mockRecipeUpdates)
 
       expect(result).toBeNull()
-      expect(console.error).toHaveBeenCalledWith(
-        'updating recipe',
-        unexpectedError,
+      expect(global.alert).toHaveBeenCalledWith(
+        'ご迷惑をお掛けし申し訳ありません。\n時間をおいて再度お試しください。',
       )
     })
 
@@ -277,9 +274,8 @@ describe('updateRecipe', () => {
       const result = await updateRecipe('123', mockRecipeUpdates)
 
       expect(result).toBeNull()
-      expect(console.error).toHaveBeenCalledWith(
-        'updating recipe',
-        expect.any(Error),
+      expect(global.alert).toHaveBeenCalledWith(
+        'ご迷惑をお掛けし申し訳ありません。\n時間をおいて再度お試しください。',
       )
     })
   })

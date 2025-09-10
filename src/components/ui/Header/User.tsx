@@ -59,7 +59,7 @@ export const User = () => {
         <PersonIcon />
       </button>
       <DropdownMenu open={menuOpen}>
-        <UserLink href="/account">
+        <UserLink href="/account" onClick={handleMenuClose}>
           <AccountCircleIcon />
           {user.email}
         </UserLink>
@@ -74,22 +74,29 @@ export const User = () => {
 }
 
 const Container = styled.div`
-  position: relative;
   font-size: ${({ theme }) => theme.typography.fontSize.sm};
+
+  @media (width > 35.1875rem) {
+    position: relative;
+  }
 `
 
 const DropdownMenu = styled.div<{ open: boolean }>`
   position: absolute;
   top: calc(100% + ${({ theme }) => theme.spacing[6]});
-  right: 50%;
+  right: ${({ theme }) => theme.spacing[3]};
   z-index: 1000;
   display: ${({ open }) => (open ? 'block' : 'none')};
   min-width: 200px;
   border-radius: ${({ theme }) => theme.borderRadius.lg};
   background-color: ${({ theme }) => theme.colors.white};
-  transform: translateX(50%);
   overflow: hidden;
   box-shadow: ${({ theme }) => theme.shadow.xl};
+
+  @media (width > 35.1875rem) {
+    right: 50%;
+    transform: translateX(50%);
+  }
 `
 
 const UserLink = styled(Link)`

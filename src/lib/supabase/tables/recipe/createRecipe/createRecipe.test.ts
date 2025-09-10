@@ -60,6 +60,7 @@ describe('createRecipe', () => {
   const mockRecipeOutput: Recipe = {
     ...mockRecipeInput,
     id: '123',
+    createdAt: '2024-01-01T00:00:00Z',
   }
 
   beforeEach(() => {

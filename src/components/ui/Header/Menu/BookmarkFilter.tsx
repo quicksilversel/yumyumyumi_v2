@@ -1,31 +1,41 @@
 import styled from '@emotion/styled'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 
 import { useAuth } from '@/contexts/AuthContext'
 
 type Props = {
   showBookmarked: boolean
   setShowBookmarked: (show: boolean) => void
+  setSlideMenuOpen: (open: boolean) => void
 }
 
 export const BookmarkFilter = ({
   showBookmarked,
   setShowBookmarked,
+  setSlideMenuOpen,
 }: Props) => {
   const router = useRouter()
+  const searchParams = useSearchParams()
+
   const { user } = useAuth()
 
   const handleBookmarkToggle = () => {
     const newValue = !showBookmarked
     setShowBookmarked(newValue)
+    setSlideMenuOpen(false)
+
+    const params = new URLSearchParams(searchParams.toString())
 
     if (newValue) {
-      router.push('/?bookmarked=true')
+      params.delete('bookmarked')
     } else {
-      router.push('/')
+      params.set('bookmarked', 'true')
     }
+
+    const queryString = params.toString()
+    router.push(queryString ? `/?${queryString}` : '/')
   }
 
   if (!user) return null
@@ -49,6 +59,7 @@ const FilterButton = styled.button<{ active?: boolean }>`
   font-size: ${({ theme }) => theme.typography.fontSize.sm};
   font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
   transition: background-color ${({ theme }) => theme.transition.fast};
+  user-select: none;
 
   &:hover {
     background-color: rgb(245, 178, 172, 5%);

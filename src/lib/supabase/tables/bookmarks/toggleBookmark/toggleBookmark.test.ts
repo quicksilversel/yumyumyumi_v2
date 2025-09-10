@@ -21,8 +21,8 @@ describe('toggleBookmark', () => {
 
     const result = await toggleBookmark(mockRecipeId)
 
-    expect(isBookmarked).toHaveBeenCalledWith(mockRecipeId)
-    expect(removeBookmark).toHaveBeenCalledWith(mockRecipeId)
+    expect(isBookmarked).toHaveBeenCalledWith(mockRecipeId, undefined)
+    expect(removeBookmark).toHaveBeenCalledWith(mockRecipeId, undefined)
     expect(addBookmark).not.toHaveBeenCalled()
     expect(result).toBe(false)
   })
@@ -33,8 +33,8 @@ describe('toggleBookmark', () => {
 
     const result = await toggleBookmark(mockRecipeId)
 
-    expect(isBookmarked).toHaveBeenCalledWith(mockRecipeId)
-    expect(addBookmark).toHaveBeenCalledWith(mockRecipeId)
+    expect(isBookmarked).toHaveBeenCalledWith(mockRecipeId, undefined)
+    expect(addBookmark).toHaveBeenCalledWith(mockRecipeId, undefined)
     expect(removeBookmark).not.toHaveBeenCalled()
     expect(result).toBe(true)
   })

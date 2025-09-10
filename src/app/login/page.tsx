@@ -8,10 +8,14 @@ import Visibility from '@mui/icons-material/Visibility'
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
 import { useRouter } from 'next/navigation'
 
-import { Button, IconButton } from '@/components/ui/Button'
-import { Input } from '@/components/ui/Forms/Input'
-import { Stack } from '@/components/ui/Layout'
-import { Caption } from '@/components/ui/Typography'
+import {
+  Spinner,
+  Caption,
+  Stack,
+  Input,
+  Button,
+  IconButton,
+} from '@/components/ui'
 import { useAuth } from '@/contexts/AuthContext'
 
 export default function LoginPage() {
@@ -29,7 +33,7 @@ export default function LoginPage() {
 
   useEffect(() => {
     if (!authLoading && user) {
-      router.push('/')
+      router.push('/account')
     }
   }, [user, authLoading, router])
 
@@ -85,13 +89,9 @@ export default function LoginPage() {
   if (authLoading) {
     return (
       <PageContainer>
-        <AuthCard>
-          <TabContainer>
-            <Tab active type="button">
-              Loading...
-            </Tab>
-          </TabContainer>
-        </AuthCard>
+        <LoadingOverlay>
+          <Spinner />
+        </LoadingOverlay>
       </PageContainer>
     )
   }
@@ -297,4 +297,11 @@ const LinkButton = styled.button`
   &:hover {
     opacity: 0.7;
   }
+`
+
+const LoadingOverlay = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
 `

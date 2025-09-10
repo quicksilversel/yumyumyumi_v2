@@ -5,8 +5,7 @@ import { useEffect } from 'react'
 import styled from '@emotion/styled'
 import { useRouter } from 'next/navigation'
 
-import { Button } from '@/components/ui/Button'
-import { Stack } from '@/components/ui/Layout'
+import { Button, Stack, Spinner } from '@/components/ui'
 import { useAuth } from '@/contexts/AuthContext'
 
 export default function AccountPage() {
@@ -27,9 +26,9 @@ export default function AccountPage() {
   if (loading) {
     return (
       <PageContainer>
-        <AccountCard>
-          <Title>Loading...</Title>
-        </AccountCard>
+        <LoadingOverlay>
+          <Spinner />
+        </LoadingOverlay>
       </PageContainer>
     )
   }
@@ -110,4 +109,11 @@ const Value = styled.div`
   color: ${({ theme }) => theme.colors.black};
   font-size: ${({ theme }) => theme.typography.fontSize.base};
   word-break: break-all;
+`
+
+const LoadingOverlay = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
 `

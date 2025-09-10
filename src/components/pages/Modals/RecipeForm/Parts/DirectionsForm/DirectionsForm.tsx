@@ -88,7 +88,7 @@ export function DirectionsForm() {
       )}
       <StyledButton size="sm" onClick={addDirection} type="button">
         <AddIcon fontSize="inherit" />
-        手順を追加
+        手順を追加する
       </StyledButton>
     </Stack>
   )
@@ -98,6 +98,7 @@ const DirectionRow = styled.div`
   display: flex;
   align-items: flex-start;
   gap: ${({ theme }) => theme.spacing[3]};
+  margin-top: ${({ theme }) => theme.spacing[2]};
   width: 100%;
 `
 
@@ -113,7 +114,6 @@ const StepNumber = styled.div`
   font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
   font-size: 14px;
   flex-shrink: 0;
-  margin-top: ${({ theme }) => theme.spacing[2]};
 `
 
 const FieldContainer = styled.div`
@@ -124,7 +124,6 @@ const FieldContainer = styled.div`
 `
 
 const DeleteButton = styled(IconButton)`
-  margin-top: ${({ theme }) => theme.spacing[2]};
   flex-shrink: 0;
 `
 

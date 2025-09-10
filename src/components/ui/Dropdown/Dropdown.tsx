@@ -68,12 +68,14 @@ export function Dropdown<T = string>({
   }
 
   const selectedOption = options.find((opt) => opt.value === selectedValue)
-  const displayLabel = title || selectedOption?.label || placeholder
+  const displayLabel = !!selectedOption?.value
+    ? title || selectedOption?.label
+    : placeholder
 
   return (
     <Container className={className} fullWidth={fullWidth}>
       <StyledDetails ref={detailsRef}>
-        <StyledSummary hasPadding={hasPadding}>
+        <StyledSummary hasPadding={hasPadding} absolute={absoluteDropdown}>
           {icon && <IconWrapper>{icon}</IconWrapper>}
           <LabelText>{displayLabel}</LabelText>
           <StyledExpandMoreIcon />
@@ -109,7 +111,10 @@ const StyledDetails = styled.details`
   width: 100%;
 `
 
-const StyledSummary = styled.summary<{ hasPadding?: boolean }>`
+const StyledSummary = styled.summary<{
+  hasPadding?: boolean
+  absolute?: boolean
+}>`
   display: flex;
   align-items: center;
   gap: ${({ theme }) => theme.spacing[1]};
@@ -136,6 +141,14 @@ const StyledSummary = styled.summary<{ hasPadding?: boolean }>`
     hasPadding &&
     css`
       padding: ${theme.spacing[4]} ${theme.spacing[3]};
+    `}
+
+  ${({ absolute, theme }) =>
+    absolute === false &&
+    css`
+      details[open] > & {
+        border-bottom: 1px solid ${theme.colors.gray[200]};
+      }
     `}
 `
 
@@ -167,12 +180,12 @@ const StyledExpandMoreIcon = styled(ExpandMoreIcon)`
 const DropdownContainer = styled.div<{ absolute?: boolean }>`
   ${({ absolute }) =>
     absolute &&
-    `
-    position: absolute;
-    top: calc(100% + 4px);
-    left: 0;
-    right: 0;
-  `}
+    css`
+      position: absolute;
+      top: calc(100% + 4px);
+      left: 0;
+      right: 0;
+    `}
   z-index: 1000;
   min-width: 200px;
   max-height: ${({ absolute }) => (absolute ? '300px' : '0')};

@@ -112,7 +112,7 @@ export function IngredientsForm() {
       )}
       <StyledButton size="sm" onClick={addIngredient} type="button">
         <AddIcon fontSize="inherit" />
-        材料を追加
+        材料を追加する
       </StyledButton>
     </Stack>
   )
