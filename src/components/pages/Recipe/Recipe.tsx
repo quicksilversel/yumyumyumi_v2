@@ -6,7 +6,6 @@ import type { Recipe } from '@/types/recipe'
 
 import { Directions } from './Directions'
 import { Header } from './Header'
-import { Hero } from './Hero'
 import { Ingredients } from './Ingredients'
 import { Source } from './Source'
 import { Tips } from './Tips'
@@ -14,9 +13,8 @@ import { Tips } from './Tips'
 export const RecipeDetail = (props: { recipe: Recipe }) => {
   return (
     <RecipeContainer>
-      <Hero {...props} />
+      <Header {...props} />
       <InnerContainer>
-        <Header {...props} />
         <Ingredients {...props} />
         <Directions {...props} />
         <Tips {...props} />
@@ -26,7 +24,7 @@ export const RecipeDetail = (props: { recipe: Recipe }) => {
   )
 }
 
-const RecipeContainer = styled.div`
+const RecipeContainer = styled.main`
   max-width: 1200px;
   margin: 0 auto 1rem;
 `

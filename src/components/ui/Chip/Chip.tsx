@@ -15,23 +15,23 @@ const chipStyles = ({
   switch (variant) {
     case 'outlined':
       return css`
+        color: ${selected ? theme.colors.black : theme.colors.gray[700]};
+        background-color: transparent;
         border: 1px solid
           ${selected ? theme.colors.black : theme.colors.gray[300]};
-        background-color: transparent;
-        color: ${selected ? theme.colors.black : theme.colors.gray[700]};
       `
     case 'accent':
       return css`
-        background-color: ${theme.colors.primary};
         color: ${theme.colors.white};
+        background-color: ${theme.colors.primary};
       `
     default:
       return css`
-        border: 1px solid transparent;
+        color: ${selected ? theme.colors.white : theme.colors.gray[700]};
         background-color: ${selected
           ? theme.colors.black
           : theme.colors.gray[100]};
-        color: ${selected ? theme.colors.white : theme.colors.gray[700]};
+        border: 1px solid transparent;
       `
   }
 }
@@ -43,13 +43,13 @@ export const Chip = styled.span<{
   selected?: boolean
 }>`
   display: inline-flex;
-  align-items: center;
   gap: ${({ theme }) => theme.spacing[1]};
-  border-radius: ${({ theme }) => theme.borderRadius.full};
-  transition: opacity ${({ theme }) => theme.transition.default};
+  align-items: center;
+  font-weight: ${(props) => props.theme.typography.fontWeight.semibold};
   white-space: nowrap;
   user-select: none;
-  font-weight: ${(props) => props.theme.typography.fontWeight.semibold};
+  border-radius: ${({ theme }) => theme.borderRadius.full};
+  transition: opacity ${({ theme }) => theme.transition.default};
 
   ${({ variant, selected, theme }) =>
     chipStyles({ variant: variant ?? 'filled', selected: !!selected, theme })}

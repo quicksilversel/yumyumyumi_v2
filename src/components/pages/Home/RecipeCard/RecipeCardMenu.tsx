@@ -84,11 +84,11 @@ export const RecipeCardMenu = ({
 }
 
 const CardOverlay = styled.div`
-  padding: ${({ theme }) => theme.spacing[2]};
-  width: 100%;
   z-index: 10;
   display: flex;
   justify-content: space-between;
+  width: 100%;
+  padding: ${({ theme }) => theme.spacing[2]};
   background-color: ${({ theme }) => theme.colors.white};
 `
 

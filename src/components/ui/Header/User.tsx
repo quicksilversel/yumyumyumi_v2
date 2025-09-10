@@ -11,10 +11,15 @@ import { Divider } from '@/components/ui/Layout'
 import { useAuth } from '@/contexts/AuthContext'
 
 export const User = () => {
-  const { user, signOut } = useAuth()
+  const { user, signOut, loading } = useAuth()
   const [menuOpen, setMenuOpen] = useState(false)
+  const [mounted, setMounted] = useState(false)
 
   const menuRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -45,21 +50,31 @@ export const User = () => {
     handleMenuClose()
   }
 
+  if (!mounted || loading) {
+    return (
+      <Container>
+        <PersonIcon />
+      </Container>
+    )
+  }
+
   if (!user) {
     return (
-      <Link href="/login">
-        <LoginIcon />
-      </Link>
+      <Container>
+        <Link href="/login" title="ログイン">
+          <LoginIcon />
+        </Link>
+      </Container>
     )
   }
 
   return (
     <Container ref={menuRef}>
-      <button onClick={handleMenuToggle}>
+      <button onClick={handleMenuToggle} type="button">
         <PersonIcon />
       </button>
       <DropdownMenu open={menuOpen}>
-        <UserLink href="/account">
+        <UserLink href="/account" onClick={handleMenuClose}>
           <AccountCircleIcon />
           {user.email}
         </UserLink>
@@ -74,34 +89,41 @@ export const User = () => {
 }
 
 const Container = styled.div`
-  position: relative;
   font-size: ${({ theme }) => theme.typography.fontSize.sm};
+
+  @media (width > 35.1875rem) {
+    position: relative;
+  }
 `
 
 const DropdownMenu = styled.div<{ open: boolean }>`
   position: absolute;
   top: calc(100% + ${({ theme }) => theme.spacing[6]});
-  right: 50%;
+  right: ${({ theme }) => theme.spacing[3]};
   z-index: 1000;
   display: ${({ open }) => (open ? 'block' : 'none')};
   min-width: 200px;
-  border-radius: ${({ theme }) => theme.borderRadius.lg};
-  background-color: ${({ theme }) => theme.colors.white};
-  transform: translateX(50%);
   overflow: hidden;
+  background-color: ${({ theme }) => theme.colors.white};
+  border-radius: ${({ theme }) => theme.borderRadius.lg};
   box-shadow: ${({ theme }) => theme.shadow.xl};
+
+  @media (width > 35.1875rem) {
+    right: 50%;
+    transform: translateX(50%);
+  }
 `
 
 const UserLink = styled(Link)`
   display: flex;
-  align-items: center;
   gap: ${({ theme }) => theme.spacing[3]};
+  align-items: center;
   width: 100%;
   padding: ${({ theme }) => theme.spacing[3]};
-  border: none;
-  background: none;
   color: ${({ theme }) => theme.colors.black};
   text-align: left;
+  background: none;
+  border: none;
   transition: background-color ${({ theme }) => theme.transition.fast};
 
   &:hover:not(:disabled) {
@@ -111,14 +133,14 @@ const UserLink = styled(Link)`
 
 const MenuItem = styled.button`
   display: flex;
-  align-items: center;
   gap: ${({ theme }) => theme.spacing[3]};
+  align-items: center;
   width: 100%;
   padding: ${({ theme }) => theme.spacing[3]} ${({ theme }) => theme.spacing[4]};
-  border: none;
-  background: none;
   color: ${({ theme }) => theme.colors.black};
   text-align: left;
+  background: none;
+  border: none;
   transition: background-color ${({ theme }) => theme.transition.fast};
 
   &:hover:not(:disabled) {

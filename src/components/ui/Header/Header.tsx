@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 import { keyframes } from '@emotion/css'
 import styled from '@emotion/styled'
@@ -16,8 +16,13 @@ import { Menu } from './Menu'
 import { User } from './User'
 
 export const Header = () => {
-  const { user } = useAuth()
+  const { user, loading } = useAuth()
   const [slideMenuOpen, setSlideMenuOpen] = useState(false)
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   return (
     <>
@@ -26,8 +31,8 @@ export const Header = () => {
           <Logo />
           <Flex gap={4} align="center">
             <User />
-            {user && <AddRecipeButton />}
-            <button onClick={() => setSlideMenuOpen(true)}>
+            {mounted && !loading && user && <AddRecipeButton />}
+            <button onClick={() => setSlideMenuOpen(true)} type="button">
               <MenuIcon />
             </button>
           </Flex>
@@ -43,12 +48,16 @@ export const Header = () => {
       <SlideMenu open={slideMenuOpen}>
         <MenuHeader>
           <MenuTitle>絞り込み</MenuTitle>
-          <IconButton size="sm" onClick={() => setSlideMenuOpen(false)}>
-            <CloseIcon fontSize="inherit" />
+          <IconButton
+            size="sm"
+            onClick={() => setSlideMenuOpen(false)}
+            type="button"
+          >
+            <CloseIcon fontSize="inherit" type="button" />
           </IconButton>
         </MenuHeader>
         <MenuContent>
-          <Menu />
+          <Menu setSlideMenuOpen={setSlideMenuOpen} />
         </MenuContent>
       </SlideMenu>
     </>
@@ -59,16 +68,16 @@ const Container = styled.header`
   position: sticky;
   top: 0;
   z-index: 100;
-  background-color: ${({ theme }) => theme.colors.primary};
-  color: ${({ theme }) => theme.colors.white};
-  box-shadow: ${({ theme }) => theme.shadow.sm};
   padding-inline: 1rem;
+  color: ${({ theme }) => theme.colors.white};
+  background-color: ${({ theme }) => theme.colors.primary};
+  box-shadow: ${({ theme }) => theme.shadow.sm};
 `
 
 const Toolbar = styled(Flex)`
-  height: 56px;
   width: 100%;
   max-width: 1200px;
+  height: 56px;
   margin: 0 auto;
 `
 
@@ -83,14 +92,14 @@ const fadeIn = keyframes`
 
 const MenuOverlay = styled.div<{ open: boolean }>`
   position: fixed;
+  inset: 0;
   z-index: 998;
   display: ${({ open }) => (open ? 'block' : 'none')};
   background-color: rgb(0, 0, 0, 50%);
   animation: ${({ open }) => (open ? `${fadeIn} 0.3s ease` : 'none')};
-  inset: 0;
 `
 
-const SlideMenu = styled.div<{ open: boolean }>`
+const SlideMenu = styled.aside<{ open: boolean }>`
   position: fixed;
   top: 0;
   right: 0;
@@ -100,9 +109,9 @@ const SlideMenu = styled.div<{ open: boolean }>`
   flex-direction: column;
   width: 320px;
   background-color: ${({ theme }) => theme.colors.white};
-  transition: transform 0.3s ease;
-  transform: translateX(${({ open }) => (open ? '0' : '100%')});
   box-shadow: -4px 0 20px rgb(0, 0, 0, 15%);
+  transform: translateX(${({ open }) => (open ? '0' : '100%')});
+  transition: transform 0.3s ease;
 
   @media (width <= 480px) {
     width: 85%;
@@ -112,17 +121,17 @@ const SlideMenu = styled.div<{ open: boolean }>`
 
 const MenuHeader = styled.div`
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
   padding: ${({ theme }) => theme.spacing[4]} ${({ theme }) => theme.spacing[3]};
   border-bottom: 1px solid ${({ theme }) => theme.colors.gray[200]};
 `
 
 const MenuTitle = styled.span`
   margin: 0;
-  color: ${({ theme }) => theme.colors.black};
   font-size: ${({ theme }) => theme.typography.fontSize.base};
   font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
+  color: ${({ theme }) => theme.colors.black};
 `
 
 const MenuContent = styled.div`

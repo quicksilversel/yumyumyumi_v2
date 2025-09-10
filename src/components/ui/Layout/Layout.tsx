@@ -15,11 +15,13 @@ export const Container = styled.div<{
     css`
       padding: 0 ${theme.spacing[4]};
 
-      @media (min-width: ${theme.breakpoints.md}) {
+      /* stylelint-disable-next-line media-query-no-invalid */
+      @media (width > ${theme.breakpoints.md}) {
         padding: 0 ${theme.spacing[6]};
       }
 
-      @media (min-width: ${theme.breakpoints.lg}) {
+      /* stylelint-disable-next-line media-query-no-invalid */
+      @media (width > ${theme.breakpoints.lg}) {
         padding: 0 ${theme.spacing[8]};
       }
     `}
@@ -47,29 +49,33 @@ export const Grid = styled.div<{
   gap?: keyof Theme['spacing']
   responsive?: boolean
 }>`
-  width: 100%;
   display: grid;
   grid-template-columns: repeat(${({ cols }) => cols || 1}, 1fr);
   gap: ${({ theme, gap }) => theme.spacing[gap || 4]};
+  width: 100%;
 
   ${({ responsive, theme, cols }) =>
     responsive &&
     css`
-      @media (max-width: ${theme.breakpoints.sm}) {
+      /* stylelint-disable-next-line media-query-no-invalid */
+      @media (width <= ${theme.breakpoints.sm}) {
         grid-template-columns: repeat(1, 1fr);
       }
 
-      @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
-          .breakpoints.md}) {
+      /* stylelint-disable-next-line media-query-no-invalid */
+      @media (width > ${theme.breakpoints.sm}) and (width <= ${theme.breakpoints
+          .md}) {
         grid-template-columns: repeat(2, 1fr);
       }
 
-      @media (min-width: ${theme.breakpoints.md}) and (max-width: ${theme
-          .breakpoints.lg}) {
+      /* stylelint-disable-next-line media-query-no-invalid */
+      @media (width > ${theme.breakpoints.md}) and (width <= ${theme.breakpoints
+          .lg}) {
         grid-template-columns: repeat(3, 1fr);
       }
 
-      @media (min-width: ${theme.breakpoints.lg}) {
+      /* stylelint-disable-next-line media-query-no-invalid */
+      @media (width > ${theme.breakpoints.lg}) {
         grid-template-columns: repeat(${cols || 4}, 1fr);
       }
     `}
@@ -83,6 +89,18 @@ export const Flex = styled.div<{
   wrap?: boolean
 }>`
   display: flex;
+  flex-flow: ${({ direction }) => direction || 'row'};
+  flex-wrap: ${({ wrap }) => (wrap ? 'wrap' : 'nowrap')};
+  gap: ${({ theme, gap }) => theme.spacing[gap || 0]};
+  align-items: ${({ align }) => {
+    const alignMap = {
+      start: 'flex-start',
+      center: 'center',
+      end: 'flex-end',
+      stretch: 'stretch',
+    }
+    return alignMap[align || 'start']
+  }};
   justify-content: ${({ justify }) => {
     const justifyMap = {
       start: 'flex-start',
@@ -94,18 +112,6 @@ export const Flex = styled.div<{
     }
     return justifyMap[justify || 'start']
   }};
-  align-items: ${({ align }) => {
-    const alignMap = {
-      start: 'flex-start',
-      center: 'center',
-      end: 'flex-end',
-      stretch: 'stretch',
-    }
-    return alignMap[align || 'start']
-  }};
-  gap: ${({ theme, gap }) => theme.spacing[gap || 0]};
-  flex-direction: ${({ direction }) => direction || 'row'};
-  flex-wrap: ${({ wrap }) => (wrap ? 'wrap' : 'nowrap')};
 `
 
 export const Stack = styled(Flex)`

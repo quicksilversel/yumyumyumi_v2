@@ -9,36 +9,12 @@ import { useFormContext, Controller } from 'react-hook-form'
 
 import type { RecipeForm } from '@/types/recipe'
 
-import { IconButton, Stack, Caption, ErrorText } from '@/components/ui'
+import { IconButton, ErrorText, H2 } from '@/components/ui'
 import { validateImage, deleteImage } from '@/lib/supabase/storage'
 
 type Props = {
   onImageChange?: (file: File | null, preview: string) => void
   uploading?: boolean
-}
-
-function handleImageSelect(file: File | null): {
-  isValid: boolean
-  error?: string
-  preview?: string
-} {
-  if (!file) {
-    return { isValid: false, error: 'No file selected' }
-  }
-
-  const validationError = validateImage(file)
-  if (validationError) {
-    return { isValid: false, error: validationError }
-  }
-
-  const reader = new FileReader()
-  let preview = ''
-  reader.onloadend = () => {
-    preview = reader.result as string
-  }
-  reader.readAsDataURL(file)
-
-  return { isValid: true, preview }
 }
 
 async function handleImageRemove(imageUrl?: string): Promise<void> {
@@ -90,69 +66,94 @@ export function ImageForm({ onImageChange, uploading = false }: Props) {
     onImageChange?.(null, '')
   }
 
+  const hasImage = imagePreview || imageUrl
+
   return (
-    <Stack gap={1}>
+    <Section>
+      <H2>サムネイル</H2>
       <Controller
         name="imageUrl"
         control={control}
         render={({ field }) => (
-          <ImageContainer>
-            <ImagePreview>
-              {imagePreview || field.value ? (
+          <ImageContainer
+            role="img"
+            aria-labelledby="image-heading"
+            aria-describedby="image-help"
+          >
+            <ImagePreview hasImage={!!hasImage}>
+              {hasImage ? (
                 <>
-                  <Image
+                  <RecipeImage
                     src={imagePreview || field.value || ''}
-                    alt="Recipe"
+                    alt="レシピ画像のプレビュー"
                     fill
-                    objectFit="cover"
+                    style={{ objectFit: 'cover' }}
                   />
+                  <ImageActions>
+                    <ActionButton
+                      size="sm"
+                      variant="primary"
+                      onClick={handleUploadClick}
+                      disabled={uploading}
+                      type="button"
+                      aria-label="画像を変更"
+                    >
+                      <EditIcon fontSize="inherit" />
+                    </ActionButton>
+                    <ActionButton
+                      size="sm"
+                      variant="primary"
+                      onClick={handleRemoveImage}
+                      type="button"
+                      aria-label="画像を削除"
+                    >
+                      <DeleteIcon fontSize="inherit" />
+                    </ActionButton>
+                  </ImageActions>
                 </>
               ) : (
-                <PlaceholderContent onClick={handleUploadClick} type="button">
-                  <ImageIcon />
-                  <Caption>画像をアップロード</Caption>
-                </PlaceholderContent>
+                <UploadPrompt
+                  onClick={handleUploadClick}
+                  type="button"
+                  disabled={uploading}
+                  aria-describedby="image-help"
+                >
+                  <ImageIcon fontSize="large" />
+                  <UploadText>画像をアップロード</UploadText>
+                  <UploadHint>クリックして画像を選択</UploadHint>
+                </UploadPrompt>
               )}
             </ImagePreview>
-            {(imagePreview || field.value) && (
-              <ButtonContainer>
-                <IconButton
-                  size="sm"
-                  variant="primary"
-                  onClick={handleUploadClick}
-                  disabled={uploading}
-                  type="button"
-                >
-                  <EditIcon fontSize="inherit" />
-                </IconButton>
-                <IconButton
-                  size="sm"
-                  variant="primary"
-                  onClick={handleRemoveImage}
-                  type="button"
-                >
-                  <DeleteIcon fontSize="inherit" />
-                </IconButton>
-              </ButtonContainer>
-            )}
           </ImageContainer>
         )}
       />
-      <HiddenInput
+      <HiddenFileInput
         ref={fileInputRef}
         type="file"
-        accept="image/*"
+        accept="image/jpeg,image/png,image/webp"
         onChange={handleFileSelect}
+        aria-label="画像ファイルを選択"
       />
-      {error && <ErrorText>{error}</ErrorText>}
-      <Caption>
-        最大ファイルサイズ: 2MB。
+      {error && (
+        <ErrorText role="alert" aria-live="polite">
+          {error}
+        </ErrorText>
+      )}
+      <HelpText id="image-help">
+        最大ファイルサイズ: 2MB
         <br />
         サポートされているフォーマット: JPG, PNG, WebP
-      </Caption>
-    </Stack>
+      </HelpText>
+    </Section>
   )
 }
+
+const Section = styled.section`
+  display: flex;
+  flex-direction: column;
+  gap: ${({ theme }) => theme.spacing[3]};
+  width: 100%;
+`
 
 const ImageContainer = styled.div`
   position: relative;
@@ -160,37 +161,104 @@ const ImageContainer = styled.div`
   max-width: 450px;
 `
 
-const ButtonContainer = styled.div`
-  position: absolute;
-  top: ${({ theme }) => theme.spacing[1]};
-  right: ${({ theme }) => theme.spacing[1]};
-  display: flex;
-  gap: ${({ theme }) => theme.spacing[1]};
-`
-
-const ImagePreview = styled.div`
+const ImagePreview = styled.div<{ hasImage: boolean }>`
   position: relative;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   width: 100%;
-  border-radius: ${({ theme }) => theme.borderRadius.lg};
-  background-color: ${({ theme }) => theme.colors.gray[100]};
-  overflow: hidden;
   aspect-ratio: 16/9;
+  overflow: hidden;
+  background-color: ${({ theme }) => theme.colors.gray[100]};
+  border: 2px dashed
+    ${({ theme, hasImage }) =>
+      hasImage ? 'transparent' : theme.colors.gray[300]};
+  border-radius: ${({ theme }) => theme.borderRadius.lg};
+  transition: border-color 0.2s ease;
+
+  &:hover {
+    border-color: ${({ theme, hasImage }) =>
+      hasImage ? 'transparent' : theme.colors.gray[400]};
+  }
 `
 
-const PlaceholderContent = styled.button`
+const RecipeImage = styled(Image)`
+  border-radius: ${({ theme }) => theme.borderRadius.lg};
+`
+
+const ImageActions = styled.div`
+  position: absolute;
+  top: ${({ theme }) => theme.spacing[2]};
+  right: ${({ theme }) => theme.spacing[2]};
   display: flex;
-  justify-content: center;
+  gap: ${({ theme }) => theme.spacing[1]};
+  opacity: 0;
+  transition: opacity 0.2s ease;
+
+  ${ImagePreview}:hover & {
+    opacity: 1;
+  }
+`
+
+const ActionButton = styled(IconButton)`
+  color: ${({ theme }) => theme.colors.gray[700]};
+  background-color: ${({ theme }) => theme.colors.white};
+  box-shadow: ${({ theme }) => theme.shadow.sm};
+
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.gray[50]};
+  }
+`
+
+const UploadPrompt = styled.button`
+  display: flex;
+  flex-direction: column;
+  gap: ${({ theme }) => theme.spacing[2]};
   align-items: center;
+  justify-content: center;
   width: 100%;
   height: 100%;
-  gap: ${({ theme }) => theme.spacing[2]};
   color: ${({ theme }) => theme.colors.gray[500]};
-  text-align: center;
+  cursor: pointer;
+  background: none;
+  border: none;
+  transition: color 0.2s ease;
+
+  &:hover:not(:disabled) {
+    color: ${({ theme }) => theme.colors.gray[600]};
+  }
+
+  &:disabled {
+    pointer-events: none;
+    opacity: 0.5;
+  }
 `
 
-const HiddenInput = styled.input`
-  display: none;
+const UploadText = styled.span`
+  margin-top: ${({ theme }) => theme.spacing[1]};
+  font-size: ${({ theme }) => theme.typography.fontSize.sm};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
+`
+
+const UploadHint = styled.span`
+  font-size: ${({ theme }) => theme.typography.fontSize.xs};
+  color: ${({ theme }) => theme.colors.gray[400]};
+`
+
+const HiddenFileInput = styled.input`
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  white-space: nowrap;
+  border: 0;
+  clip-path: inset(0 0 100% 100%);
+`
+
+const HelpText = styled.p`
+  font-size: ${({ theme }) => theme.typography.fontSize.xs};
+  line-height: 1.4;
+  color: ${({ theme }) => theme.colors.gray[600]};
 `

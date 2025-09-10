@@ -85,9 +85,9 @@ export const TagsForm = () => {
 }
 
 const TagInputRow = styled(Flex)`
-  width: 100%;
   gap: ${({ theme }) => theme.spacing[2]};
   align-items: flex-end;
+  width: 100%;
 `
 
 const StyledButton = styled(Button)`

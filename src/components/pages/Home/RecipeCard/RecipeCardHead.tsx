@@ -27,8 +27,8 @@ const Container = styled.div`
   position: relative;
   width: 100%;
   aspect-ratio: 16 / 9;
-  background-color: ${({ theme }) => theme.colors.gray[100]};
   overflow: hidden;
+  background-color: ${({ theme }) => theme.colors.gray[100]};
 `
 
 const MediaGradient = styled.div`
@@ -37,8 +37,8 @@ const MediaGradient = styled.div`
   bottom: 0;
   left: 0;
   height: 60%;
-  background: linear-gradient(to top, rgb(0, 0, 0, 30%) 0%, transparent 100%);
   pointer-events: none;
+  background: linear-gradient(to top, rgb(0, 0, 0, 30%) 0%, transparent 100%);
 `
 
 const Label = styled.div`
@@ -49,6 +49,6 @@ const Label = styled.div`
   font-size: ${({ theme }) => theme.typography.fontSize.xs};
   font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
   line-height: 1;
-  background-color: ${({ theme }) => theme.colors.primary};
   color: ${({ theme }) => theme.colors.white};
+  background-color: ${({ theme }) => theme.colors.primary};
 `

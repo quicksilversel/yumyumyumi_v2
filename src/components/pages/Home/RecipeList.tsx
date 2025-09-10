@@ -2,12 +2,12 @@
 
 import { useCallback, useEffect, useState, Suspense, useRef } from 'react'
 
-import { keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
 import { useSearchParams } from 'next/navigation'
 
 import type { Recipe, RecipeFilters } from '@/types/recipe'
 
+import { Spinner } from '@/components/ui'
 import { useRecipeContext } from '@/contexts/RecipeContext'
 import { useBookmarks } from '@/hooks/useBookmarks'
 
@@ -173,7 +173,6 @@ function RecipeListInner({ initialRecipes }: RecipeListProps) {
           selectedSort={selectedSort}
           onSortChange={setSelectedSort}
         />
-
         {loading ? (
           <LoadingOverlay>
             <Spinner />
@@ -197,35 +196,17 @@ function RecipeListInner({ initialRecipes }: RecipeListProps) {
   )
 }
 
-const StyledList = styled.div`
-  padding: 20px;
+const StyledList = styled.main`
   max-width: 1200px;
+  padding: 20px;
   margin: 0 auto;
 `
 
 const LoadingOverlay = styled.div`
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   min-height: 400px;
-`
-
-const spin = keyframes`
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-`
-
-const Spinner = styled.div`
-  border: 3px solid rgba(0, 0, 0, 0.1);
-  border-left-color: #333;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  animation: ${spin} 1s linear infinite;
 `
 
 export function RecipeList({ initialRecipes }: RecipeListProps) {

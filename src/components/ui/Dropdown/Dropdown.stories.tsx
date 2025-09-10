@@ -9,7 +9,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 import { Dropdown, type DropdownOption } from './Dropdown'
 
 const meta: Meta<typeof Dropdown> = {
-  title: 'UI/Dropdown',
+  title: 'Components/Dropdown',
   component: Dropdown,
   parameters: {
     layout: 'centered',
@@ -216,7 +216,6 @@ export const LongList: Story = {
   ],
 }
 
-// Interactive example showing multiple dropdowns working together
 export const MultipleDropdowns: Story = {
   render: () => {
     const sortOptions: DropdownOption<string>[] = [
@@ -264,7 +263,6 @@ export const MultipleDropdowns: Story = {
   },
 }
 
-// Interactive story for controls testing
 export const Interactive: Story = {
   args: {
     options: [
@@ -296,7 +294,6 @@ export const Interactive: Story = {
   },
 }
 
-// Empty state example
 export const EmptyOptions: Story = {
   args: {
     options: [],
@@ -313,7 +310,6 @@ export const EmptyOptions: Story = {
   ],
 }
 
-// Non-absolute positioning (for use in menus/headers)
 export const NonAbsoluteDropdown: Story = {
   args: {
     options: [
@@ -376,7 +372,6 @@ export const WithFixedTitle: Story = {
   },
 }
 
-// Title vs Dynamic Label comparison
 export const TitleVsDynamicLabel: Story = {
   render: () => {
     const options: DropdownOption<string>[] = [
@@ -426,7 +421,6 @@ export const TitleVsDynamicLabel: Story = {
   },
 }
 
-// Comparison of absolute vs non-absolute
 export const AbsoluteVsNonAbsolute: Story = {
   render: () => {
     const options: DropdownOption<string>[] = [

@@ -48,7 +48,7 @@ describe('addBookmark', () => {
     const result = await addBookmark(mockRecipeId)
 
     expect(mockSupabaseClient.auth.getUser).toHaveBeenCalled()
-    expect(isBookmarked).toHaveBeenCalledWith(mockRecipeId)
+    expect(isBookmarked).toHaveBeenCalledWith(mockRecipeId, 'user123')
     expect(mockSupabaseClient.from).toHaveBeenCalledWith('bookmarks')
     expect(mockQueryBuilder.insert).toHaveBeenCalledWith({
       user_id: 'user123',
@@ -62,7 +62,7 @@ describe('addBookmark', () => {
 
     const result = await addBookmark(mockRecipeId)
 
-    expect(isBookmarked).toHaveBeenCalledWith(mockRecipeId)
+    expect(isBookmarked).toHaveBeenCalledWith(mockRecipeId, 'user123')
     expect(mockQueryBuilder.insert).not.toHaveBeenCalled()
     expect(result).toBe(true)
   })
@@ -78,9 +78,7 @@ describe('addBookmark', () => {
     const result = await addBookmark(mockRecipeId)
 
     expect(result).toBe(false)
-    expect(consoleSpy).toHaveBeenCalledWith(
-      'User must be logged in to bookmark recipes',
-    )
+    expect(global.alert).toHaveBeenCalledWith('ログインが必要です')
     expect(isBookmarked).not.toHaveBeenCalled()
     expect(mockQueryBuilder.insert).not.toHaveBeenCalled()
 

@@ -8,8 +8,8 @@ export const resetCss = css`
   }
 
   * {
-    margin: 0;
     padding: 0;
+    margin: 0;
   }
 
   body {
@@ -35,13 +35,13 @@ export const resetCss = css`
   textarea,
   select {
     padding: 0;
-    border-style: none;
-    background: transparent;
-    color: inherit;
     font: inherit;
+    vertical-align: middle;
+    color: inherit;
     text-align: inherit;
     text-transform: inherit;
-    vertical-align: middle;
+    background: transparent;
+    border-style: none;
   }
 
   li {

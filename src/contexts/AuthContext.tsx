@@ -22,10 +22,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const supabase = getSupabaseClient()
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setUser(session?.user ?? null)
-      setLoading(false)
-    })
+    supabase.auth
+      .getSession()
+      .then(({ data: { session } }) => {
+        setUser(session?.user ?? null)
+        setLoading(false)
+      })
+      .catch((error) => {
+        // eslint-disable-next-line no-console
+        console.error('Error getting session:', error)
+        setUser(null)
+        setLoading(false)
+      })
 
     const {
       data: { subscription },

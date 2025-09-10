@@ -1,5 +1,7 @@
 import { useState, useCallback } from 'react'
 
+import { useRouter } from 'next/navigation'
+
 import { useAuth } from '@/contexts/AuthContext'
 import { useBookmarksContext } from '@/contexts/BookmarksContext'
 
@@ -10,6 +12,7 @@ interface UseBookmarksOptions {
 
 export function useBookmarks(options: UseBookmarksOptions = {}) {
   const [isToggling, setIsToggling] = useState(false)
+  const router = useRouter()
   const { user } = useAuth()
   const {
     bookmarks,
@@ -36,7 +39,7 @@ export function useBookmarks(options: UseBookmarksOptions = {}) {
       }
 
       if (!user) {
-        window.location.href = '/login'
+        router.push('/login')
         return
       }
 
@@ -51,7 +54,7 @@ export function useBookmarks(options: UseBookmarksOptions = {}) {
         setIsToggling(false)
       }
     },
-    [options, user, toggleBookmark],
+    [options, user, toggleBookmark, router],
   )
 
   return {

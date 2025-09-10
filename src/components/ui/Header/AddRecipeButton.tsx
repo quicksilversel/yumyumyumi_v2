@@ -9,11 +9,7 @@ export const AddRecipeButton = () => {
 
   return (
     <>
-      <button
-        onClick={() => setAddRecipeOpen(true)}
-        type="button"
-        title="レシピを作る"
-      >
+      <button onClick={() => setAddRecipeOpen(true)} type="button">
         <AddIcon />
       </button>
       <AddRecipeDialog

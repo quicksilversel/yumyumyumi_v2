@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 
 import LocalOfferIcon from '@mui/icons-material/LocalOffer'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 
 import { Dropdown, type DropdownOption } from '@/components/ui/Dropdown'
 import { getAllTagsFromRecipes } from '@/lib/supabase/tables/recipe/getAllTagsFromRecipes/getAllTagsFromRecipes'
@@ -9,10 +9,17 @@ import { getAllTagsFromRecipes } from '@/lib/supabase/tables/recipe/getAllTagsFr
 type Props = {
   selectedTag: string | null
   setSelectedTag: (tag: string | null) => void
+  setSlideMenuOpen: (open: boolean) => void
 }
 
-export const TagFilter = ({ selectedTag, setSelectedTag }: Props) => {
+export const TagFilter = ({
+  selectedTag,
+  setSelectedTag,
+  setSlideMenuOpen,
+}: Props) => {
   const router = useRouter()
+  const searchParams = useSearchParams()
+
   const [availableTags, setAvailableTags] = useState<string[]>([])
   const [isLoading, setIsLoading] = useState(true)
 
@@ -34,11 +41,17 @@ export const TagFilter = ({ selectedTag, setSelectedTag }: Props) => {
 
   const handleTagSelect = (tag: string | null) => {
     setSelectedTag(tag)
-    if (tag) {
-      router.push(`/?tag=${encodeURIComponent(tag)}`)
+    setSlideMenuOpen(false)
+    const params = new URLSearchParams(searchParams.toString())
+
+    if (tag === null) {
+      params.delete('tag')
     } else {
-      router.push('/')
+      params.set('tag', encodeURIComponent(tag))
     }
+
+    const queryString = params.toString()
+    router.push(queryString ? `/?${queryString}` : '/')
   }
 
   const tagOptions: DropdownOption<string | null>[] = [

@@ -29,13 +29,13 @@ const fadeInAnimation = keyframes`
 `
 
 const Container = styled.div`
-  padding: ${({ theme }) => theme.spacing[4]};
-  background: rgb(255, 255, 255, 98%);
-  animation: ${fadeInAnimation} 0.3s ease;
   inset: 0;
   width: 100%;
   max-height: 310px;
+  padding: ${({ theme }) => theme.spacing[4]};
   overflow-y: auto;
+  background: rgb(255, 255, 255, 98%);
+  animation: ${fadeInAnimation} 0.3s ease;
 `
 
 const Title = styled.span`
@@ -47,8 +47,8 @@ const Title = styled.span`
 
 const Item = styled.li`
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
   padding: ${({ theme }) => theme.spacing[2]} 0;
   border-bottom: 1px solid ${({ theme }) => theme.colors.gray[200]};
 
@@ -58,12 +58,12 @@ const Item = styled.li`
 `
 
 const Name = styled.span`
-  color: ${({ theme }) => theme.colors.black};
   font-size: ${({ theme }) => theme.typography.fontSize.sm};
+  color: ${({ theme }) => theme.colors.black};
 `
 
 const Amount = styled.span`
-  color: ${({ theme }) => theme.colors.gray[600]};
   font-size: ${({ theme }) => theme.typography.fontSize.sm};
   font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
+  color: ${({ theme }) => theme.colors.gray[600]};
 `

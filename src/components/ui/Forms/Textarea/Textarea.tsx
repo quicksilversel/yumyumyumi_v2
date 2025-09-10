@@ -94,19 +94,19 @@ const sizeStyles = ({ theme, size }: { theme: Theme; size: TextareaSize }) => {
   switch (size) {
     case 'small':
       return css`
-        padding: 16px 12px 8px 12px;
+        padding: 16px 12px 8px;
         font-size: ${theme.typography.fontSize.sm};
         line-height: 1.4;
       `
     case 'medium':
       return css`
-        padding: 20px 16px 8px 16px;
+        padding: 20px 16px 8px;
         font-size: ${theme.typography.fontSize.base};
         line-height: 1.5;
       `
     case 'large':
       return css`
-        padding: 24px 20px 8px 20px;
+        padding: 24px 20px 8px;
         font-size: ${theme.typography.fontSize.lg};
         line-height: 1.6;
       `
@@ -136,40 +136,40 @@ const FloatingLabel = styled.label<{
 }>`
   position: absolute;
   left: 12px;
+  display: flex;
+  align-items: center;
+  padding: 0 4px;
+  margin-left: -4px;
   color: ${({ theme, hasError, isFocused }) => {
     if (hasError) return theme.colors.error
     if (isFocused) return theme.colors.primary
     return theme.colors.gray[600]
   }};
   pointer-events: none;
-  transition: all 0.2s ease-in-out;
-  transform-origin: left top;
   background-color: ${({ theme }) => theme.colors.white};
-  padding: 0 4px;
-  margin-left: -4px;
-  display: flex;
-  align-items: center;
+  transform-origin: left top;
+  transition: all 0.2s ease-in-out;
 
   ${({ isFloating, theme }) =>
     isFloating
       ? css`
           top: -8px;
           font-size: 12px;
-          transform: scale(0.85);
           font-weight: ${theme.typography.fontWeight.medium};
+          transform: scale(0.85);
         `
       : css`
           top: 50%;
-          transform: translateY(-50%);
           font-size: ${theme.typography.fontSize.sm};
+          transform: translateY(-50%);
         `}
 
   ${({ theme, isRequired }) =>
     isRequired &&
     css`
-      &:after {
-        content: ' *';
+      &::after {
         color: ${theme.colors.error};
+        content: ' *';
       }
     `}
 `
@@ -177,9 +177,9 @@ const FloatingLabel = styled.label<{
 const HelperText = styled.span<{ error?: boolean }>`
   display: block;
   margin-top: ${({ theme }) => theme.spacing[1]};
+  font-size: ${({ theme }) => theme.typography.fontSize.xs};
   color: ${({ error, theme }) =>
     error ? theme.colors.error : theme.colors.gray[500]};
-  font-size: ${({ theme }) => theme.typography.fontSize.xs};
 `
 
 const StyledTextarea = styled.textarea<{
@@ -209,15 +209,16 @@ const StyledTextarea = styled.textarea<{
         return `${maxRows * lineHeight + padding}px`
       })()};
     `}
-  border: 1px solid
-    ${({ error, theme }) =>
-    error ? theme.colors.error : theme.colors.gray[300]};
-  border-radius: ${({ theme }) => theme.borderRadius.md};
-  background-color: ${({ theme }) => theme.colors.white};
+
   color: ${({ theme }) => theme.colors.black};
   resize: ${({ resize }) => resize || 'vertical'};
-  transition: border-color ${({ theme }) => theme.transition.default};
   outline: none;
+  background-color: ${({ theme }) => theme.colors.white};
+  border: 1px solid
+    ${({ error, theme }) =>
+      error ? theme.colors.error : theme.colors.gray[300]};
+  border-radius: ${({ theme }) => theme.borderRadius.md};
+  transition: border-color ${({ theme }) => theme.transition.default};
 
   ${({ theme, height }) => sizeStyles({ theme, size: height || 'medium' })}
 
@@ -227,10 +228,10 @@ const StyledTextarea = styled.textarea<{
   }
 
   &:disabled {
-    background-color: ${({ theme }) => theme.colors.gray[50]};
     color: ${({ theme }) => theme.colors.gray[500]};
-    cursor: not-allowed;
+    pointer-events: none;
     resize: none;
+    background-color: ${({ theme }) => theme.colors.gray[50]};
   }
 
   &::-webkit-scrollbar {

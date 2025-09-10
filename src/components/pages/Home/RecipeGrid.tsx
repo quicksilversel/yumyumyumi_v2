@@ -20,21 +20,21 @@ export function RecipeGrid() {
   }
 
   return (
-    <RecipeGridContainer cols={3} gap={6} responsive>
+    <Container cols={3} gap={6} responsive>
       {filteredRecipes.map((recipe) => (
         <RecipeCard key={recipe.id} recipe={recipe} />
       ))}
-    </RecipeGridContainer>
+    </Container>
   )
 }
 
 const EmptyState = styled(Stack)`
   padding: ${({ theme }) => theme.spacing[6]};
-  color: ${({ theme }) => theme.colors.gray[600]};
   font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
+  color: ${({ theme }) => theme.colors.gray[600]};
   text-align: center;
 `
 
-const RecipeGridContainer = styled(Grid)`
+const Container = styled(Grid)`
   padding-block: ${({ theme }) => theme.spacing[6]};
 `

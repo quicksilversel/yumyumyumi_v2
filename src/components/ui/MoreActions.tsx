@@ -21,8 +21,13 @@ export const MoreActions = ({
   className,
 }: MoreActionsProps) => {
   const [menuOpen, setMenuOpen] = useState(false)
+  const [mounted, setMounted] = useState(false)
 
   const menuRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -60,6 +65,7 @@ export const MoreActions = ({
     onDelete()
   }
 
+  if (!mounted) return null
   return (
     <Container className={className}>
       <StyledIconButton
@@ -67,6 +73,7 @@ export const MoreActions = ({
         size="sm"
         disabled={isDeleting}
         type="button"
+        aria-label="アクションメニューを開く"
       >
         <MoreVertIcon fontSize="inherit" />
       </StyledIconButton>
@@ -105,24 +112,24 @@ const Menu = styled.div<{ open: boolean }>`
   display: ${({ open }) => (open ? 'block' : 'none')};
   min-width: 140px;
   margin-top: ${({ theme }) => theme.spacing[1]};
+  background-color: ${({ theme }) => theme.colors.white};
   border: 1px solid ${({ theme }) => theme.colors.gray[200]};
   border-radius: ${({ theme }) => theme.borderRadius.lg};
-  background-color: ${({ theme }) => theme.colors.white};
   box-shadow: ${({ theme }) => theme.shadow.lg};
 `
 
 const MenuItem = styled.button`
   display: flex;
-  align-items: center;
   gap: ${({ theme }) => theme.spacing[4]};
+  align-items: center;
   width: 100%;
   padding: ${({ theme }) => theme.spacing[3]} ${({ theme }) => theme.spacing[4]};
-  border: none;
-  background: none;
-  color: ${({ theme }) => theme.colors.black};
   font-size: ${({ theme }) => theme.typography.fontSize.sm};
+  color: ${({ theme }) => theme.colors.black};
   text-align: left;
   cursor: pointer;
+  background: none;
+  border: none;
   transition: background-color ${({ theme }) => theme.transition.fast};
 
   &:hover {

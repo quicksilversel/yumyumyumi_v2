@@ -46,7 +46,6 @@ export const RecipeForm = ({
       <Divider />
       <DirectionsForm />
       <Divider />
-      <H2>その他</H2>
       <ImageForm onImageChange={handleImageChange} uploading={uploadingImage} />
       <SourceForm />
       <TipsForm />

@@ -181,7 +181,7 @@ export function EditRecipeDialog({
 
 const DialogActions = styled.div`
   display: flex;
-  justify-content: flex-end;
   gap: ${({ theme }) => theme.spacing[3]};
+  justify-content: flex-end;
   margin-top: ${({ theme }) => theme.spacing[6]};
 `

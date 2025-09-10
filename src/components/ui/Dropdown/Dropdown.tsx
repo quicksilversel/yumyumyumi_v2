@@ -68,12 +68,14 @@ export function Dropdown<T = string>({
   }
 
   const selectedOption = options.find((opt) => opt.value === selectedValue)
-  const displayLabel = title || selectedOption?.label || placeholder
+  const displayLabel = !!selectedOption?.value
+    ? title || selectedOption?.label
+    : placeholder
 
   return (
     <Container className={className} fullWidth={fullWidth}>
       <StyledDetails ref={detailsRef}>
-        <StyledSummary hasPadding={hasPadding}>
+        <StyledSummary hasPadding={hasPadding} absolute={absoluteDropdown}>
           {icon && <IconWrapper>{icon}</IconWrapper>}
           <LabelText>{displayLabel}</LabelText>
           <StyledExpandMoreIcon />
@@ -109,20 +111,23 @@ const StyledDetails = styled.details`
   width: 100%;
 `
 
-const StyledSummary = styled.summary<{ hasPadding?: boolean }>`
+const StyledSummary = styled.summary<{
+  hasPadding?: boolean
+  absolute?: boolean
+}>`
   display: flex;
-  align-items: center;
   gap: ${({ theme }) => theme.spacing[1]};
-  border-radius: ${({ theme }) => theme.borderRadius.md};
-  background-color: ${({ theme }) => theme.colors.white};
-  color: ${({ theme }) => theme.colors.gray[700]};
+  align-items: center;
   font-size: ${({ theme }) => theme.typography.fontSize.sm};
   font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
-  cursor: pointer;
-  transition: background-color ${({ theme }) => theme.transition.fast};
+  color: ${({ theme }) => theme.colors.gray[700]};
   white-space: nowrap;
-  list-style: none;
+  cursor: pointer;
   user-select: none;
+  list-style: none;
+  background-color: ${({ theme }) => theme.colors.white};
+  border-radius: ${({ theme }) => theme.borderRadius.md};
+  transition: background-color ${({ theme }) => theme.transition.fast};
 
   &::-webkit-details-marker {
     display: none;
@@ -136,6 +141,14 @@ const StyledSummary = styled.summary<{ hasPadding?: boolean }>`
     hasPadding &&
     css`
       padding: ${theme.spacing[4]} ${theme.spacing[3]};
+    `}
+
+  ${({ absolute, theme }) =>
+    absolute === false &&
+    css`
+      details[open] > & {
+        border-bottom: 1px solid ${theme.colors.gray[200]};
+      }
     `}
 `
 
@@ -155,8 +168,8 @@ const LabelText = styled.span`
 
 const StyledExpandMoreIcon = styled(ExpandMoreIcon)`
   margin-left: auto;
-  color: ${({ theme }) => theme.colors.gray[500]};
   font-size: 20px;
+  color: ${({ theme }) => theme.colors.gray[500]};
   transition: transform ${({ theme }) => theme.transition.default};
 
   details[open] & {
@@ -167,23 +180,23 @@ const StyledExpandMoreIcon = styled(ExpandMoreIcon)`
 const DropdownContainer = styled.div<{ absolute?: boolean }>`
   ${({ absolute }) =>
     absolute &&
-    `
-    position: absolute;
-    top: calc(100% + 4px);
-    left: 0;
-    right: 0;
-  `}
+    css`
+      position: absolute;
+      top: calc(100% + 4px);
+      right: 0;
+      left: 0;
+    `}
   z-index: 1000;
   min-width: 200px;
   max-height: ${({ absolute }) => (absolute ? '300px' : '0')};
-  border: ${({ theme, absolute }) =>
-    absolute ? `1px solid ${theme.colors.gray[200]}` : 'none'};
+  overflow: ${({ absolute }) => (absolute ? 'auto' : 'hidden')};
+  pointer-events: ${({ absolute }) => (absolute ? 'none' : 'auto')};
   background-color: ${({ theme }) => theme.colors.white};
   ${({ absolute }) => absolute && 'box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);'}
-  overflow: ${({ absolute }) => (absolute ? 'auto' : 'hidden')};
+  border: ${({ theme, absolute }) =>
+    absolute ? `1px solid ${theme.colors.gray[200]}` : 'none'};
   opacity: ${({ absolute }) => (absolute ? '0' : '1')};
   transform: ${({ absolute }) => (absolute ? 'translateY(-8px)' : 'none')};
-  pointer-events: ${({ absolute }) => (absolute ? 'none' : 'auto')};
   transition: ${({ theme, absolute }) =>
     absolute
       ? `all ${theme.transition.default}`
@@ -193,10 +206,10 @@ const DropdownContainer = styled.div<{ absolute?: boolean }>`
     ${({ absolute, theme }) =>
       absolute
         ? css`
-            opacity: 1;
-            transform: translateY(0);
             pointer-events: auto;
             border-radius: ${theme.borderRadius.md};
+            opacity: 1;
+            transform: translateY(0);
           `
         : css`
             max-height: 300px;
@@ -211,11 +224,11 @@ const DropdownItem = styled.button<{ selected?: boolean }>`
   justify-content: space-between;
   width: 100%;
   padding: ${({ theme }) => theme.spacing[3]} ${({ theme }) => theme.spacing[4]};
-  background: ${({ selected, theme }) =>
-    selected ? theme.colors.primary + '40' : 'transparent'};
-  color: ${({ theme }) => theme.colors.gray[700]};
   font-size: ${({ theme }) => theme.typography.fontSize.sm};
   font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
+  color: ${({ theme }) => theme.colors.gray[700]};
+  background: ${({ selected, theme }) =>
+    selected ? theme.colors.primary + '40' : 'transparent'};
   transition: opacity ${({ theme }) => theme.transition.fast};
 
   &:hover {

@@ -50,38 +50,19 @@ export const Input = ({
     const checkAutofill = () => {
       if (inputRef.current) {
         const isAutofilled = inputRef.current.matches(':-webkit-autofill')
-        setHasAutofillValue(isAutofilled)
+        const hasSimulatedAutofill = inputRef.current.closest(
+          '.autofill-simulation',
+        )
+        setHasAutofillValue(isAutofilled || !!hasSimulatedAutofill)
       }
     }
 
     checkAutofill()
 
-    const interval = setInterval(checkAutofill, 100)
-
-    const handleAnimationStart = (e: AnimationEvent) => {
-      if (e.animationName === 'onAutoFillStart') {
-        setHasAutofillValue(true)
-      }
-    }
-
-    const handleAnimationCancel = (e: AnimationEvent) => {
-      if (e.animationName === 'onAutoFillCancel') {
-        setHasAutofillValue(false)
-      }
-    }
-
-    const input = inputRef.current
-    if (input) {
-      input.addEventListener('animationstart', handleAnimationStart)
-      input.addEventListener('animationcancel', handleAnimationCancel)
-    }
+    const interval = setInterval(checkAutofill, 300)
 
     return () => {
       clearInterval(interval)
-      if (input) {
-        input.removeEventListener('animationstart', handleAnimationStart)
-        input.removeEventListener('animationcancel', handleAnimationCancel)
-      }
     }
   }, [])
 
@@ -102,7 +83,6 @@ export const Input = ({
           ref={inputRef}
           type={type}
           height={height}
-          autoComplete="off"
           value={value}
           {...inputProps}
           onFocus={handleFocus}
@@ -116,6 +96,7 @@ export const Input = ({
             isFloating={shouldFloatLabel}
             isFocused={isFocused}
             hasError={inputProps.error}
+            hasAutofill={hasAutofillValue}
           >
             {icon && <IconWrapper>{icon}</IconWrapper>}
             {title}
@@ -169,43 +150,75 @@ const FloatingLabel = styled.label<{
   isFloating: boolean
   isFocused: boolean
   hasError?: boolean
+  hasAutofill?: boolean
 }>`
   position: absolute;
   left: 12px;
+  display: flex;
+  align-items: center;
+  padding: 0 4px;
+  margin-left: -4px;
   color: ${({ theme, hasError, isFocused }) => {
     if (hasError) return theme.colors.error
     if (isFocused) return theme.colors.primary
     return theme.colors.gray[600]
   }};
   pointer-events: none;
-  transition: all 0.2s ease-in-out;
   transform-origin: left top;
-  background-color: ${({ theme }) => theme.colors.white};
-  padding: 0 4px;
-  margin-left: -4px;
-  display: flex;
-  align-items: center;
+  transition: all 0.2s ease-in-out;
+
+  ${({ theme, hasAutofill, isFloating }) => {
+    if (hasAutofill && isFloating) {
+      return css`
+        text-shadow:
+          1px 1px 0 rgb(255, 255, 255, 0.8),
+          -1px -1px 0 rgb(255, 255, 255, 0.8),
+          1px -1px 0 rgb(255, 255, 255, 0.8),
+          -1px 1px 0 rgb(255, 255, 255, 0.8);
+        background-color: transparent;
+      `
+    } else if (isFloating) {
+      return css`
+        background-color: ${theme.colors.white};
+        &::before {
+          position: absolute;
+          top: 50%;
+          right: -2px;
+          left: -2px;
+          z-index: -1;
+          height: 2px;
+          content: '';
+          background-color: ${theme.colors.white};
+        }
+      `
+    } else {
+      return css`
+        background-color: transparent;
+      `
+    }
+  }}
 
   ${({ isFloating, theme }) =>
     isFloating
       ? css`
           top: -8px;
+          z-index: 1;
           font-size: 12px;
-          transform: scale(0.85);
           font-weight: ${theme.typography.fontWeight.medium};
+          transform: scale(0.85);
         `
       : css`
           top: 50%;
-          transform: translateY(-50%);
           font-size: ${theme.typography.fontSize.sm};
+          transform: translateY(-50%);
         `}
 
   ${({ theme, isRequired }) =>
     isRequired &&
     css`
-      &:after {
-        content: ' *';
+      &::after {
         color: ${theme.colors.error};
+        content: ' *';
       }
     `}
 `
@@ -216,14 +229,14 @@ const StyledInput = styled.input<{
   hasFloatingLabel?: boolean
 }>`
   width: 100%;
+  color: ${({ theme }) => theme.colors.black};
+  outline: none;
+  background-color: ${({ theme }) => theme.colors.white};
   border: 1px solid
     ${({ theme, error }) =>
       error ? theme.colors.error : theme.colors.gray[300]};
   border-radius: ${({ theme }) => theme.borderRadius.md};
-  background-color: ${({ theme }) => theme.colors.white};
-  color: ${({ theme }) => theme.colors.black};
   transition: border-color ${({ theme }) => theme.transition.default};
-  outline: none;
 
   ${({ theme, height }) => sizeStyles({ theme, size: height || 'medium' })}
 
@@ -233,56 +246,19 @@ const StyledInput = styled.input<{
   }
 
   &:disabled {
-    background-color: ${({ theme }) => theme.colors.gray[50]};
     color: ${({ theme }) => theme.colors.gray[500]};
-    cursor: not-allowed;
+    pointer-events: none;
+    background-color: ${({ theme }) => theme.colors.gray[50]};
   }
 
   &[type='number']::-webkit-inner-spin-button,
   &[type='number']::-webkit-outer-spin-button {
-    -webkit-appearance: none;
     margin: 0;
+    -webkit-appearance: none;
   }
 
   &[type='number'] {
     appearance: textfield;
-  }
-
-  /* Autofill detection animations */
-  @keyframes onAutoFillStart {
-    from {
-      /* */
-    }
-    to {
-      /* */
-    }
-  }
-  @keyframes onAutoFillCancel {
-    from {
-      /* */
-    }
-    to {
-      /* */
-    }
-  }
-
-  &:-webkit-autofill,
-  &:-webkit-autofill:hover,
-  &:-webkit-autofill:focus,
-  &:-webkit-autofill:active {
-    -webkit-animation-delay: 1s;
-    -webkit-animation-name: onAutoFillStart;
-    -webkit-animation-fill-mode: both;
-
-    -webkit-box-shadow: 0 0 0 30px ${({ theme }) => theme.colors.white} inset !important;
-    -webkit-text-fill-color: ${({ theme }) => theme.colors.black} !important;
-
-    border-color: ${({ theme, error }) =>
-      error ? theme.colors.error : theme.colors.gray[300]} !important;
-  }
-
-  &:not(:-webkit-autofill) {
-    -webkit-animation-name: onAutoFillCancel;
   }
 
   ${({ hasFloatingLabel }) =>
@@ -295,10 +271,6 @@ const StyledInput = styled.input<{
       &:focus::placeholder {
         opacity: 0.6;
         transition: opacity 0.2s ease-in-out;
-      }
-
-      &:-webkit-autofill::placeholder {
-        opacity: 0 !important;
       }
     `}
 `
