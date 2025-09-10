@@ -200,8 +200,8 @@ export default function LoginPage() {
 
 const PageContainer = styled.div`
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   min-height: 50vh;
   padding: ${({ theme }) => theme.spacing[4]};
   background: linear-gradient(
@@ -215,8 +215,8 @@ const AuthCard = styled.div`
   width: 100%;
   max-width: 420px;
   padding: ${({ theme }) => theme.spacing[8]};
-  border-radius: ${({ theme }) => theme.borderRadius.xl};
   background: ${({ theme }) => theme.colors.white};
+  border-radius: ${({ theme }) => theme.borderRadius.xl};
   box-shadow: 0 10px 25px rgb(0, 0, 0, 10%);
 `
 
@@ -229,14 +229,14 @@ const TabContainer = styled.div`
 const Tab = styled.button<{ active: boolean }>`
   flex: 1;
   padding: ${({ theme }) => theme.spacing[3]} ${({ theme }) => theme.spacing[4]};
-  background: none;
-  color: ${({ theme, active }) =>
-    active ? theme.colors.black : theme.colors.gray[500]};
   font-size: ${({ theme }) => theme.typography.fontSize.base};
   font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
+  color: ${({ theme, active }) =>
+    active ? theme.colors.black : theme.colors.gray[500]};
   text-align: center;
-  border-bottom: 2px solid transparent;
   cursor: pointer;
+  background: none;
+  border-bottom: 2px solid transparent;
   transition: color ${({ theme }) => theme.transition.default};
 
   ${({ theme, active }) =>
@@ -251,16 +251,16 @@ const Tab = styled.button<{ active: boolean }>`
 `
 
 const Alert = styled.div<{ variant: 'error' | 'success' }>`
-  margin-bottom: ${({ theme }) => theme.spacing[4]};
   padding: ${({ theme }) => theme.spacing[3]} ${({ theme }) => theme.spacing[4]};
-  border-radius: ${({ theme }) => theme.borderRadius.lg};
+  margin-bottom: ${({ theme }) => theme.spacing[4]};
   font-size: ${({ theme }) => theme.typography.fontSize.sm};
+  border-radius: ${({ theme }) => theme.borderRadius.lg};
 
   ${({ theme, variant }) =>
     variant === 'error'
       ? css`
-          background-color: ${theme.colors.error};
           color: ${theme.colors.white};
+          background-color: ${theme.colors.error};
         `
       : css`
           color: ${theme.colors.white};
@@ -284,14 +284,14 @@ const Form = styled.form`
 `
 
 const LinkButton = styled.button`
-  margin-left: ${({ theme }) => theme.spacing[1]};
   padding: 0;
-  border: none;
-  background: none;
-  color: ${({ theme }) => theme.colors.black};
+  margin-left: ${({ theme }) => theme.spacing[1]};
   font-size: inherit;
+  color: ${({ theme }) => theme.colors.black};
   text-decoration: underline;
   cursor: pointer;
+  background: none;
+  border: none;
 
   &:hover {
     opacity: 0.7;
@@ -300,7 +300,7 @@ const LinkButton = styled.button`
 
 const LoadingOverlay = styled.div`
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   min-height: 400px;
 `

@@ -36,15 +36,15 @@ const StyledCard = styled.article`
   position: relative;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
+  background-color: ${({ theme }) => theme.colors.white};
   border: 1px solid ${({ theme }) => theme.colors.gray[200]};
   border-radius: ${({ theme }) => theme.borderRadius.lg};
-  background-color: ${({ theme }) => theme.colors.white};
-  overflow: hidden;
 `
 
 const StyledLink = styled(Link)`
   display: flex;
+  flex-grow: 1;
   flex-direction: column;
   height: 100%;
-  flex-grow: 1;
 `

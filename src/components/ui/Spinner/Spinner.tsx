@@ -41,9 +41,9 @@ const StyledSpinner = styled.div<{
   width: ${({ $size }) => $size}px;
   height: ${({ $size }) => $size}px;
   border: ${({ $thickness }) => $thickness}px solid rgb(0, 0, 0, 0.1);
+  border-left-color: ${({ $color }) => $color};
   border-radius: 50%;
   animation: ${spin} ${({ $speed }) => $speed}s linear infinite;
-  border-left-color: ${({ $color }) => $color};
 `
 
 export const Spinner = ({

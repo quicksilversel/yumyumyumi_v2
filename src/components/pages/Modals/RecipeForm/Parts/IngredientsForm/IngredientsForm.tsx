@@ -120,34 +120,34 @@ export function IngredientsForm() {
 
 const IngredientRow = styled.div`
   display: grid;
-  align-items: start;
-  grid-template-columns: 4fr 2fr auto;
   grid-template-rows: auto auto auto;
+  grid-template-columns: 4fr 2fr auto;
   gap: 0 ${({ theme }) => theme.spacing[2]};
+  align-items: start;
   width: 100%;
   margin-top: ${({ theme }) => theme.spacing[2]};
 `
 
 const IngredientInput = styled(Input)`
-  grid-column: 1;
   grid-row: 1;
+  grid-column: 1;
 `
 
 const AmountInput = styled(Input)`
-  grid-column: 2;
   grid-row: 1;
+  grid-column: 2;
 `
 
 const DeleteButton = styled(IconButton)`
-  grid-column: 3;
   grid-row: 1;
+  grid-column: 3;
   align-self: center;
 `
 
 const SpiceToggle = styled(ToggleSwitch)`
-  margin-top: ${({ theme }) => theme.spacing[2]};
-  grid-column: 1 / -1;
   grid-row: 3;
+  grid-column: 1 / -1;
+  margin-top: ${({ theme }) => theme.spacing[2]};
 `
 
 const StyledButton = styled(Button)`

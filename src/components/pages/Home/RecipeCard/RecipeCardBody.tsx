@@ -31,26 +31,26 @@ const Container = styled.div`
 
 const Title = styled.span`
   display: -webkit-box;
-  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
-  -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical;
   overflow: hidden;
+  -webkit-line-clamp: 1;
+  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
+  -webkit-box-orient: vertical;
 `
 
 const Summary = styled.span`
   display: -webkit-box;
-  color: ${({ theme }) => theme.colors.gray[600]};
-  font-size: ${({ theme }) => theme.typography.fontSize.sm};
   flex-grow: 1;
   overflow: hidden;
   -webkit-line-clamp: 2;
+  font-size: ${({ theme }) => theme.typography.fontSize.sm};
+  color: ${({ theme }) => theme.colors.gray[600]};
   -webkit-box-orient: vertical;
 `
 
 const RecipeInfo = styled(Flex)`
   margin-top: ${({ theme }) => theme.spacing[4]};
-  color: ${({ theme }) => theme.colors.gray[600]};
   font-size: ${({ theme }) => theme.typography.fontSize.sm};
+  color: ${({ theme }) => theme.colors.gray[600]};
 
   svg {
     font-size: 18px;

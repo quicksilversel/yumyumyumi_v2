@@ -13,8 +13,8 @@ export const Logo = () => {
 
 const LogoLink = styled(Link)`
   display: flex;
-  align-items: center;
   gap: ${({ theme }) => theme.spacing[3]};
+  align-items: center;
 `
 
 const LogoText = styled.span`

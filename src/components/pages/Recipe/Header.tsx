@@ -56,8 +56,8 @@ const StyledFlex = styled(Flex)`
 
 const RecipeInfo = styled(Flex)`
   margin-top: ${({ theme }) => theme.spacing[2]};
-  color: ${({ theme }) => theme.colors.gray[600]};
   font-size: ${({ theme }) => theme.typography.fontSize.sm};
+  color: ${({ theme }) => theme.colors.gray[600]};
 
   svg {
     font-size: 18px;

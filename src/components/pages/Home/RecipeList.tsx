@@ -199,14 +199,14 @@ function RecipeListInner({ initialRecipes }: RecipeListProps) {
 
 const StyledList = styled.div`
   max-width: 1200px;
-  margin: 0 auto;
   padding: 20px;
+  margin: 0 auto;
 `
 
 const LoadingOverlay = styled.div`
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   min-height: 400px;
 `
 

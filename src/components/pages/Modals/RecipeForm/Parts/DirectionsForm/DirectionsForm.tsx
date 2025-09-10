@@ -96,24 +96,24 @@ export function DirectionsForm() {
 
 const DirectionRow = styled.div`
   display: flex;
-  align-items: flex-start;
   gap: ${({ theme }) => theme.spacing[3]};
+  align-items: flex-start;
   width: 100%;
   margin-top: ${({ theme }) => theme.spacing[2]};
 `
 
 const StepNumber = styled.div`
   display: flex;
-  justify-content: center;
+  flex-shrink: 0;
   align-items: center;
+  justify-content: center;
   width: 32px;
   height: 32px;
-  border-radius: 50%;
-  background-color: ${({ theme }) => theme.colors.primary};
-  color: ${({ theme }) => theme.colors.white};
   font-size: 14px;
   font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
-  flex-shrink: 0;
+  color: ${({ theme }) => theme.colors.white};
+  background-color: ${({ theme }) => theme.colors.primary};
+  border-radius: 50%;
 `
 
 const FieldContainer = styled.div`

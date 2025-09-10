@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 
 import { ThemeProvider } from '@emotion/react'
 
@@ -39,10 +39,12 @@ export const Providers = ({ children }: { children: React.ReactNode }) => {
       <ThemeProvider theme={lightTheme}>
         <AuthProvider>
           <BookmarksProvider>
-            <RecipeProvider>
-              <GlobalStyles />
-              {children}
-            </RecipeProvider>
+            <Suspense fallback={null}>
+              <RecipeProvider>
+                <GlobalStyles />
+                {children}
+              </RecipeProvider>
+            </Suspense>
           </BookmarksProvider>
         </AuthProvider>
       </ThemeProvider>

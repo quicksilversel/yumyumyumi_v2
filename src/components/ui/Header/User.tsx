@@ -88,9 +88,9 @@ const DropdownMenu = styled.div<{ open: boolean }>`
   z-index: 1000;
   display: ${({ open }) => (open ? 'block' : 'none')};
   min-width: 200px;
-  border-radius: ${({ theme }) => theme.borderRadius.lg};
-  background-color: ${({ theme }) => theme.colors.white};
   overflow: hidden;
+  background-color: ${({ theme }) => theme.colors.white};
+  border-radius: ${({ theme }) => theme.borderRadius.lg};
   box-shadow: ${({ theme }) => theme.shadow.xl};
 
   @media (width > 35.1875rem) {
@@ -101,14 +101,14 @@ const DropdownMenu = styled.div<{ open: boolean }>`
 
 const UserLink = styled(Link)`
   display: flex;
-  align-items: center;
   gap: ${({ theme }) => theme.spacing[3]};
+  align-items: center;
   width: 100%;
   padding: ${({ theme }) => theme.spacing[3]};
-  border: none;
-  background: none;
   color: ${({ theme }) => theme.colors.black};
   text-align: left;
+  background: none;
+  border: none;
   transition: background-color ${({ theme }) => theme.transition.fast};
 
   &:hover:not(:disabled) {
@@ -118,14 +118,14 @@ const UserLink = styled(Link)`
 
 const MenuItem = styled.button`
   display: flex;
-  align-items: center;
   gap: ${({ theme }) => theme.spacing[3]};
+  align-items: center;
   width: 100%;
   padding: ${({ theme }) => theme.spacing[3]} ${({ theme }) => theme.spacing[4]};
-  border: none;
-  background: none;
   color: ${({ theme }) => theme.colors.black};
   text-align: left;
+  background: none;
+  border: none;
   transition: background-color ${({ theme }) => theme.transition.fast};
 
   &:hover:not(:disabled) {

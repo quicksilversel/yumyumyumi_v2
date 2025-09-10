@@ -136,6 +136,80 @@ export const Disabled: Story = {
   },
 }
 
+export const AutofillSimulation: Story = {
+  render: () => (
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '24px',
+        width: '320px',
+      }}
+    >
+      <style>
+        {`
+          .autofill-simulation input {
+            background-color: #e8f0fe !important;
+            color: #202124 !important;
+          }
+        `}
+      </style>
+
+      <div>
+        <p style={{ margin: '0 0 8px 0', fontSize: '12px', color: '#666' }}>
+          Autofilled Email (CSS simulation)
+        </p>
+        <div className="autofill-simulation">
+          <Input
+            title="Email Address"
+            icon={<EmailIcon fontSize="small" />}
+            value="john.doe@example.com"
+            type="email"
+            autoComplete="email"
+            onChange={fn()}
+          />
+        </div>
+      </div>
+
+      <div>
+        <p style={{ margin: '0 0 8px 0', fontSize: '12px', color: '#666' }}>
+          Autofilled Password (CSS simulation)
+        </p>
+        <div className="autofill-simulation">
+          <Input
+            title="Password"
+            icon={<LockIcon fontSize="small" />}
+            value="••••••••••"
+            type="password"
+            autoComplete="current-password"
+            onChange={fn()}
+          />
+        </div>
+      </div>
+
+      <div>
+        <p style={{ margin: '0 0 8px 0', fontSize: '12px', color: '#666' }}>
+          Regular input (not autofilled)
+        </p>
+        <Input
+          title="Phone Number"
+          type="tel"
+          value="+1 (555) 123-4567"
+          onChange={fn()}
+        />
+      </div>
+    </div>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Demonstrates how the Input component handles browser autofill styling. The first two inputs simulate the blue background that browsers apply to autofilled fields, while the floating labels remain visible with transparent backgrounds.',
+      },
+    },
+  },
+}
+
 export const AllSizes: Story = {
   render: () => (
     <div

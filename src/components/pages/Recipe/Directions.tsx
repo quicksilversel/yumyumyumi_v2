@@ -63,14 +63,14 @@ const DirectionTitle = styled.h3<{ stepIndex: number }>`
     top: 0;
     left: -${({ theme }) => theme.spacing[8]};
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
     width: 24px;
     height: 24px;
-    border-radius: 50%;
-    background-color: ${({ theme }) => theme.colors.primary};
-    color: ${({ theme }) => theme.colors.white};
     font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
+    color: ${({ theme }) => theme.colors.white};
     content: '${({ stepIndex }) => stepIndex}';
+    background-color: ${({ theme }) => theme.colors.primary};
+    border-radius: 50%;
   }
 `

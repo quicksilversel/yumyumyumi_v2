@@ -4,18 +4,18 @@ import type { Theme } from '@emotion/react'
 
 export const customStyles = (theme: Theme) => css`
   body {
-    background: ${theme.colors.background};
     color: ${theme.colors.text};
+    accent-color: ${theme.colors.primary};
+    background: ${theme.colors.background};
     transition:
       background 0.2s ease-in,
       color 0.2s ease-in;
-    accent-color: ${theme.colors.primary};
   }
 
   a:hover,
   button:hover {
-    transition: opacity 0.2s ease-in;
     opacity: 0.7;
+    transition: opacity 0.2s ease-in;
   }
 
   img {

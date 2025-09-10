@@ -67,15 +67,15 @@ const SwitchLabel = styled.label<{
   display: inline-flex;
   flex-direction: ${({ labelPosition }) =>
     labelPosition === 'left' ? 'row-reverse' : 'row'};
-  align-items: center;
   gap: ${({ theme }) => theme.spacing[3]};
-  cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
-  opacity: ${({ disabled }) => (disabled ? 0.6 : 1)};
+  align-items: center;
+  pointer-events: ${({ disabled }) => (disabled ? 'none' : 'auto')};
+  cursor: pointer;
   user-select: none;
+  opacity: ${({ disabled }) => (disabled ? 0.6 : 1)};
 `
 
 const LabelText = styled.span<{ height?: ToggleSwitchSize }>`
-  color: ${({ theme }) => theme.colors.gray[700]};
   font-size: ${({ height, theme }) => {
     const sizes = {
       small: theme.typography.fontSize.sm,
@@ -85,13 +85,14 @@ const LabelText = styled.span<{ height?: ToggleSwitchSize }>`
     return sizes[height || 'medium']
   }};
   font-weight: ${({ theme }) => theme.typography.fontWeight.normal};
+  color: ${({ theme }) => theme.colors.gray[700]};
 `
 
 const HelperText = styled.span<{ error?: boolean }>`
   margin-top: ${({ theme }) => theme.spacing[1]};
+  font-size: ${({ theme }) => theme.typography.fontSize.xs};
   color: ${({ error, theme }) =>
     error ? theme.colors.error : theme.colors.gray[500]};
-  font-size: ${({ theme }) => theme.typography.fontSize.xs};
 `
 
 const SwitchInput = styled.input<{ height?: ToggleSwitchSize }>`
@@ -104,16 +105,17 @@ const SwitchInput = styled.input<{ height?: ToggleSwitchSize }>`
     const heights = { small: '20px', medium: '24px', large: '28px' }
     return heights[height || 'medium']
   }};
+  appearance: none;
+  pointer-events: ${({ disabled }) => (disabled ? 'none' : 'auto')};
+  cursor: pointer;
+  outline: none;
+  background-color: ${({ theme }) => theme.colors.gray[300]};
   border: 2px solid transparent;
   border-radius: ${({ height }) => {
     const heights = { small: '10px', medium: '12px', large: '14px' }
     return heights[height || 'medium']
   }};
-  background-color: ${({ theme }) => theme.colors.gray[300]};
-  cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
   transition: opacity ${({ theme }) => theme.transition.default};
-  outline: none;
-  appearance: none;
 
   &:checked {
     background-color: ${({ theme }) => theme.colors.primary};
@@ -130,8 +132,8 @@ const SwitchInput = styled.input<{ height?: ToggleSwitchSize }>`
   }
 
   &:disabled {
+    pointer-events: none;
     background-color: ${({ theme }) => theme.colors.gray[200]};
-    cursor: not-allowed;
 
     &:checked {
       background-color: ${({ theme }) => theme.colors.gray[400]};
@@ -156,11 +158,11 @@ const SwitchInput = styled.input<{ height?: ToggleSwitchSize }>`
       const heights = { small: '14px', medium: '16px', large: '18px' }
       return heights[height || 'medium']
     }};
-    border-radius: 50%;
-    background-color: ${({ theme }) => theme.colors.white};
-    transition: transform ${({ theme }) => theme.transition.default};
-    box-shadow: 0 2px 4px rgb(0, 0, 0, 0.2);
     content: '';
+    background-color: ${({ theme }) => theme.colors.white};
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgb(0, 0, 0, 0.2);
+    transition: transform ${({ theme }) => theme.transition.default};
   }
 
   &:checked::after {

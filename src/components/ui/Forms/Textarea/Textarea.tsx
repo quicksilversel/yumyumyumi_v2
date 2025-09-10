@@ -138,17 +138,17 @@ const FloatingLabel = styled.label<{
   left: 12px;
   display: flex;
   align-items: center;
-  margin-left: -4px;
   padding: 0 4px;
-  background-color: ${({ theme }) => theme.colors.white};
+  margin-left: -4px;
   color: ${({ theme, hasError, isFocused }) => {
     if (hasError) return theme.colors.error
     if (isFocused) return theme.colors.primary
     return theme.colors.gray[600]
   }};
-  transition: all 0.2s ease-in-out;
-  transform-origin: left top;
   pointer-events: none;
+  background-color: ${({ theme }) => theme.colors.white};
+  transform-origin: left top;
+  transition: all 0.2s ease-in-out;
 
   ${({ isFloating, theme }) =>
     isFloating
@@ -177,9 +177,9 @@ const FloatingLabel = styled.label<{
 const HelperText = styled.span<{ error?: boolean }>`
   display: block;
   margin-top: ${({ theme }) => theme.spacing[1]};
+  font-size: ${({ theme }) => theme.typography.fontSize.xs};
   color: ${({ error, theme }) =>
     error ? theme.colors.error : theme.colors.gray[500]};
-  font-size: ${({ theme }) => theme.typography.fontSize.xs};
 `
 
 const StyledTextarea = styled.textarea<{
@@ -209,15 +209,16 @@ const StyledTextarea = styled.textarea<{
         return `${maxRows * lineHeight + padding}px`
       })()};
     `}
-  border: 1px solid
-    ${({ error, theme }) =>
-    error ? theme.colors.error : theme.colors.gray[300]};
-  border-radius: ${({ theme }) => theme.borderRadius.md};
-  background-color: ${({ theme }) => theme.colors.white};
+
   color: ${({ theme }) => theme.colors.black};
-  transition: border-color ${({ theme }) => theme.transition.default};
   resize: ${({ resize }) => resize || 'vertical'};
   outline: none;
+  background-color: ${({ theme }) => theme.colors.white};
+  border: 1px solid
+    ${({ error, theme }) =>
+      error ? theme.colors.error : theme.colors.gray[300]};
+  border-radius: ${({ theme }) => theme.borderRadius.md};
+  transition: border-color ${({ theme }) => theme.transition.default};
 
   ${({ theme, height }) => sizeStyles({ theme, size: height || 'medium' })}
 
@@ -227,10 +228,10 @@ const StyledTextarea = styled.textarea<{
   }
 
   &:disabled {
-    background-color: ${({ theme }) => theme.colors.gray[50]};
     color: ${({ theme }) => theme.colors.gray[500]};
-    cursor: not-allowed;
+    pointer-events: none;
     resize: none;
+    background-color: ${({ theme }) => theme.colors.gray[50]};
   }
 
   &::-webkit-scrollbar {
@@ -238,13 +239,13 @@ const StyledTextarea = styled.textarea<{
   }
 
   &::-webkit-scrollbar-track {
-    border-radius: ${({ theme }) => theme.borderRadius.default};
     background: ${({ theme }) => theme.colors.gray[100]};
+    border-radius: ${({ theme }) => theme.borderRadius.default};
   }
 
   &::-webkit-scrollbar-thumb {
-    border-radius: ${({ theme }) => theme.borderRadius.default};
     background: ${({ theme }) => theme.colors.gray[400]};
+    border-radius: ${({ theme }) => theme.borderRadius.default};
 
     &:hover {
       background: ${({ theme }) => theme.colors.gray[500]};
@@ -259,8 +260,8 @@ const StyledTextarea = styled.textarea<{
       }
 
       &:focus::placeholder {
-        transition: opacity 0.2s ease-in-out;
         opacity: 0.6;
+        transition: opacity 0.2s ease-in-out;
       }
     `}
 `

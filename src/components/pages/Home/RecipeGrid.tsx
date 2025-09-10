@@ -30,8 +30,8 @@ export function RecipeGrid() {
 
 const EmptyState = styled(Stack)`
   padding: ${({ theme }) => theme.spacing[6]};
-  color: ${({ theme }) => theme.colors.gray[600]};
   font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
+  color: ${({ theme }) => theme.colors.gray[600]};
   text-align: center;
 `
 

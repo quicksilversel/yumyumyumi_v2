@@ -51,8 +51,8 @@ export const MenuInner = (props: {
 
 const SearchAndFiltersFallback = styled.div`
   display: flex;
-  align-items: center;
   gap: ${({ theme }) => theme.spacing[2]};
+  align-items: center;
   width: 100%;
   height: 40px;
 `

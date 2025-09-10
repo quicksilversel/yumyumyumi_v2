@@ -77,43 +77,43 @@ const AccountCard = styled.div`
   width: 100%;
   max-width: 420px;
   padding: ${({ theme }) => theme.spacing[8]};
-  border-radius: ${({ theme }) => theme.borderRadius.xl};
-  background: ${({ theme }) => theme.colors.white};
   margin-inline: auto;
+  background: ${({ theme }) => theme.colors.white};
+  border-radius: ${({ theme }) => theme.borderRadius.xl};
   box-shadow: 0 10px 25px rgb(0, 0, 0, 10%);
 `
 
 const Title = styled.h1`
   margin-bottom: ${({ theme }) => theme.spacing[6]};
-  color: ${({ theme }) => theme.colors.black};
   font-size: ${({ theme }) => theme.typography.fontSize.xl};
   font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
+  color: ${({ theme }) => theme.colors.black};
   text-align: center;
 `
 
 const InfoSection = styled.div`
-  margin-bottom: ${({ theme }) => theme.spacing[6]};
   padding: ${({ theme }) => theme.spacing[4]};
-  border-radius: ${({ theme }) => theme.borderRadius.lg};
+  margin-bottom: ${({ theme }) => theme.spacing[6]};
   background: ${({ theme }) => theme.colors.gray[50]};
+  border-radius: ${({ theme }) => theme.borderRadius.lg};
 `
 
 const Label = styled.div`
   margin-bottom: ${({ theme }) => theme.spacing[1]};
-  color: ${({ theme }) => theme.colors.gray[600]};
   font-size: ${({ theme }) => theme.typography.fontSize.sm};
   font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
+  color: ${({ theme }) => theme.colors.gray[600]};
 `
 
 const Value = styled.div`
-  color: ${({ theme }) => theme.colors.black};
   font-size: ${({ theme }) => theme.typography.fontSize.base};
+  color: ${({ theme }) => theme.colors.black};
   word-break: break-all;
 `
 
 const LoadingOverlay = styled.div`
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   min-height: 400px;
 `

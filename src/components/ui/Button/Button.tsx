@@ -10,17 +10,17 @@ const baseStyles = ({ theme }: { theme: Theme }) => {
   return css`
     position: relative;
     display: inline-flex;
-    justify-content: center;
-    align-items: center;
     gap: ${theme.spacing[2]};
+    align-items: center;
+    justify-content: center;
     font-weight: ${theme.typography.fontWeight.semibold};
-    text-decoration: none;
-    transition: opacity ${theme.transition.default};
     white-space: nowrap;
+    text-decoration: none;
     user-select: none;
+    transition: opacity ${theme.transition.default};
 
     &:disabled {
-      cursor: not-allowed;
+      pointer-events: none;
       opacity: 0.5;
     }
 
@@ -42,22 +42,22 @@ const sizeStyles = ({ size, theme }: { size: ButtonSize; theme: Theme }) => {
       return css`
         height: 32px;
         padding: 0 ${theme.spacing[3]};
-        border-radius: ${theme.borderRadius.sm};
         font-size: ${theme.typography.fontSize.sm};
+        border-radius: ${theme.borderRadius.sm};
       `
     case 'md':
       return css`
         height: 40px;
         padding: 0 ${theme.spacing[4]};
-        border-radius: ${theme.borderRadius.default};
         font-size: ${theme.typography.fontSize.base};
+        border-radius: ${theme.borderRadius.default};
       `
     case 'lg':
       return css`
         height: 48px;
         padding: 0 ${theme.spacing[6]};
-        border-radius: ${theme.borderRadius.md};
         font-size: ${theme.typography.fontSize.lg};
+        border-radius: ${theme.borderRadius.md};
       `
   }
 }
@@ -72,24 +72,24 @@ const variantStyles = ({
   switch (variant) {
     case 'primary':
       return css`
-        background-color: ${theme.colors.primary};
         color: ${theme.colors.white};
+        background-color: ${theme.colors.primary};
       `
     case 'secondary':
       return css`
-        background-color: ${theme.colors.black};
         color: ${theme.colors.white};
+        background-color: ${theme.colors.black};
       `
     case 'ghost':
       return css`
-        border: 1px solid transparent;
-        background-color: transparent;
         color: ${theme.colors.gray[600]};
+        background-color: transparent;
+        border: 1px solid transparent;
       `
     case 'text':
       return css`
-        background-color: transparent;
         color: ${theme.colors.black};
+        background-color: transparent;
       `
   }
 }
@@ -127,9 +127,9 @@ export const IconButton = styled.button<{
   }}
 
   padding: 0;
-  border-radius: ${({ theme }) => theme.borderRadius.full};
-  background-color: transparent;
   color: ${({ theme }) => theme.colors.gray[600]};
+  background-color: transparent;
+  border-radius: ${({ theme }) => theme.borderRadius.full};
 
   &:hover:not(:disabled),
   &:active:not(:disabled) {

@@ -50,8 +50,8 @@ const IngredientItem = styled.li<{ isSpice: boolean }>`
   position: relative;
   width: 100%;
   padding: ${({ theme }) => theme.spacing[3]} ${({ theme }) => theme.spacing[2]};
-  border-top: 1px solid ${({ theme }) => theme.colors.gray[200]};
   font-size: ${({ theme }) => theme.typography.fontSize.sm};
+  border-top: 1px solid ${({ theme }) => theme.colors.gray[200]};
 
   &:first-child {
     margin-top: ${({ theme }) => theme.spacing[4]};

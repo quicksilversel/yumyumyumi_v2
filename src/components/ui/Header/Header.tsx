@@ -59,10 +59,10 @@ const Container = styled.header`
   position: sticky;
   top: 0;
   z-index: 100;
-  background-color: ${({ theme }) => theme.colors.primary};
-  color: ${({ theme }) => theme.colors.white};
-  box-shadow: ${({ theme }) => theme.shadow.sm};
   padding-inline: 1rem;
+  color: ${({ theme }) => theme.colors.white};
+  background-color: ${({ theme }) => theme.colors.primary};
+  box-shadow: ${({ theme }) => theme.shadow.sm};
 `
 
 const Toolbar = styled(Flex)`
@@ -83,11 +83,11 @@ const fadeIn = keyframes`
 
 const MenuOverlay = styled.div<{ open: boolean }>`
   position: fixed;
+  inset: 0;
   z-index: 998;
   display: ${({ open }) => (open ? 'block' : 'none')};
   background-color: rgb(0, 0, 0, 50%);
   animation: ${({ open }) => (open ? `${fadeIn} 0.3s ease` : 'none')};
-  inset: 0;
 `
 
 const SlideMenu = styled.div<{ open: boolean }>`
@@ -100,9 +100,9 @@ const SlideMenu = styled.div<{ open: boolean }>`
   flex-direction: column;
   width: 320px;
   background-color: ${({ theme }) => theme.colors.white};
-  transition: transform 0.3s ease;
-  transform: translateX(${({ open }) => (open ? '0' : '100%')});
   box-shadow: -4px 0 20px rgb(0, 0, 0, 15%);
+  transform: translateX(${({ open }) => (open ? '0' : '100%')});
+  transition: transform 0.3s ease;
 
   @media (width <= 480px) {
     width: 85%;
@@ -112,17 +112,17 @@ const SlideMenu = styled.div<{ open: boolean }>`
 
 const MenuHeader = styled.div`
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
   padding: ${({ theme }) => theme.spacing[4]} ${({ theme }) => theme.spacing[3]};
   border-bottom: 1px solid ${({ theme }) => theme.colors.gray[200]};
 `
 
 const MenuTitle = styled.span`
   margin: 0;
-  color: ${({ theme }) => theme.colors.black};
   font-size: ${({ theme }) => theme.typography.fontSize.base};
   font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
+  color: ${({ theme }) => theme.colors.black};
 `
 
 const MenuContent = styled.div`

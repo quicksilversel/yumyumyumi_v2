@@ -171,20 +171,20 @@ const ButtonContainer = styled.div`
 const ImagePreview = styled.div`
   position: relative;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   width: 100%;
-  border-radius: ${({ theme }) => theme.borderRadius.lg};
-  background-color: ${({ theme }) => theme.colors.gray[100]};
-  overflow: hidden;
   aspect-ratio: 16/9;
+  overflow: hidden;
+  background-color: ${({ theme }) => theme.colors.gray[100]};
+  border-radius: ${({ theme }) => theme.borderRadius.lg};
 `
 
 const PlaceholderContent = styled.button`
   display: flex;
-  justify-content: center;
-  align-items: center;
   gap: ${({ theme }) => theme.spacing[2]};
+  align-items: center;
+  justify-content: center;
   width: 100%;
   height: 100%;
   color: ${({ theme }) => theme.colors.gray[500]};
