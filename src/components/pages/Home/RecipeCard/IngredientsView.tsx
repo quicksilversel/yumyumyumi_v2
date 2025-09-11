@@ -31,7 +31,7 @@ const fadeInAnimation = keyframes`
 const Container = styled.div`
   inset: 0;
   width: 100%;
-  max-height: 310px;
+  max-height: 340px;
   padding: ${({ theme }) => theme.spacing[4]};
   overflow-y: auto;
   background: rgb(255, 255, 255, 98%);
