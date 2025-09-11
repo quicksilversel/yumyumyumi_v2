@@ -102,7 +102,6 @@ export function IngredientsForm() {
                   </ErrorText>
                 )}
               </FieldGroup>
-
               <FieldGroup>
                 <Input
                   {...register(`ingredients.${index}.amount`, {
@@ -140,7 +139,6 @@ export function IngredientsForm() {
               >
                 <DeleteIcon />
               </DeleteButton>
-
               <SpiceToggleWrapper>
                 <ToggleSwitch
                   label="調味料・スパイス"

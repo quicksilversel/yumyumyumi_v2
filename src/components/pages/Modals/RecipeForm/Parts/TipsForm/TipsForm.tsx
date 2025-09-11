@@ -14,7 +14,6 @@ export const TipsForm = () => {
       value={watch('tips')}
       title="ポイント"
       placeholder="ポイントやコツを入力してください"
-      rows={5}
     />
   )
 }

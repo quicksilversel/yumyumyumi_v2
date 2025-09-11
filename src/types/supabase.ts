@@ -15,19 +15,13 @@ export type Database = {
           user_id: string | null
           title: string
           summary: string | null
-          ingredients: {
-            amount: string
-            isSpice?: boolean | null
-            name: string
-          }[]
+          ingredients: string[]
           directions: {
             title: string
             description: string
-          }
+          }[]
           tips: string | null
-          prep_time: number
           cook_time: number
-          total_time: number
           servings: number
           image_url: string | null
           source: string | null
@@ -41,11 +35,12 @@ export type Database = {
           title: string
           summary?: string | null
           ingredients: string[]
-          directions: string[]
+          directions: {
+            title: string
+            description: string
+          }[]
           tips?: string | null
-          prep_time?: number
           cook_time?: number
-          total_time?: number
           servings?: number
           image_url?: string | null
           source?: string | null
@@ -61,9 +56,7 @@ export type Database = {
           ingredients?: string[]
           directions?: string[]
           tips?: string | null
-          prep_time?: number
           cook_time?: number
-          total_time?: number
           servings?: number
           image_url?: string | null
           source?: string | null
