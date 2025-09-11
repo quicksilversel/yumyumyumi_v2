@@ -2,10 +2,7 @@ import { getSupabaseClient } from '@/lib/supabase/getSupabaseClient'
 
 import { addBookmark } from './addBookmark'
 
-import { isBookmarked } from '../isBookmarked'
-
 jest.mock('@/lib/supabase/getSupabaseClient')
-jest.mock('../isBookmarked')
 
 describe('addBookmark', () => {
   const mockSupabaseClient = {
@@ -39,7 +36,6 @@ describe('addBookmark', () => {
   })
 
   it('should add bookmark successfully', async () => {
-    ;(isBookmarked as jest.Mock).mockResolvedValue(false)
     mockQueryBuilder.single.mockResolvedValue({
       data: { id: 'bookmark1' },
       error: null,
@@ -48,7 +44,6 @@ describe('addBookmark', () => {
     const result = await addBookmark(mockRecipeId)
 
     expect(mockSupabaseClient.auth.getUser).toHaveBeenCalled()
-    expect(isBookmarked).toHaveBeenCalledWith(mockRecipeId, 'user123')
     expect(mockSupabaseClient.from).toHaveBeenCalledWith('bookmarks')
     expect(mockQueryBuilder.insert).toHaveBeenCalledWith({
       user_id: 'user123',
@@ -57,13 +52,15 @@ describe('addBookmark', () => {
     expect(result).toBe(true)
   })
 
-  it('should return true if already bookmarked', async () => {
-    ;(isBookmarked as jest.Mock).mockResolvedValue(true)
+  it('should return true if bookmark already exists (duplicate key error)', async () => {
+    mockQueryBuilder.single.mockResolvedValue({
+      data: null,
+      error: { code: '23505', message: 'Duplicate key' },
+    })
 
     const result = await addBookmark(mockRecipeId)
 
-    expect(isBookmarked).toHaveBeenCalledWith(mockRecipeId, 'user123')
-    expect(mockQueryBuilder.insert).not.toHaveBeenCalled()
+    expect(mockQueryBuilder.insert).toHaveBeenCalled()
     expect(result).toBe(true)
   })
 
@@ -79,14 +76,12 @@ describe('addBookmark', () => {
 
     expect(result).toBe(false)
     expect(global.alert).toHaveBeenCalledWith('ログインが必要です')
-    expect(isBookmarked).not.toHaveBeenCalled()
     expect(mockQueryBuilder.insert).not.toHaveBeenCalled()
 
     consoleSpy.mockRestore()
   })
 
   it('should handle database insert errors', async () => {
-    ;(isBookmarked as jest.Mock).mockResolvedValue(false)
     const mockError = new Error('Insert failed')
     mockQueryBuilder.single.mockResolvedValue({
       data: null,
@@ -117,18 +112,20 @@ describe('addBookmark', () => {
     consoleSpy.mockRestore()
   })
 
-  it('should handle isBookmarked check errors', async () => {
-    const mockError = new Error('Check failed')
-    ;(isBookmarked as jest.Mock).mockRejectedValue(mockError)
+  it('should use provided userId when given', async () => {
+    const providedUserId = 'user456'
+    mockQueryBuilder.single.mockResolvedValue({
+      data: { id: 'bookmark1' },
+      error: null,
+    })
 
-    const consoleSpy = jest.spyOn(console, 'error').mockImplementation()
+    const result = await addBookmark(mockRecipeId, providedUserId)
 
-    const result = await addBookmark(mockRecipeId)
-
-    expect(result).toBe(false)
-    expect(consoleSpy).toHaveBeenCalledWith('adding bookmark', mockError)
-    expect(mockQueryBuilder.insert).not.toHaveBeenCalled()
-
-    consoleSpy.mockRestore()
+    expect(mockSupabaseClient.auth.getUser).not.toHaveBeenCalled()
+    expect(mockQueryBuilder.insert).toHaveBeenCalledWith({
+      user_id: providedUserId,
+      recipe_id: mockRecipeId,
+    })
+    expect(result).toBe(true)
   })
 })

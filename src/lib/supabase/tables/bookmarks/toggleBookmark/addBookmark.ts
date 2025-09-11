@@ -1,7 +1,5 @@
 import { getSupabaseClient } from '@/lib/supabase/getSupabaseClient'
 
-import { isBookmarked } from '../isBookmarked'
-
 export async function addBookmark(
   recipeId: string,
   userId?: string,
@@ -21,11 +19,6 @@ export async function addBookmark(
       return false
     }
 
-    const alreadyBookmarked = await isBookmarked(recipeId, userId)
-    if (alreadyBookmarked) {
-      return true
-    }
-
     const insertData = {
       user_id: userId,
       recipe_id: recipeId,
@@ -36,6 +29,10 @@ export async function addBookmark(
       .insert(insertData as any)
       .select()
       .single()
+
+    if (error && error.code === '23505') {
+      return true
+    }
 
     if (error) throw error
 

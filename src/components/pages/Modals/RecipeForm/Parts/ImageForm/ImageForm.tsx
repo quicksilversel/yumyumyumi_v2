@@ -192,12 +192,7 @@ const ImageActions = styled.div`
   right: ${({ theme }) => theme.spacing[2]};
   display: flex;
   gap: ${({ theme }) => theme.spacing[1]};
-  opacity: 0;
   transition: opacity 0.2s ease;
-
-  ${ImagePreview}:hover & {
-    opacity: 1;
-  }
 `
 
 const ActionButton = styled(IconButton)`

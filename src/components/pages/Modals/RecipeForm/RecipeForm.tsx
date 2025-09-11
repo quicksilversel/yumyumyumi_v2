@@ -37,6 +37,7 @@ export const RecipeForm = ({
       <TitleForm />
       <SummaryForm />
       <TagsForm />
+      <H2>その他</H2>
       <Grid cols={2} gap={4} responsive>
         <CookTimeForm />
         <ServingsForm />

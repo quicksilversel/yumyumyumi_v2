@@ -29,8 +29,11 @@ export async function getBookmarks(userId?: string): Promise<BookmarkList> {
 
     if (error) throw error
 
-    if (!isValidOf(bookmarkListSchema, objectToCamel(data))) return []
-    return objectToCamel(data)
+    const camelCaseData = objectToCamel(data)
+
+    if (!isValidOf(bookmarkListSchema, camelCaseData)) return []
+
+    return camelCaseData
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('fetching bookmarks', error)

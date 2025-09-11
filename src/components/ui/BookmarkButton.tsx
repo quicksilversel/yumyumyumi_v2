@@ -23,6 +23,7 @@ export const BookmarkButton = ({
 }: BookmarkButtonProps) => {
   const { user, loading } = useAuth()
   const [mounted, setMounted] = useState(false)
+  const [isProcessing, setIsProcessing] = useState(false)
 
   const { isBookmarked, toggleBookmark, isLoading, isToggling } = useBookmarks({
     recipeId,
@@ -33,17 +34,30 @@ export const BookmarkButton = ({
     setMounted(true)
   }, [])
 
-  // Don't render if user is not authenticated
+  const handleToggle = async (e: React.MouseEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    
+    if (isProcessing || isToggling) return
+    
+    setIsProcessing(true)
+    try {
+      await toggleBookmark(e)
+    } finally {
+      setIsProcessing(false)
+    }
+  }
+
   if (!mounted || loading || !user) {
     return null
   }
 
   return (
     <StyledIconButton
-      onClick={toggleBookmark}
+      onClick={handleToggle}
       size={size}
       className={className}
-      disabled={isLoading || isToggling}
+      disabled={isLoading || isToggling || isProcessing}
       aria-label={
         isBookmarked ? 'お気に入りレシピから外す' : 'お気に入りレシピに追加する'
       }

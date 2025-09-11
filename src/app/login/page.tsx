@@ -46,12 +46,12 @@ export default function LoginPage() {
         }
       } else {
         if (password !== confirmPassword) {
-          setError('Passwords do not match')
+          setError('パスワードが一致しません')
           setLoading(false)
           return
         }
         if (password.length < 6) {
-          setError('Password must be at least 6 characters')
+          setError('パスワードは6文字以上で入力してください')
           setLoading(false)
           return
         }
@@ -60,14 +60,14 @@ export default function LoginPage() {
         if (error) {
           setError(error)
         } else {
-          setSuccess('Check your email to confirm your account!')
+          setSuccess('メールアドレスに確認メールを送信しました！')
           setTimeout(() => {
             router.push('/')
           }, 3000)
         }
       }
     } catch (err) {
-      setError('An unexpected error occurred')
+      setError('予期しないエラーが発生しました')
     } finally {
       setLoading(false)
     }
