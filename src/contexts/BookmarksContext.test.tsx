@@ -14,7 +14,6 @@ import type { User } from '@supabase/supabase-js'
 import { useAuth } from '@/contexts/AuthContext'
 import {
   getBookmarks,
-  getBookmarkedRecipeIds,
   toggleBookmark as toggleBookmarkApi,
 } from '@/lib/supabase/tables/bookmarks'
 
@@ -45,7 +44,6 @@ jest.mock('@/contexts/AuthContext', () => ({
 // Mock the bookmarks API functions
 jest.mock('@/lib/supabase/tables/bookmarks', () => ({
   getBookmarks: jest.fn(),
-  getBookmarkedRecipeIds: jest.fn(),
   toggleBookmark: jest.fn(),
 }))
 
@@ -64,8 +62,6 @@ describe('BookmarksContext', () => {
     { id: '2', recipeId: 'recipe2', userId: 'user123' },
   ]
 
-  const mockBookmarkedIds = new Set(['recipe1', 'recipe2'])
-
   const wrapper = ({ children }: { children: ReactNode }) => (
     <BookmarksProvider>{children}</BookmarksProvider>
   )
@@ -73,9 +69,9 @@ describe('BookmarksContext', () => {
   beforeEach(() => {
     jest.clearAllMocks()
     mockPush.mockClear()
+    mockRouter.refresh.mockClear()
     ;(useAuth as jest.Mock).mockReturnValue({ user: mockUser })
     ;(getBookmarks as jest.Mock).mockResolvedValue(mockBookmarks)
-    ;(getBookmarkedRecipeIds as jest.Mock).mockResolvedValue(mockBookmarkedIds)
   })
 
   describe('useBookmarksContext', () => {
@@ -111,11 +107,10 @@ describe('BookmarksContext', () => {
       await waitFor(() => {
         expect(result.current.isLoading).toBe(false)
         expect(result.current.bookmarks).toEqual(mockBookmarks)
-        expect(result.current.bookmarkedIds).toEqual(mockBookmarkedIds)
+        expect(result.current.bookmarkedIds).toEqual(new Set(['recipe1', 'recipe2']))
       })
 
       expect(getBookmarks).toHaveBeenCalledWith('user123')
-      expect(getBookmarkedRecipeIds).toHaveBeenCalledWith('user123')
     })
 
     it('should handle no user (unauthenticated)', async () => {
@@ -130,7 +125,6 @@ describe('BookmarksContext', () => {
       })
 
       expect(getBookmarks).not.toHaveBeenCalled()
-      expect(getBookmarkedRecipeIds).not.toHaveBeenCalled()
     })
 
     it('should handle API errors gracefully', async () => {
@@ -152,7 +146,7 @@ describe('BookmarksContext', () => {
       consoleError.mockRestore()
     })
 
-    it('should fetch bookmarks only once unless forced', async () => {
+    it('should fetch bookmarks when user changes', async () => {
       const { result, rerender } = renderHook(() => useBookmarksContext(), {
         wrapper,
       })
@@ -163,14 +157,15 @@ describe('BookmarksContext', () => {
 
       expect(getBookmarks).toHaveBeenCalledTimes(1)
 
-      // Rerender should not fetch again
+      // Change user
+      const newUser = { ...mockUser, id: 'user456' }
+      ;(useAuth as jest.Mock).mockReturnValue({ user: newUser })
+      
       rerender()
 
       await waitFor(() => {
-        expect(result.current.isLoading).toBe(false)
+        expect(getBookmarks).toHaveBeenCalledWith('user456')
       })
-
-      expect(getBookmarks).toHaveBeenCalledTimes(1)
     })
   })
 
@@ -192,6 +187,7 @@ describe('BookmarksContext', () => {
       expect(toggleResult!).toBe(true)
       expect(toggleBookmarkApi).toHaveBeenCalledWith('recipe3', 'user123')
       expect(result.current.bookmarkedIds.has('recipe3')).toBe(true)
+      expect(mockRouter.refresh).toHaveBeenCalled()
     })
 
     it('should toggle bookmark off when bookmarked', async () => {
@@ -211,6 +207,7 @@ describe('BookmarksContext', () => {
       expect(toggleResult!).toBe(false)
       expect(toggleBookmarkApi).toHaveBeenCalledWith('recipe1', 'user123')
       expect(result.current.bookmarkedIds.has('recipe1')).toBe(false)
+      expect(mockRouter.refresh).toHaveBeenCalled()
     })
 
     it('should redirect to login when user is not authenticated', async () => {
@@ -293,9 +290,7 @@ describe('BookmarksContext', () => {
 
       // Update the mock to return different data
       const newBookmarks = [{ id: '3', recipeId: 'recipe3', userId: 'user123' }]
-      const newIds = new Set(['recipe3'])
       ;(getBookmarks as jest.Mock).mockResolvedValue(newBookmarks)
-      ;(getBookmarkedRecipeIds as jest.Mock).mockResolvedValue(newIds)
 
       await act(async () => {
         await result.current.refreshBookmarks()
@@ -303,7 +298,7 @@ describe('BookmarksContext', () => {
 
       expect(getBookmarks).toHaveBeenCalledTimes(2)
       expect(result.current.bookmarks).toEqual(newBookmarks)
-      expect(result.current.bookmarkedIds).toEqual(newIds)
+      expect(result.current.bookmarkedIds).toEqual(new Set(['recipe3']))
     })
   })
 

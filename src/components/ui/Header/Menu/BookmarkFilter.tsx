@@ -35,9 +35,9 @@ export const BookmarkFilter = ({
     const params = new URLSearchParams(searchParams.toString())
 
     if (newValue) {
-      params.delete('bookmarked')
-    } else {
       params.set('bookmarked', 'true')
+    } else {
+      params.delete('bookmarked')
     }
 
     const queryString = params.toString()

@@ -13,7 +13,6 @@ import type { Bookmark } from '@/types/bookmarks'
 import { useAuth } from '@/contexts/AuthContext'
 import {
   getBookmarks,
-  getBookmarkedRecipeIds,
   toggleBookmark as toggleBookmarkApi,
 } from '@/lib/supabase/tables/bookmarks'
 
@@ -33,46 +32,70 @@ export function BookmarksProvider({ children }: { children: React.ReactNode }) {
   const [bookmarks, setBookmarks] = useState<Partial<Bookmark>[]>([])
   const [bookmarkedIds, setBookmarkedIds] = useState<Set<string>>(new Set())
   const [isLoading, setIsLoading] = useState(true)
-  const [hasFetched, setHasFetched] = useState(false)
   const { user } = useAuth()
   const router = useRouter()
 
-  const fetchBookmarks = useCallback(
-    async (force = false) => {
-      if (!user) {
-        setBookmarks([])
-        setBookmarkedIds(new Set())
-        setIsLoading(false)
-        setHasFetched(true)
-        return
-      }
-
-      if (hasFetched && !force) {
-        return
-      }
-
-      try {
-        const [bookmarksList, bookmarkedIdsSet] = await Promise.all([
-          getBookmarks(user.id),
-          getBookmarkedRecipeIds(user.id),
-        ])
-
-        setBookmarks(bookmarksList)
-        setBookmarkedIds(bookmarkedIdsSet)
-        setHasFetched(true)
-      } catch (error) {
-        // eslint-disable-next-line no-console
-        console.error('Error fetching bookmarks:', error)
-      } finally {
-        setIsLoading(false)
-      }
-    },
-    [user, hasFetched],
-  )
-
   useEffect(() => {
+    if (!user) {
+      setBookmarks([])
+      setBookmarkedIds(new Set())
+      setIsLoading(false)
+      return
+    }
+
+    let cancelled = false
+    setIsLoading(true)
+
+    const fetchBookmarks = async () => {
+      try {
+        const bookmarksList = await getBookmarks(user.id)
+
+        if (!cancelled) {
+          const recipeIds = bookmarksList
+            .map((b) => b.recipeId)
+            .filter(Boolean) as string[]
+          const bookmarkedIdsSet = new Set(recipeIds)
+
+          setBookmarks(bookmarksList)
+          setBookmarkedIds(bookmarkedIdsSet)
+          setIsLoading(false)
+        }
+      } catch (error) {
+        if (!cancelled) {
+          // eslint-disable-next-line no-console
+          console.error('Error fetching bookmarks:', error)
+          setBookmarks([])
+          setBookmarkedIds(new Set())
+          setIsLoading(false)
+        }
+      }
+    }
+
     fetchBookmarks()
-  }, [fetchBookmarks])
+
+    return () => {
+      cancelled = true
+    }
+  }, [user])
+
+  const refreshBookmarks = useCallback(async () => {
+    if (!user) {
+      return
+    }
+
+    try {
+      const bookmarksList = await getBookmarks(user.id)
+      const bookmarkedIdsSet = new Set(
+        bookmarksList.map((b) => b.recipeId).filter(Boolean) as string[],
+      )
+
+      setBookmarks(bookmarksList)
+      setBookmarkedIds(bookmarkedIdsSet)
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error('Error refreshing bookmarks:', error)
+    }
+  }, [user])
 
   const toggleBookmark = useCallback(
     async (recipeId: string): Promise<boolean> => {
@@ -82,37 +105,49 @@ export function BookmarksProvider({ children }: { children: React.ReactNode }) {
       }
 
       try {
-        const wasBookmarked = bookmarkedIds.has(recipeId)
-        const newBookmarkedIds = new Set(bookmarkedIds)
-
-        if (wasBookmarked) {
-          newBookmarkedIds.delete(recipeId)
-        } else {
-          newBookmarkedIds.add(recipeId)
-        }
-        setBookmarkedIds(newBookmarkedIds)
+        let wasBookmarked = false
+        setBookmarkedIds((prevIds) => {
+          wasBookmarked = prevIds.has(recipeId)
+          const newIds = new Set(prevIds)
+          if (wasBookmarked) {
+            newIds.delete(recipeId)
+          } else {
+            newIds.add(recipeId)
+          }
+          return newIds
+        })
 
         const actualState = await toggleBookmarkApi(recipeId, user.id)
 
-        if (actualState !== !wasBookmarked) {
-          const revertedIds = new Set(bookmarkedIds)
-          if (actualState) {
-            revertedIds.add(recipeId)
-          } else {
-            revertedIds.delete(recipeId)
+        setBookmarkedIds((prevIds) => {
+          const correctedIds = new Set(prevIds)
+          if (actualState && !correctedIds.has(recipeId)) {
+            correctedIds.add(recipeId)
+          } else if (!actualState && correctedIds.has(recipeId)) {
+            correctedIds.delete(recipeId)
           }
-          setBookmarkedIds(revertedIds)
-        }
+          return correctedIds
+        })
+
+        router.refresh()
 
         return actualState
       } catch (error) {
         // eslint-disable-next-line no-console
         console.error('Error toggling bookmark:', error)
-        setBookmarkedIds(bookmarkedIds)
+        setBookmarkedIds((prevIds) => {
+          const revertedIds = new Set(prevIds)
+          if (revertedIds.has(recipeId)) {
+            revertedIds.delete(recipeId)
+          } else {
+            revertedIds.add(recipeId)
+          }
+          return revertedIds
+        })
         return false
       }
     },
-    [user, router, bookmarkedIds],
+    [user, router],
   )
 
   return (
@@ -122,7 +157,7 @@ export function BookmarksProvider({ children }: { children: React.ReactNode }) {
         bookmarkedIds,
         isLoading,
         toggleBookmark,
-        refreshBookmarks: () => fetchBookmarks(true),
+        refreshBookmarks,
       }}
     >
       {children}

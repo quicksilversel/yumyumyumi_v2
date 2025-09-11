@@ -1,15 +1,12 @@
-import { useState, Suspense } from 'react'
+import { useState } from 'react'
 
-import styled from '@emotion/styled'
 import { useSearchParams } from 'next/navigation'
 
 import { BookmarkFilter } from './BookmarkFilter'
 import { CookingTimeFilter } from './CookingTimeFilter'
 import { TagFilter } from './TagFilter'
 
-export const MenuInner = (props: {
-  setSlideMenuOpen: (open: boolean) => void
-}) => {
+export const Menu = (props: { setSlideMenuOpen: (open: boolean) => void }) => {
   const searchParams = useSearchParams()
 
   const [selectedCookingTime, setSelectedCookingTime] = useState<number | null>(
@@ -46,21 +43,5 @@ export const MenuInner = (props: {
         {...props}
       />
     </>
-  )
-}
-
-const SearchAndFiltersFallback = styled.div`
-  display: flex;
-  gap: ${({ theme }) => theme.spacing[2]};
-  align-items: center;
-  width: 100%;
-  height: 40px;
-`
-
-export function Menu(props: { setSlideMenuOpen: (open: boolean) => void }) {
-  return (
-    <Suspense fallback={<SearchAndFiltersFallback />}>
-      <MenuInner {...props} />
-    </Suspense>
   )
 }
