@@ -209,7 +209,6 @@ const StyledTextarea = styled.textarea<{
         return `${maxRows * lineHeight + padding}px`
       })()};
     `}
-
   color: ${({ theme }) => theme.colors.black};
   resize: ${({ resize }) => resize || 'vertical'};
   outline: none;

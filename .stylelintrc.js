@@ -5,26 +5,14 @@ module.exports = {
   customSyntax: 'postcss-styled-syntax',
   ignoreFiles: ['**/node_modules/**', 'src/styles/resetCss/resetCss.ts'],
   rules: {
-    'value-keyword-case': null,
-    'function-name-case': null,
+    // disabled due to incompatibility with css-in-js
     'selector-class-pattern': null,
-    'selector-id-pattern': null,
     'alpha-value-notation': null,
-    'color-function-notation': null,
-    'function-no-unknown': null,
-    'block-no-empty': null,
+    'color-function-notation': 'legacy',
     'no-descending-specificity': null,
     'property-no-vendor-prefix': null,
     'value-no-vendor-prefix': null,
-    'no-empty-source': null,
-    'no-invalid-double-slash-comments': null,
-    'comment-empty-line-before': null,
-    'custom-property-empty-line-before': null,
-    'declaration-empty-line-before': null,
-    'rule-empty-line-before': null,
-    'at-rule-empty-line-before': null,
     'nesting-selector-no-missing-scoping-root': null,
-    'media-feature-range-notation': null,
 
     /* --- Perf / robustness --- */
     // 1) Block render-blocking @import in CSS

@@ -255,7 +255,7 @@ const ActionGrid = styled.div`
   grid-template-columns: 1fr 1fr;
   gap: ${({ theme }) => theme.spacing[3]};
 
-  @media (max-width: 480px) {
+  @media (width <= 480px) {
     grid-template-columns: 1fr;
   }
 `

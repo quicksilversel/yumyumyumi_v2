@@ -180,6 +180,7 @@ const FloatingLabel = styled.label<{
     } else if (isFloating) {
       return css`
         background-color: ${theme.colors.white};
+
         &::before {
           position: absolute;
           top: 50%;

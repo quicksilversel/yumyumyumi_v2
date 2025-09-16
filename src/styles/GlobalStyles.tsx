@@ -3,7 +3,6 @@ import { useTheme } from '@emotion/react'
 
 import { customStyles } from './customStyles'
 import { resetCss } from './resetCss'
-import { variables } from './variables'
 
 export const GlobalStyles = () => {
   const theme = useTheme()
@@ -12,7 +11,6 @@ export const GlobalStyles = () => {
       styles={css`
         ${resetCss}
         ${customStyles(theme)}
-        ${variables}
       `}
     />
   )

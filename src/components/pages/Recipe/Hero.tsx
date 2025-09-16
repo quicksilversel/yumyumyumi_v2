@@ -71,7 +71,7 @@ export const Hero = ({ recipe }: { recipe: Recipe }) => {
 }
 
 const ImageContent = styled.div`
-  @media (max-width: 768px) {
+  @media (width <= 768px) {
     order: 1;
   }
 `

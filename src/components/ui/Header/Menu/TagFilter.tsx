@@ -59,19 +59,7 @@ export const TagFilter = ({
     ...availableTags.map((tag) => ({ label: tag, value: tag })),
   ]
 
-  if (isLoading) {
-    return (
-      <Dropdown
-        options={[{ label: '読み込み中...', value: null }]}
-        selectedValue={null}
-        onSelect={() => {}}
-        placeholder="タグから探す"
-        icon={<LocalOfferIcon />}
-        fullWidth
-        absoluteDropdown={false}
-      />
-    )
-  }
+  if (isLoading) return null
 
   return (
     <Dropdown

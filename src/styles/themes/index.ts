@@ -1,4 +1,4 @@
-export const typography = {
+const typography = {
   fontSize: {
     xs: '0.75rem', // 12px
     sm: '0.875rem', // 14px
@@ -30,7 +30,7 @@ export const typography = {
   },
 } as const
 
-export const spacing = {
+const spacing = {
   px: '1px',
   0: '0',
   0.5: '0.125rem', // 2px
@@ -49,7 +49,7 @@ export const spacing = {
   32: '8rem', // 128px
 } as const
 
-export const borderRadius = {
+const borderRadius = {
   none: '0',
   sm: '0.125rem', // 2px
   default: '0.25rem', // 4px
@@ -59,7 +59,7 @@ export const borderRadius = {
   full: '9999px',
 } as const
 
-export const shadow = {
+const shadow = {
   none: 'none',
   xs: '0 1px 2px rgba(0, 0, 0, 0.05)',
   sm: '0 2px 4px rgba(0, 0, 0, 0.05)',
@@ -69,13 +69,13 @@ export const shadow = {
   xl: '0 20px 40px rgba(0, 0, 0, 0.05)',
 } as const
 
-export const transition = {
+const transition = {
   fast: '150ms ease',
   default: '200ms ease',
   slow: '300ms ease',
 } as const
 
-export const breakpoints = {
+const breakpoints = {
   sm: '640px',
   md: '768px',
   lg: '1024px',
@@ -138,5 +138,3 @@ export const darkTheme = {
     border: commonTheme.colors.gray[700],
   },
 }
-
-export type Theme = typeof lightTheme
