@@ -60,14 +60,6 @@ export default function AccountPage() {
                 <InfoLabel>メールアドレス</InfoLabel>
                 <InfoValue>{user.email}</InfoValue>
               </InfoItem>
-              <InfoItem>
-                <InfoLabel>アカウント作成日</InfoLabel>
-                <InfoValue>
-                  {user.created_at
-                    ? new Date(user.created_at).toLocaleDateString('ja-JP')
-                    : '不明'}
-                </InfoValue>
-              </InfoItem>
             </InfoCard>
           </AccountSection>
           <ActionsSection aria-labelledby="actions-heading">

@@ -14,7 +14,7 @@ import { useAuth } from '@/contexts/AuthContext'
 import {
   getBookmarks,
   toggleBookmark as toggleBookmarkApi,
-} from '@/lib/supabase/tables/bookmarks'
+} from '@/lib/db/queries/bookmarks'
 
 type BookmarksContextType = {
   bookmarks: Partial<Bookmark>[]
@@ -48,7 +48,7 @@ export function BookmarksProvider({ children }: { children: React.ReactNode }) {
 
     const fetchBookmarks = async () => {
       try {
-        const bookmarksList = await getBookmarks(user.id)
+        const bookmarksList = await getBookmarks()
 
         if (!cancelled) {
           const recipeIds = bookmarksList
@@ -84,7 +84,7 @@ export function BookmarksProvider({ children }: { children: React.ReactNode }) {
     }
 
     try {
-      const bookmarksList = await getBookmarks(user.id)
+      const bookmarksList = await getBookmarks()
       const bookmarkedIdsSet = new Set(
         bookmarksList.map((b) => b.recipeId).filter(Boolean) as string[],
       )
@@ -117,7 +117,7 @@ export function BookmarksProvider({ children }: { children: React.ReactNode }) {
           return newIds
         })
 
-        const actualState = await toggleBookmarkApi(recipeId, user.id)
+        const actualState = await toggleBookmarkApi(recipeId)
 
         setBookmarkedIds((prevIds) => {
           const correctedIds = new Set(prevIds)

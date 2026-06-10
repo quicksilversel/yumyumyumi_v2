@@ -1,1 +1,0 @@
-export { searchRecipesInSupabase } from './searchRecipesInSupabase'

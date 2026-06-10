@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation'
 import type { Recipe } from '@/types/recipe'
 
 import { Button, Dialog, Body } from '@/components/ui'
-import { deleteRecipe } from '@/lib/supabase/tables/recipe/deleteRecipe'
+import { deleteRecipe } from '@/lib/db/queries/recipe'
 
 type Props = {
   open: boolean

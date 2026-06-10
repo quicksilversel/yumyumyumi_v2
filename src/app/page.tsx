@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 
 import { RecipeList } from '@/components/pages/Home/RecipeList'
-import { getRecipesFromSupabase } from '@/lib/supabase/tables/recipe/getRecipesFromSupabase'
+import { getRecipes } from '@/lib/db/queries/recipe/getRecipes'
 
 export const revalidate = 3600 // 1 hour
 
@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 }
 
 export default async function HomePage() {
-  const recipes = await getRecipesFromSupabase()
+  const recipes = await getRecipes()
 
   return <RecipeList initialRecipes={recipes} />
 }

@@ -37,9 +37,9 @@ export const BookmarkButton = ({
   const handleToggle = async (e: React.MouseEvent) => {
     e.preventDefault()
     e.stopPropagation()
-    
+
     if (isProcessing || isToggling) return
-    
+
     setIsProcessing(true)
     try {
       await toggleBookmark(e)

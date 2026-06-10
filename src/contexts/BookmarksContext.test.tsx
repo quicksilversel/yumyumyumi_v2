@@ -9,13 +9,12 @@ import {
 } from '@testing-library/react'
 
 import type { Bookmark } from '@/types/bookmarks'
-import type { User } from '@supabase/supabase-js'
 
 import { useAuth } from '@/contexts/AuthContext'
 import {
   getBookmarks,
   toggleBookmark as toggleBookmarkApi,
-} from '@/lib/supabase/tables/bookmarks'
+} from '@/lib/db/queries/bookmarks'
 
 import { BookmarksProvider, useBookmarksContext } from './BookmarksContext'
 
@@ -42,20 +41,16 @@ jest.mock('@/contexts/AuthContext', () => ({
 }))
 
 // Mock the bookmarks API functions
-jest.mock('@/lib/supabase/tables/bookmarks', () => ({
+jest.mock('@/lib/db/queries/bookmarks', () => ({
   getBookmarks: jest.fn(),
   toggleBookmark: jest.fn(),
 }))
 
 describe('BookmarksContext', () => {
-  const mockUser: User = {
+  const mockUser = {
     id: 'user123',
     email: 'test@example.com',
-    app_metadata: {},
-    user_metadata: {},
-    aud: 'authenticated',
-    created_at: '2024-01-01T00:00:00Z',
-  } as User
+  }
 
   const mockBookmarks: Partial<Bookmark>[] = [
     { id: '1', recipeId: 'recipe1', userId: 'user123' },
@@ -107,10 +102,12 @@ describe('BookmarksContext', () => {
       await waitFor(() => {
         expect(result.current.isLoading).toBe(false)
         expect(result.current.bookmarks).toEqual(mockBookmarks)
-        expect(result.current.bookmarkedIds).toEqual(new Set(['recipe1', 'recipe2']))
+        expect(result.current.bookmarkedIds).toEqual(
+          new Set(['recipe1', 'recipe2']),
+        )
       })
 
-      expect(getBookmarks).toHaveBeenCalledWith('user123')
+      expect(getBookmarks).toHaveBeenCalled()
     })
 
     it('should handle no user (unauthenticated)', async () => {
@@ -160,11 +157,11 @@ describe('BookmarksContext', () => {
       // Change user
       const newUser = { ...mockUser, id: 'user456' }
       ;(useAuth as jest.Mock).mockReturnValue({ user: newUser })
-      
+
       rerender()
 
       await waitFor(() => {
-        expect(getBookmarks).toHaveBeenCalledWith('user456')
+        expect(getBookmarks).toHaveBeenCalled()
       })
     })
   })
@@ -185,7 +182,7 @@ describe('BookmarksContext', () => {
       })
 
       expect(toggleResult!).toBe(true)
-      expect(toggleBookmarkApi).toHaveBeenCalledWith('recipe3', 'user123')
+      expect(toggleBookmarkApi).toHaveBeenCalledWith('recipe3')
       expect(result.current.bookmarkedIds.has('recipe3')).toBe(true)
       expect(mockRouter.refresh).toHaveBeenCalled()
     })
@@ -205,7 +202,7 @@ describe('BookmarksContext', () => {
       })
 
       expect(toggleResult!).toBe(false)
-      expect(toggleBookmarkApi).toHaveBeenCalledWith('recipe1', 'user123')
+      expect(toggleBookmarkApi).toHaveBeenCalledWith('recipe1')
       expect(result.current.bookmarkedIds.has('recipe1')).toBe(false)
       expect(mockRouter.refresh).toHaveBeenCalled()
     })

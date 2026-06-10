@@ -1,10 +1,10 @@
 # YumYumYumi 🍳
 
-A modern recipe sharing platform built with Next.js, TypeScript, Material-UI, and Supabase.
+A modern recipe sharing platform built with Next.js, TypeScript, Material-UI, Neon (Postgres) and Drizzle ORM.
 
 ## Features
 
-- 🔐 **User Authentication** - Sign up and log in to create your own recipes
+- 🔐 **Authentication** - Log in to create, edit, and delete your own recipes
 - 📝 **Recipe Management** - Create, edit, and delete your recipes
 - 🖼️ **Image Upload** - Upload recipe images with automatic compression and WebP conversion
 - 🔍 **Advanced Search** - Search recipes by title, ingredients, and cooking time
@@ -29,11 +29,10 @@ A modern recipe sharing platform built with Next.js, TypeScript, Material-UI, an
 
 ### Backend & Database
 
-- **Backend as a Service**: [Supabase](https://supabase.com/)
-- **Database**: PostgreSQL (via Supabase)
-- **Authentication**: Supabase Auth
-- **File Storage**: Supabase Storage
-- **Real-time**: Supabase Realtime subscriptions
+- **Database**: [Neon](https://neon.tech/) (serverless PostgreSQL)
+- **ORM**: [Drizzle ORM](https://orm.drizzle.team/)
+- **Authentication**: [Auth.js (NextAuth v5)](https://authjs.dev/) — Credentials provider
+- **File Storage**: [Vercel Blob](https://vercel.com/docs/storage/vercel-blob)
 
 ### Form & Validation
 
@@ -58,16 +57,16 @@ A modern recipe sharing platform built with Next.js, TypeScript, Material-UI, an
 ### Additional Features
 
 - **Image Processing**: [Browser Image Compression](https://github.com/Donaldcwl/browser-image-compression)
-- **SSR Support**: [@supabase/ssr](https://github.com/supabase/ssr)
-- **Auth Helpers**: [@supabase/auth-helpers-nextjs](https://github.com/supabase/auth-helpers)
+- **Type Conversion**: [ts-case-convert](https://github.com/tonivj5/ts-case-convert) (snake_case ↔ camelCase)
 
 ## Getting Started
 
 ### Prerequisites
 
-- Node.js 18+
+- Node.js 20.19+
 - npm or yarn
-- Supabase account
+- A [Neon](https://neon.tech/) account (free Postgres)
+- A [Vercel](https://vercel.com/) account with a Blob store (for image uploads)
 
 ### Installation
 
@@ -86,60 +85,44 @@ npm install
 
 3. Set up environment variables:
 
-Create a `.env.local` file in the root directory:
+Copy `.env.example` to `.env.local` and fill in the values:
 
 ```env
-# Supabase Configuration
-NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your_anon_key_here
+# Neon Postgres connection string (from the Neon console)
+DATABASE_URL="postgresql://USER:PASSWORD@HOST/DB?sslmode=require"
 
-# Service role key - Keep this secret!
-SUPABASE_SERVICE_ROLE_KEY=your_service_role_key_here
+# Auth.js secret — generate with: npx auth secret
+AUTH_SECRET=""
+
+# Vercel Blob token (Vercel dashboard > Storage > Blob > .env.local tab).
+# Auto-injected when deployed on Vercel.
+BLOB_READ_WRITE_TOKEN=""
+
+# Only used once by `npm run db:seed` to create the single login account.
+SEED_EMAIL=""
+SEED_PASSWORD=""
 ```
 
-4. Set up Supabase:
+4. Set up the database:
 
-   a. Create a new project in [Supabase](https://app.supabase.com)
+   a. Create a project in [Neon](https://console.neon.tech) and copy its `DATABASE_URL`.
 
-   b. Run the database migrations in SQL Editor:
+   b. Apply the schema:
 
-   ```sql
-   -- Create recipes table
-   CREATE TABLE recipes (
-     id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-     user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE,
-     title TEXT NOT NULL,
-     summary TEXT,
-     ingredients TEXT[] NOT NULL,
-     directions TEXT[] NOT NULL,
-     tips TEXT,
-     prep_time INTEGER DEFAULT 0,
-     cook_time INTEGER DEFAULT 0,
-     total_time INTEGER DEFAULT 0,
-     servings INTEGER DEFAULT 1,
-     image_url TEXT,
-     source TEXT,
-     is_public BOOLEAN DEFAULT true,
-     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-     updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
-   );
-
-   -- Create bookmarks table
-   CREATE TABLE bookmarks (
-     id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-     user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE,
-     recipe_id UUID REFERENCES recipes(id) ON DELETE CASCADE,
-     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-     UNIQUE(user_id, recipe_id)
-   );
+   ```bash
+   npm run db:migrate
    ```
 
-   c. Set up Storage bucket:
-   - Go to Storage in Supabase Dashboard
-   - Create a bucket named `recipe-images`
-   - Set it as PUBLIC
+   c. (Optional) Seed the account and any rescued recipes from `data-export/`:
 
-5. Run the development server:
+   ```bash
+   npm run db:seed
+   ```
+
+5. Set up image storage:
+   - In the Vercel dashboard, create a **Blob** store and copy `BLOB_READ_WRITE_TOKEN` into `.env.local`.
+
+6. Run the development server:
 
 ```bash
 npm run dev
@@ -149,13 +132,21 @@ Open [http://localhost:3000](http://localhost:3000) to see the app.
 
 ## Environment Variables
 
-| Variable                        | Description                                                | Required |
-| ------------------------------- | ---------------------------------------------------------- | -------- |
-| `NEXT_PUBLIC_SUPABASE_URL`      | Your Supabase project URL                                  | Yes      |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase anonymous key for client-side auth                | Yes      |
-| `SUPABASE_SERVICE_ROLE_KEY`     | Service role key for server-side operations (image upload) | Yes      |
+| Variable                | Description                                            | Required          |
+| ----------------------- | ------------------------------------------------------ | ----------------- |
+| `DATABASE_URL`          | Neon Postgres connection string                        | Yes               |
+| `AUTH_SECRET`           | Auth.js session secret (`npx auth secret`)             | Yes               |
+| `BLOB_READ_WRITE_TOKEN` | Vercel Blob token (auto-injected on Vercel)            | Yes (for uploads) |
+| `SEED_EMAIL`            | Email for the single account created by `db:seed`      | Seed only         |
+| `SEED_PASSWORD`         | Password for that account                              | Seed only         |
 
-⚠️ **Security Note**: Never expose `SUPABASE_SERVICE_ROLE_KEY` to the client. It's only used in server-side API routes.
+## Database scripts
+
+- `npm run db:generate` - Generate a new migration from `src/lib/db/schema.ts`
+- `npm run db:migrate` - Apply migrations to the database
+- `npm run db:push` - Push the schema directly (handy for the first setup)
+- `npm run db:studio` - Open Drizzle Studio to browse data
+- `npm run db:seed` - Seed the account + rescued recipes
 
 ## Project Structure
 

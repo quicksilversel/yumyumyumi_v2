@@ -10,8 +10,8 @@ import type { Recipe, RecipeForm } from '@/types/recipe'
 
 import { Button, Dialog } from '@/components/ui'
 import { useAuth } from '@/contexts/AuthContext'
-import { uploadImage, deleteImage } from '@/lib/supabase/storage'
-import { updateRecipe } from '@/lib/supabase/tables/recipe/updateRecipe'
+import { updateRecipe } from '@/lib/db/queries/recipe'
+import { uploadImage, deleteImage } from '@/lib/db/storage'
 import { recipeFormSchema } from '@/types/recipe'
 
 import { RecipeForm as RecipeFormComponent } from './RecipeForm/RecipeForm'
@@ -79,7 +79,10 @@ export function EditRecipeDialog({
       if (imageFile) {
         setUploadingImage(true)
 
-        if (recipe.imageUrl && recipe.imageUrl.includes('supabase')) {
+        if (
+          recipe.imageUrl &&
+          recipe.imageUrl.includes('blob.vercel-storage.com')
+        ) {
           try {
             await deleteImage(recipe.imageUrl)
           } catch (err) {
