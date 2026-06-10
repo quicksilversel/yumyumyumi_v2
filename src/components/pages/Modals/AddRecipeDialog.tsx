@@ -77,8 +77,8 @@ export function AddRecipeDialog({
 
       if (imageFile) {
         setUploadingImage(true)
-        const tempRecipeId = `temp-${Date.now()}`
-        const result = await uploadImage(imageFile, user.id, tempRecipeId)
+
+        const result = await uploadImage(imageFile, user.id, 'temp')
 
         if (result.error) {
           setError('root', {

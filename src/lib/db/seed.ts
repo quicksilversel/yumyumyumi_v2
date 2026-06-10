@@ -1,11 +1,3 @@
-/**
- * Seeds the Neon database with data rescued from the old Supabase backup.
- *
- * Run with:  npm run db:seed
- * Requires in .env.local:  DATABASE_URL, SEED_EMAIL, SEED_PASSWORD
- *
- * Re-running is safe: rows are upserted by primary key.
- */
 /* eslint-disable no-console */
 import { readFileSync } from 'fs'
 import { join } from 'path'
@@ -16,11 +8,8 @@ import { bookmarks, recipes, users } from './schema'
 
 import { db } from './index'
 
-// The account UUID from the original Supabase auth.users — kept identical so the
-// rescued recipes.user_id / bookmarks.user_id keep pointing at the same owner.
 const OWNER_ID = 'ac8f5cfe-a34f-44b6-a8ea-66aff226baa3'
 
-// The 4 bookmarks rescued from the backup.
 const SEED_BOOKMARKS = [
   {
     id: '862c7fb3-c019-4e88-b670-57f67ecc6be5',
@@ -81,7 +70,6 @@ async function main() {
     })
   console.log(`✓ Seeded owner account (${SEED_EMAIL})`)
 
-  // 2. Recipes (image_url nulled — original blobs are unrecoverable)
   const file = join(process.cwd(), 'data-export', 'recipes_export.json')
   const exported: ExportedRecipe[] = JSON.parse(readFileSync(file, 'utf-8'))
 
@@ -90,19 +78,16 @@ async function main() {
       id: r.id,
       userId: r.user_id,
       title: r.title,
-      // empty optional text is stored as '' (not null) to match the schema
       summary: r.summary ?? '',
       tags: r.tags,
       tips: r.tips ?? '',
       cookTime: r.cook_time,
       servings: r.servings,
-      // original image blobs are unrecoverable — store '' so the no-image fallback shows
       imageUrl: '',
       source: r.source ?? '',
       isPublic: r.is_public,
       createdAt: r.created_at,
       updatedAt: r.updated_at,
-      // jsonb stored as-is (nested keys stay snake_case, matching the read path)
       ingredients: r.ingredients as never,
       directions: r.directions as never,
     }

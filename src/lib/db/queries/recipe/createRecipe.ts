@@ -1,6 +1,6 @@
 'use server'
 
-import { revalidatePath, revalidateTag } from 'next/cache'
+import { revalidatePath } from 'next/cache'
 import { objectToCamel, objectToSnake } from 'ts-case-convert'
 
 import type { Recipe } from '@/types/recipe'
@@ -25,7 +25,6 @@ export async function createRecipe(
       .values({
         ...rest,
         userId: session.user.id,
-        // nested jsonb keys stored snake_case to match the read path
         ingredients: objectToSnake(ingredients) as never,
         directions: objectToSnake(directions) as never,
       })
@@ -36,9 +35,8 @@ export async function createRecipe(
     const camelCaseData = objectToCamel(data)
     if (!isValidOf(recipeSchema, camelCaseData)) return null
 
-    revalidateTag('recipes')
-    revalidateTag('recipes-list')
     revalidatePath('/')
+    revalidatePath('/recipes/[id]', 'page')
 
     return camelCaseData
   } catch (error) {

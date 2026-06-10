@@ -34,6 +34,8 @@ export const Input = ({
 }: InputProps) => {
   const [isFocused, setIsFocused] = useState(false)
   const [hasAutofillValue, setHasAutofillValue] = useState(false)
+
+  const [hasRefValue, setHasRefValue] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
 
   const isPasswordField =
@@ -41,7 +43,7 @@ export const Input = ({
     (type === 'text' && inputProps.autoComplete?.includes('password'))
 
   const hasValue = isPasswordField
-    ? inputRef.current?.value !== '' && inputRef.current?.value !== undefined
+    ? hasRefValue
     : value !== undefined && value !== '' && value !== null
 
   const shouldFloatLabel = isFocused || hasValue || hasAutofillValue
@@ -54,6 +56,7 @@ export const Input = ({
           '.autofill-simulation',
         )
         setHasAutofillValue(isAutofilled || !!hasSimulatedAutofill)
+        setHasRefValue(inputRef.current.value !== '')
       }
     }
 

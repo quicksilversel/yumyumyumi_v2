@@ -13,7 +13,7 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'hsjbtgctzfkncwianizn.supabase.co',
+        hostname: '**.public.blob.vercel-storage.com',
       },
     ],
   },

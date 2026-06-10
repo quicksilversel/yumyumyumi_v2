@@ -9,17 +9,14 @@ import Link from 'next/link'
 
 import { Divider } from '@/components/ui/Layout'
 import { useAuth } from '@/contexts/AuthContext'
+import { useHydrated } from '@/hooks/useHydrated'
 
 export const User = () => {
   const { user, signOut, loading } = useAuth()
   const [menuOpen, setMenuOpen] = useState(false)
-  const [mounted, setMounted] = useState(false)
+  const mounted = useHydrated()
 
   const menuRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    setMounted(true)
-  }, [])
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {

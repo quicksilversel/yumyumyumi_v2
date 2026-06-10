@@ -1,7 +1,7 @@
 'use server'
 
 import { and, eq } from 'drizzle-orm'
-import { revalidatePath, revalidateTag } from 'next/cache'
+import { revalidatePath } from 'next/cache'
 
 import { auth } from '@/auth'
 import { db } from '@/lib/db'
@@ -16,9 +16,8 @@ export async function deleteRecipe(id: string): Promise<boolean> {
       .delete(recipes)
       .where(and(eq(recipes.id, id), eq(recipes.userId, session.user.id)))
 
-    revalidateTag('recipes')
-    revalidateTag('recipes-list')
     revalidatePath('/')
+    revalidatePath('/recipes/[id]', 'page')
 
     return true
   } catch (error) {

@@ -1,5 +1,4 @@
 import { eq } from 'drizzle-orm'
-import { unstable_cache } from 'next/cache'
 import { objectToCamel } from 'ts-case-convert'
 
 import type { Recipe } from '@/types/recipe'
@@ -9,30 +8,25 @@ import { recipes } from '@/lib/db/schema'
 import { isValidOf } from '@/lib/functions/isValidOf'
 import { recipeSchema } from '@/types/recipe'
 
-export const getRecipeById = unstable_cache(
-  async (id: string): Promise<Recipe | null> => {
-    try {
-      const [data] = await db
-        .select()
-        .from(recipes)
-        .where(eq(recipes.id, id))
-        .limit(1)
+// Caching is handled at the route level via `export const revalidate` and
+// on-demand `revalidatePath` calls in the mutation actions.
+export async function getRecipeById(id: string): Promise<Recipe | null> {
+  try {
+    const [data] = await db
+      .select()
+      .from(recipes)
+      .where(eq(recipes.id, id))
+      .limit(1)
 
-      if (!data) return null
+    if (!data) return null
 
-      const camelCaseData = objectToCamel(data)
+    const camelCaseData = objectToCamel(data)
 
-      if (!isValidOf(recipeSchema, camelCaseData)) return null
-      return camelCaseData
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error('fetching recipe by ID', error)
-      return null
-    }
-  },
-  ['recipe-by-id'],
-  {
-    tags: ['recipes'],
-    revalidate: 3600,
-  },
-)
+    if (!isValidOf(recipeSchema, camelCaseData)) return null
+    return camelCaseData
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('fetching recipe by ID', error)
+    return null
+  }
+}

@@ -16,9 +16,9 @@ A modern recipe sharing platform built with Next.js, TypeScript, Material-UI, Ne
 
 ### Frontend
 
-- **Framework**: [Next.js 15](https://nextjs.org/) with Turbopack
+- **Framework**: [Next.js 16](https://nextjs.org/) with Turbopack
 - **Language**: [TypeScript](https://www.typescriptlang.org/)
-- **UI Library**: [React 18](https://react.dev/)
+- **UI Library**: [React 19](https://react.dev/)
 - **State Management**: React Context API
 
 ### Styling & UI Components
