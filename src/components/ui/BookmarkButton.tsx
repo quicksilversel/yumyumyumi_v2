@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 import styled from '@emotion/styled'
 import FavoriteIcon from '@mui/icons-material/Favorite'
@@ -7,6 +7,7 @@ import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlin
 import { IconButton } from '@/components/ui/Button'
 import { useAuth } from '@/contexts/AuthContext'
 import { useBookmarks } from '@/hooks/useBookmarks'
+import { useHydrated } from '@/hooks/useHydrated'
 
 interface BookmarkButtonProps {
   recipeId: string
@@ -22,17 +23,13 @@ export const BookmarkButton = ({
   className,
 }: BookmarkButtonProps) => {
   const { user, loading } = useAuth()
-  const [mounted, setMounted] = useState(false)
   const [isProcessing, setIsProcessing] = useState(false)
+  const mounted = useHydrated()
 
   const { isBookmarked, toggleBookmark, isLoading, isToggling } = useBookmarks({
     recipeId,
     onToggle,
   })
-
-  useEffect(() => {
-    setMounted(true)
-  }, [])
 
   const handleToggle = async (e: React.MouseEvent) => {
     e.preventDefault()

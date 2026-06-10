@@ -1,11 +1,10 @@
-import { useEffect, useState } from 'react'
-
 import styled from '@emotion/styled'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined'
 import { useRouter, useSearchParams } from 'next/navigation'
 
 import { useAuth } from '@/contexts/AuthContext'
+import { useHydrated } from '@/hooks/useHydrated'
 
 type Props = {
   showBookmarked: boolean
@@ -21,11 +20,7 @@ export const BookmarkFilter = ({
   const router = useRouter()
   const searchParams = useSearchParams()
   const { user, loading } = useAuth()
-  const [mounted, setMounted] = useState(false)
-
-  useEffect(() => {
-    setMounted(true)
-  }, [])
+  const mounted = useHydrated()
 
   const handleBookmarkToggle = () => {
     const newValue = !showBookmarked

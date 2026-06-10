@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, Suspense } from 'react'
+import { Suspense } from 'react'
 
 import { ThemeProvider } from '@emotion/react'
 import { SessionProvider } from 'next-auth/react'
@@ -12,29 +12,7 @@ import EmotionRegistry from '@/lib/emotion/EmotionRegistry'
 import { GlobalStyles } from '@/styles'
 import { lightTheme } from '@/styles/themes'
 
-export type ThemeContext = {
-  theme: 'light' | 'dark'
-  setTheme: (theme: 'light' | 'dark') => void
-}
-
 export const Providers = ({ children }: { children: React.ReactNode }) => {
-  const [theme, setTheme] = useState<ThemeContext['theme']>('dark')
-
-  useEffect(() => {
-    const savedTheme = localStorage.getItem('theme')
-    const prefersLight =
-      window.matchMedia &&
-      window.matchMedia('(prefers-color-scheme: light)').matches
-
-    if (savedTheme) {
-      setTheme(savedTheme === 'dark' ? 'dark' : 'light')
-    }
-
-    if (prefersLight) {
-      setTheme('light')
-    }
-  }, [])
-
   return (
     <EmotionRegistry>
       <ThemeProvider theme={lightTheme}>

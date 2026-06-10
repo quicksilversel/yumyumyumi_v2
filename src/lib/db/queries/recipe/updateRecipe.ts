@@ -1,7 +1,7 @@
 'use server'
 
 import { and, eq } from 'drizzle-orm'
-import { revalidatePath, revalidateTag } from 'next/cache'
+import { revalidatePath } from 'next/cache'
 import { objectToCamel, objectToSnake } from 'ts-case-convert'
 
 import type { Recipe, RecipeForm } from '@/types/recipe'
@@ -38,8 +38,6 @@ export async function updateRecipe(
     const camelCaseData = objectToCamel(data)
     if (!isValidOf(recipeSchema, camelCaseData)) return null
 
-    revalidateTag('recipes')
-    revalidateTag('recipes-list')
     revalidatePath('/')
     revalidatePath(`/recipes/${id}`)
 

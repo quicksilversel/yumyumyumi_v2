@@ -6,6 +6,7 @@ import EditIcon from '@mui/icons-material/Edit'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 
 import { IconButton } from '@/components/ui/Button'
+import { useHydrated } from '@/hooks/useHydrated'
 
 interface MoreActionsProps {
   onEdit: () => void
@@ -21,13 +22,9 @@ export const MoreActions = ({
   className,
 }: MoreActionsProps) => {
   const [menuOpen, setMenuOpen] = useState(false)
-  const [mounted, setMounted] = useState(false)
+  const mounted = useHydrated()
 
   const menuRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    setMounted(true)
-  }, [])
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {

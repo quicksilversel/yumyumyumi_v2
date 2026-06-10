@@ -5,7 +5,6 @@ import { useBookmarksContext } from '@/contexts/BookmarksContext'
 
 import { useBookmarks } from './useBookmarks'
 
-// Mock Next.js navigation
 const mockPush = jest.fn()
 const mockRouter = {
   push: mockPush,
@@ -22,7 +21,6 @@ jest.mock('next/navigation', () => ({
   usePathname: () => '/',
 }))
 
-// Mock the contexts
 jest.mock('@/contexts/AuthContext', () => ({
   useAuth: jest.fn(),
 }))
@@ -151,10 +149,8 @@ describe('useBookmarks', () => {
         await result.current.toggleBookmark()
       })
 
-      // Verify router.push was called with /login
       expect(mockPush).toHaveBeenCalledWith('/login')
 
-      // Verify bookmark wasn't toggled (user wasn't authenticated)
       expect(mockToggleBookmark).not.toHaveBeenCalled()
     })
 
@@ -190,17 +186,14 @@ describe('useBookmarks', () => {
 
       expect(result.current.isToggling).toBe(false)
 
-      // Start the toggle operation
       let togglePromiseResult: Promise<void>
       act(() => {
         togglePromiseResult = result.current.toggleBookmark()
       })
 
-      // Force a rerender to check the state
       rerender()
       expect(result.current.isToggling).toBe(true)
 
-      // Resolve the toggle operation
       await act(async () => {
         resolveToggle!()
         await togglePromiseResult!
@@ -237,7 +230,6 @@ describe('useBookmarks', () => {
 
       expect(result.current.isBookmarked).toBe(false)
 
-      // Update the mock to include recipe3
       const newBookmarkedIds = new Set(['recipe1', 'recipe2', 'recipe3'])
       ;(useBookmarksContext as jest.Mock).mockReturnValue({
         ...mockBookmarksValue,

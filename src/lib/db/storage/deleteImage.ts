@@ -1,9 +1,5 @@
 const API_ENDPOINT = '/api/upload-image'
 
-/**
- * Deletes an uploaded image from Vercel Blob. The actual deletion runs
- * server-side (the Blob token is server-only), so this calls the API route.
- */
 export async function deleteImage(imageUrl: string): Promise<boolean> {
   try {
     if (!imageUrl) return true

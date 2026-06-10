@@ -1,7 +1,7 @@
 'use server'
 
 import { and, eq } from 'drizzle-orm'
-import { revalidatePath, revalidateTag } from 'next/cache'
+import { revalidatePath } from 'next/cache'
 
 import { auth } from '@/auth'
 import { db } from '@/lib/db'
@@ -40,7 +40,6 @@ export async function toggleBookmark(recipeId: string): Promise<boolean> {
       nowBookmarked = true
     }
 
-    revalidateTag('bookmarks')
     revalidatePath(`/recipes/${recipeId}`)
 
     return nowBookmarked

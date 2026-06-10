@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 
 import { keyframes } from '@emotion/css'
 import styled from '@emotion/styled'
@@ -9,6 +9,7 @@ import MenuIcon from '@mui/icons-material/Menu'
 
 import { Flex, IconButton } from '@/components/ui'
 import { useAuth } from '@/contexts/AuthContext'
+import { useHydrated } from '@/hooks/useHydrated'
 
 import { AddRecipeButton } from './AddRecipeButton'
 import { Logo } from './Logo'
@@ -18,11 +19,7 @@ import { User } from './User'
 export const Header = () => {
   const { user, loading } = useAuth()
   const [slideMenuOpen, setSlideMenuOpen] = useState(false)
-  const [mounted, setMounted] = useState(false)
-
-  useEffect(() => {
-    setMounted(true)
-  }, [])
+  const mounted = useHydrated()
 
   return (
     <>

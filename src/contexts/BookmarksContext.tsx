@@ -35,6 +35,10 @@ export function BookmarksProvider({ children }: { children: React.ReactNode }) {
   const { user } = useAuth()
   const router = useRouter()
 
+  // Data-fetching effect synced to the authenticated user: it resets bookmark
+  // state on logout and (re)fetches on login. Synchronous setState here is the
+  // intended pattern for this case, so the React Compiler hooks rule is scoped off.
+  /* eslint-disable react-hooks/set-state-in-effect */
   useEffect(() => {
     if (!user) {
       setBookmarks([])
@@ -77,6 +81,7 @@ export function BookmarksProvider({ children }: { children: React.ReactNode }) {
       cancelled = true
     }
   }, [user])
+  /* eslint-enable react-hooks/set-state-in-effect */
 
   const refreshBookmarks = useCallback(async () => {
     if (!user) {
