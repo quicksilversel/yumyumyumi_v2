@@ -35,5 +35,6 @@ jest.mock('next/server', () => ({
 }))
 
 // Mock environment variables
-process.env.NEXT_PUBLIC_SUPABASE_URL = 'https://test.supabase.co'
-process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY = 'test-anon-key'
+process.env.DATABASE_URL = 'postgresql://test:test@localhost/test'
+process.env.AUTH_SECRET = 'test-auth-secret'
+process.env.BLOB_READ_WRITE_TOKEN = 'vercel_blob_rw_test_token'

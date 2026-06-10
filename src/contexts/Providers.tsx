@@ -3,6 +3,7 @@
 import { useState, useEffect, Suspense } from 'react'
 
 import { ThemeProvider } from '@emotion/react'
+import { SessionProvider } from 'next-auth/react'
 
 import { AuthProvider } from '@/contexts/AuthContext'
 import { BookmarksProvider } from '@/contexts/BookmarksContext'
@@ -37,16 +38,18 @@ export const Providers = ({ children }: { children: React.ReactNode }) => {
   return (
     <EmotionRegistry>
       <ThemeProvider theme={lightTheme}>
-        <AuthProvider>
-          <BookmarksProvider>
-            <Suspense fallback={null}>
-              <RecipeProvider>
-                <GlobalStyles />
-                {children}
-              </RecipeProvider>
-            </Suspense>
-          </BookmarksProvider>
-        </AuthProvider>
+        <SessionProvider>
+          <AuthProvider>
+            <BookmarksProvider>
+              <Suspense fallback={null}>
+                <RecipeProvider>
+                  <GlobalStyles />
+                  {children}
+                </RecipeProvider>
+              </Suspense>
+            </BookmarksProvider>
+          </AuthProvider>
+        </SessionProvider>
       </ThemeProvider>
     </EmotionRegistry>
   )

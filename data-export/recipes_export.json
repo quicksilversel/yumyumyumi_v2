@@ -1,0 +1,1606 @@
+[
+  {
+    "id": "ebb86250-c28b-4705-86cc-35ffa146770d",
+    "user_id": "ac8f5cfe-a34f-44b6-a8ea-66aff226baa3",
+    "title": "ミニトマトのチーズ和え",
+    "summary": null,
+    "tags": [
+      "副菜",
+      "時短",
+      "洋食",
+      "サラダ"
+    ],
+    "tips": "チーズ、塩、オリーブオイルを和えて、トマトと絡めても美味しい😋",
+    "cook_time": 10,
+    "servings": 2,
+    "image_url": null,
+    "source": "dancyu(大庭英子)",
+    "is_public": true,
+    "created_at": "2025-08-29 05:24:02.266082+00",
+    "updated_at": "2025-09-08 03:36:20.024787+00",
+    "ingredients": [
+      {
+        "name": "ミニトマト",
+        "amount": "12～16個",
+        "is_spice": false
+      },
+      {
+        "name": "パルミジャーノチーズ（粉チーズでも！）",
+        "amount": "大2",
+        "is_spice": false
+      },
+      {
+        "name": "塩",
+        "amount": "少々",
+        "is_spice": false
+      },
+      {
+        "name": "粗挽き黒胡椒",
+        "amount": "少々",
+        "is_spice": false
+      },
+      {
+        "name": "オリーブオイル",
+        "amount": "大1",
+        "is_spice": false
+      },
+      {
+        "name": "バジル",
+        "amount": "適量",
+        "is_spice": false
+      }
+    ],
+    "directions": [
+      {
+        "title": "トマトはへたを取りながら器に入れる。",
+        "description": ""
+      },
+      {
+        "title": "バジル、チーズをかける\\nバジルを散らし、パルミジャーノチーズをかける。",
+        "description": ""
+      },
+      {
+        "title": "塩、胡椒、オリーブオイルを合わせ、回しかける。",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "id": "d1537aac-2859-47b9-9ac1-667b3bc62c11",
+    "user_id": "ac8f5cfe-a34f-44b6-a8ea-66aff226baa3",
+    "title": "大葉ソースと照り焼きチキン",
+    "summary": "甘辛照り焼き味に、大葉の風味をプラス！ 普段のお弁当をアップデート(*^_^*)♡",
+    "tags": [
+      "お弁当",
+      "時短"
+    ],
+    "tips": null,
+    "cook_time": 20,
+    "servings": 2,
+    "image_url": null,
+    "source": "つくりおき",
+    "is_public": true,
+    "created_at": "2025-09-08 02:44:49.388+00",
+    "updated_at": "2025-09-08 02:44:51.045132+00",
+    "ingredients": [
+      {
+        "name": "鶏むね肉",
+        "amount": "1枚（約350g）",
+        "is_spice": false
+      },
+      {
+        "name": "酒大",
+        "amount": "1",
+        "is_spice": false
+      },
+      {
+        "name": "醤油",
+        "amount": "小2",
+        "is_spice": false
+      },
+      {
+        "name": "砂糖",
+        "amount": "小1",
+        "is_spice": false
+      },
+      {
+        "name": "こしょう",
+        "amount": "少々",
+        "is_spice": false
+      },
+      {
+        "name": "大葉",
+        "amount": "10枚",
+        "is_spice": true
+      },
+      {
+        "name": "みりん",
+        "amount": "大2",
+        "is_spice": true
+      },
+      {
+        "name": "醤油",
+        "amount": "大1",
+        "is_spice": true
+      },
+      {
+        "name": "穀物酢",
+        "amount": "小2",
+        "is_spice": true
+      },
+      {
+        "name": "砂糖",
+        "amount": "小2",
+        "is_spice": false
+      }
+    ],
+    "directions": [
+      {
+        "title": "調味料をポリ袋に入れ、混ぜ合わせる。カットした鶏肉を入れ、もみ込む。空気を抜いて口を閉じ、冷蔵庫で30分～ひと晩漬ける。",
+        "description": ""
+      },
+      {
+        "title": "室温に戻し、焼く！",
+        "description": ""
+      },
+      {
+        "title": "大葉は軸を取り、みじん切りに。",
+        "description": ""
+      },
+      {
+        "title": "フライパンに大葉とAを入れ、中火で煮立たせます。ソースがとろりとするまで煮詰め、食べるときにソースをかけて完成！",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "id": "bfd0d688-d7eb-439c-ae48-8ef86a02f954",
+    "user_id": "ac8f5cfe-a34f-44b6-a8ea-66aff226baa3",
+    "title": "炒り豆腐",
+    "summary": null,
+    "tags": [
+      "和食",
+      "副菜"
+    ],
+    "tips": "豆腐の水切り具合は、約7割の重さが目安！",
+    "cook_time": 45,
+    "servings": 4,
+    "image_url": "https://hsjbtgctzfkncwianizn.supabase.co/storage/v1/object/public/recipe-images/ac8f5cfe-a34f-44b6-a8ea-66aff226baa3_temp-1757300362094_1757300363267_0yvrss.webp",
+    "source": "ゆとりの空間(栗原はるみ)",
+    "is_public": true,
+    "created_at": "2025-09-08 02:59:24.442+00",
+    "updated_at": "2025-09-08 02:59:24.798876+00",
+    "ingredients": [
+      {
+        "name": "木綿豆腐",
+        "amount": "2丁（約500g）",
+        "is_spice": false
+      },
+      {
+        "name": "にんじん",
+        "amount": "3cm長さ（80g）",
+        "is_spice": false
+      },
+      {
+        "name": "れんこん",
+        "amount": "小1節（100g）",
+        "is_spice": false
+      },
+      {
+        "name": "生しいたけ",
+        "amount": "3枚",
+        "is_spice": false
+      },
+      {
+        "name": "絹さや",
+        "amount": "100g",
+        "is_spice": false
+      },
+      {
+        "name": "しょうゆ",
+        "amount": "大さじ4",
+        "is_spice": true
+      },
+      {
+        "name": "みりん",
+        "amount": "大さじ2",
+        "is_spice": true
+      },
+      {
+        "name": "砂糖",
+        "amount": "大さじ1",
+        "is_spice": true
+      },
+      {
+        "name": "顆粒かつおだし",
+        "amount": "小さじ2",
+        "is_spice": true
+      },
+      {
+        "name": "サラダ油",
+        "amount": "大さじ2",
+        "is_spice": true
+      }
+    ],
+    "directions": [
+      {
+        "title": "豆腐は1～2時間おいて十分に水きりをする。",
+        "description": ""
+      },
+      {
+        "title": "にんじんは3cm長さの細切りにする。",
+        "description": ""
+      },
+      {
+        "title": "れんこんは皮をむき、2～3mm幅の半月またはいちょう切りにし、水にさらして水気をよくきる。",
+        "description": ""
+      },
+      {
+        "title": "しいたけは2～3mm幅の薄切りにする。",
+        "description": ""
+      },
+      {
+        "title": "絹さやは筋を取り、ゆでて冷水に取り水気を拭き、斜め7～8mm幅に切る。",
+        "description": ""
+      },
+      {
+        "title": "[A]の調味料を合わせる。",
+        "description": ""
+      },
+      {
+        "title": "鍋にサラダ油を熱し、にんじん、れんこん、しいたけを順に加えて炒める。豆腐はもう一度表面の水気を拭いてほぐしながら加え、炒め合わせる。",
+        "description": ""
+      },
+      {
+        "title": "[6]の合わせ調味料を加えて手早く混ぜて味をなじませ、火を止め、絹さやを混ぜる。",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "id": "0fdf1877-76f5-4382-b06d-47749687cc6e",
+    "user_id": "ac8f5cfe-a34f-44b6-a8ea-66aff226baa3",
+    "title": "モロヘイヤのかき玉汁",
+    "summary": null,
+    "tags": [
+      "中華",
+      "和食",
+      "汁物"
+    ],
+    "tips": "・モロヘイヤは少なくてもいけた！(60gで作った)\\n・食べる直前に溶き卵を入れるといいかも！長い時間置いておくと、卵が黒ずんだ、、",
+    "cook_time": 20,
+    "servings": 4,
+    "image_url": null,
+    "source": "dancyu(重信初江)",
+    "is_public": true,
+    "created_at": "2025-09-08 03:30:46.847+00",
+    "updated_at": "2025-09-08 03:30:48.058254+00",
+    "ingredients": [
+      {
+        "name": "モロヘイヤ",
+        "amount": "100g(1袋)",
+        "is_spice": false
+      },
+      {
+        "name": "玉ねぎ",
+        "amount": " 1／4個",
+        "is_spice": false
+      },
+      {
+        "name": "卵",
+        "amount": "2個",
+        "is_spice": false
+      },
+      {
+        "name": "だし",
+        "amount": "4カップ",
+        "is_spice": false
+      },
+      {
+        "name": "薄口しょうゆ",
+        "amount": "小さじ2",
+        "is_spice": false
+      },
+      {
+        "name": "塩",
+        "amount": "小さじ1/2",
+        "is_spice": false
+      }
+    ],
+    "directions": [
+      {
+        "title": "モロヘイヤは葉を摘み、玉ねぎは薄切りにする。",
+        "description": ""
+      },
+      {
+        "title": "鍋にだし、醤油、塩を入れて煮立て、モロヘイヤと玉ねぎを入れる",
+        "description": ""
+      },
+      {
+        "title": "再び煮立ったら溶き卵を流し入れ、卵がふんわりと浮いて固まったら火を止める。",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "id": "b26f1560-710d-44a5-b2cf-7af0f148cacc",
+    "user_id": "ac8f5cfe-a34f-44b6-a8ea-66aff226baa3",
+    "title": "お豆のデリ風サラダ",
+    "summary": null,
+    "tags": [
+      "洋食",
+      "時短",
+      "副菜",
+      "サラダ"
+    ],
+    "tips": "あっさりとしたスープ、サラダと合わせると◎",
+    "cook_time": 15,
+    "servings": 4,
+    "image_url": "https://hsjbtgctzfkncwianizn.supabase.co/storage/v1/object/public/recipe-images/ac8f5cfe-a34f-44b6-a8ea-66aff226baa3_temp-1757305097594_1757305098295_zp2ho4.webp",
+    "source": "ゆとりの空間(栗原はるみ)",
+    "is_public": true,
+    "created_at": "2025-09-08 04:18:19.52+00",
+    "updated_at": "2025-09-08 04:18:20.023246+00",
+    "ingredients": [
+      {
+        "name": "ミックスビーンズ",
+        "amount": "2缶（1缶120gのもの）",
+        "is_spice": false
+      },
+      {
+        "name": "ツナ缶",
+        "amount": "小1缶",
+        "is_spice": false
+      },
+      {
+        "name": "玉ねぎみじん切り",
+        "amount": "大さじ3",
+        "is_spice": false
+      },
+      {
+        "name": "イタリアンパセリ",
+        "amount": "適量",
+        "is_spice": false
+      },
+      {
+        "name": "マヨネーズ",
+        "amount": "大さじ2～3",
+        "is_spice": false
+      },
+      {
+        "name": "レモン汁",
+        "amount": "大さじ1",
+        "is_spice": false
+      },
+      {
+        "name": "塩",
+        "amount": "少々",
+        "is_spice": false
+      },
+      {
+        "name": "こしょう",
+        "amount": "少々",
+        "is_spice": false
+      }
+    ],
+    "directions": [
+      {
+        "title": "ツナ缶は汁気をきる。",
+        "description": ""
+      },
+      {
+        "title": "玉ねぎのみじん切りを、水にさらして水気を絞る。",
+        "description": ""
+      },
+      {
+        "title": "イタリアンパセリはかたい軸を除き、粗く刻む。",
+        "description": ""
+      },
+      {
+        "title": "ボウルにミックスビーンズ、ツナ、玉ねぎを加えて軽く混ぜる。マヨネーズであえ、レモン汁、塩、こしょうで味を調え、イタリアンパセリを加える。",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "id": "b61cdb05-ecfb-46f4-b44a-8cd1bbd9a7f9",
+    "user_id": "ac8f5cfe-a34f-44b6-a8ea-66aff226baa3",
+    "title": "アスパラとニラのオイルパスタ",
+    "summary": null,
+    "tags": [
+      "洋食",
+      "メイン",
+      "パスタ"
+    ],
+    "tips": "・ニラのアリシンは健康にいいが、臭いの原因になるので、さっと茹でて、チーズをたっぷりかけてタンパク質と結合させて臭いを緩和、レモン汁でさらに消臭効果！\\n・切り落としたアスパラはお弁当とかに活用する！\\n・初めて作ったとき、オイル入れ過ぎて胸焼けしちゃった(笑)(元レシピは大さじ4)",
+    "cook_time": 40,
+    "servings": 1,
+    "image_url": null,
+    "source": "GINZA(渡辺彰子)",
+    "is_public": true,
+    "created_at": "2025-09-08 04:22:19.456+00",
+    "updated_at": "2025-09-08 04:22:20.918514+00",
+    "ingredients": [
+      {
+        "name": "ショートパスタ",
+        "amount": "85g",
+        "is_spice": false
+      },
+      {
+        "name": "ニラ",
+        "amount": "50g",
+        "is_spice": false
+      },
+      {
+        "name": "アスパラ",
+        "amount": "5本",
+        "is_spice": false
+      },
+      {
+        "name": "かぼちゃの種、ナッツ類 ",
+        "amount": "大1.5",
+        "is_spice": false
+      },
+      {
+        "name": "オリーブオイル",
+        "amount": "大2",
+        "is_spice": false
+      },
+      {
+        "name": "レモン汁",
+        "amount": "大１",
+        "is_spice": false
+      },
+      {
+        "name": "塩",
+        "amount": "少々",
+        "is_spice": false
+      },
+      {
+        "name": "パルメザンチーズ",
+        "amount": "たっぷり",
+        "is_spice": false
+      },
+      {
+        "name": "黒胡椒 ",
+        "amount": "たっぷり",
+        "is_spice": false
+      }
+    ],
+    "directions": [
+      {
+        "title": "アスパラは下半分の皮をむき、下から3.4センチ切り落とし、三等分に切る。",
+        "description": ""
+      },
+      {
+        "title": "お湯を沸かし、塩ひとつまみを加え、ニラを１分弱茹でる。さっと流水で冷まし、軽く手で絞ってから適当に切る。",
+        "description": ""
+      },
+      {
+        "title": "残ったお湯でパスタを時間通り茹でる。",
+        "description": ""
+      },
+      {
+        "title": "ナッツ類を適当に切って、ニラ、オイル、レモン汁、塩と一緒にミキサーにかけ、滑らかなペーストにする。",
+        "description": ""
+      },
+      {
+        "title": "パスタの茹で時間が残り2分になったらアスパラの一番下の部分を入れ、残り１分になったら穂先を入れパスタと一緒に茹でる。",
+        "description": ""
+      },
+      {
+        "title": "パスタとアスパラが茹で上がったらざるにあげ、また鍋に戻し、ペーストを加えて手早くよく混ぜる。",
+        "description": ""
+      },
+      {
+        "title": "盛り付けて、チーズと胡椒をかけて完成！",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "id": "9d6e3c91-2389-4374-bcf0-e38ed4f0d655",
+    "user_id": "ac8f5cfe-a34f-44b6-a8ea-66aff226baa3",
+    "title": "きのこの炊き込みご飯",
+    "summary": null,
+    "tags": [
+      "和食",
+      "時短",
+      "炊き込みご飯"
+    ],
+    "tips": null,
+    "cook_time": 10,
+    "servings": 2,
+    "image_url": null,
+    "source": "ゆとりの空間(栗原はるみ)",
+    "is_public": true,
+    "created_at": "2025-09-08 04:24:57.937+00",
+    "updated_at": "2025-09-08 04:24:58.989651+00",
+    "ingredients": [
+      {
+        "name": "米",
+        "amount": "2合",
+        "is_spice": false
+      },
+      {
+        "name": "しいたけ",
+        "amount": "1パック（100g）",
+        "is_spice": false
+      },
+      {
+        "name": "まいたけ",
+        "amount": "1パック（100g）",
+        "is_spice": false
+      },
+      {
+        "name": "しめじ",
+        "amount": "大1パック（200g）",
+        "is_spice": false
+      },
+      {
+        "name": "しょうゆ",
+        "amount": "大さじ1",
+        "is_spice": true
+      },
+      {
+        "name": "薄口しょうゆ",
+        "amount": "大さじ1",
+        "is_spice": true
+      },
+      {
+        "name": "みりん",
+        "amount": "大さじ1",
+        "is_spice": true
+      },
+      {
+        "name": "酒",
+        "amount": "大さじ1",
+        "is_spice": true
+      },
+      {
+        "name": "だし汁",
+        "amount": "1と1/2カップ",
+        "is_spice": true
+      },
+      {
+        "name": "塩",
+        "amount": "少々",
+        "is_spice": true
+      }
+    ],
+    "directions": [
+      {
+        "title": "米は洗ってざるに上げ、約15分おく。",
+        "description": ""
+      },
+      {
+        "title": "きのこは石づきを取り、しいたけは5mm幅の薄切り、まいたけ、しめじはほぐして長いものは半分に切る。",
+        "description": ""
+      },
+      {
+        "title": "[A]の調味料にだし汁、塩を加えてよく混ぜる。",
+        "description": ""
+      },
+      {
+        "title": "土鍋に米を入れてきのこをのせ、[3]を縁から注ぎ入れる。蓋をして強火にかけ、煮立ったら弱火にして約12分炊く。火を止めて約10分蒸らしたら、混ぜる。",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "id": "2bac0446-c0bb-4a32-b9a0-4b783ee31687",
+    "user_id": "ac8f5cfe-a34f-44b6-a8ea-66aff226baa3",
+    "title": "ピーマンとちくわのカレーソテー",
+    "summary": null,
+    "tags": [
+      "お弁当",
+      "時短"
+    ],
+    "tips": null,
+    "cook_time": 10,
+    "servings": 2,
+    "image_url": null,
+    "source": "つくりおき",
+    "is_public": true,
+    "created_at": "2025-09-08 04:27:01.184+00",
+    "updated_at": "2025-09-08 04:27:02.2458+00",
+    "ingredients": [
+      {
+        "name": "ピーマン",
+        "amount": "4～5個",
+        "is_spice": false
+      },
+      {
+        "name": "ちくわ",
+        "amount": "2～3本",
+        "is_spice": false
+      },
+      {
+        "name": "マヨネーズ",
+        "amount": "大2",
+        "is_spice": false
+      },
+      {
+        "name": "醤油",
+        "amount": "小1",
+        "is_spice": true
+      },
+      {
+        "name": "カレー粉",
+        "amount": "小1/2",
+        "is_spice": true
+      }
+    ],
+    "directions": [
+      {
+        "title": "ピーマンは細切りに、ちくわは横半分に切り、細切りにする。",
+        "description": ""
+      },
+      {
+        "title": "フライパンにマヨネーズを入れ、中火で熱する。溶けてきたらピーマンを入れ、しんなりするまで炒める。",
+        "description": ""
+      },
+      {
+        "title": "ちくわを入れ、炒め合わせ、(A)を入れ、全体に味がまわるよう炒め合わせて、完成！",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "id": "f57c0128-4908-4996-a3c3-a54ff527b8c7",
+    "user_id": "ac8f5cfe-a34f-44b6-a8ea-66aff226baa3",
+    "title": "とろ～りごまだれ バンバンジー",
+    "summary": "濃厚なごまだれでいただく、さっぱりなゆで鶏ときゅうり！ 酸味がないので食べやすい😋！",
+    "tags": [
+      "中華",
+      "メイン"
+    ],
+    "tips": "・鶏肉が浸かる量の水を使用！\\n→絶対浮かせない！",
+    "cook_time": 100,
+    "servings": 4,
+    "image_url": null,
+    "source": "ゆとりの空間(栗原はるみ)",
+    "is_public": true,
+    "created_at": "2025-09-08 03:43:10.119+00",
+    "updated_at": "2025-09-08 04:27:57.312146+00",
+    "ingredients": [
+      {
+        "name": "鶏むね肉",
+        "amount": "大1枚（350g）",
+        "is_spice": false
+      },
+      {
+        "name": "しょうが",
+        "amount": "1片",
+        "is_spice": false
+      },
+      {
+        "name": "長ねぎの青い部分",
+        "amount": "1本分",
+        "is_spice": false
+      },
+      {
+        "name": "(紹興)酒",
+        "amount": "大さじ1",
+        "is_spice": false
+      },
+      {
+        "name": "お湯",
+        "amount": "6カップ",
+        "is_spice": false
+      },
+      {
+        "name": "きゅうり",
+        "amount": "1本",
+        "is_spice": false
+      },
+      {
+        "name": "練りごま",
+        "amount": "50g",
+        "is_spice": true
+      },
+      {
+        "name": "しょうゆ",
+        "amount": "大さじ2",
+        "is_spice": true
+      },
+      {
+        "name": "砂糖",
+        "amount": "大さじ2",
+        "is_spice": true
+      },
+      {
+        "name": "酢",
+        "amount": "大さじ1",
+        "is_spice": true
+      },
+      {
+        "name": "長ねぎのみじん切り",
+        "amount": "大さじ2",
+        "is_spice": true
+      },
+      {
+        "name": "にんにくのみじん切り",
+        "amount": "小さじ2",
+        "is_spice": true
+      },
+      {
+        "name": "しょうがのみじん切り",
+        "amount": "小さじ2",
+        "is_spice": true
+      }
+    ],
+    "directions": [
+      {
+        "title": "鶏肉は中央の厚みのある部分に切り込みを入れる。",
+        "description": ""
+      },
+      {
+        "title": "長ねぎは縦半分に切り、しょうがはたたいてつぶす。",
+        "description": ""
+      },
+      {
+        "title": "鍋に分量の湯を沸かし、長ねぎ、しょうが、紹興酒を入れ、再び沸騰したら鶏肉を入れ、すぐに火を止めて蓋をし、そのまま約30分おいて余熱で中まで火を通す。",
+        "description": ""
+      },
+      {
+        "title": "鶏肉を取り出し、細く割く。",
+        "description": ""
+      },
+      {
+        "title": "きゅうりは長さを3等分にして細いせん切りにする。",
+        "description": ""
+      },
+      {
+        "title": "ごまだれを作る。ボウルに練りごまを入れ、調味料を加えて混ぜ合わせる。香味野菜は食べる直前に加える。",
+        "description": ""
+      },
+      {
+        "title": "器にきゅうりを盛って鶏肉をのせ、ごまだれをかける。",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "id": "5d580351-2624-43a3-83f3-e8a761baecac",
+    "user_id": "ac8f5cfe-a34f-44b6-a8ea-66aff226baa3",
+    "title": "ピーマンとちくわのきんぴら",
+    "summary": null,
+    "tags": [
+      "お弁当",
+      "時短"
+    ],
+    "tips": null,
+    "cook_time": 10,
+    "servings": 2,
+    "image_url": null,
+    "source": "つくりおき",
+    "is_public": true,
+    "created_at": "2025-09-08 04:29:54.788+00",
+    "updated_at": "2025-09-08 04:29:55.894766+00",
+    "ingredients": [
+      {
+        "name": "ピーマン",
+        "amount": "4～5個",
+        "is_spice": false
+      },
+      {
+        "name": "ちくわ",
+        "amount": "2～3本",
+        "is_spice": false
+      },
+      {
+        "name": "ごま油",
+        "amount": "大1",
+        "is_spice": false
+      },
+      {
+        "name": "酒",
+        "amount": "大1",
+        "is_spice": true
+      },
+      {
+        "name": "みりん",
+        "amount": "大1.5",
+        "is_spice": true
+      },
+      {
+        "name": "醤油",
+        "amount": "小2",
+        "is_spice": true
+      },
+      {
+        "name": "いりごま",
+        "amount": "適量",
+        "is_spice": true
+      }
+    ],
+    "directions": [
+      {
+        "title": "ピーマンは細切りに。ちくわは輪切りに。",
+        "description": ""
+      },
+      {
+        "title": "フライパンにごま油を熱し、ピーマン、ちくわを入れ、中火で全体に油がまわるよう炒め合わせる。",
+        "description": ""
+      },
+      {
+        "title": "(A)を入れ、汁気を飛ばす。",
+        "description": ""
+      },
+      {
+        "title": "醤油を入れ、全体に味がいきわたるよう炒め合わせ、仕上げにいりごまをふり、完成！",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "id": "68b4766e-5cb2-487e-a23a-fd82cc41a0d2",
+    "user_id": "ac8f5cfe-a34f-44b6-a8ea-66aff226baa3",
+    "title": "イカと菜の花の焦がしバターソテー",
+    "summary": null,
+    "tags": [
+      "洋食",
+      "副菜"
+    ],
+    "tips": "菜の花に、まんべんなくバターが染み込むようにする！泡が引いてきた頃に投入！！",
+    "cook_time": 30,
+    "servings": 2,
+    "image_url": null,
+    "source": "Kurashi(小堀紀代美)",
+    "is_public": true,
+    "created_at": "2025-09-08 04:34:41.267+00",
+    "updated_at": "2025-09-08 04:34:42.333188+00",
+    "ingredients": [
+      {
+        "name": "イカ",
+        "amount": "1杯(下処理済が楽)",
+        "is_spice": false
+      },
+      {
+        "name": "菜の花",
+        "amount": "6~7本",
+        "is_spice": false
+      },
+      {
+        "name": "ミニトマト",
+        "amount": "4個",
+        "is_spice": false
+      },
+      {
+        "name": "ニンニク",
+        "amount": "1/2片",
+        "is_spice": false
+      },
+      {
+        "name": "バター",
+        "amount": "20g(15+5g)",
+        "is_spice": false
+      },
+      {
+        "name": "（ケッパ）",
+        "amount": "大さじ1",
+        "is_spice": false
+      },
+      {
+        "name": "醤油",
+        "amount": "小さじ1/3",
+        "is_spice": false
+      },
+      {
+        "name": "白ワイン",
+        "amount": "大さじ1",
+        "is_spice": false
+      },
+      {
+        "name": "塩",
+        "amount": "少々",
+        "is_spice": false
+      },
+      {
+        "name": "黒こしょう",
+        "amount": "少々",
+        "is_spice": false
+      },
+      {
+        "name": "（レモン）",
+        "amount": "適宜",
+        "is_spice": false
+      }
+    ],
+    "directions": [
+      {
+        "title": "下ごしらえ",
+        "description": "イカはよく洗う。菜の花は根元を切り落として洗い、水気をよく切る。ミニトマトは横半分に切る。"
+      },
+      {
+        "title": "菜の花を炒める",
+        "description": "フライパンにバター15gを入れて中火にかける。バターが溶けたらニンニク、菜の花を入れて塩、こしょうを振り、香ばしく焼きつけていったん取り出す。"
+      },
+      {
+        "title": "イカを加える",
+        "description": "残りのバターを加え、溶けたらイカを入れてさっと炒め、ミニトマト、ケッパー、醤油、白ワインを加えて炒め合わせる。"
+      },
+      {
+        "title": "仕上げ",
+        "description": "器に盛ってこしょうを振り、好みでレモンを絞る。"
+      }
+    ]
+  },
+  {
+    "id": "774f4532-924d-4939-9361-7e04ee22b0d1",
+    "user_id": "ac8f5cfe-a34f-44b6-a8ea-66aff226baa3",
+    "title": "カニと長ねぎのグラタン",
+    "summary": null,
+    "tags": [
+      "洋食",
+      "メイン",
+      "オーブン"
+    ],
+    "tips": "ナツメグが隠し味で決め手なので、多めに入れても、ぐう！！",
+    "cook_time": 60,
+    "servings": 2,
+    "image_url": null,
+    "source": "Kurashi(真藤舞衣子)",
+    "is_public": true,
+    "created_at": "2025-09-08 04:51:07.606+00",
+    "updated_at": "2025-09-08 04:51:09.01658+00",
+    "ingredients": [
+      {
+        "name": "カニの缶詰",
+        "amount": "260g",
+        "is_spice": false
+      },
+      {
+        "name": "長ねぎ",
+        "amount": "1本",
+        "is_spice": false
+      },
+      {
+        "name": "牛乳",
+        "amount": "400mL",
+        "is_spice": false
+      },
+      {
+        "name": "生クリーム",
+        "amount": "100mL",
+        "is_spice": false
+      },
+      {
+        "name": "バター",
+        "amount": "大さじ1",
+        "is_spice": false
+      },
+      {
+        "name": "薄力粉",
+        "amount": "大さじ4",
+        "is_spice": false
+      },
+      {
+        "name": "ショートパスタ",
+        "amount": "120g",
+        "is_spice": false
+      },
+      {
+        "name": "オリーブ油",
+        "amount": "適量",
+        "is_spice": false
+      },
+      {
+        "name": "ナツメグ",
+        "amount": "少々",
+        "is_spice": false
+      },
+      {
+        "name": "塩",
+        "amount": "少々",
+        "is_spice": false
+      },
+      {
+        "name": "こしょう",
+        "amount": "少々",
+        "is_spice": false
+      },
+      {
+        "name": "シュレッドチーズ",
+        "amount": "50g",
+        "is_spice": false
+      },
+      {
+        "name": "パン粉",
+        "amount": "適量",
+        "is_spice": false
+      }
+    ],
+    "directions": [
+      {
+        "title": "下ごしらえ",
+        "description": "長ねぎは斜め薄切りにする。フライパンにオリーブ油を中火で熱し、長ねぎが色付くまで炒める。"
+      },
+      {
+        "title": "パスタをゆでる",
+        "description": "鍋に湯を沸かして塩適量（分量外）を入れ、パスタを表示どおり茹でる。"
+      },
+      {
+        "title": "ベシャメルソースを作る",
+        "description": "鍋にバター、薄力粉を入れて炒め、そこに冷たい牛乳、生クリームを少しずつ加えてソースを作る。ねぎとカニを加え、ねっとりするまで混ぜながら火を入れる。パスタ、ナツメグ、塩、こしょうを加えて味を調える。"
+      },
+      {
+        "title": "焼く",
+        "description": "容器に３を入れ、上にチーズ、パン粉をのせて200℃のオーブンで約15分、焦げ目が付くまで焼く。"
+      }
+    ]
+  },
+  {
+    "id": "78922649-b4c2-43d5-9d48-303ac78da7b6",
+    "user_id": "ac8f5cfe-a34f-44b6-a8ea-66aff226baa3",
+    "title": "白身魚のソテー～ジェノベーゼソースかけ",
+    "summary": "魚料理が手軽に、よそいきメニューに変身！\\n\\n",
+    "tags": [
+      "洋食",
+      "メイン",
+      "魚料理"
+    ],
+    "tips": null,
+    "cook_time": 25,
+    "servings": 2,
+    "image_url": null,
+    "source": "Kurashi(高梨亜里)",
+    "is_public": true,
+    "created_at": "2025-09-08 04:54:18.935+00",
+    "updated_at": "2025-09-08 04:54:19.867477+00",
+    "ingredients": [
+      {
+        "name": "鯛やたらの切り身",
+        "amount": "2切れ",
+        "is_spice": false
+      },
+      {
+        "name": "塩",
+        "amount": "少々",
+        "is_spice": false
+      },
+      {
+        "name": "こしょう",
+        "amount": "少々",
+        "is_spice": false
+      },
+      {
+        "name": "オリーブ油",
+        "amount": "適量",
+        "is_spice": false
+      },
+      {
+        "name": "青じそ",
+        "amount": "20枚",
+        "is_spice": true
+      },
+      {
+        "name": "くるみ",
+        "amount": "2個",
+        "is_spice": true
+      },
+      {
+        "name": "ニンニク",
+        "amount": "1/2かけ",
+        "is_spice": true
+      },
+      {
+        "name": "オリーブ油",
+        "amount": "大さじ3",
+        "is_spice": true
+      },
+      {
+        "name": "味噌",
+        "amount": "大さじ1",
+        "is_spice": true
+      }
+    ],
+    "directions": [
+      {
+        "title": "下味をつける",
+        "description": "魚に塩、こしょうをし、10分程度おいておく。"
+      },
+      {
+        "title": "ソースをつくる",
+        "description": "Aをミキサーで撹拌する。(みじん切りでもOK！)"
+      },
+      {
+        "title": "焼く",
+        "description": "フライパンに適量の油（分量外）を熱し、魚の皮目から焼く。片面焼けたらひっくり返して蓋をし、じっくりと火を通す。"
+      },
+      {
+        "title": "仕上げ",
+        "description": "(２)のソースを加えて煮からめる。"
+      }
+    ]
+  },
+  {
+    "id": "539dd88b-7b15-4380-8330-879515b60b79",
+    "user_id": "ac8f5cfe-a34f-44b6-a8ea-66aff226baa3",
+    "title": "ブリのみぞれ煮",
+    "summary": "焼いた後にお湯で油を落とすというひと手間が、美味しく仕上げるポイント！\\n\\n",
+    "tags": [
+      "和食",
+      "メイン",
+      "魚料理"
+    ],
+    "tips": "大根おろしは搾りすぎると味が抜けてしまうので、ザルに上げて自然に水きりするといいみたい。10 分ぐらい置けばOK！",
+    "cook_time": 40,
+    "servings": 2,
+    "image_url": null,
+    "source": "Kurashi(冷水希三子)",
+    "is_public": true,
+    "created_at": "2025-09-08 05:04:41.564+00",
+    "updated_at": "2025-09-08 05:04:42.827782+00",
+    "ingredients": [
+      {
+        "name": "ブリ",
+        "amount": "2切れ",
+        "is_spice": false
+      },
+      {
+        "name": "大根",
+        "amount": "10cm",
+        "is_spice": false
+      },
+      {
+        "name": "塩",
+        "amount": "小さじ1/3",
+        "is_spice": false
+      },
+      {
+        "name": "薄力粉",
+        "amount": "適量",
+        "is_spice": false
+      },
+      {
+        "name": "油",
+        "amount": "大さじ2",
+        "is_spice": false
+      },
+      {
+        "name": "ダシ汁",
+        "amount": "250cc",
+        "is_spice": true
+      },
+      {
+        "name": "酒",
+        "amount": "大さじ２",
+        "is_spice": true
+      },
+      {
+        "name": "みりん",
+        "amount": "大さじ1と1/2",
+        "is_spice": true
+      },
+      {
+        "name": "薄口醤油",
+        "amount": "大さじ1と1/2",
+        "is_spice": true
+      },
+      {
+        "name": "柚子の皮",
+        "amount": "適量",
+        "is_spice": true
+      }
+    ],
+    "directions": [
+      {
+        "title": "下ごしらえ",
+        "description": "ブリに塩をして冷蔵庫で1～2時間置く。大根はおろしてザルに上げ、10分ほど置いて水分を自然にきる。"
+      },
+      {
+        "title": "ブリを焼き、油を流す",
+        "description": "ブリの水気を拭き、薄力粉をはたき、フライパンに油を入れて両面を焼く。網の上において熱湯を回しかけ油を流す。"
+      },
+      {
+        "title": "煮る",
+        "description": "鍋にAを入れて中火にかけ、沸騰したら2のブリを入れ、５分ほど煮たら２の大根おろしを入れ、温まる程度に火を入れる。"
+      },
+      {
+        "title": "盛り付ける",
+        "description": "器に盛り、刻んだ柚子の皮を散らす。"
+      }
+    ]
+  },
+  {
+    "id": "605cbf9c-f244-4278-a724-7858a07fc7ca",
+    "user_id": "ac8f5cfe-a34f-44b6-a8ea-66aff226baa3",
+    "title": "トマトとベーコンの炊き込みご飯",
+    "summary": null,
+    "tags": [
+      "洋食",
+      "時短",
+      "炊き込みご飯"
+    ],
+    "tips": "・時間があれば、ベーコンはフライパンで焼き色が付くまでカリッと焼き、半分は炊飯器にいれ、もう半分は仕上げで混ぜる！\\n・葉は、苦手なら水菜でも！",
+    "cook_time": 15,
+    "servings": 2,
+    "image_url": null,
+    "source": "Kurashi(スズキエミ)",
+    "is_public": true,
+    "created_at": "2025-09-08 07:13:05.311+00",
+    "updated_at": "2025-09-08 07:15:32.994996+00",
+    "ingredients": [
+      {
+        "name": "米",
+        "amount": "1.5合",
+        "is_spice": false
+      },
+      {
+        "name": "ベーコン（ブロック）",
+        "amount": "60g",
+        "is_spice": false
+      },
+      {
+        "name": "トマト",
+        "amount": "1個",
+        "is_spice": false
+      },
+      {
+        "name": "ルッコラ、クレソン",
+        "amount": "散らす程度",
+        "is_spice": false
+      },
+      {
+        "name": "こしょう",
+        "amount": "適量",
+        "is_spice": false
+      },
+      {
+        "name": "塩",
+        "amount": "小さじ1/2",
+        "is_spice": true
+      },
+      {
+        "name": "酒",
+        "amount": "小さじ1",
+        "is_spice": true
+      },
+      {
+        "name": "オリーブ油",
+        "amount": "小さじ1",
+        "is_spice": true
+      }
+    ],
+    "directions": [
+      {
+        "title": "下準備",
+        "description": "ベーコンは1cm角の拍子切りにし、トマトは4等分に切る。"
+      },
+      {
+        "title": "ご飯を炊く",
+        "description": "炊飯器に米とＡを入れ水(気持ち少な目)を入れ、ベーコンとトマトをのせて炊く。"
+      },
+      {
+        "title": "仕上げ",
+        "description": "ざく切りにしたルッコラとクレソンをのせ、こしょうを振る。"
+      }
+    ]
+  },
+  {
+    "id": "9b854160-91ec-419e-ae36-fd762aaf2646",
+    "user_id": "ac8f5cfe-a34f-44b6-a8ea-66aff226baa3",
+    "title": "里芋と鶏肉の白味噌グラタン",
+    "summary": "ペンネやご飯を入れて主食にアレンジしても。",
+    "tags": [
+      "和食",
+      "洋食",
+      "メイン",
+      "オーブン"
+    ],
+    "tips": "里芋は沸騰しないようにトロ火で蒸し煮にする。ソースもとろみがつくまで弱火で煮る。",
+    "cook_time": 60,
+    "servings": 2,
+    "image_url": null,
+    "source": "Kurashi(TORi)",
+    "is_public": true,
+    "created_at": "2025-09-08 07:19:05.672+00",
+    "updated_at": "2025-09-08 07:19:06.390731+00",
+    "ingredients": [
+      {
+        "name": "里芋",
+        "amount": "3個",
+        "is_spice": false
+      },
+      {
+        "name": "オリーブ油",
+        "amount": "大さじ1と1/2",
+        "is_spice": false
+      },
+      {
+        "name": "水",
+        "amount": "1/2カップ",
+        "is_spice": false
+      },
+      {
+        "name": "牛乳または豆乳",
+        "amount": "1/2カップ",
+        "is_spice": false
+      },
+      {
+        "name": "塩",
+        "amount": "適量",
+        "is_spice": false
+      },
+      {
+        "name": "白味噌",
+        "amount": "大さじ1",
+        "is_spice": false
+      },
+      {
+        "name": "鶏もも肉",
+        "amount": "1枚",
+        "is_spice": false
+      },
+      {
+        "name": "舞茸",
+        "amount": "1パック",
+        "is_spice": false
+      },
+      {
+        "name": "玉ねぎ",
+        "amount": "1/2個",
+        "is_spice": false
+      },
+      {
+        "name": "塩",
+        "amount": "小さじ1弱",
+        "is_spice": false
+      },
+      {
+        "name": "黒こしょう",
+        "amount": "適量",
+        "is_spice": false
+      },
+      {
+        "name": "とろけるチーズ",
+        "amount": "適量",
+        "is_spice": false
+      }
+    ],
+    "directions": [
+      {
+        "title": "里芋ソースを作る",
+        "description": "鍋に油大さじ１を熱し、１cmの厚さに切った里芋を加え、油がなじんだら水を加える。蓋をし、弱火で里芋にすっと串が刺さるまで(12分位)蒸し煮にする。火が通ったらグラタンの具材用に6カット分ほど取り分けておく。鍋に牛乳または豆乳を加えブレンダーで撹拌し、（なければフォークなどでつぶす）とろみがつくまで弱火で加熱。白味噌、塩２つまみ、こしょうで味を調える。"
+      },
+      {
+        "title": "具に火を通す",
+        "description": "鶏肉に塩小さじ１弱、こしょうをして、熱したフライパンに油大さじ１/２を敷いて皮目から焼く。こんがり色づいたらひっくり返し、玉ねぎも入れて焼き目がつくように炒める。舞茸を加えて火を全体的に混ぜて火を通す。（フライパンが小さければ鶏肉を焼いて取り出し、そのままのフライパンで玉ねぎと舞茸を炒める）"
+      },
+      {
+        "title": "焼く",
+        "description": "フライパンに (１)で取り分けておいた里芋を戻し、里芋ソースを加えて絡める。グラタン皿に入れチーズをかけて250℃に熱したオーブンで10分加熱。"
+      }
+    ]
+  },
+  {
+    "id": "aa19aa84-bfa1-499e-9e7d-d40a128a25d2",
+    "user_id": "ac8f5cfe-a34f-44b6-a8ea-66aff226baa3",
+    "title": "大豆のファラフェル",
+    "summary": null,
+    "tags": [
+      "洋食",
+      "副菜"
+    ],
+    "tips": null,
+    "cook_time": 40,
+    "servings": 2,
+    "image_url": null,
+    "source": "Kurashi(天野朋子)",
+    "is_public": true,
+    "created_at": "2025-09-08 07:14:58.74+00",
+    "updated_at": "2025-09-09 01:08:38.92722+00",
+    "ingredients": [
+      {
+        "name": "ゆで大豆",
+        "amount": "1カップ",
+        "is_spice": false
+      },
+      {
+        "name": "ニンニク",
+        "amount": "1/2切れ",
+        "is_spice": false
+      },
+      {
+        "name": "玉ねぎ",
+        "amount": "1/4個",
+        "is_spice": false
+      },
+      {
+        "name": "クミンパウダー",
+        "amount": "少々",
+        "is_spice": false
+      },
+      {
+        "name": "塩",
+        "amount": "少々",
+        "is_spice": false
+      },
+      {
+        "name": "小麦粉、パン粉、揚げ油",
+        "amount": "適量",
+        "is_spice": false
+      }
+    ],
+    "directions": [
+      {
+        "title": "下ごしらえ",
+        "description": "ニンニクとみじん切りにした玉ねぎを炒め、塩を加える。"
+      },
+      {
+        "title": "成形する",
+        "description": "ゆで大豆はすり鉢、すりこぎで原型がなくなるまで潰し、1を混ぜて６個にまとめる。"
+      },
+      {
+        "title": "揚げる",
+        "description": "2に小麦粉をまぶし、溶き粉（小麦粉を水少々で溶いたもの）、パン粉（フードプロセッサーにかけてさらに細かくし、塩とクミンパウダーを少々加えたもの）をつけて色よく揚げる。"
+      }
+    ]
+  },
+  {
+    "id": "a6c75c91-6fdb-4d75-abaf-af96695164fb",
+    "user_id": "ac8f5cfe-a34f-44b6-a8ea-66aff226baa3",
+    "title": "ミニトマトとたらこのパスタ",
+    "summary": null,
+    "tags": [
+      "洋食",
+      "時短",
+      "メイン",
+      "パスタ"
+    ],
+    "tips": "アイコが濃厚で美味しい😋♡",
+    "cook_time": 15,
+    "servings": 2,
+    "image_url": "https://hsjbtgctzfkncwianizn.supabase.co/storage/v1/object/public/recipe-images/ac8f5cfe-a34f-44b6-a8ea-66aff226baa3_a6c75c91-6fdb-4d75-abaf-af96695164fb_1757394715367_itztrq.webp",
+    "source": "Kurashi(成沢正胡)",
+    "is_public": true,
+    "created_at": "2025-09-08 04:58:37.66+00",
+    "updated_at": "2025-09-09 05:54:05.937781+00",
+    "ingredients": [
+      {
+        "name": "ミニトマト",
+        "amount": "15～18個（200g）",
+        "is_spice": false
+      },
+      {
+        "name": "オリーブ油",
+        "amount": "大さじ1",
+        "is_spice": false
+      },
+      {
+        "name": "たらこ",
+        "amount": "60～80g（1腹分）",
+        "is_spice": false
+      },
+      {
+        "name": "パスタ",
+        "amount": "140g",
+        "is_spice": false
+      },
+      {
+        "name": "刻みのり",
+        "amount": "適量",
+        "is_spice": false
+      },
+      {
+        "name": "（シソ）",
+        "amount": "5～6枚",
+        "is_spice": false
+      }
+    ],
+    "directions": [
+      {
+        "title": "パスタを茹でる",
+        "description": "パスタを表示時間通りに茹でる。"
+      },
+      {
+        "title": "下ごしらえ",
+        "description": "ミニトマトは４等分。たらこは薄皮を剥いてほぐす。"
+      },
+      {
+        "title": "ソースをつくる",
+        "description": "フライパンにオリーブオイルを温め、ミニトマトをほぐしながら炒める。軽くソース状になったら、たらこを合わせる。"
+      },
+      {
+        "title": "仕上げ",
+        "description": "茹でたパスタをフライパンに入れ、ソースに絡める。"
+      },
+      {
+        "title": "盛りつけて完成！！",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "id": "8002f732-429b-41ad-b9fb-352787093e1d",
+    "user_id": "ac8f5cfe-a34f-44b6-a8ea-66aff226baa3",
+    "title": "地三鮮（ディーサンセン）",
+    "summary": "旬の野菜を3つ合わせて作る、中国東北地方の名物料理“地三鮮（ディーサンセン）”！",
+    "tags": [
+      "中華",
+      "時短",
+      "副菜"
+    ],
+    "tips": "・ナスは水にさらさない！\\n「ナスのアクも旨味」と考えて、ナスは水にさらさず、切ったらそのままフライパンへ。油がはねず、調理もしやすい！\\n・野菜は皮をむいたり、種をとったりせずに調理する。野菜は中心より、皮がある外側に栄養が多く集まっているので、そのまま調理することでより効率よく栄養をとることができる。",
+    "cook_time": 20,
+    "servings": 2,
+    "image_url": "https://hsjbtgctzfkncwianizn.supabase.co/storage/v1/object/public/recipe-images/ac8f5cfe-a34f-44b6-a8ea-66aff226baa3_temp-1757316179682_1757316180325_6ua54w.webp",
+    "source": "Kurashi(荻野恭子)",
+    "is_public": true,
+    "created_at": "2025-09-08 07:23:02.448+00",
+    "updated_at": "2025-09-09 06:07:45.943764+00",
+    "ingredients": [
+      {
+        "name": "ナス",
+        "amount": "３個",
+        "is_spice": false
+      },
+      {
+        "name": "ピーマン",
+        "amount": "２個",
+        "is_spice": false
+      },
+      {
+        "name": "ジャガイモ",
+        "amount": "１個",
+        "is_spice": false
+      },
+      {
+        "name": "長ねぎ",
+        "amount": "１/８本",
+        "is_spice": false
+      },
+      {
+        "name": "ショウガ",
+        "amount": "１片",
+        "is_spice": false
+      },
+      {
+        "name": "油",
+        "amount": "大さじ3",
+        "is_spice": false
+      },
+      {
+        "name": "ごま油",
+        "amount": "小さじ１",
+        "is_spice": false
+      },
+      {
+        "name": "酒",
+        "amount": "大さじ1と1/2",
+        "is_spice": true
+      },
+      {
+        "name": "醤油",
+        "amount": "大さじ1と1/2",
+        "is_spice": true
+      },
+      {
+        "name": "砂糖",
+        "amount": "大さじ1と1/2",
+        "is_spice": true
+      },
+      {
+        "name": "片栗粉",
+        "amount": "小さじ1（水大さじ1で溶く）",
+        "is_spice": true
+      }
+    ],
+    "directions": [
+      {
+        "title": "食材を切る",
+        "description": "ナス、ピーマン、ジャガイモは乱切りにする。長ねぎは斜めぶつ切り、ショウガは皮つきのまま薄切り、唐辛子は小口切りにする。"
+      },
+      {
+        "title": "炒める",
+        "description": "フライパンに油を熱し、ジャガイモ入れ中火で炒め揚げし、ナスを加えて炒める。"
+      },
+      {
+        "title": "仕上げる",
+        "description": "２にピーマン、長ねぎ、ショウガを加え、さらに炒める。＜Ａ＞を加えて混ぜ、最後にごま油を回し入れる。"
+      }
+    ]
+  }
+]

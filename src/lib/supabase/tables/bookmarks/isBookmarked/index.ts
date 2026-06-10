@@ -1,1 +1,0 @@
-export { isBookmarked } from './isBookmarked'

@@ -10,7 +10,7 @@ import { useFormContext, Controller } from 'react-hook-form'
 import type { RecipeForm } from '@/types/recipe'
 
 import { IconButton, ErrorText, H2 } from '@/components/ui'
-import { validateImage, deleteImage } from '@/lib/supabase/storage'
+import { validateImage, deleteImage } from '@/lib/db/storage'
 
 type Props = {
   onImageChange?: (file: File | null, preview: string) => void
@@ -18,7 +18,7 @@ type Props = {
 }
 
 async function handleImageRemove(imageUrl?: string): Promise<void> {
-  if (imageUrl && imageUrl.includes('supabase')) {
+  if (imageUrl && imageUrl.includes('blob.vercel-storage.com')) {
     try {
       await deleteImage(imageUrl)
     } catch (err) {

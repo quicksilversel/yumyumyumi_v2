@@ -10,8 +10,8 @@ import type { Recipe, RecipeFormInput } from '@/types/recipe'
 
 import { Button, Dialog } from '@/components/ui'
 import { useAuth } from '@/contexts/AuthContext'
-import { uploadImage } from '@/lib/supabase/storage'
-import { createRecipe } from '@/lib/supabase/tables/recipe/createRecipe'
+import { createRecipe } from '@/lib/db/queries/recipe'
+import { uploadImage } from '@/lib/db/storage'
 import { recipeFormSchema } from '@/types/recipe'
 
 import { RecipeForm as RecipeFormComponent } from './RecipeForm/RecipeForm'

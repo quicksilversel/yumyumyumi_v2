@@ -4,7 +4,7 @@ import LocalOfferIcon from '@mui/icons-material/LocalOffer'
 import { useRouter, useSearchParams } from 'next/navigation'
 
 import { Dropdown, type DropdownOption } from '@/components/ui/Dropdown'
-import { getAllTagsFromRecipes } from '@/lib/supabase/tables/recipe/getAllTagsFromRecipes/getAllTagsFromRecipes'
+import { getAllTags } from '@/lib/db/queries/recipe'
 
 type Props = {
   selectedTag: string | null
@@ -26,7 +26,7 @@ export const TagFilter = ({
   useEffect(() => {
     const fetchTags = async () => {
       try {
-        const tags = await getAllTagsFromRecipes()
+        const tags = await getAllTags()
         setAvailableTags(tags)
       } catch (error) {
         // eslint-disable-next-line no-console

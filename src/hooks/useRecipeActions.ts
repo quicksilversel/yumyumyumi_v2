@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation'
 
 import type { Recipe } from '@/types/recipe'
 
-import { deleteRecipe } from '@/lib/supabase/tables/recipe/deleteRecipe'
+import { deleteRecipe } from '@/lib/db/queries/recipe'
 
 interface UseRecipeActionsOptions {
   onEditOpen?: (recipe: Recipe) => void

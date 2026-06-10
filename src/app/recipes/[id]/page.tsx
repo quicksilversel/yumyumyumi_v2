@@ -1,15 +1,15 @@
 import { notFound } from 'next/navigation'
 
 import { RecipeDetail } from '@/components/pages/Recipe/Recipe'
-import { getRecipeByIdFromSupabase } from '@/lib/supabase/tables/recipe/getRecipeByIdFromSupabase'
-import { getRecipesFromSupabase } from '@/lib/supabase/tables/recipe/getRecipesFromSupabase'
+import { getRecipeById } from '@/lib/db/queries/recipe/getRecipeById'
+import { getRecipes } from '@/lib/db/queries/recipe/getRecipes'
 
 export const revalidate = 3600 // 1 hour
 
 export const dynamicParams = true
 
 export async function generateStaticParams() {
-  const recipes = await getRecipesFromSupabase()
+  const recipes = await getRecipes()
 
   return recipes.map((recipe) => ({
     id: recipe.id,
@@ -22,7 +22,7 @@ export async function generateMetadata({
   params: Promise<{ id: string }>
 }) {
   const { id } = await params
-  const recipe = await getRecipeByIdFromSupabase(id)
+  const recipe = await getRecipeById(id)
 
   if (!recipe) {
     return {
@@ -42,7 +42,7 @@ export default async function RecipePage({
   params: Promise<{ id: string }>
 }) {
   const { id } = await params
-  const recipe = await getRecipeByIdFromSupabase(id)
+  const recipe = await getRecipeById(id)
 
   if (!recipe) {
     notFound()
