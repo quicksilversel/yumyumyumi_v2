@@ -1,4 +1,6 @@
+import { css } from '@emotion/react'
 import styled from '@emotion/styled'
+import CloseIcon from '@mui/icons-material/Close'
 
 type Props = {
   searchTerm: string
@@ -6,16 +8,31 @@ type Props = {
 }
 
 export const SearchBar = ({ searchTerm, onSearchChange }: Props) => {
+  const hasValue = searchTerm.length > 0
+
   return (
     <Container role="search">
-      <SearchInput
-        id="search-input"
-        type="text"
-        placeholder="料理名・食材でレシピを探す"
-        value={searchTerm}
-        onChange={(e) => onSearchChange(e.target.value)}
-        className="search-input"
-      />
+      <InputWrapper>
+        <SearchInput
+          id="search-input"
+          type="text"
+          placeholder="料理名・食材でレシピを探す"
+          value={searchTerm}
+          onChange={(e) => onSearchChange(e.target.value)}
+          className="search-input"
+          hasValue={hasValue}
+        />
+        {hasValue && (
+          <ClearButton
+            type="button"
+            aria-label="検索をクリア"
+            onMouseDown={(e) => e.preventDefault()}
+            onClick={() => onSearchChange('')}
+          >
+            <CloseIcon fontSize="small" />
+          </ClearButton>
+        )}
+      </InputWrapper>
     </Container>
   )
 }
@@ -27,10 +44,16 @@ const Container = styled.form`
   margin: ${({ theme }) => theme.spacing[6]} auto;
 `
 
-const SearchInput = styled.input`
+const InputWrapper = styled.div`
+  position: relative;
+  width: 100%;
+`
+
+const SearchInput = styled.input<{ hasValue: boolean }>`
   width: 100%;
   padding: 12px 24px;
-  font-size: 14px;
+  /* 16px keeps iOS Safari from zooming the page when the field is focused */
+  font-size: 16px;
   line-height: 18px;
   color: #575756;
   background-color: transparent;
@@ -58,5 +81,43 @@ const SearchInput = styled.input`
     border: 1px solid transparent;
     border-bottom: 1px solid #575756;
     border-radius: 0;
+  }
+
+  ${({ hasValue }) =>
+    hasValue &&
+    css`
+      background-image: none;
+      padding-right: 44px;
+
+      &:hover,
+      &:focus {
+        padding-right: 44px;
+      }
+    `}
+`
+
+const ClearButton = styled.button`
+  position: absolute;
+  top: 50%;
+  right: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  color: #575756;
+  cursor: pointer;
+  background: none;
+  border: none;
+  transform: translateY(-50%);
+  transition: opacity ${({ theme }) => theme.transition.default};
+
+  &:hover {
+    opacity: 0.6;
+  }
+
+  &:focus-visible {
+    border-radius: 50%;
+    outline: 2px solid #575756;
+    outline-offset: 2px;
   }
 `

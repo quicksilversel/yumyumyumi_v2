@@ -41,6 +41,7 @@ function RecipeListInner({ initialRecipes }: RecipeListProps) {
 
   const [selectedSort, setSelectedSort] = useState<SortOption>('date-desc')
   const hasInitialized = useRef(false)
+  const hasFilteredOnce = useRef(false)
 
   const getFiltersFromParams = useCallback((): RecipeFilters => {
     const filters: RecipeFilters = {}
@@ -121,13 +122,19 @@ function RecipeListInner({ initialRecipes }: RecipeListProps) {
   useEffect(() => {
     if (!hasInitialized.current && initialRecipes) {
       setRecipes(initialRecipes)
-      setLoading(false)
       hasInitialized.current = true
     }
-  }, [initialRecipes, setRecipes, setLoading])
+  }, [initialRecipes, setRecipes])
 
   useEffect(() => {
     if (!hasInitialized.current) return
+    if (
+      !hasFilteredOnce.current &&
+      initialRecipes.length > 0 &&
+      recipes.length === 0
+    ) {
+      return
+    }
 
     let filtered = recipes
 
@@ -150,8 +157,11 @@ function RecipeListInner({ initialRecipes }: RecipeListProps) {
 
     filtered = sortRecipes(filtered, selectedSort)
     setFilteredRecipes(filtered)
+    hasFilteredOnce.current = true
+    setLoading(false)
   }, [
     recipes,
+    initialRecipes,
     searchParams,
     clientSearchTerm,
     selectedSort,
@@ -160,6 +170,7 @@ function RecipeListInner({ initialRecipes }: RecipeListProps) {
     filterRecipesClientSide,
     sortRecipes,
     setFilteredRecipes,
+    setLoading,
   ])
 
   return (
