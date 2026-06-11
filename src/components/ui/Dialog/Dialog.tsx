@@ -126,10 +126,14 @@ export const DialogContent = styled.div<{
 `
 
 export const DialogHeader = styled.div`
+  position: sticky;
+  top: 0;
+  z-index: 10;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: ${({ theme }) => theme.spacing[6]};
+  padding: ${({ theme }) => theme.spacing[5]} ${({ theme }) => theme.spacing[6]};
+  background-color: ${({ theme }) => theme.colors.white};
   border-bottom: 1px solid ${({ theme }) => theme.colors.gray[200]};
 `
 
@@ -145,10 +149,14 @@ export const DialogBody = styled.div`
 `
 
 export const DialogActions = styled.div`
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
   display: flex;
   gap: ${({ theme }) => theme.spacing[3]};
   align-items: center;
   justify-content: flex-end;
-  padding: ${({ theme }) => theme.spacing[6]};
-  padding-top: 0;
+  padding: ${({ theme }) => theme.spacing[4]} ${({ theme }) => theme.spacing[6]};
+  background-color: ${({ theme }) => theme.colors.white};
+  border-top: 1px solid ${({ theme }) => theme.colors.gray[200]};
 `

@@ -1,7 +1,6 @@
 import { useState } from 'react'
 
 import styled from '@emotion/styled'
-import Image from 'next/image'
 
 import type { Recipe } from '@/types/recipe'
 
@@ -9,12 +8,12 @@ import { DeleteRecipeModal } from '@/components/pages/Modals/DeleteRecipeModal'
 import { EditRecipeDialog } from '@/components/pages/Modals/EditRecipeDialog'
 import { BookmarkButton } from '@/components/ui/BookmarkButton'
 import { MoreActions } from '@/components/ui/MoreActions'
+import { RecipeImage } from '@/components/ui/RecipeImage'
 import { useAuth } from '@/contexts/AuthContext'
 import { useRecipeActions } from '@/hooks/useRecipeActions'
 
 export const Hero = ({ recipe }: { recipe: Recipe }) => {
   const { user } = useAuth()
-  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
   const [currentRecipe, setCurrentRecipe] = useState(recipe)
 
   const {
@@ -23,7 +22,11 @@ export const Hero = ({ recipe }: { recipe: Recipe }) => {
     setEditDialogOpen,
     handleEdit,
     handleDelete,
-  } = useRecipeActions(currentRecipe)
+    deleteDialogOpen,
+    setDeleteDialogOpen,
+    confirmDelete,
+    deleteError,
+  } = useRecipeActions(currentRecipe, { redirectOnDelete: true })
 
   const isOwner = user && currentRecipe.userId === user.id
 
@@ -35,14 +38,10 @@ export const Hero = ({ recipe }: { recipe: Recipe }) => {
   return (
     <ImageContent>
       <ImageContainer>
-        <Image
-          src={
-            recipe.imageUrl ||
-            'https://images.unsplash.com/photo-1614597330453-ecf2c06e1f55?w=800'
-          }
+        <RecipeImage
+          src={recipe.imageUrl}
           alt={recipe.title}
-          fill
-          objectFit="cover"
+          seed={recipe.id}
           priority
           sizes="(max-width: 1200px) 100vw, 1200px"
         />
@@ -64,7 +63,10 @@ export const Hero = ({ recipe }: { recipe: Recipe }) => {
       <DeleteRecipeModal
         open={deleteDialogOpen}
         onClose={() => setDeleteDialogOpen(false)}
-        recipe={currentRecipe}
+        onConfirm={confirmDelete}
+        isDeleting={isDeleting}
+        recipeTitle={currentRecipe.title}
+        error={deleteError}
       />
     </ImageContent>
   )

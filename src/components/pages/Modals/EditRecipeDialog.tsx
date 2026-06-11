@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react'
 
-import styled from '@emotion/styled'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm, FormProvider, SubmitHandler } from 'react-hook-form'
 
@@ -14,7 +13,7 @@ import { updateRecipe } from '@/lib/db/queries/recipe'
 import { uploadImage, deleteImage } from '@/lib/db/storage'
 import { recipeFormSchema } from '@/types/recipe'
 
-import { RecipeForm as RecipeFormComponent } from './RecipeForm/RecipeForm'
+import { RecipeForm as RecipeFormComponent } from './RecipeForm'
 
 type EditRecipeDialogProps = {
   open: boolean
@@ -67,7 +66,7 @@ export function EditRecipeDialog({
     }
 
     if (!recipe.id) {
-      setError('root', { message: 'Recipe ID is missing' })
+      setError('root', { message: 'レシピIDが見つかりません' })
       return
     }
 
@@ -86,7 +85,7 @@ export function EditRecipeDialog({
           try {
             await deleteImage(recipe.imageUrl)
           } catch (err) {
-            window.alert('Error Deleting old image')
+            console.warn('Failed to delete old image:', err)
           }
         }
 
@@ -94,7 +93,7 @@ export function EditRecipeDialog({
 
         if (result.error) {
           setError('root', {
-            message: `Failed to upload image: ${result.error}`,
+            message: `画像のアップロードに失敗しました: ${result.error}`,
           })
           setUploadingImage(false)
           setLoading(false)
@@ -141,7 +140,7 @@ export function EditRecipeDialog({
   }
 
   const formErrors = errors.root
-    ? [errors.root.message || 'An error occurred']
+    ? [errors.root.message || 'エラーが発生しました']
     : []
 
   return (
@@ -151,7 +150,7 @@ export function EditRecipeDialog({
       maxWidth="lg"
       title="レシピを編集"
       actions={
-        <DialogActions>
+        <>
           <Button
             variant="ghost"
             size="sm"
@@ -168,7 +167,7 @@ export function EditRecipeDialog({
           >
             {loading ? '更新中...' : '更新する'}
           </Button>
-        </DialogActions>
+        </>
       }
     >
       <FormProvider {...methods}>
@@ -181,10 +180,3 @@ export function EditRecipeDialog({
     </Dialog>
   )
 }
-
-const DialogActions = styled.div`
-  display: flex;
-  gap: ${({ theme }) => theme.spacing[3]};
-  justify-content: flex-end;
-  margin-top: ${({ theme }) => theme.spacing[6]};
-`

@@ -8,8 +8,6 @@ import { recipes } from '@/lib/db/schema'
 import { isValidOf } from '@/lib/functions/isValidOf'
 import { recipeSchema } from '@/types/recipe'
 
-// Caching is handled at the route level via `export const revalidate` and
-// on-demand `revalidatePath` calls in the mutation actions.
 export async function getRecipeById(id: string): Promise<Recipe | null> {
   try {
     const [data] = await db

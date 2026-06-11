@@ -1,75 +1,53 @@
 'use client'
 
-import { useState } from 'react'
-
 import styled from '@emotion/styled'
-import { useRouter } from 'next/navigation'
 
-import type { Recipe } from '@/types/recipe'
-
-import { Button, Dialog, Body } from '@/components/ui'
-import { deleteRecipe } from '@/lib/db/queries/recipe'
+import { Button, Dialog, Body, ErrorText } from '@/components/ui'
 
 type Props = {
   open: boolean
   onClose: () => void
-  recipe: Recipe
-  onRecipeUpdated?: (recipe: Recipe) => void
+  onConfirm: () => void
+  recipeTitle: string
+  isDeleting?: boolean
+  error?: string | null
 }
 
-export const DeleteRecipeModal = ({ recipe, open, onClose }: Props) => {
-  const router = useRouter()
-
-  const [isDeleting, setIsDeleting] = useState(false)
-
-  const handleDelete = async () => {
-    setIsDeleting(true)
-    const success = await deleteRecipe(recipe.id)
-    if (success) {
-      router.push('/')
-    } else {
-      alert(
-        'ご迷惑をお掛けし申し訳ありません。\n時間をおいて再度お試しください。',
-      )
-    }
-    setIsDeleting(false)
-    onClose()
-  }
-
+export const DeleteRecipeModal = ({
+  open,
+  onClose,
+  onConfirm,
+  recipeTitle,
+  isDeleting = false,
+  error,
+}: Props) => {
   return (
     <Dialog
       open={open}
       onClose={onClose}
-      title="Delete Recipe"
+      title="レシピを削除"
       actions={
-        <DialogActions>
+        <>
           <Button variant="ghost" onClick={onClose} disabled={isDeleting}>
             キャンセル
           </Button>
-          <Button
-            variant="primary"
-            onClick={handleDelete}
-            disabled={isDeleting}
-          >
+          <Button variant="primary" onClick={onConfirm} disabled={isDeleting}>
             {isDeleting ? '削除中...' : '削除する'}
           </Button>
-        </DialogActions>
+        </>
       }
     >
       <DialogContent>
-        <Body>「{recipe.title}」を削除しますか？</Body>
+        <Body>「{recipeTitle}」を削除しますか？</Body>
+        {error && <ErrorText>{error}</ErrorText>}
       </DialogContent>
     </Dialog>
   )
 }
 
 const DialogContent = styled.div`
-  padding: ${({ theme }) => theme.spacing[4]};
-`
-
-const DialogActions = styled.div`
   display: flex;
-  gap: ${({ theme }) => theme.spacing[3]};
-  justify-content: flex-end;
-  margin-top: ${({ theme }) => theme.spacing[6]};
+  flex-direction: column;
+  gap: ${({ theme }) => theme.spacing[2]};
+  padding: ${({ theme }) => theme.spacing[4]};
 `

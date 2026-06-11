@@ -227,7 +227,7 @@ const AddTagButton = styled(Button)`
   flex-shrink: 0;
   gap: ${({ theme }) => theme.spacing[1]};
   align-items: center;
-  height: 48px; /* Match input height */
+  height: 48px;
   font-size: ${({ theme }) => theme.typography.fontSize.sm};
 `
 

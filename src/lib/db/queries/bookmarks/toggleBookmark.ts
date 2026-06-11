@@ -7,10 +7,6 @@ import { auth } from '@/auth'
 import { db } from '@/lib/db'
 import { bookmarks } from '@/lib/db/schema'
 
-/**
- * Toggles a bookmark for the current user. Returns the new state
- * (true = now bookmarked, false = now removed).
- */
 export async function toggleBookmark(recipeId: string): Promise<boolean> {
   try {
     const session = await auth()

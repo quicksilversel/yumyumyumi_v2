@@ -1,19 +1,16 @@
 import styled from '@emotion/styled'
-import Image from 'next/image'
 
 import type { Recipe } from '@/types/recipe'
+
+import { RecipeImage } from '@/components/ui/RecipeImage'
 
 export const RecipeCardHead = ({ recipe }: { recipe: Recipe }) => {
   return (
     <Container>
-      <Image
-        src={
-          recipe.imageUrl ||
-          'https://images.unsplash.com/photo-1614597330453-ecf2c06e1f55?w=800'
-        }
+      <RecipeImage
+        src={recipe.imageUrl}
         alt={recipe.title}
-        fill
-        objectFit="cover"
+        seed={recipe.id}
         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
       />
 

@@ -2,7 +2,6 @@
 
 import { useState } from 'react'
 
-import styled from '@emotion/styled'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm, FormProvider } from 'react-hook-form'
 
@@ -82,7 +81,7 @@ export function AddRecipeDialog({
 
         if (result.error) {
           setError('root', {
-            message: `Failed to upload image: ${result.error}`,
+            message: `画像のアップロードに失敗しました: ${result.error}`,
           })
           setUploadingImage(false)
           setLoading(false)
@@ -109,12 +108,12 @@ export function AddRecipeDialog({
         handleClose()
       } else {
         setError('root', {
-          message: 'Failed to create recipe. Please try again.',
+          message: 'レシピの作成に失敗しました。もう一度お試しください。',
         })
       }
     } catch (err) {
       setError('root', {
-        message: 'An unexpected error occurred. Please try again.',
+        message: '予期しないエラーが発生しました。もう一度お試しください。',
       })
     } finally {
       setLoading(false)
@@ -139,7 +138,7 @@ export function AddRecipeDialog({
       maxWidth="lg"
       title="新規作成"
       actions={
-        <DialogActions>
+        <>
           <Button
             variant="ghost"
             onClick={handleClose}
@@ -156,7 +155,7 @@ export function AddRecipeDialog({
           >
             {loading ? '作成中...' : 'レシピを作成する'}
           </Button>
-        </DialogActions>
+        </>
       }
     >
       <FormProvider {...methods}>
@@ -169,10 +168,3 @@ export function AddRecipeDialog({
     </Dialog>
   )
 }
-
-const DialogActions = styled.div`
-  display: flex;
-  gap: ${({ theme }) => theme.spacing[3]};
-  justify-content: flex-end;
-  margin-top: ${({ theme }) => theme.spacing[6]};
-`

@@ -18,6 +18,8 @@ export const useRecipeActions = (
 ) => {
   const [isDeleting, setIsDeleting] = useState(false)
   const [editDialogOpen, setEditDialogOpen] = useState(false)
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
+  const [deleteError, setDeleteError] = useState<string | null>(null)
   const router = useRouter()
 
   const handleEdit = () => {
@@ -27,24 +29,28 @@ export const useRecipeActions = (
       setEditDialogOpen(true)
     }
   }
+  const handleDelete = () => {
+    setDeleteError(null)
+    setDeleteDialogOpen(true)
+  }
 
-  const handleDelete = async () => {
-    if (window.confirm(`${recipe.title}」を削除しますか？`)) {
-      setIsDeleting(true)
-      const success = await deleteRecipe(recipe.id)
-      if (success) {
-        if (options.onDeleteSuccess) {
-          options.onDeleteSuccess()
-        } else if (options.redirectOnDelete) {
-          router.push('/')
-        } else {
-          window.location.reload()
-        }
+  const confirmDelete = async () => {
+    setIsDeleting(true)
+    setDeleteError(null)
+    const success = await deleteRecipe(recipe.id)
+    if (success) {
+      setDeleteDialogOpen(false)
+      if (options.onDeleteSuccess) {
+        options.onDeleteSuccess()
+      } else if (options.redirectOnDelete) {
+        router.push('/')
       } else {
-        alert('Failed to delete recipe')
+        window.location.reload()
       }
-      setIsDeleting(false)
+    } else {
+      setDeleteError('削除に失敗しました。時間をおいて再度お試しください。')
     }
+    setIsDeleting(false)
   }
 
   return {
@@ -52,6 +58,10 @@ export const useRecipeActions = (
     editDialogOpen,
     setEditDialogOpen,
     handleEdit,
+    deleteDialogOpen,
+    setDeleteDialogOpen,
+    confirmDelete,
+    deleteError,
     handleDelete,
   }
 }

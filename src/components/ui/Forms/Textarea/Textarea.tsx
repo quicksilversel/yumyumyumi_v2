@@ -33,7 +33,7 @@ export interface TextareaProps
 export const Textarea = ({
   title,
   icon,
-  height = 'small',
+  height = 'medium',
   error,
   helperText,
   resize = 'vertical',
