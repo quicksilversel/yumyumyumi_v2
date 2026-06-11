@@ -29,7 +29,7 @@ export function Dropdown<T = string>({
   options,
   selectedValue,
   onSelect,
-  placeholder = 'Select an option',
+  placeholder = '選択してください',
   title,
   icon,
   className,

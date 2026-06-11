@@ -6,6 +6,7 @@ import Image from 'next/image'
 
 import type { Recipe } from '@/types/recipe'
 
+import { DeleteRecipeModal } from '@/components/pages/Modals/DeleteRecipeModal'
 import { Flex } from '@/components/ui'
 import { BookmarkButton } from '@/components/ui/BookmarkButton'
 import { IconButton } from '@/components/ui/Button'
@@ -13,6 +14,7 @@ import { MoreActions } from '@/components/ui/MoreActions'
 import { useAuth } from '@/contexts/AuthContext'
 import { useRecipeContext } from '@/contexts/RecipeContext'
 import { useRecipeActions } from '@/hooks/useRecipeActions'
+import { pickRecipeIcon } from '@/lib/recipeIcons'
 
 type RecipeCardProps = {
   recipe: Recipe
@@ -27,23 +29,20 @@ export const RecipeCardMenu = ({
   const { handleEditRecipe, handleDeleteRecipe, handleToggleIngredients } =
     useRecipeContext()
 
-  const { isDeleting, handleEdit, handleDelete } = useRecipeActions(recipe, {
+  const {
+    isDeleting,
+    handleEdit,
+    handleDelete,
+    deleteDialogOpen,
+    setDeleteDialogOpen,
+    confirmDelete,
+    deleteError,
+  } = useRecipeActions(recipe, {
     onEditOpen: handleEditRecipe,
     onDeleteSuccess: handleDeleteRecipe,
   })
 
-  const randomIconImage = useMemo(() => {
-    const IMAGE_OPTIONS = [
-      '/star-icon.png',
-      '/flower-icon.png',
-      '/heart-icon.png',
-    ]
-    let hash = 0
-    for (let i = 0; i < recipe.id.length; i++) {
-      hash = ((hash << 5) - hash + recipe.id.charCodeAt(i)) & 0xffffffff
-    }
-    return IMAGE_OPTIONS[Math.abs(hash) % 3]
-  }, [recipe.id])
+  const iconImage = useMemo(() => pickRecipeIcon(recipe.id), [recipe.id])
 
   if (!recipe.title?.length) return null
 
@@ -66,7 +65,7 @@ export const RecipeCardMenu = ({
         {isInIngredientView ? (
           <CloseIcon fontSize="inherit" />
         ) : (
-          <Image width={20} height={20} src={randomIconImage} alt="" />
+          <Image width={20} height={20} src={iconImage} alt="" />
         )}
       </StyledIconButton>
       <Flex gap={0}>
@@ -79,6 +78,16 @@ export const RecipeCardMenu = ({
           />
         )}
       </Flex>
+      {isOwner && (
+        <DeleteRecipeModal
+          open={deleteDialogOpen}
+          onClose={() => setDeleteDialogOpen(false)}
+          onConfirm={confirmDelete}
+          isDeleting={isDeleting}
+          recipeTitle={recipe.title}
+          error={deleteError}
+        />
+      )}
     </CardOverlay>
   )
 }

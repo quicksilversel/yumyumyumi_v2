@@ -7,8 +7,8 @@ import type { RecipeForm } from '@/types/recipe'
 
 import {
   H2,
-  Caption,
   ErrorText,
+  Input,
   Textarea,
   Button,
   IconButton,
@@ -25,115 +25,90 @@ export function DirectionsForm() {
     name: 'directions',
   })
 
-  const addDirection = () => {
-    append({ title: '', description: '' })
-  }
-
-  const removeDirection = (index: number) => {
-    remove(index)
-  }
+  const addDirection = () => append({ title: '', description: '' })
 
   return (
     <Section>
-      <SectionHeader>
-        <H2 id="directions-heading">作り方</H2>
-        <AddButton
-          variant="primary"
-          size="sm"
-          onClick={addDirection}
-          type="button"
-          aria-describedby="directions-help"
-        >
-          <AddIcon fontSize="inherit" />
-          手順を追加
-        </AddButton>
-      </SectionHeader>
+      <H2 id="directions-heading">作り方</H2>
 
       {errors.directions &&
         typeof errors.directions === 'object' &&
         'message' in errors.directions && (
           <ErrorText role="alert">{errors.directions.message}</ErrorText>
         )}
+
       {fields.length === 0 ? (
         <EmptyState>
-          <Caption id="directions-help">
-            まだ手順が追加されていません。「手順を追加」ボタンを押して追加してください。
-          </Caption>
+          <EmptyText>まだ手順がありません</EmptyText>
+          <Button
+            variant="primary"
+            size="md"
+            onClick={addDirection}
+            type="button"
+          >
+            <AddIcon fontSize="inherit" />
+            手順を追加
+          </Button>
         </EmptyState>
       ) : (
-        <DirectionsList
-          role="list"
-          aria-labelledby="directions-heading"
-          aria-describedby="directions-help"
-        >
-          {fields.map((field, index) => (
-            <DirectionItem key={field.id} role="listitem">
-              <StepNumber aria-label={`手順 ${index + 1}`}>
-                {index + 1}
-              </StepNumber>
-              <DirectionContent>
-                <FieldGroup>
-                  <Textarea
-                    {...register(`directions.${index}.title`, {
-                      required: '見出しは必須です',
-                    })}
-                    title="見出し"
-                    value={watch(`directions.${index}.title`)}
-                    rows={2}
-                    aria-describedby={
-                      errors.directions?.[index]?.title
-                        ? `direction-title-error-${index}`
-                        : undefined
-                    }
-                  />
-                  {errors.directions?.[index]?.title && (
-                    <ErrorText
-                      id={`direction-title-error-${index}`}
-                      role="alert"
-                    >
-                      {errors.directions[index].title?.message}
-                    </ErrorText>
-                  )}
-                </FieldGroup>
-                <FieldGroup>
+        <>
+          <DirectionsList role="list" aria-labelledby="directions-heading">
+            {fields.map((field, index) => (
+              <DirectionItem key={field.id} role="listitem">
+                <StepNumber aria-label={`手順 ${index + 1}`}>
+                  {index + 1}
+                </StepNumber>
+                <DirectionContent>
+                  <FieldGroup>
+                    <Input
+                      {...register(`directions.${index}.title`, {
+                        required: '見出しは必須です',
+                      })}
+                      title="見出し（必須）"
+                      placeholder="例：野菜を切る"
+                      height="medium"
+                      value={watch(`directions.${index}.title`)}
+                      error={!!errors.directions?.[index]?.title}
+                    />
+                    {errors.directions?.[index]?.title && (
+                      <ErrorText role="alert">
+                        {errors.directions[index].title?.message}
+                      </ErrorText>
+                    )}
+                  </FieldGroup>
                   <Textarea
                     {...register(`directions.${index}.description`)}
-                    title="詳細"
+                    title="詳細（任意）"
+                    placeholder="例：玉ねぎはみじん切りにする"
                     value={watch(`directions.${index}.description`)}
                     error={!!errors.directions?.[index]?.description}
-                    rows={3}
-                    aria-describedby={
-                      errors.directions?.[index]?.description
-                        ? `direction-desc-error-${index}`
-                        : undefined
-                    }
+                    minRows={3}
                   />
-                  {errors.directions?.[index]?.description && (
-                    <ErrorText
-                      id={`direction-desc-error-${index}`}
-                      role="alert"
-                    >
-                      {errors.directions[index].description?.message}
-                    </ErrorText>
-                  )}
-                </FieldGroup>
-              </DirectionContent>
-              {fields.length > 1 && (
-                <DeleteButton
-                  size="sm"
-                  onClick={() => removeDirection(index)}
-                  type="button"
-                  aria-label={`手順 ${index + 1} を削除`}
-                >
-                  <DeleteIcon />
-                </DeleteButton>
-              )}
-            </DirectionItem>
-          ))}
-          <HelperText id="directions-help">
-            各手順には見出しと詳細を入力してください。見出しは必須です。
-          </HelperText>
-        </DirectionsList>
+                </DirectionContent>
+                {fields.length > 1 && (
+                  <DeleteButton
+                    size="sm"
+                    onClick={() => remove(index)}
+                    type="button"
+                    aria-label={`手順 ${index + 1} を削除`}
+                  >
+                    <DeleteIcon />
+                  </DeleteButton>
+                )}
+              </DirectionItem>
+            ))}
+          </DirectionsList>
+
+          <AddRowButton
+            variant="ghost"
+            size="md"
+            onClick={addDirection}
+            type="button"
+          >
+            <AddIcon fontSize="inherit" />
+            手順を追加
+          </AddRowButton>
+        </>
       )}
     </Section>
   )
@@ -146,23 +121,21 @@ const Section = styled.section`
   width: 100%;
 `
 
-const SectionHeader = styled.div`
+const EmptyState = styled.div`
   display: flex;
+  flex-direction: column;
   gap: ${({ theme }) => theme.spacing[3]};
   align-items: center;
-  justify-content: space-between;
-`
-
-const AddButton = styled(Button)`
-  flex-shrink: 0;
-`
-
-const EmptyState = styled.div`
-  padding: ${({ theme }) => theme.spacing[4]};
-  text-align: center;
+  padding: ${({ theme }) => theme.spacing[6]} ${({ theme }) => theme.spacing[4]};
   background-color: ${({ theme }) => theme.colors.gray[50]};
   border: 1px dashed ${({ theme }) => theme.colors.gray[300]};
   border-radius: ${({ theme }) => theme.borderRadius.md};
+`
+
+const EmptyText = styled.p`
+  margin: 0;
+  font-size: ${({ theme }) => theme.typography.fontSize.sm};
+  color: ${({ theme }) => theme.colors.gray[600]};
 `
 
 const DirectionsList = styled.ol`
@@ -172,7 +145,6 @@ const DirectionsList = styled.ol`
   padding: 0;
   margin: 0;
   list-style: none;
-  counter-reset: step-counter;
 `
 
 const DirectionItem = styled.li`
@@ -193,6 +165,7 @@ const StepNumber = styled.div`
   justify-content: center;
   width: 32px;
   height: 32px;
+  margin-top: ${({ theme }) => theme.spacing[1]};
   font-size: 14px;
   font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
   color: ${({ theme }) => theme.colors.white};
@@ -203,6 +176,7 @@ const StepNumber = styled.div`
 const DirectionContent = styled.div`
   display: flex;
   flex: 1;
+  min-width: 0;
   flex-direction: column;
   gap: ${({ theme }) => theme.spacing[3]};
 `
@@ -216,12 +190,10 @@ const FieldGroup = styled.div`
 const DeleteButton = styled(IconButton)`
   flex-shrink: 0;
   align-self: flex-start;
-  margin-top: 8px;
+  margin-top: ${({ theme }) => theme.spacing[1]};
 `
 
-const HelperText = styled.p`
-  margin: ${({ theme }) => theme.spacing[2]} 0 0 0;
-  font-size: ${({ theme }) => theme.typography.fontSize.xs};
-  color: ${({ theme }) => theme.colors.gray[600]};
-  text-align: center;
+const AddRowButton = styled(Button)`
+  width: 100%;
+  border: 1px dashed ${({ theme }) => theme.colors.gray[300]};
 `

@@ -27,7 +27,7 @@ export interface InputProps
 export const Input = ({
   title,
   type = 'text',
-  height = 'small',
+  height = 'medium',
   icon,
   value,
   ...inputProps

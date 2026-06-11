@@ -59,7 +59,6 @@ async function main() {
     )
   }
 
-  // 1. Owner account
   const passwordHash = await bcrypt.hash(SEED_PASSWORD, 10)
   await db
     .insert(users)
@@ -98,7 +97,6 @@ async function main() {
   }
   console.log(`✓ Seeded ${exported.length} recipes`)
 
-  // 3. Bookmarks
   for (const b of SEED_BOOKMARKS) {
     await db
       .insert(bookmarks)

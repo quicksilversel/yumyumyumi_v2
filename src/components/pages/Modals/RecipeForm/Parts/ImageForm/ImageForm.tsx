@@ -22,7 +22,7 @@ async function handleImageRemove(imageUrl?: string): Promise<void> {
     try {
       await deleteImage(imageUrl)
     } catch (err) {
-      window.alert('Error deleting image')
+      console.warn('Failed to delete image:', err)
     }
   }
 }

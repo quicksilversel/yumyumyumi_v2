@@ -11,9 +11,9 @@ export function RecipeGrid() {
   if (filteredRecipes.length === 0) {
     return (
       <EmptyState align="center" gap={2}>
-        <H2>No recipes found</H2>
+        <H2>レシピが見つかりませんでした</H2>
         <Body size="sm" muted>
-          Try adjusting your search or filters to find more recipes
+          検索条件やフィルターを変えてお試しください
         </Body>
       </EmptyState>
     )
