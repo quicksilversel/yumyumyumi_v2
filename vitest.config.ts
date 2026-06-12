@@ -14,6 +14,23 @@ const dirname =
 export default defineConfig({
   test: {
     projects: [
+      // Unit/integration tests (jsdom) — run with `npm test`
+      {
+        extends: true,
+        resolve: {
+          alias: {
+            '@': path.join(dirname, 'src'),
+          },
+        },
+        test: {
+          name: 'unit',
+          globals: true,
+          environment: 'jsdom',
+          setupFiles: ['./src/lib/vitest/setup.ts'],
+          include: ['src/**/*.test.{ts,tsx}'],
+        },
+      },
+      // Storybook stories run in a real browser — run with `npm run test:storybook`
       {
         extends: true,
         plugins: [

@@ -1,6 +1,6 @@
 import { css } from '@emotion/react'
 import styled from '@emotion/styled'
-import CloseIcon from '@mui/icons-material/Close'
+import { X as CloseIcon } from 'lucide-react'
 
 type Props = {
   searchTerm: string
@@ -29,7 +29,7 @@ export const SearchBar = ({ searchTerm, onSearchChange }: Props) => {
             onMouseDown={(e) => e.preventDefault()}
             onClick={() => onSearchChange('')}
           >
-            <CloseIcon fontSize="small" />
+            <CloseIcon size={20} />
           </ClearButton>
         )}
       </InputWrapper>
@@ -52,6 +52,7 @@ const InputWrapper = styled.div`
 const SearchInput = styled.input<{ hasValue: boolean }>`
   width: 100%;
   padding: 12px 24px;
+
   /* 16px keeps iOS Safari from zooming the page when the field is focused */
   font-size: 16px;
   line-height: 18px;
@@ -86,8 +87,8 @@ const SearchInput = styled.input<{ hasValue: boolean }>`
   ${({ hasValue }) =>
     hasValue &&
     css`
-      background-image: none;
       padding-right: 44px;
+      background-image: none;
 
       &:hover,
       &:focus {
@@ -116,8 +117,8 @@ const ClearButton = styled.button`
   }
 
   &:focus-visible {
-    border-radius: 50%;
     outline: 2px solid #575756;
     outline-offset: 2px;
+    border-radius: 50%;
   }
 `

@@ -1,4 +1,4 @@
-import SortIcon from '@mui/icons-material/Sort'
+import { ArrowUpDown as SortIcon } from 'lucide-react'
 
 import { Dropdown, type DropdownOption } from '@/components/ui/Dropdown'
 

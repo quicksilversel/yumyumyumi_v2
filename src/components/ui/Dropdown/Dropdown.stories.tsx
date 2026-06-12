@@ -1,7 +1,9 @@
-import LocalOfferIcon from '@mui/icons-material/LocalOffer'
-import RestaurantIcon from '@mui/icons-material/Restaurant'
-import SortIcon from '@mui/icons-material/Sort'
-import TimerIcon from '@mui/icons-material/Timer'
+import {
+  Tag as LocalOfferIcon,
+  Utensils as RestaurantIcon,
+  ArrowUpDown as SortIcon,
+  Timer as TimerIcon,
+} from 'lucide-react'
 import { fn } from 'storybook/test'
 
 import type { Meta, StoryObj } from '@storybook/react'

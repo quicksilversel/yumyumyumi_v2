@@ -1,5 +1,4 @@
-import CloseIcon from '@mui/icons-material/Close'
-import StarIcon from '@mui/icons-material/Star'
+import { X as CloseIcon, Star as StarIcon } from 'lucide-react'
 import { fn } from 'storybook/test'
 
 import type { Meta, StoryObj } from '@storybook/react'

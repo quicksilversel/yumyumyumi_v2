@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import InfoIcon from '@mui/icons-material/Info'
+import { Info as InfoIcon } from 'lucide-react'
 
 import type { Recipe } from '@/types/recipe'
 

@@ -1,7 +1,9 @@
-import AddIcon from '@mui/icons-material/Add'
-import DeleteIcon from '@mui/icons-material/Delete'
-import EditIcon from '@mui/icons-material/Edit'
-import SearchIcon from '@mui/icons-material/Search'
+import {
+  Plus as AddIcon,
+  Trash2 as DeleteIcon,
+  Pencil as EditIcon,
+  Search as SearchIcon,
+} from 'lucide-react'
 
 import type { Meta, StoryObj } from '@storybook/react'
 

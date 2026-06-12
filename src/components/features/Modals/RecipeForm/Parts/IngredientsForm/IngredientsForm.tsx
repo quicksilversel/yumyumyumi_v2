@@ -1,6 +1,5 @@
 import styled from '@emotion/styled'
-import AddIcon from '@mui/icons-material/Add'
-import DeleteIcon from '@mui/icons-material/Delete'
+import { Plus as AddIcon, Trash2 as DeleteIcon } from 'lucide-react'
 import { useFormContext, useFieldArray } from 'react-hook-form'
 
 import type { RecipeForm } from '@/types/recipe'
@@ -52,7 +51,7 @@ export function IngredientsForm() {
             onClick={addIngredient}
             type="button"
           >
-            <AddIcon fontSize="inherit" />
+            <AddIcon size="1em" />
             材料を追加
           </Button>
         </EmptyState>
@@ -121,7 +120,7 @@ export function IngredientsForm() {
             onClick={addIngredient}
             type="button"
           >
-            <AddIcon fontSize="inherit" />
+            <AddIcon size="1em" />
             材料を追加
           </AddRowButton>
         </>

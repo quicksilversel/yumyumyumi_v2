@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation'
 
-import { RecipeDetail } from '@/components/pages/Recipe/Recipe'
+import { RecipeDetail } from '@/components/features/Recipe/Recipe'
 import { getRecipeById } from '@/lib/db/queries/recipe/getRecipeById'
 import { getRecipes } from '@/lib/db/queries/recipe/getRecipes'
 

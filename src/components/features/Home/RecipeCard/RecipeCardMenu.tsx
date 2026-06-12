@@ -1,12 +1,12 @@
 import { useMemo } from 'react'
 
 import styled from '@emotion/styled'
-import CloseIcon from '@mui/icons-material/Close'
+import { X as CloseIcon } from 'lucide-react'
 import Image from 'next/image'
 
 import type { Recipe } from '@/types/recipe'
 
-import { DeleteRecipeModal } from '@/components/pages/Modals/DeleteRecipeModal'
+import { DeleteRecipeModal } from '@/components/features/Modals/DeleteRecipeModal'
 import { Flex } from '@/components/ui'
 import { BookmarkButton } from '@/components/ui/BookmarkButton'
 import { IconButton } from '@/components/ui/Button'
@@ -63,7 +63,7 @@ export const RecipeCardMenu = ({
         type="button"
       >
         {isInIngredientView ? (
-          <CloseIcon fontSize="inherit" />
+          <CloseIcon size="1em" />
         ) : (
           <Image width={20} height={20} src={iconImage} alt="" />
         )}

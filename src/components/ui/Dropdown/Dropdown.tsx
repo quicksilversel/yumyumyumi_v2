@@ -2,8 +2,7 @@ import { useRef, ReactNode, useEffect } from 'react'
 
 import { css } from '@emotion/react'
 import styled from '@emotion/styled'
-import CheckIcon from '@mui/icons-material/Check'
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
+import { Check as CheckIcon, ChevronDown as ExpandMoreIcon } from 'lucide-react'
 
 export type DropdownOption<T = string> = {
   label: string
@@ -90,7 +89,7 @@ export function Dropdown<T = string>({
               {option.icon && <IconWrapper>{option.icon}</IconWrapper>}
               <span>{option.label}</span>
               {showCheckmark && selectedValue === option.value && (
-                <CheckIcon fontSize="inherit" />
+                <CheckIcon size="1em" />
               )}
             </DropdownItem>
           ))}
@@ -158,7 +157,8 @@ const IconWrapper = styled.span`
   color: ${({ theme }) => theme.colors.gray[500]};
 
   svg {
-    font-size: 18px;
+    width: 18px;
+    height: 18px;
   }
 `
 
@@ -167,8 +167,9 @@ const LabelText = styled.span`
 `
 
 const StyledExpandMoreIcon = styled(ExpandMoreIcon)`
+  width: 20px;
+  height: 20px;
   margin-left: auto;
-  font-size: 20px;
   color: ${({ theme }) => theme.colors.gray[500]};
   transition: transform ${({ theme }) => theme.transition.default};
 

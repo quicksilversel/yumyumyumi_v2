@@ -12,14 +12,13 @@ import styled from '@emotion/styled'
 type TextareaSize = 'small' | 'medium' | 'large'
 type ResizeOption = 'none' | 'vertical' | 'horizontal' | 'both'
 
-export interface TextareaProps
-  extends Omit<
-    DetailedHTMLProps<
-      TextareaHTMLAttributes<HTMLTextAreaElement>,
-      HTMLTextAreaElement
-    >,
-    'size'
-  > {
+export interface TextareaProps extends Omit<
+  DetailedHTMLProps<
+    TextareaHTMLAttributes<HTMLTextAreaElement>,
+    HTMLTextAreaElement
+  >,
+  'size'
+> {
   title?: string
   icon?: ReactNode
   height?: TextareaSize

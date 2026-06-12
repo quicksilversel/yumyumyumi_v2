@@ -13,11 +13,10 @@ import styled from '@emotion/styled'
 
 type InputSize = 'small' | 'medium' | 'large'
 
-export interface InputProps
-  extends Omit<
-    DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>,
-    'size'
-  > {
+export interface InputProps extends Omit<
+  DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>,
+  'size'
+> {
   title?: string
   icon?: ReactNode
   height?: InputSize

@@ -1,7 +1,9 @@
-import EmailIcon from '@mui/icons-material/Email'
-import LockIcon from '@mui/icons-material/Lock'
-import PersonIcon from '@mui/icons-material/Person'
-import SearchIcon from '@mui/icons-material/Search'
+import {
+  Mail as EmailIcon,
+  Lock as LockIcon,
+  User as PersonIcon,
+  Search as SearchIcon,
+} from 'lucide-react'
 import { fn } from 'storybook/test'
 
 import type { Meta, StoryObj } from '@storybook/react'
@@ -86,7 +88,7 @@ export const WithValue: Story = {
 export const WithIcon: Story = {
   args: {
     title: 'Email',
-    icon: <EmailIcon fontSize="small" />,
+    icon: <EmailIcon size={20} />,
     placeholder: 'Enter your email',
     type: 'email',
     height: 'medium',
@@ -162,7 +164,7 @@ export const AutofillSimulation: Story = {
         <div className="autofill-simulation">
           <Input
             title="Email Address"
-            icon={<EmailIcon fontSize="small" />}
+            icon={<EmailIcon size={20} />}
             value="john.doe@example.com"
             type="email"
             autoComplete="email"
@@ -178,7 +180,7 @@ export const AutofillSimulation: Story = {
         <div className="autofill-simulation">
           <Input
             title="Password"
-            icon={<LockIcon fontSize="small" />}
+            icon={<LockIcon size={20} />}
             value="••••••••••"
             type="password"
             autoComplete="current-password"
@@ -254,14 +256,14 @@ export const InteractiveExample: Story = {
     >
       <Input
         title="Full Name"
-        icon={<PersonIcon fontSize="small" />}
+        icon={<PersonIcon size={20} />}
         placeholder="John Doe"
         onChange={fn()}
         required
       />
       <Input
         title="Email Address"
-        icon={<EmailIcon fontSize="small" />}
+        icon={<EmailIcon size={20} />}
         type="email"
         placeholder="john@example.com"
         onChange={fn()}
@@ -269,7 +271,7 @@ export const InteractiveExample: Story = {
       />
       <Input
         title="Password"
-        icon={<LockIcon fontSize="small" />}
+        icon={<LockIcon size={20} />}
         type="password"
         placeholder="Enter password"
         onChange={fn()}
@@ -299,7 +301,7 @@ export const FormVariations: Story = {
     >
       <Input
         title="Search"
-        icon={<SearchIcon fontSize="small" />}
+        icon={<SearchIcon size={20} />}
         type="search"
         placeholder="Search recipes..."
         onChange={fn()}

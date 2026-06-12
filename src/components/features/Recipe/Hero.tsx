@@ -4,8 +4,8 @@ import styled from '@emotion/styled'
 
 import type { Recipe } from '@/types/recipe'
 
-import { DeleteRecipeModal } from '@/components/pages/Modals/DeleteRecipeModal'
-import { EditRecipeDialog } from '@/components/pages/Modals/EditRecipeDialog'
+import { DeleteRecipeModal } from '@/components/features/Modals/DeleteRecipeModal'
+import { EditRecipeDialog } from '@/components/features/Modals/EditRecipeDialog'
 import { BookmarkButton } from '@/components/ui/BookmarkButton'
 import { MoreActions } from '@/components/ui/MoreActions'
 import { RecipeImage } from '@/components/ui/RecipeImage'

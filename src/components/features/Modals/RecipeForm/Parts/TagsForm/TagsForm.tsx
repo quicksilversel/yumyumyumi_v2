@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 import styled from '@emotion/styled'
-import AddIcon from '@mui/icons-material/Add'
+import { Plus as AddIcon } from 'lucide-react'
 import { useFormContext } from 'react-hook-form'
 
 import type { RecipeForm } from '@/types/recipe'
@@ -130,7 +130,7 @@ export const TagsForm = () => {
           type="button"
           aria-label="タグを追加"
         >
-          <AddIcon fontSize="inherit" />
+          <AddIcon size="1em" />
           追加
         </AddTagButton>
       </TagInputContainer>

@@ -16,7 +16,7 @@ export const Providers = ({ children }: { children: React.ReactNode }) => {
   return (
     <EmotionRegistry>
       <ThemeProvider theme={lightTheme}>
-        <SessionProvider>
+        <SessionProvider refetchOnWindowFocus={false}>
           <AuthProvider>
             <BookmarksProvider>
               <Suspense fallback={null}>

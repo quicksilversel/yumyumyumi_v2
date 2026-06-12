@@ -1,4 +1,4 @@
-import TimerIcon from '@mui/icons-material/Timer'
+import { Timer as TimerIcon } from 'lucide-react'
 import { useRouter, useSearchParams } from 'next/navigation'
 
 import { Dropdown, type DropdownOption } from '@/components/ui/Dropdown'

@@ -7,6 +7,7 @@ import {
   render,
   screen,
 } from '@testing-library/react'
+import { type Mock } from 'vitest'
 
 import type { Bookmark } from '@/types/bookmarks'
 
@@ -19,31 +20,31 @@ import {
 import { BookmarksProvider, useBookmarksContext } from './BookmarksContext'
 
 // Mock Next.js navigation
-const mockPush = jest.fn()
+const mockPush = vi.fn()
 const mockRouter = {
   push: mockPush,
-  back: jest.fn(),
-  forward: jest.fn(),
-  refresh: jest.fn(),
-  replace: jest.fn(),
-  prefetch: jest.fn(),
+  back: vi.fn(),
+  forward: vi.fn(),
+  refresh: vi.fn(),
+  replace: vi.fn(),
+  prefetch: vi.fn(),
 }
 
-jest.mock('next/navigation', () => ({
+vi.mock('next/navigation', () => ({
   useRouter: () => mockRouter,
   useSearchParams: () => new URLSearchParams(),
   usePathname: () => '/',
 }))
 
 // Mock the auth context
-jest.mock('@/contexts/AuthContext', () => ({
-  useAuth: jest.fn(),
+vi.mock('@/contexts/AuthContext', () => ({
+  useAuth: vi.fn(),
 }))
 
 // Mock the bookmarks API functions
-jest.mock('@/lib/db/queries/bookmarks', () => ({
-  getBookmarks: jest.fn(),
-  toggleBookmark: jest.fn(),
+vi.mock('@/lib/db/queries/bookmarks', () => ({
+  getBookmarks: vi.fn(),
+  toggleBookmark: vi.fn(),
 }))
 
 describe('BookmarksContext', () => {
@@ -62,16 +63,18 @@ describe('BookmarksContext', () => {
   )
 
   beforeEach(() => {
-    jest.clearAllMocks()
+    vi.clearAllMocks()
     mockPush.mockClear()
     mockRouter.refresh.mockClear()
-    ;(useAuth as jest.Mock).mockReturnValue({ user: mockUser })
-    ;(getBookmarks as jest.Mock).mockResolvedValue(mockBookmarks)
+    ;(useAuth as unknown as Mock).mockReturnValue({ user: mockUser })
+    ;(getBookmarks as unknown as Mock).mockResolvedValue(mockBookmarks)
   })
 
   describe('useBookmarksContext', () => {
     it('should throw error when used outside BookmarksProvider', () => {
-      const consoleError = jest.spyOn(console, 'error').mockImplementation()
+      const consoleError = vi
+        .spyOn(console, 'error')
+        .mockImplementation(() => {})
 
       expect(() => {
         renderHook(() => useBookmarksContext())
@@ -111,7 +114,7 @@ describe('BookmarksContext', () => {
     })
 
     it('should handle no user (unauthenticated)', async () => {
-      ;(useAuth as jest.Mock).mockReturnValue({ user: null })
+      ;(useAuth as unknown as Mock).mockReturnValue({ user: null })
 
       const { result } = renderHook(() => useBookmarksContext(), { wrapper })
 
@@ -125,9 +128,11 @@ describe('BookmarksContext', () => {
     })
 
     it('should handle API errors gracefully', async () => {
-      const consoleError = jest.spyOn(console, 'error').mockImplementation()
+      const consoleError = vi
+        .spyOn(console, 'error')
+        .mockImplementation(() => {})
       const error = new Error('API Error')
-      ;(getBookmarks as jest.Mock).mockRejectedValue(error)
+      ;(getBookmarks as unknown as Mock).mockRejectedValue(error)
 
       const { result } = renderHook(() => useBookmarksContext(), { wrapper })
 
@@ -156,7 +161,7 @@ describe('BookmarksContext', () => {
 
       // Change user
       const newUser = { ...mockUser, id: 'user456' }
-      ;(useAuth as jest.Mock).mockReturnValue({ user: newUser })
+      ;(useAuth as unknown as Mock).mockReturnValue({ user: newUser })
 
       rerender()
 
@@ -168,7 +173,7 @@ describe('BookmarksContext', () => {
 
   describe('toggleBookmark', () => {
     it('should toggle bookmark on when not bookmarked', async () => {
-      ;(toggleBookmarkApi as jest.Mock).mockResolvedValue(true)
+      ;(toggleBookmarkApi as unknown as Mock).mockResolvedValue(true)
 
       const { result } = renderHook(() => useBookmarksContext(), { wrapper })
 
@@ -188,7 +193,7 @@ describe('BookmarksContext', () => {
     })
 
     it('should toggle bookmark off when bookmarked', async () => {
-      ;(toggleBookmarkApi as jest.Mock).mockResolvedValue(false)
+      ;(toggleBookmarkApi as unknown as Mock).mockResolvedValue(false)
 
       const { result } = renderHook(() => useBookmarksContext(), { wrapper })
 
@@ -208,7 +213,7 @@ describe('BookmarksContext', () => {
     })
 
     it('should redirect to login when user is not authenticated', async () => {
-      ;(useAuth as jest.Mock).mockReturnValue({ user: null })
+      ;(useAuth as unknown as Mock).mockReturnValue({ user: null })
 
       const { result } = renderHook(() => useBookmarksContext(), { wrapper })
 
@@ -228,7 +233,7 @@ describe('BookmarksContext', () => {
 
     it('should handle optimistic updates and revert on mismatch', async () => {
       // API returns true (bookmarked) when we expected false (unbookmarked)
-      ;(toggleBookmarkApi as jest.Mock).mockResolvedValue(true)
+      ;(toggleBookmarkApi as unknown as Mock).mockResolvedValue(true)
 
       const { result } = renderHook(() => useBookmarksContext(), { wrapper })
 
@@ -246,9 +251,11 @@ describe('BookmarksContext', () => {
     })
 
     it('should handle toggle errors and revert state', async () => {
-      const consoleError = jest.spyOn(console, 'error').mockImplementation()
+      const consoleError = vi
+        .spyOn(console, 'error')
+        .mockImplementation(() => {})
       const error = new Error('Toggle failed')
-      ;(toggleBookmarkApi as jest.Mock).mockRejectedValue(error)
+      ;(toggleBookmarkApi as unknown as Mock).mockRejectedValue(error)
 
       const { result } = renderHook(() => useBookmarksContext(), { wrapper })
 
@@ -287,7 +294,7 @@ describe('BookmarksContext', () => {
 
       // Update the mock to return different data
       const newBookmarks = [{ id: '3', recipeId: 'recipe3', userId: 'user123' }]
-      ;(getBookmarks as jest.Mock).mockResolvedValue(newBookmarks)
+      ;(getBookmarks as unknown as Mock).mockResolvedValue(newBookmarks)
 
       await act(async () => {
         await result.current.refreshBookmarks()
@@ -347,7 +354,7 @@ describe('BookmarksContext', () => {
         )
       }
 
-      ;(toggleBookmarkApi as jest.Mock).mockResolvedValue(true)
+      ;(toggleBookmarkApi as unknown as Mock).mockResolvedValue(true)
 
       const { getByText, getByTestId } = render(
         <BookmarksProvider>
@@ -384,7 +391,7 @@ describe('BookmarksContext', () => {
     })
 
     it('should not show loading state during toggle', async () => {
-      ;(toggleBookmarkApi as jest.Mock).mockImplementation(
+      ;(toggleBookmarkApi as unknown as Mock).mockImplementation(
         () => new Promise((resolve) => setTimeout(() => resolve(true), 100)),
       )
 

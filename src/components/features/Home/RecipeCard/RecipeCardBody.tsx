@@ -1,6 +1,8 @@
 import styled from '@emotion/styled'
-import AccessTimeIcon from '@mui/icons-material/AccessTime'
-import LocalDiningIcon from '@mui/icons-material/LocalDining'
+import {
+  Clock as AccessTimeIcon,
+  Utensils as LocalDiningIcon,
+} from 'lucide-react'
 
 import type { Recipe } from '@/types/recipe'
 
@@ -53,6 +55,7 @@ const RecipeInfo = styled(Flex)`
   color: ${({ theme }) => theme.colors.gray[600]};
 
   svg {
-    font-size: 18px;
+    width: 1em;
+    height: 1em;
   }
 `

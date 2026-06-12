@@ -1,8 +1,10 @@
 import styled from '@emotion/styled'
-import AccessTimeIcon from '@mui/icons-material/AccessTime'
-import DateRangeIcon from '@mui/icons-material/DateRange'
-import LocalDiningIcon from '@mui/icons-material/LocalDining'
-import LoyaltyIcon from '@mui/icons-material/Loyalty'
+import {
+  Clock as AccessTimeIcon,
+  Calendar as DateRangeIcon,
+  Utensils as LocalDiningIcon,
+  Tag as LoyaltyIcon,
+} from 'lucide-react'
 import Link from 'next/link'
 
 import type { Recipe } from '@/types/recipe'
@@ -34,7 +36,7 @@ export const Header = ({ recipe }: { recipe: Recipe }) => {
                     title={`${tag}のレシピ一覧へ`}
                   >
                     <Chip clickable variant="outlined" size="sm">
-                      <LoyaltyIcon fontSize="inherit" />
+                      <LoyaltyIcon size="1em" />
                       {tag}
                     </Chip>
                   </Link>
@@ -126,7 +128,8 @@ const MetaInfo = styled(Flex)`
   color: ${({ theme }) => theme.colors.gray[600]};
 
   svg {
-    font-size: 18px;
+    width: 1em;
+    height: 1em;
   }
 
   @media (width < 35.1875rem) {

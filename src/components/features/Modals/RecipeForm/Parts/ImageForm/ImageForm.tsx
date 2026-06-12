@@ -1,9 +1,11 @@
 import { useRef, useState } from 'react'
 
 import styled from '@emotion/styled'
-import DeleteIcon from '@mui/icons-material/Delete'
-import EditIcon from '@mui/icons-material/Edit'
-import ImageIcon from '@mui/icons-material/Image'
+import {
+  Trash2 as DeleteIcon,
+  Pencil as EditIcon,
+  Image as ImageIcon,
+} from 'lucide-react'
 import Image from 'next/image'
 import { useFormContext, Controller } from 'react-hook-form'
 
@@ -98,7 +100,7 @@ export function ImageForm({ onImageChange, uploading = false }: Props) {
                       type="button"
                       aria-label="画像を変更"
                     >
-                      <EditIcon fontSize="inherit" />
+                      <EditIcon size="1em" />
                     </ActionButton>
                     <ActionButton
                       size="sm"
@@ -107,7 +109,7 @@ export function ImageForm({ onImageChange, uploading = false }: Props) {
                       type="button"
                       aria-label="画像を削除"
                     >
-                      <DeleteIcon fontSize="inherit" />
+                      <DeleteIcon size="1em" />
                     </ActionButton>
                   </ImageActions>
                 </>
@@ -118,7 +120,7 @@ export function ImageForm({ onImageChange, uploading = false }: Props) {
                   disabled={uploading}
                   aria-describedby="image-help"
                 >
-                  <ImageIcon fontSize="large" />
+                  <ImageIcon size={32} />
                   <UploadText>画像をアップロード</UploadText>
                   <UploadHint>クリックして画像を選択</UploadHint>
                 </UploadPrompt>

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-import LocalOfferIcon from '@mui/icons-material/LocalOffer'
+import { Tag as LocalOfferIcon } from 'lucide-react'
 import { useRouter, useSearchParams } from 'next/navigation'
 
 import { Dropdown, type DropdownOption } from '@/components/ui/Dropdown'
