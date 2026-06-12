@@ -4,11 +4,10 @@ import styled from '@emotion/styled'
 
 type ToggleSwitchSize = 'small' | 'medium' | 'large'
 
-export interface ToggleSwitchProps
-  extends Omit<
-    DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>,
-    'type'
-  > {
+export interface ToggleSwitchProps extends Omit<
+  DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>,
+  'type'
+> {
   label?: string
   labelPosition?: 'left' | 'right'
   height?: ToggleSwitchSize
