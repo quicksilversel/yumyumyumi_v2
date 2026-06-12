@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import RestaurantMenuIcon from '@mui/icons-material/RestaurantMenu'
+import { UtensilsCrossed as RestaurantMenuIcon } from 'lucide-react'
 import Link from 'next/link'
 
 export const Logo = () => {

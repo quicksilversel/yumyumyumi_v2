@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import AddIcon from '@mui/icons-material/Add'
+import { Plus as AddIcon } from 'lucide-react'
 
 import { AddRecipeDialog } from '../../pages/Modals/AddRecipeDialog'
 

@@ -4,8 +4,7 @@ import { useState, useEffect } from 'react'
 
 import { css } from '@emotion/react'
 import styled from '@emotion/styled'
-import Visibility from '@mui/icons-material/Visibility'
-import VisibilityOff from '@mui/icons-material/VisibilityOff'
+import { Eye as Visibility, EyeOff as VisibilityOff } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 
 import { Spinner, Input, Button, IconButton } from '@/components/ui'

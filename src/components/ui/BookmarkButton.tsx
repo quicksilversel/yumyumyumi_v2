@@ -1,8 +1,7 @@
 import { useState } from 'react'
 
 import styled from '@emotion/styled'
-import FavoriteIcon from '@mui/icons-material/Favorite'
-import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined'
+import { Heart } from 'lucide-react'
 
 import { IconButton } from '@/components/ui/Button'
 import { useAuth } from '@/contexts/AuthContext'
@@ -63,11 +62,7 @@ export const BookmarkButton = ({
       }
       type="button"
     >
-      {isBookmarked ? (
-        <FavoriteIcon fontSize="inherit" />
-      ) : (
-        <FavoriteBorderOutlinedIcon fontSize="inherit" />
-      )}
+      <Heart size="1em" fill={isBookmarked ? 'currentColor' : 'none'} />
     </StyledIconButton>
   )
 }

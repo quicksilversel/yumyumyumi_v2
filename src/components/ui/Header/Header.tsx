@@ -4,8 +4,7 @@ import { useState } from 'react'
 
 import { keyframes } from '@emotion/css'
 import styled from '@emotion/styled'
-import CloseIcon from '@mui/icons-material/Close'
-import MenuIcon from '@mui/icons-material/Menu'
+import { X as CloseIcon, Menu as MenuIcon } from 'lucide-react'
 
 import { Flex, IconButton } from '@/components/ui'
 import { useAuth } from '@/contexts/AuthContext'
@@ -50,7 +49,7 @@ export const Header = () => {
             onClick={() => setSlideMenuOpen(false)}
             type="button"
           >
-            <CloseIcon fontSize="inherit" type="button" />
+            <CloseIcon size="1em" type="button" />
           </IconButton>
         </MenuHeader>
         <MenuContent>

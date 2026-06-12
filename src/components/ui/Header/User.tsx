@@ -1,10 +1,12 @@
 import { useState, useRef, useEffect } from 'react'
 
 import styled from '@emotion/styled'
-import AccountCircleIcon from '@mui/icons-material/AccountCircle'
-import LoginIcon from '@mui/icons-material/Login'
-import LogoutIcon from '@mui/icons-material/Logout'
-import PersonIcon from '@mui/icons-material/Person'
+import {
+  CircleUserRound as AccountCircleIcon,
+  LogIn as LoginIcon,
+  LogOut as LogoutIcon,
+  User as PersonIcon,
+} from 'lucide-react'
 import Link from 'next/link'
 
 import { Divider } from '@/components/ui/Layout'

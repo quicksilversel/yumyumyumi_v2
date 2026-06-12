@@ -1,9 +1,11 @@
 import { useState, useRef, useEffect } from 'react'
 
 import styled from '@emotion/styled'
-import DeleteIcon from '@mui/icons-material/Delete'
-import EditIcon from '@mui/icons-material/Edit'
-import MoreVertIcon from '@mui/icons-material/MoreVert'
+import {
+  Trash2 as DeleteIcon,
+  Pencil as EditIcon,
+  EllipsisVertical as MoreVertIcon,
+} from 'lucide-react'
 
 import { IconButton } from '@/components/ui/Button'
 import { useHydrated } from '@/hooks/useHydrated'
@@ -72,15 +74,15 @@ export const MoreActions = ({
         type="button"
         aria-label="アクションメニューを開く"
       >
-        <MoreVertIcon fontSize="inherit" />
+        <MoreVertIcon size="1em" />
       </StyledIconButton>
       <Menu open={menuOpen} ref={menuRef}>
         <MenuItem onClick={handleEdit}>
-          <EditIcon fontSize="inherit" />
+          <EditIcon size="1em" />
           <span>編集する</span>
         </MenuItem>
         <MenuItem onClick={handleDelete}>
-          <DeleteIcon fontSize="inherit" />
+          <DeleteIcon size="1em" />
           <span>削除する</span>
         </MenuItem>
       </Menu>
@@ -134,6 +136,7 @@ const MenuItem = styled.button`
   }
 
   svg {
-    font-size: 18px;
+    width: 18px;
+    height: 18px;
   }
 `

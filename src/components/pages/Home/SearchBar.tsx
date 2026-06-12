@@ -1,6 +1,6 @@
 import { css } from '@emotion/react'
 import styled from '@emotion/styled'
-import CloseIcon from '@mui/icons-material/Close'
+import { X as CloseIcon } from 'lucide-react'
 
 type Props = {
   searchTerm: string
@@ -29,7 +29,7 @@ export const SearchBar = ({ searchTerm, onSearchChange }: Props) => {
             onMouseDown={(e) => e.preventDefault()}
             onClick={() => onSearchChange('')}
           >
-            <CloseIcon fontSize="small" />
+            <CloseIcon size={20} />
           </ClearButton>
         )}
       </InputWrapper>

@@ -1,6 +1,8 @@
-import CommentIcon from '@mui/icons-material/Comment'
-import DescriptionIcon from '@mui/icons-material/Description'
-import NotesIcon from '@mui/icons-material/Notes'
+import {
+  MessageSquare as CommentIcon,
+  FileText as DescriptionIcon,
+  NotebookPen as NotesIcon,
+} from 'lucide-react'
 import { fn } from 'storybook/test'
 
 import type { Meta, StoryObj } from '@storybook/react'
@@ -94,7 +96,7 @@ export const WithValue: Story = {
 export const WithIcon: Story = {
   args: {
     title: 'Notes',
-    icon: <NotesIcon fontSize="small" />,
+    icon: <NotesIcon size={20} />,
     placeholder: 'Add your notes here',
     height: 'medium',
     minRows: 3,
@@ -234,7 +236,7 @@ export const InteractiveExample: Story = {
     >
       <Textarea
         title="Comment"
-        icon={<CommentIcon fontSize="small" />}
+        icon={<CommentIcon size={20} />}
         placeholder="Share your thoughts"
         onChange={fn()}
         helperText="Be constructive and respectful"
@@ -243,7 +245,7 @@ export const InteractiveExample: Story = {
       />
       <Textarea
         title="Product Description"
-        icon={<DescriptionIcon fontSize="small" />}
+        icon={<DescriptionIcon size={20} />}
         placeholder="Describe the product"
         onChange={fn()}
         helperText="Maximum 200 characters"
@@ -253,7 +255,7 @@ export const InteractiveExample: Story = {
       />
       <Textarea
         title="Additional Notes"
-        icon={<NotesIcon fontSize="small" />}
+        icon={<NotesIcon size={20} />}
         placeholder="Any other information"
         onChange={fn()}
         minRows={2}

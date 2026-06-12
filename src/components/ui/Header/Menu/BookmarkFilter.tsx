@@ -1,6 +1,5 @@
 import styled from '@emotion/styled'
-import FavoriteIcon from '@mui/icons-material/Favorite'
-import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined'
+import { Heart } from 'lucide-react'
 import { useRouter, useSearchParams } from 'next/navigation'
 
 import { useAuth } from '@/contexts/AuthContext'
@@ -43,7 +42,7 @@ export const BookmarkFilter = ({
 
   return (
     <FilterButton onClick={handleBookmarkToggle} active={showBookmarked}>
-      {showBookmarked ? <FavoriteIcon /> : <FavoriteBorderOutlinedIcon />}
+      <Heart fill={showBookmarked ? 'currentColor' : 'none'} />
       お気に入りのレシピ
     </FilterButton>
   )
@@ -67,7 +66,8 @@ const FilterButton = styled.button<{ active?: boolean }>`
   }
 
   svg {
-    font-size: 18px;
+    width: 18px;
+    height: 18px;
     color: ${({ active, theme }) =>
       active ? theme.colors.primary : theme.colors.gray[500]};
   }

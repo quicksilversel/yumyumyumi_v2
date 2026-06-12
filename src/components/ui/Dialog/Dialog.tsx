@@ -2,7 +2,7 @@ import { ReactNode, useEffect } from 'react'
 
 import { css, keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
-import CloseIcon from '@mui/icons-material/Close'
+import { X as CloseIcon } from 'lucide-react'
 
 import { IconButton } from '../Button'
 
