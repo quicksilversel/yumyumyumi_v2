@@ -6,7 +6,7 @@ import Image from 'next/image'
 
 import type { Recipe } from '@/types/recipe'
 
-import { DeleteRecipeModal } from '@/components/pages/Modals/DeleteRecipeModal'
+import { DeleteRecipeModal } from '@/components/features/Modals/DeleteRecipeModal'
 import { Flex } from '@/components/ui'
 import { BookmarkButton } from '@/components/ui/BookmarkButton'
 import { IconButton } from '@/components/ui/Button'

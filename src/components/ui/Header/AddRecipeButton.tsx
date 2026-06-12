@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 import { Plus as AddIcon } from 'lucide-react'
 
-import { AddRecipeDialog } from '../../pages/Modals/AddRecipeDialog'
+import { AddRecipeDialog } from '../../features/Modals/AddRecipeDialog'
 
 export const AddRecipeButton = () => {
   const [addRecipeOpen, setAddRecipeOpen] = useState(false)

@@ -10,7 +10,7 @@ import {
   TagsForm,
   TipsForm,
   TitleForm,
-} from '@/components/pages/Modals/RecipeForm/Parts'
+} from '@/components/features/Modals/RecipeForm/Parts'
 import { Stack, Divider, Grid, ErrorText, H2 } from '@/components/ui'
 
 type Props = {
