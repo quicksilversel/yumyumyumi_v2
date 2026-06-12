@@ -1,8 +1,9 @@
 import imageCompression from 'browser-image-compression'
+import { type Mock } from 'vitest'
 
 import { compressImage } from './compressImage'
 
-jest.mock('browser-image-compression')
+vi.mock('browser-image-compression')
 
 describe('compressImage', () => {
   const mockFile = new File(['test content'], 'test.jpg', {
@@ -10,15 +11,13 @@ describe('compressImage', () => {
   })
 
   beforeEach(() => {
-    jest.clearAllMocks()
+    vi.clearAllMocks()
   })
 
   it('should compress image successfully with default config', async () => {
     const mockCompressedBlob = new Blob(['compressed'], { type: 'image/webp' })
     Object.defineProperty(mockCompressedBlob, 'size', { value: 1024 * 1024 }) // 1MB
-    ;(imageCompression as unknown as jest.Mock).mockResolvedValue(
-      mockCompressedBlob,
-    )
+    ;(imageCompression as unknown as Mock).mockResolvedValue(mockCompressedBlob)
 
     const result = await compressImage(mockFile)
 
@@ -38,7 +37,7 @@ describe('compressImage', () => {
 
     const smallMockBlob = new Blob(['small compressed'], { type: 'image/webp' })
     Object.defineProperty(smallMockBlob, 'size', { value: 1 * 1024 * 1024 }) // 1MB
-    ;(imageCompression as unknown as jest.Mock)
+    ;(imageCompression as unknown as Mock)
       .mockResolvedValueOnce(largeMockBlob)
       .mockResolvedValueOnce(smallMockBlob)
 
@@ -67,7 +66,7 @@ describe('compressImage', () => {
   it('should return file at exactly 2MB without aggressive compression', async () => {
     const exactSizeBlob = new Blob(['exact size'], { type: 'image/webp' })
     Object.defineProperty(exactSizeBlob, 'size', { value: 2 * 1024 * 1024 }) // 2MB
-    ;(imageCompression as unknown as jest.Mock).mockResolvedValue(exactSizeBlob)
+    ;(imageCompression as unknown as Mock).mockResolvedValue(exactSizeBlob)
 
     const result = await compressImage(mockFile)
 
@@ -77,7 +76,7 @@ describe('compressImage', () => {
 
   it('should throw error when compression fails', async () => {
     const originalError = new Error('Compression library error')
-    ;(imageCompression as unknown as jest.Mock).mockRejectedValue(originalError)
+    ;(imageCompression as unknown as Mock).mockRejectedValue(originalError)
 
     await expect(compressImage(mockFile)).rejects.toThrow(
       'Failed to compress image',
@@ -89,7 +88,7 @@ describe('compressImage', () => {
   it('should throw error when aggressive compression also fails', async () => {
     const largeMockBlob = new Blob(['large compressed'], { type: 'image/webp' })
     Object.defineProperty(largeMockBlob, 'size', { value: 3 * 1024 * 1024 }) // 3MB
-    ;(imageCompression as unknown as jest.Mock)
+    ;(imageCompression as unknown as Mock)
       .mockResolvedValueOnce(largeMockBlob)
       .mockRejectedValueOnce(new Error('Aggressive compression failed'))
 
@@ -107,9 +106,7 @@ describe('compressImage', () => {
 
     const mockCompressedBlob = new Blob(['compressed'], { type: 'image/webp' })
     Object.defineProperty(mockCompressedBlob, 'size', { value: 500 * 1024 }) // 500KB
-    ;(imageCompression as unknown as jest.Mock).mockResolvedValue(
-      mockCompressedBlob,
-    )
+    ;(imageCompression as unknown as Mock).mockResolvedValue(mockCompressedBlob)
 
     const result = await compressImage(pngFile)
 
@@ -124,7 +121,7 @@ describe('compressImage', () => {
 
     const webpBlob = new Blob(['webp content'], { type: 'image/webp' })
     Object.defineProperty(webpBlob, 'size', { value: 800 * 1024 }) // 800KB
-    ;(imageCompression as unknown as jest.Mock).mockResolvedValue(webpBlob)
+    ;(imageCompression as unknown as Mock).mockResolvedValue(webpBlob)
 
     const result = await compressImage(jpegFile)
 
@@ -140,9 +137,7 @@ describe('compressImage', () => {
   it('should use web worker for compression', async () => {
     const mockCompressedBlob = new Blob(['compressed'], { type: 'image/webp' })
     Object.defineProperty(mockCompressedBlob, 'size', { value: 1024 * 1024 }) // 1MB
-    ;(imageCompression as unknown as jest.Mock).mockResolvedValue(
-      mockCompressedBlob,
-    )
+    ;(imageCompression as unknown as Mock).mockResolvedValue(mockCompressedBlob)
 
     await compressImage(mockFile)
 
@@ -164,9 +159,7 @@ describe('compressImage', () => {
       type: 'image/webp',
     })
     Object.defineProperty(tinyCompressedBlob, 'size', { value: 512 }) // 512 bytes
-    ;(imageCompression as unknown as jest.Mock).mockResolvedValue(
-      tinyCompressedBlob,
-    )
+    ;(imageCompression as unknown as Mock).mockResolvedValue(tinyCompressedBlob)
 
     const result = await compressImage(tinyFile)
 
@@ -175,9 +168,7 @@ describe('compressImage', () => {
   })
 
   it('should handle non-Error exceptions from image compression library', async () => {
-    ;(imageCompression as unknown as jest.Mock).mockRejectedValue(
-      'String error',
-    )
+    ;(imageCompression as unknown as Mock).mockRejectedValue('String error')
 
     await expect(compressImage(mockFile)).rejects.toThrow(
       'Failed to compress image',
@@ -194,7 +185,7 @@ describe('compressImage', () => {
       type: 'image/webp',
     })
     Object.defineProperty(largeMockBlob2, 'size', { value: 2.5 * 1024 * 1024 }) // 2.5MB
-    ;(imageCompression as unknown as jest.Mock)
+    ;(imageCompression as unknown as Mock)
       .mockResolvedValueOnce(largeMockBlob1)
       .mockResolvedValueOnce(largeMockBlob2)
 

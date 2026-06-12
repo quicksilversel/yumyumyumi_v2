@@ -1,32 +1,33 @@
 import { renderHook, act } from '@testing-library/react'
+import { type Mock } from 'vitest'
 
 import { useAuth } from '@/contexts/AuthContext'
 import { useBookmarksContext } from '@/contexts/BookmarksContext'
 
 import { useBookmarks } from './useBookmarks'
 
-const mockPush = jest.fn()
+const mockPush = vi.fn()
 const mockRouter = {
   push: mockPush,
-  back: jest.fn(),
-  forward: jest.fn(),
-  refresh: jest.fn(),
-  replace: jest.fn(),
-  prefetch: jest.fn(),
+  back: vi.fn(),
+  forward: vi.fn(),
+  refresh: vi.fn(),
+  replace: vi.fn(),
+  prefetch: vi.fn(),
 }
 
-jest.mock('next/navigation', () => ({
+vi.mock('next/navigation', () => ({
   useRouter: () => mockRouter,
   useSearchParams: () => new URLSearchParams(),
   usePathname: () => '/',
 }))
 
-jest.mock('@/contexts/AuthContext', () => ({
-  useAuth: jest.fn(),
+vi.mock('@/contexts/AuthContext', () => ({
+  useAuth: vi.fn(),
 }))
 
-jest.mock('@/contexts/BookmarksContext', () => ({
-  useBookmarksContext: jest.fn(),
+vi.mock('@/contexts/BookmarksContext', () => ({
+  useBookmarksContext: vi.fn(),
 }))
 
 describe('useBookmarks', () => {
@@ -36,8 +37,8 @@ describe('useBookmarks', () => {
     { id: '2', recipeId: 'recipe2', userId: 'user123' },
   ]
   const mockBookmarkedIds = new Set(['recipe1', 'recipe2'])
-  const mockToggleBookmark = jest.fn()
-  const mockRefreshBookmarks = jest.fn()
+  const mockToggleBookmark = vi.fn()
+  const mockRefreshBookmarks = vi.fn()
 
   const mockAuthValue = {
     user: mockUser,
@@ -52,10 +53,12 @@ describe('useBookmarks', () => {
   }
 
   beforeEach(() => {
-    jest.clearAllMocks()
+    vi.clearAllMocks()
     mockPush.mockClear()
-    ;(useAuth as jest.Mock).mockReturnValue(mockAuthValue)
-    ;(useBookmarksContext as jest.Mock).mockReturnValue(mockBookmarksValue)
+    ;(useAuth as unknown as Mock).mockReturnValue(mockAuthValue)
+    ;(useBookmarksContext as unknown as Mock).mockReturnValue(
+      mockBookmarksValue,
+    )
   })
 
   describe('initialization', () => {
@@ -92,7 +95,7 @@ describe('useBookmarks', () => {
   describe('toggleBookmark', () => {
     it('should toggle bookmark successfully', async () => {
       mockToggleBookmark.mockResolvedValue(undefined)
-      const onToggle = jest.fn()
+      const onToggle = vi.fn()
 
       const { result } = renderHook(() =>
         useBookmarks({ recipeId: 'recipe1', onToggle }),
@@ -108,8 +111,8 @@ describe('useBookmarks', () => {
 
     it('should handle mouse event properly', async () => {
       const mockEvent = {
-        preventDefault: jest.fn(),
-        stopPropagation: jest.fn(),
+        preventDefault: vi.fn(),
+        stopPropagation: vi.fn(),
       } as unknown as React.MouseEvent
 
       const { result } = renderHook(() => useBookmarks({ recipeId: 'recipe1' }))
@@ -124,7 +127,7 @@ describe('useBookmarks', () => {
     })
 
     it('should warn when no recipeId provided', async () => {
-      const consoleSpy = jest.spyOn(console, 'warn').mockImplementation()
+      const consoleSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
 
       const { result } = renderHook(() => useBookmarks())
 
@@ -141,7 +144,7 @@ describe('useBookmarks', () => {
     })
 
     it('should redirect to login when user is not authenticated', async () => {
-      ;(useAuth as jest.Mock).mockReturnValue({ user: null })
+      ;(useAuth as unknown as Mock).mockReturnValue({ user: null })
 
       const { result } = renderHook(() => useBookmarks({ recipeId: 'recipe1' }))
 
@@ -157,7 +160,7 @@ describe('useBookmarks', () => {
     it('should handle toggle error gracefully', async () => {
       const mockError = new Error('Toggle failed')
       mockToggleBookmark.mockRejectedValue(mockError)
-      const consoleSpy = jest.spyOn(console, 'error').mockImplementation()
+      const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
 
       const { result } = renderHook(() => useBookmarks({ recipeId: 'recipe1' }))
 
@@ -213,7 +216,7 @@ describe('useBookmarks', () => {
     })
 
     it('should reflect loading state from context', () => {
-      ;(useBookmarksContext as jest.Mock).mockReturnValue({
+      ;(useBookmarksContext as unknown as Mock).mockReturnValue({
         ...mockBookmarksValue,
         isLoading: true,
       })
@@ -231,7 +234,7 @@ describe('useBookmarks', () => {
       expect(result.current.isBookmarked).toBe(false)
 
       const newBookmarkedIds = new Set(['recipe1', 'recipe2', 'recipe3'])
-      ;(useBookmarksContext as jest.Mock).mockReturnValue({
+      ;(useBookmarksContext as unknown as Mock).mockReturnValue({
         ...mockBookmarksValue,
         bookmarkedIds: newBookmarkedIds,
       })

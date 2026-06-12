@@ -7,18 +7,18 @@ import type { Recipe } from '@/types/recipe'
 import { RecipeProvider, useRecipeContext } from './RecipeContext'
 
 // Mock Next.js navigation
-const mockPush = jest.fn()
-const mockRefresh = jest.fn()
+const mockPush = vi.fn()
+const mockRefresh = vi.fn()
 const mockSearchParams = new URLSearchParams()
 
-jest.mock('next/navigation', () => ({
+vi.mock('next/navigation', () => ({
   useRouter: () => ({
     push: mockPush,
     refresh: mockRefresh,
-    back: jest.fn(),
-    forward: jest.fn(),
-    prefetch: jest.fn(),
-    replace: jest.fn(),
+    back: vi.fn(),
+    forward: vi.fn(),
+    prefetch: vi.fn(),
+    replace: vi.fn(),
   }),
   useSearchParams: () => mockSearchParams,
   usePathname: () => '/',
@@ -61,7 +61,7 @@ describe('RecipeContext', () => {
 
   beforeEach(() => {
     // Clear all mocks before each test
-    jest.clearAllMocks()
+    vi.clearAllMocks()
     // Reset search params
     mockSearchParams.forEach((_, key) => {
       mockSearchParams.delete(key)
@@ -70,7 +70,9 @@ describe('RecipeContext', () => {
 
   describe('useRecipeContext', () => {
     it('should throw error when used outside RecipeProvider', () => {
-      const consoleError = jest.spyOn(console, 'error').mockImplementation()
+      const consoleError = vi
+        .spyOn(console, 'error')
+        .mockImplementation(() => {})
 
       expect(() => {
         renderHook(() => useRecipeContext())

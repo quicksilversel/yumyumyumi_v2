@@ -2,19 +2,20 @@ import { ReactNode } from 'react'
 
 import { renderHook, act } from '@testing-library/react'
 import { signIn, signOut, useSession } from 'next-auth/react'
+import { type Mock } from 'vitest'
 
 import { AuthProvider, useAuth } from './AuthContext'
 
-jest.mock('next-auth/react', () => ({
-  useSession: jest.fn(),
-  signIn: jest.fn(),
-  signOut: jest.fn(),
+vi.mock('next-auth/react', () => ({
+  useSession: vi.fn(),
+  signIn: vi.fn(),
+  signOut: vi.fn(),
   SessionProvider: ({ children }: { children: ReactNode }) => children,
 }))
 
-const mockUseSession = useSession as jest.Mock
-const mockSignIn = signIn as jest.Mock
-const mockSignOut = signOut as jest.Mock
+const mockUseSession = useSession as unknown as Mock
+const mockSignIn = signIn as unknown as Mock
+const mockSignOut = signOut as unknown as Mock
 
 const wrapper = ({ children }: { children: ReactNode }) => (
   <AuthProvider>{children}</AuthProvider>
@@ -22,13 +23,15 @@ const wrapper = ({ children }: { children: ReactNode }) => (
 
 describe('AuthContext', () => {
   beforeEach(() => {
-    jest.clearAllMocks()
+    vi.clearAllMocks()
     mockUseSession.mockReturnValue({ data: null, status: 'unauthenticated' })
   })
 
   describe('useAuth', () => {
     it('should throw error when used outside AuthProvider', () => {
-      const consoleError = jest.spyOn(console, 'error').mockImplementation()
+      const consoleError = vi
+        .spyOn(console, 'error')
+        .mockImplementation(() => {})
 
       expect(() => {
         renderHook(() => useAuth())

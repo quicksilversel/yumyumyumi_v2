@@ -176,9 +176,9 @@ const StepNumber = styled.div`
 const DirectionContent = styled.div`
   display: flex;
   flex: 1;
-  min-width: 0;
   flex-direction: column;
   gap: ${({ theme }) => theme.spacing[3]};
+  min-width: 0;
 `
 
 const FieldGroup = styled.div`
