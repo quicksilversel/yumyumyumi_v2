@@ -16,11 +16,11 @@ export const RecipeCardBody = ({ recipe }: { recipe: Recipe }) => {
       <RecipeInfo gap={3}>
         <Flex align="center" gap={1}>
           <AccessTimeIcon />
-          <Caption>{recipe.cookTime} min</Caption>
+          <Caption>{recipe.cookTime}分</Caption>
         </Flex>
         <Flex align="center" gap={1}>
           <LocalDiningIcon />
-          <Caption>{recipe.servings} servings</Caption>
+          <Caption>{recipe.servings}人分</Caption>
         </Flex>
       </RecipeInfo>
     </Container>

@@ -19,5 +19,5 @@ export const Source = ({ recipe }: RecipeDetailProps) => {
 }
 
 const Section = styled.section`
-  margin-top: ${({ theme }) => theme.spacing[6]};
+  margin-top: ${({ theme }) => theme.spacing[8]};
 `

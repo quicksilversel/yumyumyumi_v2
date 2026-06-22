@@ -3,13 +3,16 @@
 import { useEffect } from 'react'
 
 import styled from '@emotion/styled'
+import { Heart, House, LogOut, ChevronRight } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 
-import { Button, Spinner } from '@/components/ui'
+import { Spinner } from '@/components/ui'
 import { useAuth } from '@/contexts/AuthContext'
+import { useBookmarksContext } from '@/contexts/BookmarksContext'
 
 export default function AccountPage() {
   const { user, loading, signOut } = useAuth()
+  const { bookmarks } = useBookmarksContext()
   const router = useRouter()
 
   useEffect(() => {
@@ -44,59 +47,47 @@ export default function AccountPage() {
           <Avatar aria-hidden="true">
             {user.email?.[0]?.toUpperCase() || 'U'}
           </Avatar>
-          <WelcomeText>
-            <Greeting>おかえりなさい</Greeting>
-            <UserEmail>{user.email}</UserEmail>
-          </WelcomeText>
+          <Greeting>おかえりなさい</Greeting>
+          <UserEmail>{user.email}</UserEmail>
+          <Tagline>今日はどんな料理を作りますか？</Tagline>
         </AccountHeader>
 
-        <AccountContent>
-          <AccountSection aria-labelledby="account-info-heading">
-            <SectionTitle id="account-info-heading">
-              アカウント情報
-            </SectionTitle>
-            <InfoCard>
-              <InfoItem>
-                <InfoLabel>メールアドレス</InfoLabel>
-                <InfoValue>{user.email}</InfoValue>
-              </InfoItem>
-            </InfoCard>
-          </AccountSection>
-          <ActionsSection aria-labelledby="actions-heading">
-            <SectionTitle id="actions-heading">アクション</SectionTitle>
-            <ActionGrid>
-              <ActionButton
-                variant="secondary"
-                onClick={() => router.push('/')}
-                aria-label="ホームページに戻る"
-              >
-                <ActionIcon>🏠</ActionIcon>
-                <ActionText>
-                  <ActionTitle>ホーム</ActionTitle>
-                  <ActionSubtitle>レシピを見る</ActionSubtitle>
-                </ActionText>
-              </ActionButton>
-              <ActionButton
-                variant="secondary"
-                onClick={() => router.push('/recipes/new')}
-                aria-label="新しいレシピを作成"
-              >
-                <ActionIcon>✨</ActionIcon>
-                <ActionText>
-                  <ActionTitle>レシピ作成</ActionTitle>
-                  <ActionSubtitle>新しいレシピを追加</ActionSubtitle>
-                </ActionText>
-              </ActionButton>
-            </ActionGrid>
-          </ActionsSection>
-        </AccountContent>
+        <ActionList>
+          <ActionRow
+            onClick={() => router.push('/')}
+            type="button"
+            aria-label="ホームへ"
+          >
+            <House size={20} />
+            <ActionText>
+              <ActionTitle>ホーム</ActionTitle>
+              <ActionSubtitle>レシピを見る</ActionSubtitle>
+            </ActionText>
+            <ChevronRight size={18} />
+          </ActionRow>
+
+          <ActionRow
+            onClick={() => router.push('/?bookmarked=true')}
+            type="button"
+            aria-label="お気に入りのレシピへ"
+          >
+            <Heart size={20} />
+            <ActionText>
+              <ActionTitle>お気に入り</ActionTitle>
+              <ActionSubtitle>保存したレシピ</ActionSubtitle>
+            </ActionText>
+            <Count>{bookmarks.length}</Count>
+            <ChevronRight size={18} />
+          </ActionRow>
+        </ActionList>
 
         <AccountFooter>
           <SignOutButton
-            variant="ghost"
             onClick={handleSignOut}
+            type="button"
             aria-label="アカウントからログアウト"
           >
+            <LogOut size={16} />
             ログアウト
           </SignOutButton>
         </AccountFooter>
@@ -109,35 +100,32 @@ const PageContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
-  padding: ${({ theme }) => theme.spacing[6]} ${({ theme }) => theme.spacing[4]};
-  background: linear-gradient(
-    135deg,
-    ${({ theme }) => theme.colors.gray[50]} 0%,
-    ${({ theme }) => theme.colors.white} 100%
-  );
+  min-height: 80vh;
+  padding: ${({ theme }) => theme.spacing[8]} ${({ theme }) => theme.spacing[4]};
 `
 
 const AccountMain = styled.main`
   width: 100%;
-  max-width: 480px;
+  max-width: 420px;
   overflow: hidden;
   background: ${({ theme }) => theme.colors.white};
+  border: 1px solid ${({ theme }) => theme.colors.gray[100]};
   border-radius: ${({ theme }) => theme.borderRadius.xl};
-  box-shadow:
-    0 4px 6px -1px rgb(0, 0, 0, 0.05),
-    0 2px 4px -1px rgb(0, 0, 0, 0.03);
+  box-shadow: ${({ theme }) => theme.shadow.md};
 `
 
 const AccountHeader = styled.header`
-  padding: ${({ theme }) => theme.spacing[8]} ${({ theme }) => theme.spacing[6]};
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: ${({ theme }) => theme.spacing[10]}
+    ${({ theme }) => theme.spacing[6]} ${({ theme }) => theme.spacing[8]};
   text-align: center;
   background: linear-gradient(
-    135deg,
-    ${({ theme }) => theme.colors.primary}10 0%,
-    ${({ theme }) => theme.colors.primary}05 100%
+    180deg,
+    ${({ theme }) => theme.colors.primary}14 0%,
+    transparent 100%
   );
-  border-bottom: 1px solid ${({ theme }) => theme.colors.gray[100]};
 `
 
 const Avatar = styled.div`
@@ -146,179 +134,116 @@ const Avatar = styled.div`
   justify-content: center;
   width: 72px;
   height: 72px;
-  margin: 0 auto ${({ theme }) => theme.spacing[4]};
+  margin-bottom: ${({ theme }) => theme.spacing[4]};
   font-size: 28px;
   font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
   color: ${({ theme }) => theme.colors.white};
-  background: linear-gradient(
-    135deg,
-    ${({ theme }) => theme.colors.primary} 0%,
-    ${({ theme }) => theme.colors.primary}80 100%
-  );
+  background-color: ${({ theme }) => theme.colors.primary};
   border-radius: 50%;
-  box-shadow: 0 4px 12px rgb(0, 0, 0, 0.15);
-`
-
-const WelcomeText = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: ${({ theme }) => theme.spacing[1]};
+  box-shadow: 0 6px 16px ${({ theme }) => theme.colors.primary}55;
 `
 
 const Greeting = styled.h1`
   margin: 0;
   font-size: ${({ theme }) => theme.typography.fontSize.xl};
-  font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
   color: ${({ theme }) => theme.colors.gray[900]};
-  letter-spacing: -0.025em;
 `
 
 const UserEmail = styled.p`
-  margin: 0;
+  margin: ${({ theme }) => theme.spacing[1]} 0 0;
   font-size: ${({ theme }) => theme.typography.fontSize.sm};
-  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
+  color: ${({ theme }) => theme.colors.gray[500]};
+`
+
+const Tagline = styled.p`
+  margin: ${({ theme }) => theme.spacing[4]} 0 0;
+  font-size: ${({ theme }) => theme.typography.fontSize.sm};
   color: ${({ theme }) => theme.colors.gray[600]};
 `
 
-const AccountContent = styled.div`
+const ActionList = styled.nav`
   display: flex;
   flex-direction: column;
-  gap: ${({ theme }) => theme.spacing[6]};
-  padding: ${({ theme }) => theme.spacing[6]};
+  padding: ${({ theme }) => theme.spacing[2]};
 `
 
-const AccountSection = styled.section`
-  display: flex;
-  flex-direction: column;
-  gap: ${({ theme }) => theme.spacing[3]};
-`
-
-const SectionTitle = styled.h2`
-  margin: 0;
-  font-size: ${({ theme }) => theme.typography.fontSize.base};
-  font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
-  color: ${({ theme }) => theme.colors.gray[900]};
-  letter-spacing: -0.025em;
-`
-
-const InfoCard = styled.div`
-  overflow: hidden;
-  background: ${({ theme }) => theme.colors.gray[50]};
-  border: 1px solid ${({ theme }) => theme.colors.gray[200]};
-  border-radius: ${({ theme }) => theme.borderRadius.lg};
-`
-
-const InfoItem = styled.div`
+const ActionRow = styled.button`
   display: flex;
   gap: ${({ theme }) => theme.spacing[3]};
   align-items: center;
-  justify-content: space-between;
-  padding: ${({ theme }) => theme.spacing[4]};
+  width: 100%;
+  padding: ${({ theme }) => theme.spacing[3]} ${({ theme }) => theme.spacing[3]};
+  color: ${({ theme }) => theme.colors.gray[700]};
+  cursor: pointer;
+  background: none;
+  border: none;
+  border-radius: ${({ theme }) => theme.borderRadius.md};
+  transition: background-color ${({ theme }) => theme.transition.default};
 
-  &:not(:last-child) {
-    border-bottom: 1px solid ${({ theme }) => theme.colors.gray[200]};
+  svg:last-of-type {
+    color: ${({ theme }) => theme.colors.gray[400]};
+  }
+
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.gray[50]};
   }
 `
 
-const InfoLabel = styled.dt`
-  flex-shrink: 0;
-  margin: 0;
-  font-size: ${({ theme }) => theme.typography.fontSize.sm};
-  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
-  color: ${({ theme }) => theme.colors.gray[600]};
-`
-
-const InfoValue = styled.dd`
-  margin: 0;
-  font-size: ${({ theme }) => theme.typography.fontSize.sm};
-  color: ${({ theme }) => theme.colors.gray[900]};
-  text-align: right;
-  word-break: break-all;
-`
-
-const ActionsSection = styled.section`
+const ActionText = styled.span`
   display: flex;
+  flex: 1;
   flex-direction: column;
-  gap: ${({ theme }) => theme.spacing[3]};
-`
-
-const ActionGrid = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: ${({ theme }) => theme.spacing[3]};
-
-  @media (width <= 480px) {
-    grid-template-columns: 1fr;
-  }
-`
-
-const ActionButton = styled(Button)`
-  display: flex;
-  flex-direction: column;
-  gap: ${({ theme }) => theme.spacing[2]};
-  align-items: center;
-  height: auto;
-  padding: ${({ theme }) => theme.spacing[4]};
-  background: ${({ theme }) => theme.colors.white};
-  border: 1px solid ${({ theme }) => theme.colors.gray[200]};
-  border-radius: ${({ theme }) => theme.borderRadius.lg};
-  box-shadow: none;
-  transition: all 0.2s ease;
-
-  &:hover:not(:disabled) {
-    border-color: ${({ theme }) => theme.colors.gray[300]};
-    box-shadow: 0 4px 12px rgb(0, 0, 0, 0.1);
-    transform: translateY(-1px);
-  }
-
-  &:active {
-    transform: translateY(0);
-  }
-`
-
-const ActionIcon = styled.div`
-  font-size: 24px;
-  line-height: 1;
-`
-
-const ActionText = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: ${({ theme }) => theme.spacing[0.5]};
-  text-align: center;
+  text-align: left;
 `
 
 const ActionTitle = styled.span`
-  font-size: ${({ theme }) => theme.typography.fontSize.sm};
-  font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
+  font-size: ${({ theme }) => theme.typography.fontSize.base};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
   color: ${({ theme }) => theme.colors.gray[900]};
 `
 
 const ActionSubtitle = styled.span`
   font-size: ${({ theme }) => theme.typography.fontSize.xs};
-  color: ${({ theme }) => theme.colors.gray[600]};
+  color: ${({ theme }) => theme.colors.gray[500]};
+`
+
+const Count = styled.span`
+  min-width: 24px;
+  padding: ${({ theme }) => theme.spacing[0.5]}
+    ${({ theme }) => theme.spacing[2]};
+  font-size: ${({ theme }) => theme.typography.fontSize.xs};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
+  color: ${({ theme }) => theme.colors.primary};
+  text-align: center;
+  background-color: ${({ theme }) => theme.colors.primary}1a;
+  border-radius: ${({ theme }) => theme.borderRadius.full};
 `
 
 const AccountFooter = styled.footer`
-  padding: ${({ theme }) => theme.spacing[4]} ${({ theme }) => theme.spacing[6]};
-  text-align: center;
-  background: ${({ theme }) => theme.colors.gray[50]};
-  border-top: 1px solid ${({ theme }) => theme.colors.gray[200]};
+  padding: ${({ theme }) => theme.spacing[3]};
+  border-top: 1px solid ${({ theme }) => theme.colors.gray[100]};
 `
 
-const SignOutButton = styled(Button)`
-  padding: ${({ theme }) => theme.spacing[2]} ${({ theme }) => theme.spacing[4]};
+const SignOutButton = styled.button`
+  display: flex;
+  gap: ${({ theme }) => theme.spacing[2]};
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: ${({ theme }) => theme.spacing[3]};
   font-size: ${({ theme }) => theme.typography.fontSize.sm};
   font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
-  color: ${({ theme }) => theme.colors.gray[600]};
+  color: ${({ theme }) => theme.colors.gray[500]};
+  cursor: pointer;
   background: none;
   border: none;
   border-radius: ${({ theme }) => theme.borderRadius.md};
-  transition: all 0.2s ease;
+  transition: all ${({ theme }) => theme.transition.default};
 
-  &:hover:not(:disabled) {
-    color: ${({ theme }) => theme.colors.gray[900]};
-    background: ${({ theme }) => theme.colors.gray[100]};
+  &:hover {
+    color: ${({ theme }) => theme.colors.error};
+    background-color: ${({ theme }) => theme.colors.gray[50]};
   }
 `
 

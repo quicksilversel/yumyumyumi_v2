@@ -40,7 +40,7 @@ export const Directions = ({ recipe }: RecipeDetailProps) => {
 }
 
 const DirectionsSection = styled.section`
-  margin-block: ${({ theme }) => theme.spacing[6]};
+  margin-block: ${({ theme }) => theme.spacing[8]};
 `
 
 const DirectionsList = styled.ol`
@@ -57,14 +57,9 @@ const DirectionStep = styled.li`
   gap: ${({ theme }) => theme.spacing[4]};
   padding: ${({ theme }) => theme.spacing[5]};
   background: ${({ theme }) => theme.colors.white};
-  border: 1px solid ${({ theme }) => theme.colors.gray[200]};
+  border: 1px solid ${({ theme }) => theme.colors.gray[100]};
   border-radius: ${({ theme }) => theme.borderRadius.lg};
-  box-shadow: 0 1px 3px rgb(0, 0, 0, 0.05);
-  transition: opacity 0.2s ease;
-
-  &:hover {
-    opacity: 0.8;
-  }
+  box-shadow: ${({ theme }) => theme.shadow.xs};
 
   &:not(:last-child)::after {
     position: absolute;

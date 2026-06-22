@@ -16,7 +16,7 @@ export const TitleForm = () => {
     <Container>
       <Input
         {...register('title', {
-          required: 'Recipe title is required',
+          required: 'レシピ名を入力してください',
         })}
         id="title"
         title="レシピ名"
