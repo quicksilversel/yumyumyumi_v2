@@ -30,7 +30,6 @@ const RecipeContainer = styled.main`
 `
 
 const InnerContainer = styled.div`
-  @media (width <= 35.1875rem) {
-    margin-inline: ${({ theme }) => theme.spacing[4]};
-  }
+  max-width: 760px;
+  padding-inline: ${({ theme }) => theme.spacing[4]};
 `

@@ -21,8 +21,8 @@ export function RecipeGrid() {
 
   return (
     <Container cols={3} gap={6} responsive>
-      {filteredRecipes.map((recipe) => (
-        <RecipeCard key={recipe.id} recipe={recipe} />
+      {filteredRecipes.map((recipe, index) => (
+        <RecipeCard key={recipe.id} recipe={recipe} index={index} />
       ))}
     </Container>
   )

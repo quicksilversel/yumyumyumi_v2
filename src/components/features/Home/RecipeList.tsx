@@ -26,6 +26,7 @@ function RecipeListInner({ initialRecipes }: RecipeListProps) {
   const { bookmarks } = useBookmarks()
   const {
     recipes,
+    filteredRecipes,
     clientSearchTerm,
     loading,
     error,
@@ -191,7 +192,14 @@ function RecipeListInner({ initialRecipes }: RecipeListProps) {
         ) : error ? (
           <div>{error}</div>
         ) : (
-          <RecipeGrid />
+          <>
+            {filteredRecipes.length > 0 && (
+              <ResultCount aria-live="polite">
+                {filteredRecipes.length}件のレシピ
+              </ResultCount>
+            )}
+            <RecipeGrid />
+          </>
         )}
       </StyledList>
 
@@ -209,8 +217,15 @@ function RecipeListInner({ initialRecipes }: RecipeListProps) {
 
 const StyledList = styled.main`
   max-width: 1200px;
-  padding: 20px;
+  padding: ${({ theme }) => theme.spacing[8]} ${({ theme }) => theme.spacing[5]}
+    ${({ theme }) => theme.spacing[16]};
   margin: 0 auto;
+`
+
+const ResultCount = styled.p`
+  margin: ${({ theme }) => theme.spacing[4]} 0 0;
+  font-size: ${({ theme }) => theme.typography.fontSize.sm};
+  color: ${({ theme }) => theme.colors.gray[600]};
 `
 
 const LoadingOverlay = styled.div`

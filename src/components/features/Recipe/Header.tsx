@@ -82,6 +82,7 @@ const ContentWrapper = styled.div`
 
   @media (width > 35.1875rem) {
     padding-block: ${({ theme }) => theme.spacing[6]};
+    padding-inline: ${({ theme }) => theme.spacing[4]};
   }
 `
 

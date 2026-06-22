@@ -2,7 +2,6 @@
 
 import { useState } from 'react'
 
-import { keyframes } from '@emotion/css'
 import styled from '@emotion/styled'
 import { X as CloseIcon, Menu as MenuIcon } from 'lucide-react'
 
@@ -34,14 +33,12 @@ export const Header = () => {
           </Flex>
         </Toolbar>
       </Container>
-      {slideMenuOpen && (
-        <MenuOverlay
-          open={slideMenuOpen}
-          onClick={() => setSlideMenuOpen(false)}
-          aria-hidden="true"
-        />
-      )}
-      <SlideMenu open={slideMenuOpen}>
+      <MenuOverlay
+        open={slideMenuOpen}
+        onClick={() => setSlideMenuOpen(false)}
+        aria-hidden="true"
+      />
+      <SlideMenu open={slideMenuOpen} inert={!slideMenuOpen}>
         <MenuHeader>
           <MenuTitle>絞り込み</MenuTitle>
           <IconButton
@@ -77,22 +74,21 @@ const Toolbar = styled(Flex)`
   margin: 0 auto;
 `
 
-const fadeIn = keyframes`
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-`
-
 const MenuOverlay = styled.div<{ open: boolean }>`
   position: fixed;
   inset: 0;
   z-index: 998;
-  display: ${({ open }) => (open ? 'block' : 'none')};
+  visibility: ${({ open }) => (open ? 'visible' : 'hidden')};
+  pointer-events: ${({ open }) => (open ? 'auto' : 'none')};
   background-color: rgb(0, 0, 0, 50%);
-  animation: ${({ open }) => (open ? `${fadeIn} 0.3s ease` : 'none')};
+  opacity: ${({ open }) => (open ? 1 : 0)};
+  transition:
+    opacity 0.3s ease,
+    visibility 0.3s ease;
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
 `
 
 const SlideMenu = styled.aside<{ open: boolean }>`
@@ -102,12 +98,19 @@ const SlideMenu = styled.aside<{ open: boolean }>`
   bottom: 0;
   z-index: 999;
   display: flex;
+  visibility: ${({ open }) => (open ? 'visible' : 'hidden')};
   flex-direction: column;
   width: 320px;
   background-color: ${({ theme }) => theme.colors.white};
   box-shadow: -4px 0 20px rgb(0, 0, 0, 15%);
   transform: translateX(${({ open }) => (open ? '0' : '100%')});
-  transition: transform 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    visibility 0.3s ease;
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
 
   @media (width <= 480px) {
     width: 85%;

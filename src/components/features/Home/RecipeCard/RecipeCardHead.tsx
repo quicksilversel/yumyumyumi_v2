@@ -14,7 +14,6 @@ export const RecipeCardHead = ({ recipe }: { recipe: Recipe }) => {
         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
       />
 
-      <MediaGradient />
       {recipe.tags?.[0] && <Label>{recipe.tags[0]}</Label>}
     </Container>
   )
@@ -28,24 +27,15 @@ const Container = styled.div`
   background-color: ${({ theme }) => theme.colors.gray[100]};
 `
 
-const MediaGradient = styled.div`
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  height: 60%;
-  pointer-events: none;
-  background: linear-gradient(to top, rgb(0, 0, 0, 30%) 0%, transparent 100%);
-`
-
 const Label = styled.div`
   position: absolute;
-  bottom: 0;
-  left: 0;
-  padding: ${({ theme }) => theme.spacing[2]};
+  top: ${({ theme }) => theme.spacing[2]};
+  left: ${({ theme }) => theme.spacing[2]};
+  padding: ${({ theme }) => theme.spacing[1]} ${({ theme }) => theme.spacing[2]};
   font-size: ${({ theme }) => theme.typography.fontSize.xs};
   font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
   line-height: 1;
   color: ${({ theme }) => theme.colors.white};
   background-color: ${({ theme }) => theme.colors.primary};
+  border-radius: ${({ theme }) => theme.borderRadius.full};
 `

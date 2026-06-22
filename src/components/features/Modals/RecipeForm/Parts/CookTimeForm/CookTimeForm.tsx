@@ -16,7 +16,7 @@ export const CookTimeForm = () => {
     <Container>
       <Input
         {...register('cookTime', {
-          required: 'Cook time is required',
+          required: '調理時間を入力してください',
           min: {
             value: 1,
             message: '調理時間は1分以上で入力してください',

@@ -15,14 +15,14 @@ export const ServingsForm = () => {
     <div>
       <Input
         {...register('servings', {
-          required: 'Number of servings is required',
+          required: '人数を入力してください',
           min: {
             value: 1,
-            message: 'Servings must be at least 1',
+            message: '人数は1人分以上で入力してください',
           },
           max: {
             value: 100,
-            message: 'Servings cannot exceed 100',
+            message: '人数は100人分以下で入力してください',
           },
           valueAsNumber: true,
           validate: (value) => {

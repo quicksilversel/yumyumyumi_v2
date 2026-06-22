@@ -59,7 +59,7 @@ export const Ingredients = ({ recipe }: { recipe: Recipe }) => {
 }
 
 const Section = styled.section`
-  margin-block: ${({ theme }) => theme.spacing[6]};
+  margin-block: ${({ theme }) => theme.spacing[8]};
 `
 
 const SpiceHeading = styled.h3`

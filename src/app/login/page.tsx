@@ -4,7 +4,11 @@ import { useState, useEffect } from 'react'
 
 import { css } from '@emotion/react'
 import styled from '@emotion/styled'
-import { Eye as Visibility, EyeOff as VisibilityOff } from 'lucide-react'
+import {
+  Eye as Visibility,
+  EyeOff as VisibilityOff,
+  UtensilsCrossed,
+} from 'lucide-react'
 import { useRouter } from 'next/navigation'
 
 import { Spinner, Input, Button, IconButton } from '@/components/ui'
@@ -63,7 +67,11 @@ export default function LoginPage() {
     <PageContainer>
       <AuthCard>
         <AuthHeader>
-          <Title>ログイン</Title>
+          <BrandMark aria-hidden="true">
+            <UtensilsCrossed size={26} />
+          </BrandMark>
+          <Title>おかえりなさい</Title>
+          <Subtitle>YumYumYumi にログイン</Subtitle>
         </AuthHeader>
         <AuthForm onSubmit={handleSubmit}>
           {error && (
@@ -143,15 +151,37 @@ const AuthCard = styled.main`
 `
 
 const AuthHeader = styled.header`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   margin-bottom: ${({ theme }) => theme.spacing[6]};
+  text-align: center;
+`
+
+const BrandMark = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  margin-bottom: ${({ theme }) => theme.spacing[4]};
+  color: ${({ theme }) => theme.colors.white};
+  background-color: ${({ theme }) => theme.colors.primary};
+  border-radius: 50%;
+  box-shadow: 0 6px 16px ${({ theme }) => theme.colors.primary}55;
 `
 
 const Title = styled.h1`
   margin: 0;
   font-size: ${({ theme }) => theme.typography.fontSize.xl};
-  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
   color: ${({ theme }) => theme.colors.black};
-  text-align: center;
+`
+
+const Subtitle = styled.p`
+  margin: ${({ theme }) => theme.spacing[1]} 0 0;
+  font-size: ${({ theme }) => theme.typography.fontSize.sm};
+  color: ${({ theme }) => theme.colors.gray[500]};
 `
 
 const AuthForm = styled.form`
